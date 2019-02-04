@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+    <title>Online Preprocessor</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body class="main-bg">
+    <div class="container-fluid">
+
+            <nav class="navbar navbar-expand-lg navbar-light top-bg">
+                    <img src="/images/database.svg" alt="logo" height="32" width="32">
+                    <a href="/" class="topdiv-text" id="linklogo">Online preprocessor</a>
+                  
+                    <div class="collapse navbar-collapse" >
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                          <a class="nav-link" id="topdivhome" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="topdivpublic" href="/dataset/public">Public datasets</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="topdivregister" href="/user/register">Register</a>
+                        </li>
+                      </ul>       
+                    </div>
+                  </nav>
+
+        <div class="row">
+            <div class="col-4">
+
+            </div>
+            <div class= "login-form col-4 form-bg">
+
+                    <form action="#" th:action="@{/user/register}" th:object="${registerForm}" method="POST">
+                        <img class="header-logo" src="/images/signup.svg" alt="logo.png" height="64" width="64">
+                        <h2 class="main-text text-center">Sign up</h2>
+                            <div class="form-group">
+                            <input type="text" class="form-control" name="username" placeholder="Username" required="required">
+                            <label class="error-label" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</label>
+                            </div>
+                            <div class="form-group">
+                            <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+                            <label class="error-label" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</label>
+                            </div>
+                            <div class="form-group">
+                            <input type="email" class="form-control" name="email" placeholder="Email" required="required">
+                            <label class="error-label" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</label>
+                            </div>
+                            <div class="form-group">
+                            <input class="form-control" type="text" name="name" placeholder="Name" required="required">
+                            <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</label> 
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="surname" placeholder="Surname" required="required">
+                                <label class="error-label" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</label> 
+                            </div>
+                            <div class="form-group">
+                            <input type="submit" class="submit-button form-control" value="Register"><br>
+                            </div>
+                        </form>
+            </div>
+            <div class="col-4">
+
+            </div>
+        </div>
+        <footer class="page-footer footer-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/singGrey.svg" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                    </div>
+                </div>
+        </footer>
+    </div>
+</body>
+</html>

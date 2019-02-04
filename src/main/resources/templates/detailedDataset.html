@@ -1,0 +1,249 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+    <title>Online Preprocessor</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body class="main-bg">
+    <div class="container-fluid">
+                        <nav class="navbar navbar-expand-lg navbar-light top-bg">
+                                <img src="/images/database.svg" alt="logo" height="32" width="32">
+                                <a href="/" class="topdiv-text" id="linklogo">Online preprocessor</a>
+                              
+                                <div class="collapse navbar-collapse" >
+                                  <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item">
+                                      <a class="nav-link" id="topdivhome" href="/">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                      <a class="nav-link" id="topdivpublic" href="/dataset/public">Public datasets</a>
+                                    </li>
+                                    <li class="nav-item">
+                                      <a class="nav-link" id="topdivregister" href="/user/register">Register</a>
+                                    </li>
+                                  </ul>
+                                  <div sec:authorize="isAnonymous()">
+                                  <form action="#" th:action="@{/}" th:object="${loginForm}" method="post" class="form-inline my-2 my-lg-0">
+                                    <input class="form-control mr-sm-2" type="text" id="username" name="username" placeholder="Username" aria-label="Username">
+                                    <label class="error-label" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</label>
+                                    <input class="form-control mr-sm-2" type="password" id="username" name="password" placeholder="Password" aria-label="Password">
+                                    <label class="error-label" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</label>
+                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Login">Login</button>
+                                    </form>
+                                    </div>
+                                </div>
+                              </nav>
+
+            <div class="row page-content">
+
+                <div class="col-1">
+
+                </div>
+
+                <div class="col-10 form-bg">
+                <img class="header-logo" src="/images/databaseblue.svg" alt="logo.png" height="64" width="64">
+                <h1 class="main-text text-center">Dataset details</h1>
+                </p>
+                </div>
+
+                <div class="col-1">
+
+                </div>
+            </div>
+
+            <div class="row page-content">
+
+                <div class="col-2">
+
+                </div>
+
+
+                <div class="col-8 main-div-bg container" style="margin-bottom:100px">
+                    <div class="row">
+
+                        <div class="col-2">
+
+                        </div>
+
+                        <div class="col-8">
+                            <img src="/images/authorplaceholder.svg" alt="authorplaceholder" height="" width="64">
+                            <h3 class="topdiv-text"><span class="top-bg">Author:</span></h3>
+                            <p class="main-text dataset-attr" th:text="${dataset.author}"></p>
+                        </div>
+
+                        <div class="col-2">
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-2">
+    
+                        </div>
+    
+                        <div class="col-8">
+                            <h3 class="topdiv-text"><span class="top-bg">Dataset:</span></h3>
+                            <p class="main-text dataset-attr" th:text="${dataset.name}"></p>
+                        </div>
+    
+                        <div class="col-2">
+    
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-2">
+
+                        </div>  
+
+                        <div class="col-8">
+                        <h3 class="topdiv-text"><span class="top-bg">Description:</span></h3>
+                        <p class="main-text dataset-attr" th:text="${dataset.description}"></p>
+                        </div>
+
+                        <div class="col-2">
+                            
+                        </div>  
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+    
+                        </div>  
+    
+                        <div class="col-8">
+                        <h3 class="topdiv-text"><span class="top-bg">DOI:</span></h3>
+                        <p class="main-text dataset-attr" th:text="${dataset.doi}"></p>
+                        </div>
+    
+                        <div class="col-2">
+                                
+                        </div>  
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+        
+                        </div>  
+        
+                        <div class="col-4">
+                        <h3 class="topdiv-text"><span class="top-bg">%Spam:</span></h3>
+                        <p class="main-text dataset-attr" th:text="${dataset.percentageSpam}"></p>
+                        </div>
+
+                        <div class="col-4">
+                        <h3 class="topdiv-text"><span class="top-bg">%Ham:</span></h3>
+                        <p class="main-text dataset-attr" th:text="${dataset.percentageHam}"></p>
+                        </div>
+        
+                        <div class="col-2">
+                                    
+                        </div>  
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+        
+                        </div>  
+        
+                        <div class="col-8">
+                        <h3 class="topdiv-text"><span class="top-bg">Type:</span></h3>
+                        <p class="main-text dataset-attr" th:text="${dataset.type}"></p>
+                        </div>
+        
+                        <div class="col-2">
+                                    
+                        </div>  
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+            
+                        </div>  
+            
+                        <div class="col-8">
+                        <h3 class="topdiv-text"><span class="top-bg">Language:</span></h3>
+                        <p class="main-text dataset-attr" th:text="${dataset.language}"></p>
+                        </div>
+            
+                        <div class="col-2">
+                                        
+                        </div>  
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                
+                        </div>  
+                
+                        <div class="col-8">
+                        <h3 class="topdiv-text"><span class="top-bg">Pipeline:</span></h3>
+                        <textarea class="tapipe" rows="20" cols="60" th:text="${dataset.pipeline}">
+                        </textarea> 
+                        </div>
+                
+                        <div class="col-2">
+                                            
+                        </div>  
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                    
+                        </div>  
+                    
+                        <div class="col-8">
+                        <h3 class="topdiv-text"><span class="top-bg">Download</span></h3>
+                        <a th:href="@{/dataset/public/download(id=${dataset.name})}">
+                        <img src="/images/download.svg" alt="download.svg" height="64" width="64">
+                        </a>
+                        </div>
+                    
+                        <div class="col-2">
+                                                
+                        </div>  
+                    </div>
+
+                </div>
+
+                <div class="col-2">
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+            <footer class="page-footer footer-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/singGrey.svg" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            </div>
+    </div>
+</body>
+</html>

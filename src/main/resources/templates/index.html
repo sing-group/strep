@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+    <title>Online Preprocessor</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body class="main-bg">
+    <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg navbar-light top-bg">
+                        <img src="/images/database.svg" alt="logo" height="32" width="32">
+                        <a href="/" class="topdiv-text" id="linklogo">Online preprocessor</a>
+                              
+                        <div class="collapse navbar-collapse" >
+                            <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" id="topdivhome" href="/">Home</a>
+                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="topdivpublic" href="/dataset/public">Public datasets</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="topdivregister" href="/user/register">Register</a>
+                             </li>
+                            </ul>
+                            <div sec:authorize="isAnonymous()">
+                            <form action="#" th:action="@{/}" th:object="${loginForm}" method="post" class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="text" id="username" name="username" placeholder="Username" aria-label="Username">
+                            <label class="error-label" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</label>
+                            <input class="form-control mr-sm-2" type="password" id="username" name="password" placeholder="Password" aria-label="Password">
+                            <label class="error-label" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</label>
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Login">Login</button>
+                            </form>
+                            </div>
+                        </div>
+                        </nav>
+
+            <div class="row page-content">
+
+                <div class="col-1">
+
+                </div>
+
+                <div class="col-10 form-bg">
+                <img class="header-logo" src="/images/databaseblue.svg" alt="logo.png" height="64" width="64">
+                <h1 class="main-text text-center welcome-text">
+                    Welcome to 
+                </h1>
+                <h1 class="main-text text-center welcome-text"><em>Online preprocessor</em></h1> 
+                <p class="main-text text-center welcome-subtext">Online preprocessor is a tool that allows you to manage, 
+                    archive and process data in original format to perform experiments.
+                </p>
+                </div>
+
+                <div class="col-1">
+
+                </div>
+            </div>
+
+            <div class="row page-content welcome-items">
+                <div class="col-2">
+
+                </div>
+                <div class="col-2 form-bg welcome-item">
+                    <img class="wlc-pic" src="/images/public.svg" alt="public datasets" width="128" height="128">
+                    <h3 class="main-text text-center">Public datasets</h3>
+                    <p class="main-text text-center">Without an account you can only access public datasets</p>  
+                    <form action="/dataset/public" method="get">
+                    <input type="submit" class="submit-button form-control" value="Public datasets">
+                    </form>
+                </div>
+                <div class="col-2 form-bg welcome-item">
+                    <img class="wlc-pic"  src="/images/storeexchangecreate.svg" alt="public datasets" width="128" height="128">
+                    <h3 class="main-text text-center">Store, exchange and create</h3>
+                    <p class="main-text text-center">The platform will allow to store, exchange and even create new datasets.</p> 
+                </div>
+                <div class="col-2 form-bg welcome-item">
+                    <img class="wlc-pic"  src="/images/tiposarchivos.svg" alt="public datasets" width="128" height="128">
+                    <h3 class="main-text text-center">Multiple formats</h3>
+                    <p class="main-text text-center">The data sets can consist of .eml, .ytbid, .tsms, tweets and multiple other formats</p> 
+                </div>
+                <div class="col-2 form-bg welcome-item">
+                    <img class="wlc-pic"  src="/images/signup.svg" alt="public datasets" width="128" height="128">
+                    <h3 class="main-text text-center">Sign up</h3>
+                    <p class="main-text text-center">If you want to start using the platform do not wait any longer and register</p>
+                    <form action="/user/register" method="get">
+                    <input type="submit" class="submit-button form-control" value="Register">
+                    </form>
+                </div>
+                <div class="col-2">
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+            <footer class="page-footer footer-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/singGrey.svg" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            </div>
+    </div>
+</body>
+</html>
