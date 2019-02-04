@@ -1,7 +1,7 @@
 package com.project.onlinepreprocessor.forms;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import javax.validation.constraints.Email;
 
 public class RegisterForm
@@ -24,58 +24,46 @@ public class RegisterForm
     @Size(min=1, max=30, message="Surname must have at least 1 character")
     private String surname;
 
-    public RegisterForm()
-    {
-
+    public RegisterForm() {
     }
 
-     public String getUsername()
-    {
+     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username)
-    {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email)
-    {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password)
-    {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getSurname()
-    {
+    public String getSurname() {
         return surname;
     }
 
-    public void setSurname()
-    {
+    public void setSurname(String surname) {
         this.surname = surname;
     }
 

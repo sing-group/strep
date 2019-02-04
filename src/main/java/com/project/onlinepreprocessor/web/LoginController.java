@@ -1,21 +1,19 @@
 package com.project.onlinepreprocessor.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import com.project.onlinepreprocessor.domain.User;
-import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.validation.BindingResult;
-
-import com.project.onlinepreprocessor.repositories.UserRepository;
-import com.project.onlinepreprocessor.forms.LoginForm;
 import java.util.Optional;
+
 import javax.validation.Valid;
 
+import com.project.onlinepreprocessor.domain.User;
+import com.project.onlinepreprocessor.forms.LoginForm;
+import com.project.onlinepreprocessor.repositories.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 @Controller 

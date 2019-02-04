@@ -90,8 +90,11 @@ public class User
         return surname;
     }
 
-    public void setSurname()
-    {
+    /**
+     * Stablish the surname of a user
+     * @param surname The username of the user
+     */
+    public void setSurname(String surname){
         this.surname = surname;
     }
 

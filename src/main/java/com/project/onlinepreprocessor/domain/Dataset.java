@@ -5,7 +5,10 @@ import com.project.onlinepreprocessor.domain.File;
 import java.util.Set;
 import java.util.Date;
 
-
+/**
+ * JPA Bean for the Dataset objects managed by application
+ * @author Ismael Vázqez
+ */
 @Entity
 public class Dataset
 {
@@ -14,16 +17,18 @@ public class Dataset
      */
     @Id
     private String name;
-      /**
+    
+    /**
      * The author of the dataset
      */
     private String author;
+
     /**
      * The description of the dataset
      */
     private String description;
 
-     /**
+    /**
      * The pipeline used to generate the dataset
      */
     private String pipeline;
@@ -59,127 +64,204 @@ public class Dataset
     inverseJoinColumns = @JoinColumn(name="file_id", referencedColumnName="id"))
     private Set<File> files;
 
-    private int percentageSpam;
+    /**
+     * The percentage of Spam
+     */
+    private int spamPercentage;
 
-    private int percentageHam;
+    /**
+     * The percentage of ham
+     */
+    private int hamPercentage;
 
-    public Dataset()
-    {
+    /**
+     * The default constructor
+     */
+    public Dataset() {
 
     }
 
-    public String getName()
-    {
+    /**
+     * Return the name of the dataset
+     * @return the name of the dataset
+     */
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    /**
+     * Sets the mame of the dataset
+     * @param name the mame of the dataset
+     */
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getAuthor()
-    {
+    /**
+     * Return the author of the dataset
+     * @return the author of the dataset
+     */
+    public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author)
-    {
+    /**
+     * Sets the name of the author
+     * @param author the name of the author
+     */
+    public void setAuthor(String author) {
         this.author = author;
     }
 
-    public String getDescription()
-    {
+    /**
+     * Returns the description of the dataset
+     * @return the description of the dataset
+     */
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description)
-    {
+    /**
+     * Set the description of the datset
+     * @param description the description of the datset
+     */
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getPipeline()
-    {
+    /**
+     * Returns the preprocessing pipeline used to generate the corpus
+     * @return the preprocessing pipeline used to generate the corpus
+     */
+    public String getPipeline() {
         return pipeline;
     }
 
-    public void setPipeline(String pipeline)
-    {
+    /**
+     * Stablish the preprocessing pipeline used to generate the corpus
+     * @param pipeline the preprocessing pipeline used to generate the corpus
+     */
+    public void setPipeline(String pipeline) {
         this.pipeline = pipeline;
     }
 
-    public String getDoi()
-    {
+    /**
+     * Returns the DOI (Document Identifier for the corpus)
+     * @return the DOI (Document Identifier for the corpus)
+     */
+    public String getDoi() {
         return doi;
     }
 
-    public void setDoi(String doi)
-    {
+    /**
+     * Sets the the DOI (Document Identifier for the corpus)
+     * @param doi the DOI (Document Identifier for the corpus)
+     */
+    public void setDoi(String doi) {
         this.doi = doi;
     }
 
-    public String getAccess()
-    {
+    /**
+     * Returns the access for the corpus
+     * @return the access for the corpus
+     */
+    public String getAccess() {
         return access;
     }
 
-    public void setAccess(String access)
-    {
+    /**
+     * Stablish the access for the corpus
+     * @param access the access for the corpus
+     */
+    public void setAccess(String access) {
         this.access = access;
     }
 
-    public String getLanguage()
-    {
+    /**
+     * Returns the languages contained in the corpus
+     * @return the languages contained in the corpus
+     */
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(String language)
-    {
+    /**
+     * Stablish the languages contained in the corpus
+     * @param language the languages contained in the corpus
+     */
+    public void setLanguage(String language) {
         this.language = language;
     }
 
-    public Date getUploadDate()
-    {
+    /**
+     * Returns the date when the corpus was uploaded
+     * @return the date when the corpus was uploaded
+     */
+    public Date getUploadDate() {
         return uploadDate;
     }
 
-    public void setUploadDate(Date uploadDate)
-    {
+    /**
+     * Stablish the date when the corpus was uploaded
+     * @param uploadDate the date when the corpus was uploaded
+     */
+    public void setUploadDate(Date uploadDate) {
         this.uploadDate = uploadDate;
     }
 
-    public int getPercentageSpam()
-    {
-        return percentageSpam;
+    /**
+     * Returns the percentage of spam messages
+     * @return the percentage of spam messages
+     */
+    public int getSpamPercentage() {
+        return spamPercentage;
     }
 
-    public void setPercentageSpam(int percentageSpam)
-    {
-        this.percentageSpam = percentageSpam;
+    /**
+     * Stablish the percentage of spam messages
+     * @param spamPercentage the percentage of spam messages
+     */
+    public void setSpamPercentage(int spamPercentage) {
+        this.spamPercentage = spamPercentage;
     }
 
-    public int getPercentageHam()
-    {
-        return percentageHam;
+    /**
+     * Returns the percentage of ham messages
+     * @return the percentage of ham messages
+     */
+    public int getHamPercentage() {
+        return hamPercentage;
     }
 
-    public void setPercentageHam(int percentageHam)
-    {
-        this.percentageHam = percentageHam;
+    /**
+     * Stablish the percentage of ham messages
+     * @param hamPercentage  the percentage of ham messages
+     */
+    public void setHamPercentage(int hamPercentage) {
+        this.hamPercentage = hamPercentage;
     }
 
-    public String getType()
-    {
+    /**
+     * Returns the type of the corpus
+     * @return the type of the corpus
+     */
+    public String getType() {
         return type;
     }
 
-    public void setType(String type)
-    {
+    /**
+     * Stablish the type of the corpus
+     * @param type the type of the corpus
+     */
+    public void setType(String type) {
         this.type = type;
     }
 
-    public Set<File> getFiles()
-    {
+    /**
+     * Returns the files included in the dataset
+     * @return the list of files included in the dataset
+     */
+    public Set<File> getFiles() {
         return files;
     }
 }

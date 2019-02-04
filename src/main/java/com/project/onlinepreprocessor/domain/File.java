@@ -24,12 +24,27 @@ public class File
     //Extension of the file .tsms, .ytbid, etc
     private String extension;
 
-    @ManyToMany(mappedBy="files")
+    @ManyToMany(mappedBy = "files")
     private Set<Dataset> datasets;
 
-    public File()
-    {
+    public File() {
 
+    }
+
+    /**
+     * Returns the extension of the file
+     * @return the file extension
+     */
+    public String getExtension() {
+        return extension;
+    }
+
+    /**
+     * Stablish the extension of the file
+     * @param extension the file extension to set
+     */
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
 
     public String getPath()
