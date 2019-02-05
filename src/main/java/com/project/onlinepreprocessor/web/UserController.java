@@ -68,7 +68,7 @@ public class UserController{
             }
             else
             {
-                /*
+                
             MimeMessage message = sender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
 
@@ -77,7 +77,7 @@ public class UserController{
             helper.setSubject("Account activation");
 
             sender.send(message);
-            */
+            
 
             User user = new User(id, email,hash, registerForm.getPassword(),
             registerForm.getName(),registerForm.getSurname());
