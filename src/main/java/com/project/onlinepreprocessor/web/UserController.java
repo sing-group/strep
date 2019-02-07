@@ -1,27 +1,25 @@
 package com.project.onlinepreprocessor.web;
 
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.validation.BindingResult;
-import com.project.onlinepreprocessor.services.UserService;
-import com.project.onlinepreprocessor.domain.User;
-
-import javax.mail.internet.MimeMessage;
 import javax.mail.MessagingException;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.*;
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 
+import com.project.onlinepreprocessor.domain.User;
 import com.project.onlinepreprocessor.forms.RegisterForm;
 import com.project.onlinepreprocessor.repositories.UserRepository;
+import com.project.onlinepreprocessor.services.UserService;
 
-import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -46,10 +44,8 @@ public class UserController{
     }
 
 
-    //TODO: Validate form fields before insert user in the database
-    //TODO:Uncomment send mail part
     @PostMapping("/register")
-    public String addNewUser(@Valid RegisterForm registerForm, BindingResult bindingResult) throws Exception
+    public String addNewUser(@Valid RegisterForm registerForm, BindingResult bindingResult)
     {
 
         if(bindingResult.hasErrors())
@@ -71,17 +67,24 @@ public class UserController{
                 
             MimeMessage message = sender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
-
+            
+            try
+            {
             helper.setTo(registerForm.getEmail());
             helper.setText("Welcome to OnlinePreprocessor, click in the following link to log into your account https://localhost:8443/user/accountconfirmation"+"?hash="+hash);
             helper.setSubject("Account activation");
+            
 
             sender.send(message);
-            
 
             User user = new User(id, email,hash, registerForm.getPassword(),
             registerForm.getName(),registerForm.getSurname());
             userService.saveUser(user);
+            }
+            catch(MessagingException e)
+            {
+                return "redirect:/error";
+            }
 
             return "redirect:/";
             }
