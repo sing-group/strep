@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.Base64;
 
 
 
@@ -56,7 +57,7 @@ public class UserController{
         {
             String id = registerForm.getUsername().toLowerCase();
             String email = registerForm.getEmail().toLowerCase();
-            int hash = id.concat(email).hashCode();
+            String hash = new String(Base64.getEncoder().encode((id+email+Math.random()).getBytes()));
 
             if(userRepository.findById(id).isPresent())
             {

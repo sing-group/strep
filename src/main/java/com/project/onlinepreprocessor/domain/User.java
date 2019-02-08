@@ -46,7 +46,7 @@ public class User
     /**
      * The hash of the user
      */
-    private int hash;
+    private String hash;
 
     /**
      * The photo of the user
@@ -78,7 +78,7 @@ public class User
      * @param name the name of the user
      * @param surname the surname of the user
      */
-    public User(String username, String email,int hash, String password, String name, String surname)
+    public User(String username, String email,String hash, String password, String name, String surname)
     {
         this.username = username;
         this.email = email;
@@ -235,7 +235,7 @@ public class User
      * Return the hash of the user
      * @return the hash of the user
      */
-    public int getHash()
+    public String getHash()
     {
         return hash;
     }
@@ -244,7 +244,7 @@ public class User
      * Stablish the hash of the user
      * @param hash the hash of the user
      */
-    public void setHash(int hash)
+    public void setHash(String hash)
     {
         this.hash = hash;
     }
