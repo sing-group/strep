@@ -20,6 +20,15 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
     nativeQuery=true)
     public HashSet<Dataset> getPublicDatasets();
 
+    @Query(value="select * from dataset where type='systemdataset'",nativeQuery=true)
+    public ArrayList<Dataset> getSystemDatasets();
+
+    @Query(value="select * from dataset where access='protected'", nativeQuery=true)
+    public ArrayList<Dataset> getProtectedDatasets();
+
+    @Query(value="select * from dataset where author=?1", nativeQuery=true)
+    public ArrayList<Dataset> getUserDatasets(String username);
+
     @Query(value="select file_id from dataset_files where dataset_name=?1", nativeQuery=true)
     public ArrayList<BigInteger> getFileIds(String name);
 

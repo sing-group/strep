@@ -21,13 +21,11 @@ public class Permission
     /**
      * The name of the permission
      */
-    @Column(name = "PERM_NAME")
     private String name;
 
     /**
      * The description of the permission
      */
-    @Column(name = "PERM_DESCRIPTION")
     private String description;
 
     /**

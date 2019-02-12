@@ -3,6 +3,7 @@ package com.project.onlinepreprocessor.web;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 
@@ -10,12 +11,16 @@ import com.project.onlinepreprocessor.domain.Dataset;
 import com.project.onlinepreprocessor.forms.LoginForm;
 import com.project.onlinepreprocessor.repositories.DatasetRepository;
 import com.project.onlinepreprocessor.services.DatasetService;
+import com.project.onlinepreprocessor.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +31,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(path="/dataset")
 public class DatasetController
 {
-    private final String BASE_PATH = "/home/ismael/Desarrollo/datasets/";
+    @Value("${dataset.storage}")
+    private String BASE_PATH;
 
     @Autowired
     private DatasetRepository datasetRepository;
 
     @Autowired 
     private DatasetService datasetService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/public")
     public String listPublicDatasets(LoginForm loginForm, Model model)
@@ -75,6 +84,34 @@ public class DatasetController
         else
         {   
             return null;
+        }
+    }
+
+    @GetMapping("/home")
+    public String listHomeDatasets(Authentication authentication, Model model)
+    {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        
+        String username = userDetails.getUsername();
+        String authority = userService.getPermissionsByUsername(username);
+
+        model.addAttribute("Authority", authority);
+        model.addAttribute("username", username);
+
+        System.out.println("Username: "+ username);
+        System.out.println("Authority: "+ authority);
+
+        if(authority.equals("canView"))
+        {
+            ArrayList<Dataset> datasets = datasetRepository.getSystemDatasets();
+            model.addAttribute("datasets", datasets);
+            return "system_datasets";
+        }
+        else
+        {
+            ArrayList<Dataset> datasets = datasetRepository.getUserDatasets(username);
+            model.addAttribute("datasets", datasets);
+            return "user_datasets";
         }
     }
 }

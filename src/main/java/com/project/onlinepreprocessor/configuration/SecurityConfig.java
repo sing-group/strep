@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
+    
     @Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -25,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	{
 		auth.jdbcAuthentication()
 		.usersByUsernameQuery("select username, password, confirmed_account from user where username=?")
-		.authoritiesByUsernameQuery("select u.username, p.perm_name from user u inner join user_perm ur on(u.username=ur.user) inner join permission p on(ur.perm_id=p.id) where username=?")
+		.authoritiesByUsernameQuery("select u.username, p.name from user u inner join user_perm ur on(u.username=ur.user) inner join permission p on(ur.perm_id=p.id) where username=?")
 		.dataSource(dataSource)
 		.passwordEncoder(bCryptPasswordEncoder);
 	}
@@ -39,12 +40,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers("/user/register").permitAll()
                 .antMatchers("/user/accountconfirmation").permitAll()
                 .antMatchers("/dataset/public/**").permitAll()
-                .antMatchers("/user/**").hasAuthority("Admin").anyRequest()
+                .antMatchers("/user/editProfile","/dataset/home", "/dataset/system/**","/dataset/protected/**", "/permission","/permission/solicit").hasAuthority("canView").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/").failureUrl("/")
-                .defaultSuccessUrl("/user/main")
+                .defaultSuccessUrl("/dataset/home")
                 .usernameParameter("username")
                 .passwordParameter("password");
+
+        http.
+                authorizeRequests()
+                .antMatchers("/dataset/home").hasAnyAuthority("canView", "canUpload", "canCreateCorpus", "canAdminister");
 }
 
 	@Override

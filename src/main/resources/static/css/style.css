@@ -66,7 +66,7 @@ html {
     font-style: oblique;
 }
 
-#linklogo,#topdivhome, #topdivpublic, #topdivregister
+#linklogo,#topdivhome, #topdivpublic, #topdivregister,#navbar-link
 {
     color: #dfe6ea;
 }

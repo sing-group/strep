@@ -47,9 +47,11 @@ public class LoginController
             if(optional.isPresent())
             {
                 User user = optional.get();
+                System.out.println("Usuario presente");
 
                 if(bCryptPasswordEncoder.matches(loginForm.getPassword(), user.getPassword()))
                 {
+                    System.out.println("Contraseña correcta");
                     return "redirect:/user/main";
                 }
                 else

@@ -94,7 +94,7 @@ public class UserController{
 
     //TODO: Make a redirect to a confirmation page when confirmation is OK
     @GetMapping("/accountconfirmation")
-    public String confirmation(@RequestParam("hash") int hash)
+    public String confirmation(@RequestParam("hash") String hash)
     {
         Optional<User> opt = userRepository.findUserByHash(hash);
         if(opt.isPresent())
@@ -107,12 +107,6 @@ public class UserController{
         }
         else
             return"redirect:/user/register";
-    }
-
-    @GetMapping("/main")
-    public String access()
-    {
-        return "main";
     }
     
 }

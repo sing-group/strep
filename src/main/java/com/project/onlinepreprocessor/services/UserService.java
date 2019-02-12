@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
@@ -31,9 +33,6 @@ public class UserService
 
     public void saveUser(User user)
     {
-        Permission permissionTest = new Permission( "Admin", "The user has administer permissions");
-        permissionRepository.save(permissionTest);
-
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setConfirmedAccount(false);
 
@@ -44,6 +43,43 @@ public class UserService
         Permission permission = opt.get();
         user.setPermissions(new HashSet<Permission>(Arrays.asList(permission)));
         userRepository.save(user);
+        }
+    }
+
+    public String getPermissionsByUsername(String username)
+    {
+        ArrayList<BigInteger> permissions = permissionRepository.getUserPermissions(username);
+
+        Long maxId = new Long(Long.MIN_VALUE);
+
+        for(int i = 0; i<permissions.size(); i++)
+        {
+            if(maxId<permissions.get(i).longValue())
+            {
+                maxId = permissions.get(i).longValue();
+            }
+        }
+
+        String authority = convertPermIdToString(maxId);
+
+        return authority;
+    }
+
+    //Auxiliar method for convert permission id to String 
+    private String convertPermIdToString(Long maxId)
+    {
+        switch(maxId.intValue())
+        {
+            case 1:
+            return "canView";
+            case 2:
+            return "canUpload";
+            case 3:
+            return "canCreateCorpus";
+            case 4:
+            return "canAdminister";
+            default: 
+            return "canView";
         }
     }
 }

@@ -14,5 +14,5 @@ public interface UserRepository extends CrudRepository<User, String> {
     @Query(
     value = "SELECT * from user u where hash=?1", 
     nativeQuery = true)
-    Optional<User> findUserByHash(Integer hash);
+    Optional<User> findUserByHash(String hash);
 }
