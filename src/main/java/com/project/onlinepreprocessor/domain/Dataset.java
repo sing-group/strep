@@ -31,6 +31,7 @@ public class Dataset
     /**
      * The pipeline used to generate the dataset
      */
+    @Lob
     private String pipeline;
 
     /**

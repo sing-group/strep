@@ -72,13 +72,13 @@ public class UserController{
             try
             {
             helper.setTo(registerForm.getEmail());
-            helper.setText("Welcome to OnlinePreprocessor, click in the following link to log into your account https://localhost:8443/user/accountconfirmation"+"?hash="+hash);
+            helper.setText("Welcome to OnlinePreprocessor, click in the following link to log into your account https://localhost:8443/user/accountconfirmation"+"?hash="+hash.replaceAll("=",""));
             helper.setSubject("Account activation");
             
 
             sender.send(message);
 
-            User user = new User(id, email,hash, registerForm.getPassword(),
+            User user = new User(id, email,hash.replaceAll("=", ""), registerForm.getPassword(),
             registerForm.getName(),registerForm.getSurname());
             userService.saveUser(user);
             }

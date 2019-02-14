@@ -51,6 +51,7 @@ public class User
     /**
      * The photo of the user
      */
+    @Lob
     private byte[] photo;
 
     /**

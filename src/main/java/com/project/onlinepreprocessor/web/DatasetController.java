@@ -95,23 +95,18 @@ public class DatasetController
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
 
-        model.addAttribute("Authority", authority);
+        model.addAttribute("authority", authority);
         model.addAttribute("username", username);
 
-        System.out.println("Username: "+ username);
-        System.out.println("Authority: "+ authority);
+        ArrayList<Dataset> systemDatasets = datasetRepository.getSystemDatasets();
+        model.addAttribute("systemDatasets", systemDatasets);
 
-        if(authority.equals("canView"))
-        {
-            ArrayList<Dataset> datasets = datasetRepository.getSystemDatasets();
-            model.addAttribute("datasets", datasets);
-            return "system_datasets";
-        }
-        else
-        {
-            ArrayList<Dataset> datasets = datasetRepository.getUserDatasets(username);
-            model.addAttribute("datasets", datasets);
-            return "user_datasets";
-        }
+        ArrayList<Dataset> protectedDatasets = datasetRepository.getProtectedDatasets();
+        model.addAttribute("protectedDatasets", protectedDatasets);
+
+        ArrayList<Dataset> userDatasets = datasetRepository.getUserDatasets(username);
+        model.addAttribute("userDatasets", userDatasets);
+
+        return "home";
     }
 }

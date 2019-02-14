@@ -1,0 +1,466 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+    <title>Online Preprocessor</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body class="main-bg">
+    <div class="container-fluid">
+        <!--TODO: Switch case with authorities case: canView case: canUpload case: canCreateCorpus case: canAdminister-->
+                        <nav class="navbar navbar-expand-lg navbar-light top-bg">
+                                <img src="/images/database.svg" alt="logo" height="32" width="32">
+                                <a class="topdiv-text" id="linklogo" href="/dataset/home">Online preprocessor</a>
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item dropdown">
+                                        <a class="topdiv-text dropdown-toggle nav-link"  id="navbar-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Datasets
+                                        </a>
+                                        <div class="dropdown-menu top-bg" aria-labelledby="navbarDropdownMenuLink">
+                                            <div th:if="${authority!='canView'}">
+                                                <a class="dropdown-item topdiv-text" href="/dataset/userdatasets">My datasets</a>
+                                                <a class="dropdown-item topdiv-text" href="/dataset/upload">Upload dataset</a>
+                                                <div th:if="${authority=='canCreateCorpus'}">
+                                                    <a class="dropdown-item topdiv-text" href="/dataset/create">Create new dataset</a>
+                                                </div>
+                                                <div th:if="${authority=='canAdminister'}">
+                                                    <a class="dropdown-item topdiv-text" href="/dataset/create">Create new dataset</a>
+                                                </div>
+                                            </div>
+                                        <a class="dropdown-item topdiv-text" href="/dataset/system">System datasets</a>
+                                        <a class="dropdown-item topdiv-text" href="/dataset/protected">Protected datasets</a>
+                                        </div>
+                                    </li>
+
+
+                                    <div th:if="${authority!='canView'}">
+                                        <li class="nav-item dropdown">
+                                        <a class="topdiv-text dropdown-toggle nav-link"  id="navbar-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Notifications
+                                        </a>
+                                        <div class="dropdown-menu top-bg" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item topdiv-text" href="/dataset/uploadstatus">Upload status</a>
+                                        <a class="dropdown-item topdiv-text" href="/dataset/preprocessingstatus">Preprocessing status</a>
+                                        </div>
+                                        </li>
+                                    </div>
+
+                                    <div th:if="${authority=='canAdminister'}">
+                                        <li class="nav-item dropdown">
+                                        <a class="topdiv-text dropdown-toggle nav-link"  id="navbar-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Administer
+                                        </a>
+                                        <div class="dropdown-menu top-bg" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item topdiv-text" href="/user/list">List users</a>
+                                        <a class="dropdown-item topdiv-text" href="/dataset/uploadsystem">Upload system dataset</a>
+                                        <a class="dropdown-item topdiv-text" href="/permission/listrequests">Check permission requests</a>
+                                        </div>
+                                        </li>
+                                    </div>
+                                    
+                                    <li class="nav-item dropdown">
+                                        <a class="topdiv-text dropdown-toggle nav-link"  id="navbar-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Permission
+                                        </a>
+                                        <div class="dropdown-menu top-bg" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item topdiv-text" href="/permission">Permissions list</a>
+                                        <div th:if="${authority!='canAdminister'}">
+                                        <a class="dropdown-item topdiv-text" href="/permission/requests/">Permission requests status</a>
+                                        </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                
+                                    <!--TODO: Change this for an image passed from parameters-->
+                                    <a href="/user/editprofile">
+                                    <img class="user-photo" src="/images/authorplaceholderwhite.svg" alt="photo" height="32" width="32">
+                                    </a>
+                                    <p th:text="${username}" class="topdiv-text"></p>
+                                <div class="float-right logout-icon"></div>
+                                    <a href="/logout">
+                                    <img src="/images/logout.svg" alt="photo" height="32" width="32">
+                                    </a>
+                                </div>
+                        </nav>
+
+            <div class="row page-content">
+
+                <div class="col-1">
+
+                </div>
+
+                <div class="col-10 form-bg">
+                <img class="header-logo" src="/images/system.svg" alt="logo.png" height="64" width="64">
+                <h1 class="main-text text-center welcome-text"><em>System datasets</em></h1> 
+                </p>
+                </div>
+
+                <div class="col-1">
+
+                </div>
+            </div>
+
+            <div class="row page-content">
+
+                <div class="col-2">
+                </div>
+
+
+                <div class="col-8 main-div-bg">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="thead-text">
+                                    Name
+                                </th>
+                                    
+                                <th scope="col" class="thead-text">
+                                    Description
+                                </th>
+
+                                <th scope="col" class="thead-text">
+                                    Author
+                                </th>
+                                    
+                                <th scope="col" class="thead-text">
+                                    Upload date
+                                </th>
+
+                                <th scope="col" class="thead-text">
+                                    Language
+                                </th>
+
+                                <th scope="col">
+
+                                </th>
+
+                                <th scope="col">
+                                    
+                                </th>
+                            </tr>
+
+                        </thead>
+
+                        <tr th:each="systemDataset : ${systemDatasets}">
+                            <td th:text="${systemDataset.name}" class="main-text">
+
+                            </td>
+
+                            <td th:text="${systemDataset.description}" class="main-text">
+
+                            </td>
+
+                            <td th:text="${systemDataset.author}" class="main-text">
+
+                            </td>
+
+                            <td th:text="${systemDataset.uploadDate}" class="main-text">
+
+                            </td>
+
+                            <td th:text="${systemDataset.language}" class="main-text">
+
+                            </td>
+                            <td>
+                                <a th:href="@{/dataset/system/detailed(id=${systemDataset.name})}">
+                                <img src="/images/detailed.svg" alt="See detail" height="24" width="24">
+                                </a>
+                            </td>
+
+                            <td>
+                                <a th:href="@{/dataset/system/download(id=${systemDataset.name})}">
+                                <img src="/images/download.svg" alt="See detail" height="24" width="24">
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div class="col-2">
+
+                </div>
+
+            </div>
+
+            <div class="row page-content">
+
+                <div class="col-1">
+
+                </div>
+
+                <div class="col-10 form-bg">
+                <img class="header-logo" src="/images/shield.svg" alt="logo.png" height="64" width="64">
+                <h1 class="main-text text-center welcome-text"><em>Protected datasets</em></h1> 
+                </p>
+                </div>
+
+                <div class="col-1">
+
+                </div>
+            </div>
+
+            <div class="row page-content">
+
+                <div class="col-2">
+                </div>
+
+
+                <div class="col-8 main-div-bg">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="thead-text">
+                                    Name
+                                </th>
+                                    
+                                <th scope="col" class="thead-text">
+                                    Description
+                                </th>
+
+                                <th scope="col" class="thead-text">
+                                    Author
+                                </th>
+                                    
+                                <th scope="col" class="thead-text">
+                                    Upload date
+                                </th>
+
+                                <th scope="col" class="thead-text">
+                                    Language
+                                </th>
+
+                                <th scope="col">
+
+                                </th>
+
+                                <th scope="col">
+                                    
+                                </th>
+                            </tr>
+
+                        </thead>
+
+                        <tr th:each="protectedDataset : ${protectedDatasets}">
+                            <td th:text="${protectedDataset.name}" class="main-text">
+
+                            </td>
+
+                            <td th:text="${protectedDataset.description}" class="main-text">
+
+                            </td>
+
+                            <td th:text="${protectedDataset.author}" class="main-text">
+
+                            </td>
+
+                            <td th:text="${protectedDataset.uploadDate}" class="main-text">
+
+                            </td>
+
+                            <td th:text="${protectedDataset.language}" class="main-text">
+
+                            </td>
+                            <td>
+                                <a th:href="@{/dataset/protected/detailed(id=${protectedDataset.name})}">
+                                <img src="/images/detailed.svg" alt="See detail" height="24" width="24">
+                                </a>
+                            </td>
+
+                            <td>
+                                <a th:href="@{/dataset/protected/download(id=${protectedDataset.name})}">
+                                <img src="/images/download.svg" alt="See detail" height="24" width="24">
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div class="col-2">
+
+                </div>
+
+            </div>
+
+            <div th:if="${authority== 'canView'}">
+                    <div class="row page-content">
+
+                            <div class="col-1">
+            
+                            </div>
+            
+                            <div class="col-10 form-bg">
+                            <img class="header-logo" src="/images/lock.svg" alt="logo.png" height="64" width="64">
+                            <h1 class="main-text text-center welcome-text"><em>Your datasets</em></h1> 
+                            <p class="main-text text-center">With more permissions you will be able to upload your own datasets,
+                                 create new datasets mixing system datasets and even be an administrator.
+                                If you want to do anything of this, solicit new permissions</p>
+                            <form action="/permissions" method="get">
+                                <div class="form-group">
+                                    <input type="submit" class="submit-button form-control" value="Solicit permissions"><br>
+                                </div>
+                            </form>    
+                            </div>
+            
+                            <div class="col-1">
+            
+                            </div>
+                        </div>
+            </div>
+            <div th:unless="${authority== 'canView'}">
+                    <div class="row page-content">
+
+                            <div class="col-1">
+            
+                            </div>
+            
+                            <div class="col-10 form-bg">
+                            <img class="header-logo" src="/images/userdatasets.svg" alt="logo.png" height="64" width="64">
+                            <h1 class="main-text text-center welcome-text"><em>Your datasets</em></h1> 
+                            </p>
+                            </div>
+            
+                            <div class="col-1">
+            
+                            </div>
+                        </div>
+            
+                        <div class="row page-content">
+            
+                            <div class="col-2">
+                            </div>
+            
+            
+                            <div class="col-8 main-div-bg">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="thead-text">
+                                                Name
+                                            </th>
+                                                
+                                            <th scope="col" class="thead-text">
+                                                Description
+                                            </th>
+            
+                                            <th scope="col" class="thead-text">
+                                                Author
+                                            </th>
+                                                
+                                            <th scope="col" class="thead-text">
+                                                Upload date
+                                            </th>
+            
+                                            <th scope="col" class="thead-text">
+                                                Language
+                                            </th>
+            
+                                            <th scope="col">
+            
+                                            </th>
+            
+                                            <th scope="col">
+                                                
+                                            </th>
+
+                                            <th scope="col">
+                                                
+                                            </th>
+                                            <th scope="col">
+                                                
+                                            </th>
+                                        </tr>
+            
+                                    </thead>
+            
+                                    <tr th:each="userDataset : ${userDatasets}">
+                                        <td th:text="${userDataset.name}" class="main-text">
+            
+                                        </td>
+            
+                                        <td th:text="${userDataset.description}" class="main-text">
+            
+                                        </td>
+            
+                                        <td th:text="${userDataset.author}" class="main-text">
+            
+                                        </td>
+            
+                                        <td th:text="${userDataset.uploadDate}" class="main-text">
+            
+                                        </td>
+            
+                                        <td th:text="${userDataset.language}" class="main-text">
+            
+                                        </td>
+                                        <td>
+                                            <a th:href="@{/dataset/user/detailed(id=${userDataset.name})}">
+                                            <img src="/images/detailed.svg" alt="See detail" height="24" width="24">
+                                            </a>
+                                        </td>
+            
+                                        <td>
+                                            <a th:href="@{/dataset/user/download(id=${userDataset.name})}">
+                                            <img src="/images/download.svg" alt="Download" height="24" width="24">
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            <a th:href="@{/dataset/user/delete(id=${userDataset.name})}">
+                                                <img src="/images/delete.svg" alt="Delete" height="24" width="24">
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            <a th:href="@{/dataset/user/access(id=${userDataset.name})}">
+                                                <img src="/images/key.svg" alt="Change access" height="24" width="24">
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                </table>
+            
+                            </div>
+            
+                            <div class="col-2">
+            
+                            </div>
+            
+                        </div>
+                    </div>
+
+            <div class="row">
+            <footer class="page-footer footer-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/singGrey.svg" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                        <div class="col-2">
+                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            </div>
+    
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

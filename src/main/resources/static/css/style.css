@@ -84,6 +84,7 @@ html {
 .page-content
 {
     margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .welcome-items
@@ -126,6 +127,12 @@ html {
 {
     background-color: #203939;
     color: #dfe6ea;
+}
+
+.logout-icon, .user-photo
+{
+    margin-left: 20px;
+    margin-right:20px;
 }
 
 
