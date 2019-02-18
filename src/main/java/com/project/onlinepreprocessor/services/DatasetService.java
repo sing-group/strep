@@ -5,15 +5,18 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import com.project.onlinepreprocessor.domain.Dataset;
 import com.project.onlinepreprocessor.domain.File;
 import com.project.onlinepreprocessor.repositories.DatasetRepository;
 import com.project.onlinepreprocessor.repositories.FileRepository;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -158,6 +161,28 @@ public class DatasetService
         }
         return true;
 
+    }
+
+    public boolean deleteDataset(Dataset dataset)
+    {
+        java.io.File datasetDirectory = new java.io.File(BASE_PATH+dataset.getName());
+        java.io.File zipDirectory = new java.io.File(BASE_PATH+dataset.getName()+".zip");
+        
+        if(datasetDirectory.exists())
+        {
+            try
+            {
+            FileUtils.deleteDirectory(datasetDirectory);
+            }catch(IOException e)
+            {
+                return false;
+            }
+        }
+
+        zipDirectory.delete();
+
+        datasetRepository.delete(dataset);
+        return true;
     }
 
 

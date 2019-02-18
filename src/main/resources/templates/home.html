@@ -20,7 +20,7 @@
                                         </a>
                                         <div class="dropdown-menu top-bg" aria-labelledby="navbarDropdownMenuLink">
                                             <div th:if="${authority!='canView'}">
-                                                <a class="dropdown-item topdiv-text" href="/dataset/userdatasets">My datasets</a>
+                                                <a class="dropdown-item topdiv-text" href="/dataset/list?type=user">My datasets</a>
                                                 <a class="dropdown-item topdiv-text" href="/dataset/upload">Upload dataset</a>
                                                 <div th:if="${authority=='canCreateCorpus'}">
                                                     <a class="dropdown-item topdiv-text" href="/dataset/create">Create new dataset</a>
@@ -29,8 +29,8 @@
                                                     <a class="dropdown-item topdiv-text" href="/dataset/create">Create new dataset</a>
                                                 </div>
                                             </div>
-                                        <a class="dropdown-item topdiv-text" href="/dataset/system">System datasets</a>
-                                        <a class="dropdown-item topdiv-text" href="/dataset/protected">Protected datasets</a>
+                                        <a class="dropdown-item topdiv-text" href="/dataset/list?type=system">System datasets</a>
+                                        <a class="dropdown-item topdiv-text" href="/dataset/list?type=protected">Protected datasets</a>
                                         </div>
                                     </li>
 
@@ -164,13 +164,13 @@
 
                             </td>
                             <td>
-                                <a th:href="@{/dataset/system/detailed(id=${systemDataset.name})}">
+                                <a th:href="@{/dataset/detailed(id=${systemDataset.name},type=system)}">
                                 <img src="/images/detailed.svg" alt="See detail" height="24" width="24">
                                 </a>
                             </td>
 
                             <td>
-                                <a th:href="@{/dataset/system/download(id=${systemDataset.name})}">
+                                <a th:href="@{/dataset/download(id=${systemDataset.name},type=system)}">
                                 <img src="/images/download.svg" alt="See detail" height="24" width="24">
                                 </a>
                             </td>
@@ -264,13 +264,13 @@
 
                             </td>
                             <td>
-                                <a th:href="@{/dataset/protected/detailed(id=${protectedDataset.name})}">
+                                <a th:href="@{/dataset/detailed(id=${protectedDataset.name}, type=protected)}">
                                 <img src="/images/detailed.svg" alt="See detail" height="24" width="24">
                                 </a>
                             </td>
 
                             <td>
-                                <a th:href="@{/dataset/protected/download(id=${protectedDataset.name})}">
+                                <a th:href="@{/dataset/download(id=${protectedDataset.name}, type=protected)}">
                                 <img src="/images/download.svg" alt="See detail" height="24" width="24">
                                 </a>
                             </td>
@@ -295,14 +295,24 @@
                             <div class="col-10 form-bg">
                             <img class="header-logo" src="/images/lock.svg" alt="logo.png" height="64" width="64">
                             <h1 class="main-text text-center welcome-text"><em>Your datasets</em></h1> 
-                            <p class="main-text text-center">With more permissions you will be able to upload your own datasets,
-                                 create new datasets mixing system datasets and even be an administrator.
-                                If you want to do anything of this, solicit new permissions</p>
-                            <form action="/permissions" method="get">
-                                <div class="form-group">
-                                    <input type="submit" class="submit-button form-control" value="Solicit permissions"><br>
-                                </div>
-                            </form>    
+                                <div class="row">
+                                    <div class="col-4">
+
+                                    </div>
+                                    <div class="col-4">
+                                    <p class="main-text text-center">With more permissions you will be able to upload your own datasets,
+                                            create new datasets mixing system datasets and even be an administrator.
+                                            If you want to do anything of this, solicit new permissions</p>
+                                    <form action="/permissions" method="get">
+                                        <div class="form-group">
+                                            <input type="submit" class="submit-button form-control" value="Solicit permissions"><br>
+                                        </div>
+                                    </form>  
+                                    </div>
+                                    <div class="col-4">
+
+                                    </div>
+                                </div>  
                             </div>
             
                             <div class="col-1">
@@ -397,25 +407,25 @@
             
                                         </td>
                                         <td>
-                                            <a th:href="@{/dataset/user/detailed(id=${userDataset.name})}">
+                                            <a th:href="@{/dataset/detailed(id=${userDataset.name}, type=user)}">
                                             <img src="/images/detailed.svg" alt="See detail" height="24" width="24">
                                             </a>
                                         </td>
             
                                         <td>
-                                            <a th:href="@{/dataset/user/download(id=${userDataset.name})}">
+                                            <a th:href="@{/dataset/download(id=${userDataset.name},type=user)}">
                                             <img src="/images/download.svg" alt="Download" height="24" width="24">
                                             </a>
                                         </td>
 
                                         <td>
-                                            <a th:href="@{/dataset/user/delete(id=${userDataset.name})}">
+                                            <a th:href="@{/dataset/delete(id=${userDataset.name}, type=user)}">
                                                 <img src="/images/delete.svg" alt="Delete" height="24" width="24">
                                             </a>
                                         </td>
 
                                         <td>
-                                            <a th:href="@{/dataset/user/access(id=${userDataset.name})}">
+                                            <a th:href="@{/dataset/access(id=${userDataset.name}, type=user)}">
                                                 <img src="/images/key.svg" alt="Change access" height="24" width="24">
                                             </a>
                                         </td>
