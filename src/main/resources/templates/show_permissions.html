@@ -99,7 +99,7 @@
 
         </div>
 
-        <div class="col-4 message">
+        <div class="col-4">
             <p class="main-text text-center" th:text="${message}"></p>
         </div>
 
@@ -110,25 +110,13 @@
     </div>
 
     <div class="row page-content">
-
         <div class="col-1">
 
         </div>
 
         <div class="col-10 form-bg">
-            <div th:if="${type}=='system'">
-                <img class="header-logo" src="/images/system.svg" alt="logo.png" height="64" width="64">
-                <h1 class="main-text text-center welcome-text"><em>System datasets</em></h1>
-            </div>
-            <div th:if="${type}=='protected'">
-                <img class="header-logo" src="/images/shield.svg" alt="logo.png" height="64" width="64">
-                <h1 class="main-text text-center welcome-text"><em>Protected datasets</em></h1>
-            </div>
-            <div th:if="${type}=='user'">
-                <img class="header-logo" src="/images/userdatasets.svg" alt="logo.png" height="64" width="64">
-                <h1 class="main-text text-center welcome-text"><em>Your datasets</em></h1>
-            </div>
-            </p>
+            <img class="header-logo" src="/images/permissions.svg" alt="logo.png" height="64" width="64">
+            <h1 class="main-text text-center welcome-text"><em>Permissions</em></h1>
         </div>
 
         <div class="col-1">
@@ -136,117 +124,212 @@
         </div>
     </div>
 
-    <div class="row page-content">
+    <div class="row">
 
-        <div class="col-2">
+            <div class="col-1">
 
-        </div>
+            </div>
+    
+            <div class="col-1 form-bg">
+    
+            </div>
 
+            <div class="col-2 form-bg">
+                <h4 class="main-text text-center">Can view</h4>
+            </div>
 
-        <div class="col-8 main-div-bg">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col" class="thead-text">
-                            Name
-                        </th>
+            <div class="col-2 form-bg">
+                <h4 class="main-text text-center">Can upload</h4>
+            </div>
 
-                        <th scope="col" class="thead-text">
-                            Description
-                        </th>
+            <div class="col-2 form-bg">
+                <h4 class="main-text text-center">Can create corpus</h4>
+            </div>
 
-                        <th scope="col" class="thead-text">
-                            Author
-                        </th>
+            <div class="col-2 form-bg">
+                <h4 class="main-text text-center">Can administer</h4>
+            </div>
 
-                        <th scope="col" class="thead-text">
-                            Upload date
-                        </th>
+            <div class="col-1 form-bg">
 
-                        <th scope="col" class="thead-text">
-                            Language
-                        </th>
+            </div>
+    
+            <div class="col-1">
+    
+            </div>
+    </div>
 
-                        <th scope="col">
+    <div class="row">
 
-                        </th>
+            <div class="col-1">
 
-                        <th scope="col">
+            </div>
+    
+            <div class="col-1 form-bg">
+    
+            </div>
 
-                        </th>
-                        <div th:if="${type}=='user'">
-                            <th scope="col">
+            <div class="col-2 form-bg">
 
-                            </th>
+            </div>
 
-                            <th scope="col">
+            <div class="col-2 form-bg">
 
-                            </th>
-                        </div>
-                    </tr>
+            </div>
 
-                </thead>
+            <div class="col-2 form-bg">
+                
+            </div>
 
-                <tr th:each="dataset : ${datasets}">
-                    <td th:text="${dataset.name}" class="main-text">
+            <div class="col-2 form-bg">
+                    <p class="top-bg topdiv-text text-center">Can administer</p>
+                    <p class="main-text text-center">The user with these permissions can accept or reject permission requests,
+                         can delete system datasets, can administer users of the platform...</p>
+            </div>
 
-                    </td>
+            <div class="col-1 form-bg">
 
-                    <td th:text="${dataset.description}" class="main-text">
+            </div>
+    
+            <div class="col-1">
+    
+            </div>
+    </div>
 
-                    </td>
+    <div class="row">
 
-                    <td th:text="${dataset.author}" class="main-text">
+            <div class="col-1">
 
-                    </td>
+            </div>
+    
+            <div class="col-1 form-bg">
+    
+            </div>
 
-                    <td th:text="${dataset.uploadDate}" class="main-text">
+            <div class="col-2 form-bg">
 
-                    </td>
+            </div>
 
-                    <td th:text="${dataset.language}" class="main-text">
+            <div class="col-2 form-bg">
+                <p class="top-bg topdiv-text text-center">Can upload</p>
+                <p class="main-text text-center">The user with these permissions can upload their own datasets and schelude preprocessing tasks</p>
+            </div>
 
-                    </td>
-                    <td>
-                        <a th:href="@{/dataset/detailed(id=${dataset.name}, type=${type})}">
-                            <img src="/images/detailed.svg" alt="See detail" height="24" width="24">
-                        </a>
-                    </td>
+            <div class="col-2 form-bg">
+                <p class="top-bg topdiv-text text-center">Can create new corpus</p>
+                <p class="main-text text-center">The user with these permissions can create new corpus by mixing system corpus</p>
+            </div>
 
-                    <td>
-                        <a th:href="@{/dataset/download(id=${dataset.name}, type=${type})}">
-                            <img src="/images/download.svg" alt="See detail" height="24" width="24">
-                        </a>
-                    </td>
-                    <div th:if="${type}=='user'">
-                        <td>
-                            <a th:href="@{/dataset/delete(id=${dataset.name},type=${type})}">
-                                <img src="/images/delete.svg" alt="Delete" height="24" width="24">
-                            </a>
-                        </td>
+            <div class="col-2 form-bg">
+                <p class="top-bg topdiv-text text-center">Can upload system datasets</p>
+                <p class="main-text text-center">The user with these permissions can upload system datasets</p>
+            </div>
 
-                        <td>
-                            <div class="dropdown show">
-                                <a class="image-button dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="/images/key.svg" alt="Access" width="24" height="24">
-                                </a>
-                                <div class="dropdown-menu main-div-bg" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=private)}">Private</a>
-                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=protected)}">Protected</a>
-                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=public)}">Public</a>
-                                </div>
-                            </div>
-                        </td>
+            <div class="col-1 form-bg">
+
+            </div>
+    
+            <div class="col-1">
+    
+            </div>
+    </div>
+
+    <div class="row">
+
+            <div class="col-1">
+
+            </div>
+
+            <div class="col-1 form-bg">
+
+            </div>
+
+            <div class="col-2 form-bg">
+                <p class="top-bg topdiv-text text-center">Can view</p>
+                <p class="main-text text-center">The user with these permissions only have access to see system and protected datasets</p>
+            </div>
+
+            <div class="col-2 form-bg">
+                <p class="top-bg topdiv-text text-center">Same as permissions bellow</p>
+                <p class="main-text text-center">The user with these permissions will have all the privileges of the lower permissions</p>
+            </div>
+
+            <div class="col-2 form-bg">
+                <p class="top-bg topdiv-text text-center">Same as permissions bellow</p>
+                <p class="main-text text-center">The user with these permissions will have all the privileges of the lower permissions</p>
+            </div>
+
+            <div class="col-2 form-bg">
+                <p class="top-bg topdiv-text text-center">Same as permissions bellow</p>
+                <p class="main-text text-center">The user with these permissions will have all the privileges of the lower permissions</p>
+            </div>
+
+            <div class="col-1 form-bg">
+
+            </div>
+
+            <div class="col-1">
+
+            </div>
+    </div>
+
+    <div class="row pre-footer">
+
+            <div class="col-1">
+
+            </div>
+
+            <div class="col-1 form-bg">
+
+            </div>
+
+            <div class="col-2 form-bg">
+                <button type="button" class="submit-button form-control">You already have this permission!</button>
+            </div>
+
+            <div class="col-2 form-bg">
+                <div th:unless="${authority}=='canView'">
+                    <button type="button" class="submit-button form-control">You already have this permission!</button>
+                </div>
+                <div th:if="${authority}=='canView'">
+                    <form action="#" th:action="@{/permission/request}" method="POST">
+                        <input type="hidden" name="id" value="2">
+                        <input type="submit" class="submit-button form-control" value="Solicit this permission">
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-2 form-bg">
+                    <div th:unless="${authority}=='canView' or ${authority}=='canUpload'">
+                        <button type="button" class="submit-button form-control">You already have this permission!</button>
                     </div>
-                </tr>
-            </table>
+                    <div th:if="${authority}=='canView' or ${authority}=='canUpload'">
+                        <form action="#" th:action="@{/permission/request}" method="POST">
+                            <input type="hidden" name="id" value="3">
+                            <input type="submit" class="submit-button form-control" value="Solicit this permission">
+                        </form>
+                    </div>
+            </div>
 
-        </div>
+            <div class="col-2 form-bg">
+                    <div th:if="${authority}=='canAdminister'">
+                        <button type="button" class="submit-button form-control">You already have this permission!</button>
+                    </div>
+                    <div th:unless="${authority}=='canAdminister'">
+                        <form action="#" th:action="@{/permission/request}" method="POST">
+                            <input type="hidden" name="id" value="4">
+                            <input type="submit" class="submit-button form-control" value="Solicit this permission">
+                        </form>
+                    </div>
+            </div>
 
-        <div class="col-2">
+            <div class="col-1 form-bg">
 
-        </div>
+            </div>
 
+            <div class="col-1">
+
+            </div>
     </div>
 
 

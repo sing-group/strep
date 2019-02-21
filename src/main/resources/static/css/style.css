@@ -141,5 +141,13 @@ html {
     border: none;
 }
 
+.message
+{
+    background-color:#e2debe;
+}
 
+.pre-footer
+{
+    margin-bottom: 50px;
+}
 

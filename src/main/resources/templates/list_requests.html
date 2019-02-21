@@ -110,25 +110,13 @@
     </div>
 
     <div class="row page-content">
-
         <div class="col-1">
 
         </div>
 
         <div class="col-10 form-bg">
-            <div th:if="${type}=='system'">
-                <img class="header-logo" src="/images/system.svg" alt="logo.png" height="64" width="64">
-                <h1 class="main-text text-center welcome-text"><em>System datasets</em></h1>
-            </div>
-            <div th:if="${type}=='protected'">
-                <img class="header-logo" src="/images/shield.svg" alt="logo.png" height="64" width="64">
-                <h1 class="main-text text-center welcome-text"><em>Protected datasets</em></h1>
-            </div>
-            <div th:if="${type}=='user'">
-                <img class="header-logo" src="/images/userdatasets.svg" alt="logo.png" height="64" width="64">
-                <h1 class="main-text text-center welcome-text"><em>Your datasets</em></h1>
-            </div>
-            </p>
+            <img class="header-logo" src="/images/request.svg" alt="logo.png" height="64" width="64">
+            <h1 class="main-text text-center welcome-text"><em>Permission requests</em></h1> 
         </div>
 
         <div class="col-1">
@@ -136,114 +124,92 @@
         </div>
     </div>
 
-    <div class="row page-content">
-
-        <div class="col-2">
+    <div class="row">
+        <div class="col-3">
 
         </div>
 
-
-        <div class="col-8 main-div-bg">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col" class="thead-text">
-                            Name
-                        </th>
-
-                        <th scope="col" class="thead-text">
-                            Description
-                        </th>
-
-                        <th scope="col" class="thead-text">
-                            Author
-                        </th>
-
-                        <th scope="col" class="thead-text">
-                            Upload date
-                        </th>
-
-                        <th scope="col" class="thead-text">
-                            Language
-                        </th>
-
-                        <th scope="col">
-
-                        </th>
-
-                        <th scope="col">
-
-                        </th>
-                        <div th:if="${type}=='user'">
-                            <th scope="col">
-
-                            </th>
-
-                            <th scope="col">
-
-                            </th>
-                        </div>
-                    </tr>
-
-                </thead>
-
-                <tr th:each="dataset : ${datasets}">
-                    <td th:text="${dataset.name}" class="main-text">
-
-                    </td>
-
-                    <td th:text="${dataset.description}" class="main-text">
-
-                    </td>
-
-                    <td th:text="${dataset.author}" class="main-text">
-
-                    </td>
-
-                    <td th:text="${dataset.uploadDate}" class="main-text">
-
-                    </td>
-
-                    <td th:text="${dataset.language}" class="main-text">
-
-                    </td>
-                    <td>
-                        <a th:href="@{/dataset/detailed(id=${dataset.name}, type=${type})}">
-                            <img src="/images/detailed.svg" alt="See detail" height="24" width="24">
-                        </a>
-                    </td>
-
-                    <td>
-                        <a th:href="@{/dataset/download(id=${dataset.name}, type=${type})}">
-                            <img src="/images/download.svg" alt="See detail" height="24" width="24">
-                        </a>
-                    </td>
-                    <div th:if="${type}=='user'">
-                        <td>
-                            <a th:href="@{/dataset/delete(id=${dataset.name},type=${type})}">
-                                <img src="/images/delete.svg" alt="Delete" height="24" width="24">
-                            </a>
-                        </td>
-
-                        <td>
-                            <div class="dropdown show">
-                                <a class="image-button dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="/images/key.svg" alt="Access" width="24" height="24">
-                                </a>
-                                <div class="dropdown-menu main-div-bg" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=private)}">Private</a>
-                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=protected)}">Protected</a>
-                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=public)}">Public</a>
-                                </div>
-                            </div>
-                        </td>
+        <div class="col-2 form-bg">
+            <div class="row">
+                    <div class="col-2">
+                        <img src="/images/tick.svg" alt="aprobed.svg" width="32" height="32">
                     </div>
-                </tr>
-            </table>
+
+                    <div class="col-10">
+                        <p class="main-text text-center">This icon means that the request have been aprobed.</p>
+                    </div>
+            </div>
+        </div>
+
+        <div class="col-2 form-bg">
+            <div class="row">
+                    <div class="col-2">
+                        <img src="/images/clock.svg" alt="pending.svg" width="32" height="32">
+                    </div>
+
+                    <div class="col-10">
+                        <p class="main-text text-center">This icon means that the request is still not resolved.</p>
+                    </div>
+            </div>
+        </div>
+
+        <div class="col-2 form-bg">
+            <div class="row">
+                <div class="col-2">
+                    <img src="/images/warning.svg" alt="pending.svg" width="32" height="32">
+                </div>
+                <div class="col-10">
+                    <p class="main-text text-center">If a request does not appear here, it means that it has been rejected.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-3">
+
+        </div>
+    </div>
+
+    <div class="row page-content pre-footer">
+        <div class="col-4">
 
         </div>
 
-        <div class="col-2">
+        <div class="col-4 form-bg">
+            <h4 class="top-bg topdiv-text text-center">Requests status</h4>
+            <div th:each="request:${permissionRequests}">
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-1">
+
+                    </div>
+
+                    <div class="col-3">
+                        <div th:if="${request.status}=='pending'">
+                            <img src="/images/clock.svg" alt="pending" width="32" height="32">
+                        </div>
+                        <div th:if="${request.status}=='accepted'">
+                            <img src="/images/tick.svg" alt="accepted" width="32" height="32">
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+                        <div th:if="${request.permission.id}=='2'">
+                                <p class="main-text"><em>Can upload</em> permission request <em th:text="${request.status}"></em></p>
+                        </div>
+
+                        <div th:if="${request.permission.id}=='3'">
+                                <p class="main-text"><em>Can create corpus</em> permission request <em th:text="${request.status}"></em></p>
+                        </div>
+
+                        <div th:if="${request.permission.id}=='4'">
+                                <p class="main-text"><em>Can administer</em> permission request <em th:text="${request.status}"></em></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
 
         </div>
 

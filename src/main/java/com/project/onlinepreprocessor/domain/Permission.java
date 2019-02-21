@@ -2,6 +2,11 @@ package com.project.onlinepreprocessor.domain;
 
 import javax.persistence.*;
 import com.project.onlinepreprocessor.domain.User;
+
+import org.hibernate.annotations.NaturalId;
+
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -21,6 +26,7 @@ public class Permission
     /**
      * The name of the permission
      */
+    @NaturalId
     private String name;
 
     /**
@@ -33,6 +39,9 @@ public class Permission
      */
     @ManyToMany(mappedBy="permissions")
     private Set<User> users;
+
+    @OneToMany(mappedBy="permission", cascade=CascadeType.ALL,orphanRemoval = true)
+    private Set<PermissionRequest> permissionRequests = new HashSet<PermissionRequest>();
 
     /**
      * The default constructor
@@ -51,6 +60,16 @@ public class Permission
     {
         this.name = name;
         this.description = description;
+    }
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
     }
 
     /**
@@ -107,5 +126,35 @@ public class Permission
         this.users = users;
     }
 
+    /**
+     * Return the users wich have the permission
+     * @return the users wich have the permission
+     */
+    public Set<PermissionRequest> getPermissionRequests()
+    {
+        return permissionRequests;
+    }
+
+    /**
+     * Stablish the users wich have the permission
+     * @param users the users wich have the permission
+     */
+    public void setPermissionRequests(Set<PermissionRequest> permissionRequests)
+    {
+        this.permissionRequests = permissionRequests;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Permission permission = (Permission) o;
+        return Objects.equals(id, permission.id);
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
    
 }

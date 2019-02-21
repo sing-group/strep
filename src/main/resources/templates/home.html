@@ -65,7 +65,7 @@
                                             Permission
                                         </a>
                                         <div class="dropdown-menu top-bg" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item topdiv-text" href="/permission">Permissions list</a>
+                                        <a class="dropdown-item topdiv-text" href="/permission/list">Permissions list</a>
                                         <div th:if="${authority!='canAdminister'}">
                                         <a class="dropdown-item topdiv-text" href="/permission/requests/">Permission requests status</a>
                                         </div>
@@ -303,7 +303,7 @@
                                     <p class="main-text text-center">With more permissions you will be able to upload your own datasets,
                                             create new datasets mixing system datasets and even be an administrator.
                                             If you want to do anything of this, solicit new permissions</p>
-                                    <form action="/permissions" method="get">
+                                    <form action="/permission/list" method="get">
                                         <div class="form-group">
                                             <input type="submit" class="submit-button form-control" value="Solicit permissions"><br>
                                         </div>
@@ -425,9 +425,16 @@
                                         </td>
 
                                         <td>
-                                            <a th:href="@{/dataset/access(id=${userDataset.name}, type=user)}">
-                                                <img src="/images/key.svg" alt="Change access" height="24" width="24">
-                                            </a>
+                                            <div class="dropdown show">
+                                                <a class="image-button dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <img src="/images/key.svg" alt="Access" width="24" height="24">
+                                                </a>
+                                                <div class="dropdown-menu main-div-bg" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${userDataset.name}, access=private)}">Private</a>
+                                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${userDataset.name}, access=protected)}">Protected</a>
+                                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${userDataset.name}, access=public)}">Public</a>
+                                                </div>
+                                            </div>
                                         </td>
 
                                     </tr>

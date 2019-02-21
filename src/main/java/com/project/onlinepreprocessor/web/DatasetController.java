@@ -148,6 +148,7 @@ public class DatasetController
                 if(dataset.getAuthor().equals(username))
                 {
                     model.addAttribute("dataset", dataset);
+                    //TODO: Change this, need one detailed dataset view for private datasets
                     return "detailedDataset";
                 }
                 else
