@@ -82,208 +82,7 @@
                                     <a href="/logout">
                                     <img src="/images/logout.svg" alt="photo" height="32" width="32">
                                     </a>
-                                </div>
                         </nav>
-
-            <div class="row page-content">
-
-                <div class="col-1">
-
-                </div>
-
-                <div class="col-10 form-bg">
-                <img class="header-logo" src="/images/system.svg" alt="logo.png" height="64" width="64">
-                <h1 class="main-text text-center welcome-text"><em>System datasets</em></h1> 
-                </p>
-                </div>
-
-                <div class="col-1">
-
-                </div>
-            </div>
-
-            <div class="row page-content">
-
-                <div class="col-2">
-                </div>
-
-
-                <div class="col-8 main-div-bg">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="thead-text">
-                                    Name
-                                </th>
-                                    
-                                <th scope="col" class="thead-text">
-                                    Description
-                                </th>
-
-                                <th scope="col" class="thead-text">
-                                    Author
-                                </th>
-                                    
-                                <th scope="col" class="thead-text">
-                                    Upload date
-                                </th>
-
-                                <th scope="col" class="thead-text">
-                                    Language
-                                </th>
-
-                                <th scope="col">
-
-                                </th>
-
-                                <th scope="col">
-                                    
-                                </th>
-                            </tr>
-
-                        </thead>
-
-                        <tr th:each="systemDataset : ${systemDatasets}">
-                            <td th:text="${systemDataset.name}" class="main-text">
-
-                            </td>
-
-                            <td th:text="${systemDataset.description}" class="main-text">
-
-                            </td>
-
-                            <td th:text="${systemDataset.author}" class="main-text">
-
-                            </td>
-
-                            <td th:text="${systemDataset.uploadDate}" class="main-text">
-
-                            </td>
-
-                            <td th:text="${systemDataset.language}" class="main-text">
-
-                            </td>
-                            <td>
-                                <a th:href="@{/dataset/detailed(id=${systemDataset.name},type=system)}">
-                                <img src="/images/detailed.svg" alt="See detail" height="24" width="24">
-                                </a>
-                            </td>
-
-                            <td>
-                                <a th:href="@{/dataset/download(id=${systemDataset.name},type=system)}">
-                                <img src="/images/download.svg" alt="See detail" height="24" width="24">
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
-
-                </div>
-
-                <div class="col-2">
-
-                </div>
-
-            </div>
-
-            <div class="row page-content">
-
-                <div class="col-1">
-
-                </div>
-
-                <div class="col-10 form-bg">
-                <img class="header-logo" src="/images/shield.svg" alt="logo.png" height="64" width="64">
-                <h1 class="main-text text-center welcome-text"><em>Protected datasets</em></h1> 
-                </p>
-                </div>
-
-                <div class="col-1">
-
-                </div>
-            </div>
-
-            <div class="row page-content">
-
-                <div class="col-2">
-                </div>
-
-
-                <div class="col-8 main-div-bg">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="thead-text">
-                                    Name
-                                </th>
-                                    
-                                <th scope="col" class="thead-text">
-                                    Description
-                                </th>
-
-                                <th scope="col" class="thead-text">
-                                    Author
-                                </th>
-                                    
-                                <th scope="col" class="thead-text">
-                                    Upload date
-                                </th>
-
-                                <th scope="col" class="thead-text">
-                                    Language
-                                </th>
-
-                                <th scope="col">
-
-                                </th>
-
-                                <th scope="col">
-                                    
-                                </th>
-                            </tr>
-
-                        </thead>
-
-                        <tr th:each="protectedDataset : ${protectedDatasets}">
-                            <td th:text="${protectedDataset.name}" class="main-text">
-
-                            </td>
-
-                            <td th:text="${protectedDataset.description}" class="main-text">
-
-                            </td>
-
-                            <td th:text="${protectedDataset.author}" class="main-text">
-
-                            </td>
-
-                            <td th:text="${protectedDataset.uploadDate}" class="main-text">
-
-                            </td>
-
-                            <td th:text="${protectedDataset.language}" class="main-text">
-
-                            </td>
-                            <td>
-                                <a th:href="@{/dataset/detailed(id=${protectedDataset.name}, type=protected)}">
-                                <img src="/images/detailed.svg" alt="See detail" height="24" width="24">
-                                </a>
-                            </td>
-
-                            <td>
-                                <a th:href="@{/dataset/download(id=${protectedDataset.name}, type=protected)}">
-                                <img src="/images/download.svg" alt="See detail" height="24" width="24">
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
-
-                </div>
-
-                <div class="col-2">
-
-                </div>
-
-            </div>
 
             <div th:if="${authority== 'canView'}">
                     <div class="row page-content">
@@ -447,34 +246,31 @@
                             </div>
             
                         </div>
-                    </div>
-
-            <div class="row">
-            <footer class="page-footer footer-bg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-2">
-                            <img class="footer-logo" src="/images/singGrey.svg" alt="logo.png" height="64" width="64">
-                        </div>
-                        <div class="col-2">
-                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
-                        </div>
-                        <div class="col-2">
-                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
-                        </div>
-                        <div class="col-2">
-                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
-                        </div>
-                        <div class="col-2">
-                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
-                        </div>
-                        <div class="col-2">
-                            <img class="footer-logo" src="/images/uvigo.png" alt="logo.png" height="64" width="64">
-                        </div>
-                    </div>
                 </div>
-            </footer>
-            </div>
+
+                <footer class="fixed-bottom page-footer footer-bg">
+                        <div class="container-fluid">
+                          <div class="row">
+                            <div class="col-5">
+              
+                            </div>  
+              
+                            <div class="col-1">
+                                <a href="https://www.sing-group.org/"><img src="/images/singGrey.svg" alt="singGrey.svg" width="64" height="64"></a>
+                            </div>
+              
+                            <div class="col-1">
+                                <a href="https://www.uvigo.gal/es"><img src="/images/uvigo.png" alt="uvigo.png" width="128" height="64"></a>
+                            </div>
+              
+                            <div class="col-5">
+              
+                            </div>
+                          </div>
+                        </div>
+                      </footer>
+
+                </div>
     
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

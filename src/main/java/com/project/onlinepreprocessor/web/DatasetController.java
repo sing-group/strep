@@ -303,12 +303,6 @@ public class DatasetController
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
 
-        ArrayList<Dataset> systemDatasets = datasetRepository.getSystemDatasets();
-        model.addAttribute("systemDatasets", systemDatasets);
-
-        ArrayList<Dataset> protectedDatasets = datasetRepository.getProtectedDatasets();
-        model.addAttribute("protectedDatasets", protectedDatasets);
-
         ArrayList<Dataset> userDatasets = datasetRepository.getUserDatasets(username);
         model.addAttribute("userDatasets", userDatasets);
 
