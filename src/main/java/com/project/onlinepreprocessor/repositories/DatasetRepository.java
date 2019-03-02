@@ -16,17 +16,17 @@ import java.util.ArrayList;
 
 public interface DatasetRepository extends CrudRepository<Dataset, String> {
 
-    @Query(value="select * from dataset where access='public'",
+    @Query(value="select * from dataset where access='public' and available=true",
     nativeQuery=true)
     public HashSet<Dataset> getPublicDatasets();
 
-    @Query(value="select * from dataset where type='systemdataset'",nativeQuery=true)
+    @Query(value="select * from dataset where type='systemdataset' and available=true",nativeQuery=true)
     public ArrayList<Dataset> getSystemDatasets();
 
-    @Query(value="select * from dataset where access='protected'", nativeQuery=true)
+    @Query(value="select * from dataset where access='protected' and available=true", nativeQuery=true)
     public ArrayList<Dataset> getProtectedDatasets();
 
-    @Query(value="select * from dataset where author=?1", nativeQuery=true)
+    @Query(value="select * from dataset where author=?1 and available=true", nativeQuery=true)
     public ArrayList<Dataset> getUserDatasets(String username);
 
     @Query(value="select file_id from dataset_files where dataset_name=?1", nativeQuery=true)

@@ -5,8 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -20,6 +20,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
@@ -35,6 +36,9 @@ public class DatasetService
     @Autowired
     private FileRepository fileRepository;
 
+    @Value("${host.name}")
+    private String HOST_NAME;
+
     public DatasetService(DatasetRepository datasetRepository, FileRepository fileRepository)
     {
         this.datasetRepository = datasetRepository;
@@ -45,8 +49,8 @@ public class DatasetService
     {
 
         java.io.File datasetDirectory = new java.io.File(BASE_PATH+name+"/");
+        java.io.File datasetZip = new java.io.File(BASE_PATH+name+".zip");
 
-        
         if(!datasetDirectory.exists())
         {
             return false;
@@ -161,6 +165,55 @@ public class DatasetService
         }
         return true;
 
+    }
+
+    public String uploadDataset(Dataset dataset, MultipartFile datasetFile, String username)
+    {
+        String message = "";
+
+        String name = dataset.getName().replace(" ", "").toLowerCase();
+        String url = HOST_NAME+"/dataset/detailed/"+name;
+        Date date = new Date();
+        
+        dataset.setName(name);
+        dataset.setUrl(url);
+        dataset.setUploadDate(date);
+        dataset.setAuthor(username);
+        dataset.setType("systemdataset");
+        dataset.setAvailable(false);
+
+        //Added default value because Spam and ham percentage cannot be null
+        dataset.setSpamPercentage(-1);
+        dataset.setHamPercentage(-1);
+
+        Optional<Dataset> opt = datasetRepository.findById(dataset.getName());
+        if(opt.isPresent())
+        {
+            message="Already exists dataset with that name, error uploading dataset";
+        }
+        else{
+
+            try{
+                this.store(datasetFile, dataset);
+                }catch(IOException e)
+                {
+                    message = "IOException error";
+                    return message;
+                }
+        
+                datasetRepository.save(dataset);
+                message = "Successfully uploaded: the dataset will be available after it has been processed";
+        }
+
+        return message;
+
+        
+
+    }
+
+    private void store(MultipartFile datasetFile, Dataset dataset) throws IOException
+    {
+        datasetFile.transferTo(new java.io.File(BASE_PATH+dataset.getName()+".zip"));
     }
 
     public boolean deleteDataset(Dataset dataset)

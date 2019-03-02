@@ -66,6 +66,11 @@ html {
     margin-top:50px;
 }
 
+.files, .submit-dataset
+{
+    margin-top:30px;
+}
+
 .welcome-text
 {
     font-size: 50px;

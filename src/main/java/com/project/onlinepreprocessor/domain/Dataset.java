@@ -32,7 +32,7 @@ public class Dataset
      * The pipeline used to generate the dataset
      */
     @Lob
-    private String pipeline;
+    private byte[] pipeline;
 
     /**
      * The doi for the dataset
@@ -60,6 +60,11 @@ public class Dataset
      */
     private Date uploadDate;
 
+    /**
+     * The URL to access the dataset when the access is public
+     */
+    private String url;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="dataset_files", joinColumns= @JoinColumn(name = "dataset_name", referencedColumnName = "name"), 
     inverseJoinColumns = @JoinColumn(name="file_id", referencedColumnName="id"))
@@ -68,18 +73,38 @@ public class Dataset
     /**
      * The percentage of Spam
      */
-    private int spamPercentage;
+    private Integer spamPercentage;
 
     /**
      * The percentage of ham
      */
-    private int hamPercentage;
+    private Integer hamPercentage;
+
+    /**
+     * Indicates that the dataset is available or not
+     */
+    private boolean available;
 
     /**
      * The default constructor
      */
-    public Dataset() {
+    protected Dataset() {
 
+    }
+
+    public Dataset(String name,String url, String author, String description, String access, String language, Integer spamPercentage, Integer hamPercentage, 
+     String type)
+    {
+        this.name = name;
+        this.url = url;
+        this.author = author;
+        this.description = description;
+        this.access = access;
+        this.language = language;
+        this.spamPercentage = spamPercentage;
+        this.hamPercentage = hamPercentage;
+        this.type = type;
+        this.available = false;
     }
 
     /**
@@ -91,11 +116,29 @@ public class Dataset
     }
 
     /**
-     * Sets the mame of the dataset
+     * Sets the name of the dataset
      * @param name the mame of the dataset
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Return the url of the dataset
+     * @return
+     */
+    public String getUrl()
+    {
+        return url;
+    }
+
+    /**
+     * Sets the url of the dataset
+     * @param url
+     */
+    public void setUrl(String url)
+    {
+        this.url = url;
     }
 
     /**
@@ -134,7 +177,7 @@ public class Dataset
      * Returns the preprocessing pipeline used to generate the corpus
      * @return the preprocessing pipeline used to generate the corpus
      */
-    public String getPipeline() {
+    public byte[] getPipeline() {
         return pipeline;
     }
 
@@ -142,7 +185,7 @@ public class Dataset
      * Stablish the preprocessing pipeline used to generate the corpus
      * @param pipeline the preprocessing pipeline used to generate the corpus
      */
-    public void setPipeline(String pipeline) {
+    public void setPipeline(byte[] pipeline) {
         this.pipeline = pipeline;
     }
 
@@ -214,7 +257,7 @@ public class Dataset
      * Returns the percentage of spam messages
      * @return the percentage of spam messages
      */
-    public int getSpamPercentage() {
+    public Integer getSpamPercentage() {
         return spamPercentage;
     }
 
@@ -223,14 +266,14 @@ public class Dataset
      * @param spamPercentage the percentage of spam messages
      */
     public void setSpamPercentage(int spamPercentage) {
-        this.spamPercentage = spamPercentage;
+        this.spamPercentage = new Integer(spamPercentage);
     }
 
     /**
      * Returns the percentage of ham messages
      * @return the percentage of ham messages
      */
-    public int getHamPercentage() {
+    public Integer getHamPercentage() {
         return hamPercentage;
     }
 
@@ -239,7 +282,7 @@ public class Dataset
      * @param hamPercentage  the percentage of ham messages
      */
     public void setHamPercentage(int hamPercentage) {
-        this.hamPercentage = hamPercentage;
+        this.hamPercentage = new Integer(hamPercentage);
     }
 
     /**
@@ -264,5 +307,23 @@ public class Dataset
      */
     public Set<File> getFiles() {
         return files;
+    }
+
+    /**
+     * Returns if the dataset is available or not
+     * @return the availability of the dataset
+     */
+    public boolean getAvailable()
+    {
+        return available;
+    }
+
+    /**
+     * Stablish the availability of the dataset
+     * @param available the availability 
+     */
+    public void setAvailable(boolean available)
+    {
+        this.available = available;
     }
 }

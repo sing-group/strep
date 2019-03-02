@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -90,187 +90,109 @@
             <a href="/logout">
                 <img src="/images/logout.svg" alt="photo" height="32" width="32">
             </a>
-    </nav>
+        </nav>
 
-    <div th:if="${message}">
-    <div class="row page-content">
-        <div class="col-4">
+        <div class="row page-content">
+            <div class="col-2">
 
-        </div>
-
-        <div class="col-4 message">
-            <p class="main-text text-center" th:text="${message}"></p>
-        </div>
-
-        <div class="col-4">
-
-        </div>
-    </div>
-    </div>
-
-    <div class="row page-content">
-
-        <div class="col-1">
-
-        </div>
-
-        <div class="col-10 form-bg">
-            <div th:if="${type}=='system'">
-                <img class="header-logo" src="/images/system.svg" alt="logo.png" height="64" width="64">
-                <h1 class="main-text text-center welcome-text"><em>System datasets</em></h1>
             </div>
-            <div th:if="${type}=='protected'">
-                <img class="header-logo" src="/images/shield.svg" alt="logo.png" height="64" width="64">
-                <h1 class="main-text text-center welcome-text"><em>Protected datasets</em></h1>
-            </div>
-            <div th:if="${type}=='user'">
-                <img class="header-logo" src="/images/userdatasets.svg" alt="logo.png" height="64" width="64">
-                <h1 class="main-text text-center welcome-text"><em>Your datasets</em></h1>
-            </div>
-            </p>
-        </div>
 
-        <div class="col-1">
-
-        </div>
-    </div>
-
-    <div class="row page-content">
-
-        <div class="col-2">
-
-        </div>
-
-
-        <div class="col-8 main-div-bg">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col" class="thead-text">
-                            Name
-                        </th>
-
-                        <th scope="col" class="thead-text">
-                            Description
-                        </th>
-
-                        <th scope="col" class="thead-text">
-                            Author
-                        </th>
-
-                        <th scope="col" class="thead-text">
-                            Upload date
-                        </th>
-
-                        <th scope="col" class="thead-text">
-                            Language
-                        </th>
-
-                        <th scope="col">
-
-                        </th>
-
-                        <th scope="col">
-
-                        </th>
-                        <div th:if="${type}=='user'">
-                            <th scope="col">
-
-                            </th>
-
-                            <th scope="col">
-
-                            </th>
+            <div class="col-8 form-bg">
+                <form action="#" th:action="@{/dataset/upload}" th:object="${dataset}" enctype="multipart/form-data" method="POST">
+                    <img class="header-logo" src="/images/databaseblue.svg" alt="databaseblue.svg" height="64" width="64">
+                    <h2 class="main-text text-center">Upload dataset</h2>
+                        <div class="form-group">
+                        <input type="text" class="form-control" name="name" placeholder="Name of the dataset" required="required">
+                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Dataset name error</label>
                         </div>
-                    </tr>
+                        <div class="form-group">
+                        <textarea rows="5" class="form-control" name="description" placeholder="Description of the dataset" required="required"></textarea>
+                        <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description error</label>
+                        </div>
+                        <div class="form-group">
+                        <input type="text" class="form-control" name="doi" placeholder="DOI">
+                        <label class="error-label" th:if="${#fields.hasErrors('doi')}" th:errors="*{doi}">There is an error in the doi format</label>
+                        </div>
 
-                </thead>
+                        <div class="row text-center">
+                            <div class="col-4"> 
+                                <label>Acess type</label>
+                            </div>
 
-                <tr th:each="dataset : ${datasets}">
-                    <td th:text="${dataset.name}" class="main-text">
+                            <div class="col-8">
+                                <label>This is the url to the dataset when it has public access</label>
+                            </div>
+                        </div>
 
-                    </td>
-
-                    <td th:text="${dataset.description}" class="main-text">
-
-                    </td>
-
-                    <td th:text="${dataset.author}" class="main-text">
-
-                    </td>
-
-                    <td th:text="${dataset.uploadDate}" class="main-text">
-
-                    </td>
-
-                    <td th:text="${dataset.language}" class="main-text">
-
-                    </td>
-                    <td>
-                        <a th:href="@{/dataset/detailed(id=${dataset.name}, type=${type})}">
-                            <img src="/images/detailed.svg" alt="See detail" height="24" width="24">
-                        </a>
-                    </td>
-
-                    <td>
-                        <a th:href="@{/dataset/download(id=${dataset.name}, type=${type})}">
-                            <img src="/images/download.svg" alt="See detail" height="24" width="24">
-                        </a>
-                    </td>
-                    <div th:if="${type}=='user'">
-                        <td>
-                            <a th:href="@{/dataset/delete(id=${dataset.name},type=${type})}">
-                                <img src="/images/delete.svg" alt="Delete" height="24" width="24">
-                            </a>
-                        </td>
-
-                        <td>
-                            <div class="dropdown show">
-                                <a class="image-button dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="/images/key.svg" alt="Access" width="24" height="24">
-                                </a>
-                                <div class="dropdown-menu main-div-bg" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=private)}">Private</a>
-                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=protected)}">Protected</a>
-                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=public)}">Public</a>
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <label class="radio-inline main-text"><input type="radio" name="access" value="private" required="required" checked>Private</label>
+                                <label class="radio-inline main-text"><input type="radio" name="access" value="protected" required="required">Protected</label>
+                                <label class="radio-inline main-text"><input type="radio" name="access" value="public" required="required">Public</label>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="url" th:attr="value = ${host}" readonly="readonly">
                                 </div>
                             </div>
-                        </td>
-                    </div>
-                </tr>
-            </table>
+                        </div>
 
-        </div>
+                        <div class="row files">
+                                <div class="col-3">
 
-        <div class="col-2">
+                                </div>
 
-        </div>
+                                <div class="col-6 text-center">
+                                    <div class="form-group">
+                                        <label for="dataset-file" class="main-text">Dataset zip file</label>
+                                        <input type="file" class="form-control-file" name="dataset-file" id="dataset-file" required="required">
+                                    </div>
+                                </div>
 
-    </div>
+                                <div class="col-3">
 
-    <footer class="fixed-bottom page-footer footer-bg">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-5">
-  
-                </div>  
-  
-                <div class="col-1">
-                    <a href="https://www.sing-group.org/"><img src="/images/singGrey.svg" alt="singGrey.svg" width="64" height="64"></a>
-                </div>
-  
-                <div class="col-1">
-                    <a href="https://www.uvigo.gal/es"><img src="/images/uvigo.png" alt="uvigo.png" width="128" height="64"></a>
-                </div>
-  
-                <div class="col-5">
-  
-                </div>
-              </div>
+                                </div>
+                        </div>
+                            
+                        <div class="form-group submit-dataset">
+                        <input type="submit" class="submit-button form-control" value="Upload dataset"><br>
+                        </div>
+                    </form>
             </div>
-          </footer>
+
+            <div class="col-2">
+
+            </div>
+        </div>
+
+
+
+        <footer class="fixed-bottom page-footer footer-bg">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-5">
+
+                    </div>
+
+                    <div class="col-1">
+                        <a href="https://www.sing-group.org/"><img src="/images/singGrey.svg" alt="singGrey.svg" width="64"
+                                height="64"></a>
+                    </div>
+
+                    <div class="col-1">
+                        <a href="https://www.uvigo.gal/es"><img src="/images/uvigo.png" alt="uvigo.png" width="128"
+                                height="64"></a>
+                    </div>
+
+                    <div class="col-5">
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
     </div>
-    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
