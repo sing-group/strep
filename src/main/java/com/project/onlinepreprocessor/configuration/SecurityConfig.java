@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .defaultSuccessUrl("/dataset/home")
                 .usernameParameter("username")
                 .passwordParameter("password");
-
+        //TODO: Complete this when the urls are final
         http.
                 authorizeRequests()
                 .antMatchers("/dataset/home").hasAnyAuthority("canView", "canUpload", "canCreateCorpus", "canAdminister");

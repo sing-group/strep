@@ -15,7 +15,8 @@
  insert into dataset_files(dataset_name, file_id) values("datasetprueba1",2);
  insert into dataset_files(dataset_name, file_id) values("datasetprueba1",3);
  
-insert into user(username, confirmed_account, email, hash, name, password, photo, surname) values ('admin',b'1','onlinepreprocessor@gmail.com','system_default','System Administrator','12admin34',null,'');
+--Admin password 12admin34
+insert into user(username, confirmed_account, email, hash, name, password, photo, surname) values ('admin',b'1','onlinepreprocessor@gmail.com','system_default','System Administrator','$2a$10$3Gfa1K4Te7xeE4s8cvOhnecyN7v.iai4GXkhlrX1JXokt1PLHrKYi',null,'');
 insert into permission(id, name, description) values (1,"canView", "grant all privileges");
 insert into permission(id, name, description) values (2,"canUpload", "grant all privileges");
 insert into permission(id, name, description) values (3,"canCreateCorpus", "grant all privileges");
