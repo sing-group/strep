@@ -26,7 +26,7 @@
                     <img class="header-logo" src="/images/databaseblue.svg" alt="databaseblue.svg" height="64" width="64">
                     <h2 class="main-text text-center">Upload dataset</h2>
                         <div class="form-group">
-                        <input type="text" class="form-control" name="name" placeholder="Name of the dataset" required="required">
+                        <input type="text" class="form-control" name="name" placeholder="Name of the dataset" required="required" onchange="dynamicUrl(this.value)">
                         <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Dataset name error</label>
                         </div>
                         <div class="form-group">
@@ -56,7 +56,7 @@
                             </div>
                             <div class="col-8">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="url" th:attr="value = ${host}" readonly="readonly">
+                                    <input type="text" class="form-control" id="url" name="url" th:attr="value = ${host}" readonly="readonly">
                                 </div>
                             </div>
                         </div>
@@ -95,6 +95,7 @@
 
 
     </div>
+    <script type="text/javascript" src="/js/functions.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"

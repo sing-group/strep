@@ -274,7 +274,7 @@ public class DatasetController {
     }
 
     @GetMapping("/upload")
-    public String addNewDataset(Authentication authentication, Model model, Dataset dataset)
+    public String addNewDataset(Authentication authentication, Model model,Dataset dataset)
     {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
@@ -289,7 +289,7 @@ public class DatasetController {
     }
 
     @PostMapping("/upload")
-    public String addDataset(Authentication authentication, @Valid Dataset dataset,@RequestParam(name="dataset-file", required=true)MultipartFile datasetFile,RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model)
+    public String addDataset(Authentication authentication, @Valid Dataset dataset,BindingResult bindingResult,@RequestParam(name="dataset-file", required=true)MultipartFile datasetFile,RedirectAttributes redirectAttributes,  Model model)
     {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
@@ -300,6 +300,8 @@ public class DatasetController {
         {   
             model.addAttribute("authority", authority);
             model.addAttribute("username", username);
+            model.addAttribute("host", HOST_NAME);
+            System.out.println("HERE");
             return "add_dataset";
         }
         else

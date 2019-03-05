@@ -1,6 +1,9 @@
 package com.project.onlinepreprocessor.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.project.onlinepreprocessor.domain.File;
 import java.util.Set;
 import java.util.Date;
@@ -16,6 +19,8 @@ public class Dataset
      * The name of the dataset
      */
     @Id
+    @NotNull
+    @Size(min=8, max=50, message="Name must have beetween 8 and 50 characters")
     private String name;
     
     /**
@@ -26,6 +31,8 @@ public class Dataset
     /**
      * The description of the dataset
      */
+    @NotNull
+    @Size(min=30, max=1000, message="Description must have beetween 30 and 1000 characters")
     private String description;
 
     /**
