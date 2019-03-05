@@ -9,81 +9,10 @@
 </head>
 <body class="main-bg">
     <div class="container-fluid">
-        <!--TODO: Switch case with authorities case: canView case: canUpload case: canCreateCorpus case: canAdminister-->
-                        <nav class="navbar navbar-expand-lg navbar-light top-bg">
-                                <img src="/images/database.svg" alt="logo" height="32" width="32">
-                                <a class="topdiv-text" id="linklogo" href="/dataset/home">Online preprocessor</a>
-                                <ul class="navbar-nav mr-auto">
-                                    <li class="nav-item dropdown">
-                                        <a class="topdiv-text dropdown-toggle nav-link"  id="navbar-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Datasets
-                                        </a>
-                                        <div class="dropdown-menu top-bg" aria-labelledby="navbarDropdownMenuLink">
-                                            <div th:if="${authority!='canView'}">
-                                                <a class="dropdown-item topdiv-text" href="/dataset/list?type=user">My datasets</a>
-                                                <a class="dropdown-item topdiv-text" href="/dataset/upload">Upload dataset</a>
-                                                <div th:if="${authority=='canCreateCorpus'}">
-                                                    <a class="dropdown-item topdiv-text" href="/dataset/create">Create new dataset</a>
-                                                </div>
-                                                <div th:if="${authority=='canAdminister'}">
-                                                    <a class="dropdown-item topdiv-text" href="/dataset/create">Create new dataset</a>
-                                                </div>
-                                            </div>
-                                        <a class="dropdown-item topdiv-text" href="/dataset/list?type=system">System datasets</a>
-                                        <a class="dropdown-item topdiv-text" href="/dataset/list?type=protected">Protected datasets</a>
-                                        </div>
-                                    </li>
 
+        <div th:include="header.html">
 
-                                    <div th:if="${authority!='canView'}">
-                                        <li class="nav-item dropdown">
-                                        <a class="topdiv-text dropdown-toggle nav-link"  id="navbar-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Notifications
-                                        </a>
-                                        <div class="dropdown-menu top-bg" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item topdiv-text" href="/dataset/uploadstatus">Upload status</a>
-                                        <a class="dropdown-item topdiv-text" href="/dataset/preprocessingstatus">Preprocessing status</a>
-                                        </div>
-                                        </li>
-                                    </div>
-
-                                    <div th:if="${authority=='canAdminister'}">
-                                        <li class="nav-item dropdown">
-                                        <a class="topdiv-text dropdown-toggle nav-link"  id="navbar-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Administer
-                                        </a>
-                                        <div class="dropdown-menu top-bg" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item topdiv-text" href="/user/list">List users</a>
-                                        <a class="dropdown-item topdiv-text" href="/dataset/uploadsystem">Upload system dataset</a>
-                                        <a class="dropdown-item topdiv-text" href="/permission/listrequests">Check permission requests</a>
-                                        </div>
-                                        </li>
-                                    </div>
-                                    
-                                    <li class="nav-item dropdown">
-                                        <a class="topdiv-text dropdown-toggle nav-link"  id="navbar-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Permission
-                                        </a>
-                                        <div class="dropdown-menu top-bg" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item topdiv-text" href="/permission/list">Permissions list</a>
-                                        <div th:if="${authority!='canAdminister'}">
-                                        <a class="dropdown-item topdiv-text" href="/permission/requests/">Permission requests status</a>
-                                        </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                
-                                    <!--TODO: Change this for an image passed from parameters-->
-                                    <a href="/user/editprofile">
-                                    <img class="user-photo" src="/images/authorplaceholderwhite.svg" alt="photo" height="32" width="32">
-                                    </a>
-                                    <p th:text="${username}" class="topdiv-text"></p>
-                                <div class="float-right logout-icon"></div>
-                                    <a href="/logout">
-                                    <img src="/images/logout.svg" alt="photo" height="32" width="32">
-                                    </a>
-                        </nav>
-
+        </div>
             <div th:if="${authority== 'canView'}">
                     <div class="row page-content">
 
@@ -248,27 +177,9 @@
                         </div>
                 </div>
 
-                <footer class="fixed-bottom page-footer footer-bg">
-                        <div class="container-fluid">
-                          <div class="row">
-                            <div class="col-5">
-              
-                            </div>  
-              
-                            <div class="col-1">
-                                <a href="https://www.sing-group.org/"><img src="/images/singGrey.svg" alt="singGrey.svg" width="64" height="64"></a>
-                            </div>
-              
-                            <div class="col-1">
-                                <a href="https://www.uvigo.gal/es"><img src="/images/uvigo.png" alt="uvigo.png" width="128" height="64"></a>
-                            </div>
-              
-                            <div class="col-5">
-              
-                            </div>
-                          </div>
-                        </div>
-                      </footer>
+                <div th:include="footer.html">
+                    
+                </div>
 
                 </div>
     

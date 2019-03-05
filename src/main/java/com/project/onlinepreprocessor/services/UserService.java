@@ -73,9 +73,9 @@ public class UserService
             case 1:
             return "canView";
             case 2:
-            return "canUpload";
-            case 3:
             return "canCreateCorpus";
+            case 3:
+            return "canUpload";
             case 4:
             return "canAdminister";
             default: 
