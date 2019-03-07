@@ -28,7 +28,7 @@ html {
 {
     color: #203939;
 }
- .error-message
+ .error-message, .author
 {
     margin-top: 50pt;
 }
@@ -143,7 +143,7 @@ html {
 
 .pre-footer
 {
-    margin-bottom: 50px;
+    margin-bottom: 100px;
 }
 
 .footer-images
@@ -154,4 +154,19 @@ html {
 .low-footer
 {
     background-color: #000000;
+}
+
+.form-control[readonly]
+{
+    background-color: white;
+    color: #203939;
+    opacity: 1;
+}
+
+.page-footer
+{
+    position: absolute;
+    bottom:0;
+    left:0;
+    right:0;
 }

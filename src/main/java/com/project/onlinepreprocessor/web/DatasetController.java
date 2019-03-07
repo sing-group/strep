@@ -142,14 +142,13 @@ public class DatasetController {
             if (dataset.getAccess().equals("private")) {
                 if (dataset.getAuthor().equals(username)) {
                     model.addAttribute("dataset", dataset);
-                    // TODO: Change this, need one detailed dataset view for private datasets
-                    return "detailedDataset";
+                    return "detailed_private_dataset";
                 } else {
                     return "redirect:/error";
                 }
             } else {
                 model.addAttribute("dataset", dataset);
-                return "detailedDataset";
+                return "detailed_private_dataset";
             }
         } else {
             return "redirect:/error";
@@ -301,7 +300,6 @@ public class DatasetController {
             model.addAttribute("authority", authority);
             model.addAttribute("username", username);
             model.addAttribute("host", HOST_NAME);
-            System.out.println("HERE");
             return "add_dataset";
         }
         else
