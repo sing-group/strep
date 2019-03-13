@@ -313,4 +313,23 @@ public class DatasetController {
         }
 
     }
+
+    //TODO_ Implement this method
+    @GetMapping("/create")
+    public String getCreateDataset(Authentication authentication, Model model, Dataset dataset)
+    {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String username = userDetails.getUsername();
+        String authority = userService.getPermissionsByUsername(username);
+
+        ArrayList<Dataset> datasets = datasetRepository.getSystemDatasets();
+
+        model.addAttribute("host", HOST_NAME);
+        model.addAttribute("authority", authority);
+        model.addAttribute("username", username);
+        model.addAttribute("datasets", datasets);
+        return "create_dataset";
+
+    }
 }
