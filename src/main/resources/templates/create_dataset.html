@@ -6,8 +6,7 @@
 
     <title>Online preprocessor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -19,6 +18,53 @@
         <div th:include="header">
 
         </div>
+
+        <div class="modal fade" id="datasetModal" tabindex="-1" role="dialog" aria-labelledby="datasetModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header top-bg">
+                      <h5 class="modal-title topdiv-text" id="datasetModalLabel">Dataset info</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body main-div-bg">
+                         <div th:fragment="dataset" id="dataset-info">
+                             <h5 class="main-text text-center">Dataset name</h5>
+                             <p class="main-text text-center" th:text="${dataset.name}"></p>
+
+                             <h5 class="main-text text-center">Description</h5>
+                             <p class="main-text text-center" th:text="${dataset.description}"></p>
+
+                             <h5 class="main-text text-center">Upload date</h5>
+                             <p class="main-text text-center" th:text="${dataset.uploadDate}"></p>
+
+                             <h5 class="main-text text-center">Percentage spam</h5>
+                             <p class="main-text text-center" th:text="${dataset.spamPercentage}"></p>
+
+                             <h5 class="main-text text-center">Percentage ham</h5>
+                             <p class="main-text text-center" th:text="${dataset.hamPercentage}"></p>
+
+                             <h5 class="main-text text-center">Languages</h5>
+                             <div th:each="language : ${dataset.language}">
+                             <p class="main-text text-center" th:text="${language.language}"></p>
+                            </div>
+
+                             <h5 class="main-text text-center">Data types</h5>
+                             <div th:each="datatype : ${dataset.datatypes}">
+                             <p class="main-text text-center" th:text="${datatype.datatype}"></p>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer top-bg">
+                        <div class="form-group">
+                      <button type="button" class="form-control submit-button" data-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           
 
         <div class="row page-content pre-footer">
             <div class="col-2">
@@ -42,38 +88,51 @@
                                 <div th:each="dataset : ${datasets}">
                                     <li class="list-group-item">
                                         <div class="row">
+                                            <div class="col-2">
 
-                                            <div class="col-10">
+                                            </div>
+                                                <div class="col-1">
+                                                    <div class="form-group">
+                                                        <button  class="image-button" th:attr="id=${dataset.name}" onclick="retrieveDatasetInfo(this.id)">
+                                                            <img src="/images/info-button.svg" alt="info.svg" height="16" width="16">
+                                                        </button>
+                                                    </div>
+                                                    </div>
+
+                                            <div class="col-6">
                                                 <p class="main-text text-center" th:text="${dataset.name}"></p>
                                             </div>
 
                                             <div class="col-1">
-                                            <a href="#"><img src="/images/info-button.svg" alt="info-button.svg" height="24"
-                                                width="24"></a>
+                                                <div class="form-group">
+                                                    <input type="checkbox">
+                                                </div>
                                             </div>
 
-                                            <div class="col-1">
-                                                    <div class="form-group">
-                                                        <input type="checkbox">
-                                                    </div>
-                                                </div>
+                                            <div class="col-2">
+
+                                            </div>
                                         </div>
                                     </li>
                                 </div>
                                 <li class="list-group-item">
                                     <div class="row">
-                                        <div class="col-10">
-                                            <p class="main-text text-center">Select all</p>
+
+                                        <div class="col-3">
+
                                         </div>
-
-                                        <div class="col-1">
-
+                                        <div class="col-6">
+                                            <p class="main-text text-center">Select all</p>
                                         </div>
 
                                         <div class="col-1">
                                             <div class="form-group">
                                                 <input type="checkbox">
                                             </div>
+                                        </div>
+
+                                        <div class="col-2">
+
                                         </div>
                                     </div>
                                 </li>
@@ -88,184 +147,168 @@
                 </div>
 
                 <div class="page-content">
-                        <h4 class="main-text text-center">Filters (Optional)</h4>
-                        <div class="row">
-    
-                            <div class="col-2">
-                                <li class="list-group" id="selected-languages-list">
-    
-                                </li>
-    
-                            </div>
-    
-                            <div class="col-3">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <input type="checkbox" class="form-control" id="languagesCheckbox" onclick="enableInput(this.id)">
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-10">
-                                        <label class="main-text">Languages</label>
-                                    </div>
-                                </div>
-    
-                                <div class="form-group">
-                                    <input type="text" oninput="showLanguageOptions(this.id)" class="form-control" id="languages"
-                                        placeholder="Files language" disabled="disabled">
-                                    <div id="show-language-list">
-                                        <ul id="languages-list" class="list-group">
-    
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-    
-                            <div class="col-3">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <input type="checkbox" id="dateRangeCheckbox" class="form-control" onclick="enableDateInput()">
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-10">
-                                        <label class="main-text">Date range</label>
-                                    </div>
-                                </div>
-    
-                                <div class="row">
-                                    <div class="col-5">
-                                        <div class="form-group">
-                                            <input type="date" name="date" class="form-control" disabled="disabled">
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-2">
-                                        <p class="main-text">to</p>
-                                    </div>
-    
-                                    <div class="col-5">
-                                        <div class="form-group">
-                                            <input type="date" name="date" class="form-control" disabled="disabled">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-    
-                            <div class="col-2">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <input type="checkbox" class="form-control" id=dataTypesCheckbox onclick="enableInput(this.id)">
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-10">
-                                        <label class="main-text">Data types</label>
-                                    </div>
-                                </div>
-    
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="dataTypes" oninput="showDataTypeOptions(this.id)"
-                                        placeholder="File extension" disabled="disabled">
-                                    <div id="show-data-types-list">
-                                        <ul id="data-types-list" class="list-group">
-    
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-    
-                            <div class="col-2">
-                                <li class="list-group" id="selected-data-types-list">
-    
-                                </li>
-    
-                            </div>
-                        </div>
-
-                <div class="page-content">
-                    <h4 class="main-text text-center">Parameters (Optional)</h4>
+                    <h4 class="main-text text-center">Filters (Optional)</h4>
                     <div class="row">
 
-                        <div class="col-2">
+                        <div class="col-3">
+                            <li class="list-group" id="selected-languages-list">
+
+                            </li>
 
                         </div>
 
-                        <div class="col-8">
-
+                        <div class="col-3">
                             <div class="row">
-                                <div class="col-4">
-                                    <div class="row">
-                                        <div class="col-2">
-                                            <div class="form-group">
-                                                <input type="checkbox" id="typeLimitCheckbox" class="form-control"
-                                                    onclick="enableInput(this.id)">
-                                            </div>
-                                        </div>
-                                        <div class="col-10">
-                                            <label class="main-text">Limit type(spam or ham)</p>
-                                        </div>
-                                    </div>
+                                <div class="col-2">
                                     <div class="form-group">
-                                        <input type="number" id="typeLimit" class="form-control" placeholder="Number of spam."
-                                            disabled="disabled">
+                                        <input type="checkbox" class="form-control" id="languagesCheckbox" onclick="enableInput(this.id)">
                                     </div>
                                 </div>
 
-                                <div class="col-4">
-                                    <div class="row">
-                                        <div class="col-2">
-                                            <div class="form-group">
-                                                <input type="checkbox" id="limitPercentageCheckbox" class="form-control"
-                                                    onclick="enableInput(this.id)">
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col-10">
-                                            <label class="main-text">Limit percentages(spam or ham)</label>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <input type="number" class="form-control" id="limitPercentage" placeholder="Spam percentage."
-                                                disabled="disabled">
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-4">
-                                    <div class="row">
-                                        <div class="col-2">
-                                            <div class="form-group">
-                                                <input type="checkbox" id="limitSizeCheckbox" class="form-control"
-                                                    onclick="enableInput(this.id)">
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col-10">
-                                            <label class="main-text">Limit size(The size of the dataset)</label>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <input type="number" class="form-control" id="limitSize" placeholder="Max number of files."
-                                                disabled="disabled">
-                                        </div>
-                                    </div>
+                                <div class="col-10">
+                                    <label class="main-text">Languages</label>
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <input type="text" oninput="showLanguageOptions(this.id)" class="form-control" id="languages"
+                                    placeholder="Files language" disabled="disabled">
+                                <div id="show-language-list">
+                                    <ul id="languages-list" class="list-group">
+
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="col-2">
+                        <div class="col-3">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <input type="checkbox" id="dateRangeCheckbox" class="form-control" onclick="enableDateInput()">
+                                    </div>
+                                </div>
+
+                                <div class="col-10">
+                                    <label class="main-text">Date range</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="form-group">
+                                        <input type="date" name="date" class="form-control" disabled="disabled">
+                                    </div>
+                                </div>
+
+                                <div class="col-2">
+                                    <p class="main-text">to</p>
+                                </div>
+
+                                <div class="col-5">
+                                    <div class="form-group">
+                                        <input type="date" name="date" class="form-control" disabled="disabled">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3">
 
                         </div>
                     </div>
-                </div>
+                            <div class="row">
+                                <div class="col-2">
+                                </div>
+
+                                <div class="col-8 text-center">
+                                    <label class="main-text">Data types</label>
+                                    <div class="container">
+                                    <ul class="list-group list-group-horizontal">
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <img src="/images/gmail-logo.svg" alt="email-logo.svg" width="16" height="16">
+                                                </div>
+                                                <div class="col-5">
+                                                    <p class="main-text text-center">.eml</p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <input type="checkbox">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                    <div class="col-3">
+                                                            <img src="/images/youtube.svg" alt="youtube.svg" width="16" height="16">
+                                                        </div>
+                                                <div class="col-5">
+                                                    <p class="main-text text-center">.tytb</p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <input type="checkbox">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                    <div class="col-3">
+                                                            <img src="/images/sms.svg" alt="sms.svg" width="16" height="16">
+                                                        </div>
+                                                <div class="col-5">
+                                                    <p class="main-text text-center">.tsms</p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <input type="checkbox">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                    <div class="col-3">
+                                                            <img src="/images/twitter.svg" alt="twitter.svg" width="16" height="16">
+                                                        </div>
+                                                <div class="col-5">
+                                                    <p class="main-text text-center">.twtid</p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <input type="checkbox">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                    <div class="col-3">
+                                                            <img src="/images/internet.svg" alt="internet.svg" width="16" height="16">
+                                                        </div>
+                                                <div class="col-5">
+                                                    <p class="main-text text-center">.warc</p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <input type="checkbox">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                </div>
+                        <div class="col-2">
+                        </div>
+                    </div>
+
+                    
                     <div class="row">
                         <div class="col-2">
 
@@ -320,6 +363,87 @@
                                         </div>
                                     </div>
 
+                                    <div class="page-content">
+                                            <h4 class="main-text text-center">Parameters (Optional)</h4>
+                                            <div class="row">
+                    
+                                                <div class="col-2">
+                    
+                                                </div>
+                    
+                                                <div class="col-8">
+                    
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <div class="row">
+                                                                <div class="col-2">
+                                                                    <div class="form-group">
+                                                                        <input type="checkbox" id="typeLimitCheckbox" class="form-control"
+                                                                            onclick="enableInput(this.id)">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-10">
+                                                                    <label class="main-text">Limit type(spam or ham)</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="number" id="typeLimit" class="form-control" placeholder="Number of spam."
+                                                                    disabled="disabled">
+                                                            </div>
+                                                        </div>
+                    
+                                                        <div class="col-4">
+                                                            <div class="row">
+                                                                <div class="col-2">
+                                                                    <div class="form-group">
+                                                                        <input type="checkbox" id="limitPercentageCheckbox" class="form-control"
+                                                                            onclick="enableInput(this.id)">
+                                                                    </div>
+                    
+                                                                </div>
+                    
+                                                                <div class="col-10">
+                                                                    <label class="main-text">Limit percentages(spam or ham)</label>
+                                                                </div>
+                    
+                                                                <div class="form-group">
+                                                                    <input type="number" class="form-control" id="limitPercentage"
+                                                                        placeholder="Spam percentage." disabled="disabled">
+                                                                </div>
+                                                            </div>
+                    
+                                                        </div>
+                    
+                                                        <div class="col-4">
+                                                            <div class="row">
+                                                                <div class="col-2">
+                                                                    <div class="form-group">
+                                                                        <input type="checkbox" id="limitSizeCheckbox" class="form-control"
+                                                                            onclick="enableInput(this.id)">
+                                                                    </div>
+                    
+                                                                </div>
+                    
+                                                                <div class="col-10">
+                                                                    <label class="main-text">Limit size(The size of the dataset)</label>
+                                                                </div>
+                    
+                                                                <div class="form-group">
+                                                                    <input type="number" class="form-control" id="limitSize" placeholder="Max number of files."
+                                                                        disabled="disabled">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                    
+                                                </div>
+                    
+                                                <div class="col-2">
+                    
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     <div class="row files">
                                         <div class="col-3">
 
@@ -366,14 +490,13 @@
 
         </div>
     </div>
-
-    <script type="text/javascript" src="/js/functions.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/functions.js"></script>
+    <script type="text/javascript" src="/js/jqueryFunctions.js"></script>
 </body>
 
 </html>

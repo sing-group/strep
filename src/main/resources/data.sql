@@ -12,3 +12,16 @@ insert into permission(id, name, description) values (2,"canCreateCorpus", "User
 insert into permission(id, name, description) values (3,"canUpload", "Users can: view system datasets, view protected datasets, view and create their own datasets by mixing those in the system. They can also upload system datasets and request permissions");
 insert into permission(id, name, description) values (4,"canAdminister", "grant all privileges");
 insert into user_perm(user,perm_id) values ("admin",4);
+
+insert into language(language) values("spanish");
+insert into language(language) values("english");
+insert into language(language) values("portuguese");
+insert into language(language) values("galician");
+insert into language(language) values("russian");
+insert into language(language) values("italian");
+
+insert into datatype(dataType) values(".eml");
+insert into datatype(dataType) values(".tytb");
+insert into datatype(dataType) values(".tsms");
+insert into datatype(dataType) values(".twtid");
+insert into datatype(dataType) values(".warc");

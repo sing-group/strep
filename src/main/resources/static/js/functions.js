@@ -67,42 +67,6 @@ function showLanguageOptions(id)
  }
 }
 
-function showDataTypeOptions(id)
- {
-    var dataTypes = [".eml", ".tytb", ".tsms", ".twtid", ".warc"];
-
-    var idInput = document.getElementById(id);
-
-    var idDataTypeList = document.getElementById("show-data-types-list");
-
-    var text = "."+idInput.value.toLowerCase();
-
-    if(idDataTypeList.childElementCount!=0)
-    {
-        idDataTypeList.removeChild(document.getElementById("data-types-list"));
-    }
-    if(text.length!=1)
-    {
-        var element = document.createElement('ul');
-        element.className = "list-group"
-        element.id = "data-types-list"
-    for(i=0; i<dataTypes.length;i++)
-    {
-        if(text == dataTypes[i].substring(0, text.length))
-        {
-            var listItem = document.createElement('a');
-            listItem.className = "list-group-item list-group-item-action";
-            listItem.id = "dataType"+i;
-            listItem.innerHTML = dataTypes[i];
-            listItem.onclick = function() {selectDataType(listItem.id)};
-
-            idDataTypeList.appendChild(element);
-            element.appendChild(listItem);
-        }
-    }
- }
- }
-
  function enableDateInput()
  {
      var date1 = document.getElementsByName("date")[0];
@@ -158,41 +122,4 @@ function showDataTypeOptions(id)
 
     language.parentNode.removeChild(language);
  }
-
- 
-
- function selectDataType(id)
- {
-    var dataTypes = [".eml", ".tytb", ".tsms", ".twtid", ".warc"];
-
-    var searchInput = document.getElementById("dataTypes");
-    var list = document.getElementById("data-types-list");
-    var selectedDataTypes = document.getElementById("selected-data-types-list");
-
-    var index = id.substring(8, id.length);
-
-    console.log(index);
-
-    searchInput.value = "";
-    list.parentNode.removeChild(list);
-
-    var dataType = document.createElement('ul');
-    dataType.className = "list-group-item list-group-item-action text-center";
-    dataType.setAttribute("data-type", "selected-data-type-item");
-    dataType.innerText = dataTypes[index];
-    dataType.id = "Selected-" + id;
-    dataType.onclick = function() {deleteDataType(dataType.id)};
-
-    var removeButton = document.createElement('a');
-    removeButton.className = "list-group-item-button";
-
-    var removeButtonIcon = document.createElement('i');
-    removeButtonIcon.className = "fas fa-trash";
-    removeButton.append(removeButtonIcon);
-    dataType.append(removeButton);
-
-    dataType.append(removeButton);
-    selectedDataTypes.append(dataType);
- }
-
  

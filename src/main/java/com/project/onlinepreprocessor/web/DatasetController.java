@@ -314,6 +314,22 @@ public class DatasetController {
 
     }
 
+    //TODO: Check if user have access to the dataset
+    @GetMapping("/modal")
+    public String getDatasetInfo(Authentication authentication, Model model, @RequestParam("id") String id)
+    {
+        System.out.println("Llamada a modal");
+        Optional<Dataset> opt = datasetRepository.findById(id);
+
+        if(opt.isPresent())
+        {
+            Dataset dataset = opt.get();
+            model.addAttribute("dataset", dataset);
+        }
+        
+        return "create_dataset::dataset";
+    }
+
     //TODO_ Implement this method
     @GetMapping("/create")
     public String getCreateDataset(Authentication authentication, Model model, Dataset dataset)

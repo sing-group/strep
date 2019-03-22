@@ -51,12 +51,21 @@ public class Dataset
      */
     private String access;
 
-    /*TODO: Multiple languages for each Dataset*/
     /**
-     * The language of the dataset
+     * The languages of the dataset
      */
-    private String language;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="dataset_languages", joinColumns=@JoinColumn(name="dataset_name", referencedColumnName="name"), 
+    inverseJoinColumns = @JoinColumn(name="language", referencedColumnName="language"))
+    private Set<Language> language;
 
+    /**
+     * The data types of the dataset
+     */
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="dataset_datatypes", joinColumns=@JoinColumn(name="dataset_name", referencedColumnName="name"),
+    inverseJoinColumns = @JoinColumn(name="dataType", referencedColumnName="dataType"))
+    private Set<Datatype> datatypes;
     /**
      * The type of the dataset
      */
@@ -99,7 +108,7 @@ public class Dataset
 
     }
 
-    public Dataset(String name,String url, String author, String description, String access, String language, Integer spamPercentage, Integer hamPercentage, 
+    public Dataset(String name,String url, String author, String description, String access, Integer spamPercentage, Integer hamPercentage, 
      String type)
     {
         this.name = name;
@@ -107,7 +116,6 @@ public class Dataset
         this.author = author;
         this.description = description;
         this.access = access;
-        this.language = language;
         this.spamPercentage = spamPercentage;
         this.hamPercentage = hamPercentage;
         this.type = type;
@@ -232,7 +240,7 @@ public class Dataset
      * Returns the languages contained in the corpus
      * @return the languages contained in the corpus
      */
-    public String getLanguage() {
+    public Set<Language> getLanguage() {
         return language;
     }
 
@@ -240,9 +248,27 @@ public class Dataset
      * Stablish the languages contained in the corpus
      * @param language the languages contained in the corpus
      */
-    public void setLanguage(String language) {
+    public void setLanguage(Set<Language> language) {
         this.language = language;
     }
+
+    /**
+     * Returns the datatypes of the dataset
+     * @return the datatypes of the dataset
+     */
+    public Set<Datatype> getDatatypes()
+    {
+        return this.datatypes;
+    }
+
+     /**
+      * Stablish the datatypes of the dataset
+      * @param dataType the datatypes of the dataset
+      */
+      public void setDatatypes(Set<Datatype> datatypes)
+      {
+          this.datatypes = datatypes;
+      }
 
     /**
      * Returns the date when the corpus was uploaded
