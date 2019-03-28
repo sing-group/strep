@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.project.onlinepreprocessor.domain.File;
+import com.project.onlinepreprocessor.domain.Task;
 import java.util.Set;
 import java.util.Date;
 
@@ -54,7 +55,7 @@ public class Dataset
     /**
      * The languages of the dataset
      */
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name="dataset_languages", joinColumns=@JoinColumn(name="dataset_name", referencedColumnName="name"), 
     inverseJoinColumns = @JoinColumn(name="language", referencedColumnName="language"))
     private Set<Language> language;
@@ -62,7 +63,7 @@ public class Dataset
     /**
      * The data types of the dataset
      */
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name="dataset_datatypes", joinColumns=@JoinColumn(name="dataset_name", referencedColumnName="name"),
     inverseJoinColumns = @JoinColumn(name="dataType", referencedColumnName="dataType"))
     private Set<Datatype> datatypes;
@@ -100,6 +101,10 @@ public class Dataset
      * Indicates that the dataset is available or not
      */
     private boolean available;
+
+    @OneToOne
+    @JoinColumn(name="task_id", referencedColumnName="id")
+    private Task task;
 
     /**
      * The default constructor
@@ -358,5 +363,15 @@ public class Dataset
     public void setAvailable(boolean available)
     {
         this.available = available;
+    }
+
+    public Task getTask()
+    {
+        return task;
+    }
+
+    public void setTask(Task task)
+    {
+        this.task = task;
     }
 }

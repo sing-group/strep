@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
@@ -12,7 +14,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import com.project.onlinepreprocessor.domain.Dataset;
+import com.project.onlinepreprocessor.domain.Datatype;
 import com.project.onlinepreprocessor.domain.File;
+import com.project.onlinepreprocessor.domain.Language;
 import com.project.onlinepreprocessor.repositories.DatasetRepository;
 import com.project.onlinepreprocessor.repositories.FileRepository;
 
@@ -207,8 +211,6 @@ public class DatasetService
 
         return message;
 
-        
-
     }
 
     private void store(MultipartFile datasetFile, Dataset dataset) throws IOException
@@ -238,5 +240,146 @@ public class DatasetService
         return true;
     }
 
+    public ArrayList<Dataset> getFilteredDatasets(String selectedLanguages, String selectedDatatypes, String date1, String date2)
+    {
+        ArrayList<Dataset> systemDatasets = datasetRepository.getSystemDatasets();
+        ArrayList<Dataset> filteredDatasets = new ArrayList<Dataset>();
 
+        ArrayList<String> languages = strToArray(selectedLanguages);
+        ArrayList<String> datatypes = strToArray(selectedDatatypes);
+
+        for(int i = 0; i<systemDatasets.size();i++)
+        {
+            Dataset dataset = systemDatasets.get(i);
+            if(validLanguages(dataset, languages) && validDatatypes(dataset, datatypes) && validDate(dataset, date1, date2 ))
+            {
+                filteredDatasets.add(dataset);
+            }
+        }
+
+        return filteredDatasets;
+    }
+
+    private ArrayList<String> strToArray(String string)
+    {
+        ArrayList<String> arrayList = new ArrayList<String>();
+
+        if(!string.equals(""))
+        {
+            String[] array = string.split(",");
+            for(int i=0; i<array.length;i++)
+            {
+                arrayList.add(array[i]);
+            }
+        }
+
+        return arrayList;
+    }   
+
+   
+    private boolean validLanguages(Dataset dataset, ArrayList<String> languages)
+    {
+        ArrayList<Language> datasetLanguages = new ArrayList<Language>(dataset.getLanguage());
+
+        if(languages.isEmpty())
+        {
+            return true;
+        }
+
+        if(datasetLanguages.isEmpty())
+        {
+            return false;
+        }
+        else
+        {
+            for(int i = 0; i<datasetLanguages.size();i++)
+            {
+                String datasetLanguage = datasetLanguages.get(i).getLanguage();
+                boolean contained = false;
+                for(int j = 0; j<languages.size();j++)
+                {
+                    if(languages.get(j).equals(datasetLanguage))
+                    {
+                        contained=true;
+                    }
+                }
+                if(contained == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    private boolean validDatatypes(Dataset dataset, ArrayList<String> dataTypes)
+    {
+        ArrayList<Datatype> datasetDatatypes = new ArrayList<Datatype>(dataset.getDatatypes());
+
+        if(dataTypes.isEmpty())
+        {
+            return true;
+        }
+
+        if(datasetDatatypes.isEmpty())
+        {
+            return false;
+        }
+        else
+        {
+            for(int i = 0; i<datasetDatatypes.size();i++)
+            {
+                String datasetDatatype = datasetDatatypes.get(i).getDatatype();
+                boolean contained = false;
+                for(int j = 0; j<dataTypes.size();j++)
+                {
+                    if(dataTypes.get(j).equals(datasetDatatype))
+                    {
+                        contained=true;
+                    }
+                }
+                if(contained == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    private boolean validDate(Dataset dataset, String date1, String date2)
+    {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        if(date1.equals("") || date2.equals(""))
+        {
+            return true;
+        }
+        else
+        {
+            try
+            {
+                System.out.println(date1+"\n");
+                System.out.println(date2+"\n");
+                Date dateFrom = simpleDateFormat.parse(date1);
+                Date dateTo = simpleDateFormat.parse(date2);
+
+                if(dateFrom.compareTo(dataset.getUploadDate())<=0 && dateTo.compareTo(dataset.getUploadDate())>=0)
+                {
+                    System.out.println(dateFrom+"<"+dataset.getUploadDate()+"<"+dateTo);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch(ParseException pe)
+            {
+                System.out.println("Failed to parse Date");
+                return true;
+            }
+        }
+    }
+        
 }

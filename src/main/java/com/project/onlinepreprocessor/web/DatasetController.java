@@ -314,20 +314,40 @@ public class DatasetController {
 
     }
 
-    //TODO: Check if user have access to the dataset
     @GetMapping("/modal")
     public String getDatasetInfo(Authentication authentication, Model model, @RequestParam("id") String id)
     {
-        System.out.println("Llamada a modal");
         Optional<Dataset> opt = datasetRepository.findById(id);
 
         if(opt.isPresent())
         {
             Dataset dataset = opt.get();
+            if(dataset.getType().equals("systemdataset"))
+            {
             model.addAttribute("dataset", dataset);
+            }
         }
         
         return "create_dataset::dataset";
+    }
+
+    //TODO:Implement this method
+    @GetMapping("/createlist")
+    public String filterDatasets(Authentication authentication, Model model, @RequestParam("selectedLanguages") String selectedLanguages, 
+    @RequestParam("selectedDatatypes") String selectedDatatypes, @RequestParam("date1") String date1, @RequestParam("date2")String date2)
+    {
+        ArrayList<Dataset> datasets;
+        if(selectedLanguages=="" && selectedDatatypes=="" && date1=="" && date2=="")
+        {
+            datasets = datasetRepository.getSystemDatasets();
+        }
+        else
+        {
+            datasets = datasetService.getFilteredDatasets(selectedLanguages, selectedDatatypes, date1, date2);
+        }
+        model.addAttribute("datasets", datasets);
+
+        return "create_dataset::datasets";
     }
 
     //TODO_ Implement this method

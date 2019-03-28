@@ -84,7 +84,7 @@
 
                         </div>
                         <div class="col-4">
-                            <div class="list-group">
+                            <div th:fragment="datasets" class="list-group" id="datasets-list">
                                 <div th:each="dataset : ${datasets}">
                                     <li class="list-group-item">
                                         <div class="row">
@@ -115,27 +115,6 @@
                                         </div>
                                     </li>
                                 </div>
-                                <li class="list-group-item">
-                                    <div class="row">
-
-                                        <div class="col-3">
-
-                                        </div>
-                                        <div class="col-6">
-                                            <p class="main-text text-center">Select all</p>
-                                        </div>
-
-                                        <div class="col-1">
-                                            <div class="form-group">
-                                                <input type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-2">
-
-                                        </div>
-                                    </div>
-                                </li>
                             </div>
                         </div>
 
@@ -160,11 +139,8 @@
                         <div class="col-3">
                             <div class="row">
                                 <div class="col-2">
-                                    <div class="form-group">
-                                        <input type="checkbox" class="form-control" id="languagesCheckbox" onclick="enableInput(this.id)">
-                                    </div>
-                                </div>
 
+                                </div>
                                 <div class="col-10">
                                     <label class="main-text">Languages</label>
                                 </div>
@@ -172,48 +148,51 @@
 
                             <div class="form-group">
                                 <input type="text" oninput="showLanguageOptions(this.id)" class="form-control" id="languages"
-                                    placeholder="Files language" disabled="disabled">
+                                    placeholder="Files language">
                                 <div id="show-language-list">
                                     <ul id="languages-list" class="list-group">
 
                                     </ul>
                                 </div>
+                                <input type="hidden" id="selected-languages">
+                                <input type="hidden" id="selected-datatypes">
                             </div>
                         </div>
 
-                        <div class="col-3">
+                        <div class="col-4">
                             <div class="row">
                                 <div class="col-2">
-                                    <div class="form-group">
-                                        <input type="checkbox" id="dateRangeCheckbox" class="form-control" onclick="enableDateInput()">
-                                    </div>
                                 </div>
 
-                                <div class="col-10">
+                                <div class="col-8 text-center">
                                     <label class="main-text">Date range</label>
                                 </div>
+                                <div class="col-2">
+
+                                </div>
                             </div>
 
                             <div class="row">
+                                <div class="col-1">
+
+                                </div>
                                 <div class="col-5">
                                     <div class="form-group">
-                                        <input type="date" name="date" class="form-control" disabled="disabled">
+                                        <input id="date1" type="date" name="date" class="form-control">
                                     </div>
                                 </div>
-
-                                <div class="col-2">
-                                    <p class="main-text">to</p>
-                                </div>
-
                                 <div class="col-5">
                                     <div class="form-group">
-                                        <input type="date" name="date" class="form-control" disabled="disabled">
+                                        <input  id="date2" type="date" name="date" class="form-control">
                                     </div>
+                                </div>
+                                <div class="col-1">
+
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-3">
+                        <div class="col-2">
 
                         </div>
                     </div>
@@ -235,7 +214,7 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="form-group">
-                                                        <input type="checkbox">
+                                                        <input type="checkbox" name=".eml" id=".eml" onchange="selectDatatype(this.id)">
                                                     </div>
                                                 </div>
                                             </div>
@@ -251,7 +230,7 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="form-group">
-                                                        <input type="checkbox">
+                                                        <input type="checkbox" name=".tytb" id=".tytb" onchange="selectDatatype(this.id)">
                                                     </div>
                                                 </div>
                                             </div>
@@ -266,7 +245,7 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="form-group">
-                                                        <input type="checkbox">
+                                                        <input type="checkbox" name=".tsms" id=".tsms" onchange="selectDatatype(this.id)">
                                                     </div>
                                                 </div>
                                             </div>
@@ -281,7 +260,7 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="form-group">
-                                                        <input type="checkbox">
+                                                        <input type="checkbox" name=".twtid" id=".twtid" onchange="selectDatatype(this.id)">
                                                     </div>
                                                 </div>
                                             </div>
@@ -296,15 +275,38 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="form-group">
-                                                        <input type="checkbox">
+                                                        <input type="checkbox" name=".warc" id=".warc" onchange="selectDatatype(this.id)">
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
+
+                                <div class="row page-content">
+                                        <div class="col-3">
+        
+                                        </div>
+        
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <button type="button" class="form-control submit-button" id="applyfiltersbutton" onclick="updateDatasetsList()">Apply filters</button>
+                                            </div>
+                                        </div>
+        
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <button type="button" class="form-control reject-button" id="resetfiltersbutton" onclick="resetFilters()">Reset filters</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3">
+        
+                                        </div>
+                                    </div>
                                 </div>
                         <div class="col-2">
+                            
                         </div>
                     </div>
 

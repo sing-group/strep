@@ -20,6 +20,13 @@ html {
     background-color: #9cb805;
     color: #203939;
 }
+
+.reject-button
+{
+    background-color: #ff1a4a;
+    color: #f4f6ec;
+}
+
 .topdiv-text, .thead-text
 {
     color: #dfe6ea;

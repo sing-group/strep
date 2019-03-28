@@ -30,7 +30,7 @@ function enableInput(id)
 
 function showLanguageOptions(id)
 {
-    var languages = ["spanish", "english", "portuguese", "italian", "russian"];
+    var languages = ["spanish", "english", "portuguese", "italian", "russian", "galician"];
 
     var idInput = document.getElementById(id);
 
@@ -67,36 +67,22 @@ function showLanguageOptions(id)
  }
 }
 
- function enableDateInput()
- {
-     var date1 = document.getElementsByName("date")[0];
-     var date2 = document.getElementsByName("date")[1];
-
-     if(date1.getAttribute("disabled"))
-     {
-         date1.removeAttribute("disabled");
-         date2.removeAttribute("disabled");
-     }
-     else
-     {
-         date1.setAttribute("disabled", "disabled");
-         date2.setAttribute("disabled", "disabled");
-     }
- }
-
  function selectLanguage(id)
  {
-    var languages = ["spanish", "english", "portuguese", "italian", "russian"];
+    var languages = ["spanish", "english", "portuguese", "italian", "russian", "galician"];
 
     var searchInput = document.getElementById("languages");
     var list = document.getElementById("languages-list");
     var selectedLanguages = document.getElementById("selected-languages-list");
+    var selectedLanguagesHidden = document.getElementById("selected-languages");
 
     var index = id.substring(8, id.length);
 
     searchInput.value = "";
     list.parentNode.removeChild(list);
-
+    
+    if(!selectedLanguagesHidden.value.includes(languages[index]))
+    {
     var language = document.createElement('ul');
     language.className = "list-group-item list-group-item-action text-center";
     language.setAttribute("data-type", "selected-language-item");
@@ -114,12 +100,76 @@ function showLanguageOptions(id)
 
     language.append(removeButton);
     selectedLanguages.append(language);
+
+    if(selectedLanguagesHidden.value=="")
+    {
+        selectedLanguagesHidden.value += languages[index];
+    }
+    else
+    {
+        selectedLanguagesHidden.value += ","+languages[index];
+    }
+    }
  }
 
  function deleteLanguage(id)
  {
+    var languages = ["spanish", "english", "portuguese", "italian", "russian", "galician"];
+
     var language = document.getElementById(id);
+    var selectedLanguagesHidden = document.getElementById("selected-languages");
+    var languageStr = id.substring(17, id.length);
+
+    var index = Number(languageStr);
+
+    if(selectedLanguagesHidden.value.substring(0, languages[index].length)==languages[index])
+    {
+        selectedLanguagesHidden.value = selectedLanguagesHidden.value.replace(languages[index],"");
+        if(selectedLanguagesHidden.value!="")
+        {
+            selectedLanguagesHidden.value = selectedLanguagesHidden.value.replace(",", "");
+        }
+    }
+    else
+    {
+        selectedLanguagesHidden.value = selectedLanguagesHidden.value.replace(","+languages[index], "");
+    }
 
     language.parentNode.removeChild(language);
  }
+
+ function selectDatatype(id)
+ {
+     var datatype = document.getElementById(id);
+     var selectedDatatypesHidden = document.getElementById("selected-datatypes");
+
+     if(datatype.checked)
+     {
+         if(selectedDatatypesHidden.value == "")
+         {
+             selectedDatatypesHidden.value = id;
+         }
+         else
+         {
+             selectedDatatypesHidden.value = selectedDatatypesHidden.value+","+id;
+         }
+     }
+     else
+     {
+         if(selectedDatatypesHidden.value.substring(0, id.length)==id)
+         {
+             selectedDatatypesHidden.value = selectedDatatypesHidden.value.replace(id, "");
+             if(selectedDatatypesHidden.value!="")
+             {
+                 selectedDatatypesHidden.value = selectedDatatypesHidden.value.replace(",", "");
+             }
+         }
+         else
+         {
+             selectedDatatypesHidden.value = selectedDatatypesHidden.value.replace(","+id,"");
+         }
+     }
+ }
+
+ 
  
