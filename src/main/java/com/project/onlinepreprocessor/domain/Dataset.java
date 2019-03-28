@@ -106,6 +106,10 @@ public class Dataset
     @JoinColumn(name="task_id", referencedColumnName="id")
     private Task task;
 
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = false)
+    private License license;
+
     /**
      * The default constructor
      */
@@ -114,7 +118,7 @@ public class Dataset
     }
 
     public Dataset(String name,String url, String author, String description, String access, Integer spamPercentage, Integer hamPercentage, 
-     String type)
+     String type, License license)
     {
         this.name = name;
         this.url = url;
@@ -125,6 +129,7 @@ public class Dataset
         this.hamPercentage = hamPercentage;
         this.type = type;
         this.available = false;
+        this.license = license;
     }
 
     /**
@@ -373,5 +378,15 @@ public class Dataset
     public void setTask(Task task)
     {
         this.task = task;
+    }
+
+    public License getLicense()
+    {
+        return this.license;
+    }
+
+    public void setLicense(License license)
+    {
+        this.license = license;
     }
 }

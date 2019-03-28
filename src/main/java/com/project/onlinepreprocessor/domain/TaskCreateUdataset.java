@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 
 @Entity
 @PrimaryKeyJoinColumn(referencedColumnName="id")
-public class TaskCreateUser extends Task
+public class TaskCreateUdataset extends Task
 {
     @Column(nullable = true)
     private int limitPercentageSpam;
@@ -30,14 +30,19 @@ public class TaskCreateUser extends Task
     private Date dateTo;
 
     @ManyToMany
-    @JoinTable(name="taskcreateuser_languages", joinColumns= @JoinColumn(name = "task_id", referencedColumnName = "id"), 
+    @JoinTable(name="taskcreateudataset_languages", joinColumns= @JoinColumn(name = "task_id", referencedColumnName = "id"), 
     inverseJoinColumns = @JoinColumn(name="language", referencedColumnName="language"))
     private List<Language> languages;
 
     @ManyToMany
-    @JoinTable(name="taskcreateuser_datatypes", joinColumns= @JoinColumn(name = "task_id", referencedColumnName = "id"), 
+    @JoinTable(name="taskcreateudataset_datatypes", joinColumns= @JoinColumn(name = "task_id", referencedColumnName = "id"), 
     inverseJoinColumns = @JoinColumn(name="datatype", referencedColumnName="dataType"))
     private List<Datatype> datatypes;
+
+    @ManyToMany
+    @JoinTable(name="taskcreateudataset_licenses", joinColumns= @JoinColumn(name = "task_id", referencedColumnName = "id"), 
+    inverseJoinColumns = @JoinColumn(name="license", referencedColumnName="name"))
+    private List<License> licenses;
 
     @Column(nullable = true)
     private int limitPercentageEml;
@@ -56,8 +61,8 @@ public class TaskCreateUser extends Task
 
 
 
-    public TaskCreateUser(Dataset dataset, String state, String message, int limitPercentageSpam, int limitSpam, int limitNumberOfFiles, 
-    Date dateFrom, Date dateTo, List<Language> languages, List<Datatype> datatypes, int limitPercentageEml,
+    public TaskCreateUdataset(Dataset dataset, String state, String message, int limitPercentageSpam, int limitSpam, int limitNumberOfFiles, 
+    Date dateFrom, Date dateTo, List<Language> languages, List<Datatype> datatypes,List<License> licenses, int limitPercentageEml,
      int limitPercentageTytb, int limitPercentageTsms, int limitPercentageTwtid, int limitPercentageWarc) {
         super(dataset, state, message);
         this.limitPercentageSpam = limitPercentageSpam;
@@ -67,11 +72,17 @@ public class TaskCreateUser extends Task
         this.dateTo = dateTo;
         this.languages = languages;
         this.datatypes = datatypes;
+        this.licenses = licenses;
         this.limitPercentageEml = limitPercentageEml;
         this.limitPercentageTytb = limitPercentageTytb;
         this.limitPercentageTsms = limitPercentageTsms;
         this.limitPercentageTwtid = limitPercentageTwtid;
         this.limitPercentageWarc = limitPercentageWarc;
+    }
+
+    public TaskCreateUdataset()
+    {
+        super();
     }
 
     public int getLimitPercentageSpam() {
@@ -168,6 +179,16 @@ public class TaskCreateUser extends Task
 
     public void setLimitPercentageWarc(int limitPercentageWarc) {
         this.limitPercentageWarc = limitPercentageWarc;
+    }
+
+    public List<License> getLicenses()
+    {
+        return licenses;
+    }
+
+    public void setLicenses(List<License> licenses)
+    {
+        this.licenses = licenses;
     }
     
 

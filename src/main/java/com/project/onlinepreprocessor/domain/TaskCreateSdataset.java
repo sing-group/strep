@@ -5,15 +5,15 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
-public class TaskCreateSystem extends Task
+public class TaskCreateSdataset extends Task
 {
 
-    public TaskCreateSystem(Dataset dataset, String state, String message)
+    public TaskCreateSdataset(Dataset dataset, String state, String message)
     {
         super(dataset, state, message);
     }
 
-    public TaskCreateSystem()
+    public TaskCreateSdataset()
     {
         super();
     }
