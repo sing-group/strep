@@ -1,361 +1,337 @@
 <!DOCTYPE HTML>
 <html>
-<head> 
-    <title>Online Preprocessor</title> 
+
+<head>
+    <title>Online Preprocessor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
-    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
+
 <body class="main-bg">
     <div class="container-fluid">
-                        <nav class="navbar navbar-expand-lg navbar-light top-bg">
-                                <img src="/images/database.svg" alt="logo" height="32" width="32">
-                                <a href="/" class="topdiv-text" id="linklogo">Online preprocessor</a>
-                              
-                                <div class="collapse navbar-collapse" >
-                                  <ul class="navbar-nav mr-auto">
-                                    <li class="nav-item">
-                                      <a class="nav-link" id="topdivhome" href="/">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link" id="topdivpublic" href="/dataset/public">Public datasets</a>
-                                    </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link" id="topdivregister" href="/user/register">Register</a>
-                                    </li>
-                                  </ul>
-                                  <div sec:authorize="isAnonymous()">
-                                  <form action="#" th:action="@{/}" th:object="${loginForm}" method="post" class="form-inline my-2 my-lg-0">
-                                    <input class="form-control mr-sm-2" type="text" id="username" name="username" placeholder="Username" aria-label="Username">
-                                    <label class="error-label" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</label>
-                                    <input class="form-control mr-sm-2" type="password" id="username" name="password" placeholder="Password" aria-label="Password">
-                                    <label class="error-label" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</label>
-                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Login">Login</button>
+        <nav class="navbar navbar-expand-lg navbar-light top-bg">
+            <img src="/images/database.svg" alt="logo" height="32" width="32">
+            <a href="/" class="topdiv-text" id="linklogo">Online preprocessor</a>
+
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" id="topdivhome" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="topdivpublic" href="/dataset/public">Public datasets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="topdivregister" href="/user/register">Register</a>
+                    </li>
+                </ul>
+                <div sec:authorize="isAnonymous()">
+                    <form action="#" th:action="@{/}" th:object="${loginForm}" method="post" class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="text" id="username" name="username" placeholder="Username"
+                            aria-label="Username">
+                        <label class="error-label" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username
+                            error</label>
+                        <input class="form-control mr-sm-2" type="password" id="username" name="password" placeholder="Password"
+                            aria-label="Password">
+                        <label class="error-label" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password
+                            error</label>
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Login">Login</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <div class="row page-content pre-footer">
+                <div class="col-2">
+    
+                </div>
+
+        <div class="col-8  main-div-bg">
+            <img class="header-logo" src="/images/databaseblue.svg" alt="databaseblue.svg" height="64" width="64">
+            <h3 class="main-text text-center">Dataset details</h3>
+            <div class="page-content">
+                <img class="header-logo" src="/images/authorplaceholder.svg" alt="authorplaceholder.svg" height="64"
+                    width="64">
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-6 text-center">
+
+                        <h4 class="main-text">Author</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.author}"
+                                readonly>
+                        </div>
+                    </div>
+                    <div class="col-3">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-6 text-center">
+
+                        <h4 class="main-text">Dataset name</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.name}"
+                                readonly>
+                        </div>
+                    </div>
+                    <div class="col-3">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-6 text-center">
+
+                        <h4 class="main-text">Upload date</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.uploadDate}"
+                                readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+
+                    <div class="col-6 text-center">
+                        <h4 class="main-text">Description</h4>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" th:text="${dataset.description}" readonly></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-6 text-center">
+
+                        <h4 class="main-text">DOI</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.doi}"
+                                readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-6 text-center">
+
+                        <h4 class="main-text">License</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.license.name}"
+                                readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-6 text-center">
+
+                        <h4 class="main-text">URL</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.url}"
+                                readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-6 text-center">
+
+                        <h4 class="main-text">Type</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.type}"
+                                readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-6 text-center">
+
+                        <h4 class="main-text">Access</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.access}"
+                                readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+
+                    <div class="col-3 text-center">
+                        <h4 class="main-text">Spam percentage</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.spamPercentage}"
+                                readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-3 text-center">
+                        <h4 class="main-text">Ham percentage</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.hamPercentage}"
+                                readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+
+                    <div class="col-6 text-center">
+                        <h4 class="main-text">Languages</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control aligned-input" th:attr="value = ${languages}">
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+
+                    <div class="col-6 text-center">
+                        <h4 class="main-text">Datatypes</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control aligned-input" th:attr="value = ${datatypes}">
+                        </div>
+                    </div>
+                    <div class="col-3">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-6">
+                        <div th:if="${dataset.pipeline}!=null">
+                            <div class="row">
+                                <div class="col-6">
+                                    <form action="#" th:action="@{/dataset/public/download}" method="GET">
+                                        <input type="hidden" name="id" th:attr="value = ${dataset.name}">
+                                        <input type="submit" class="form-control submit-button" value="Download dataset">
                                     </form>
-                                    </div>
                                 </div>
-                              </nav>
-
-            <div class="row page-content">
-
-                <div class="col-1">
-
-                </div>
-
-                <div class="col-10 form-bg">
-                <img class="header-logo" src="/images/databaseblue.svg" alt="logo.png" height="64" width="64">
-                <h1 class="main-text text-center">Dataset details</h1>
-                </p>
-                </div>
-
-                <div class="col-1">
-
-                </div>
-            </div>
-
-            <div class="row page-content">
-
-                <div class="col-2">
-
-                </div>
-
-
-                <div class="col-8 main-div-bg container" style="margin-bottom:100px">
-                    <div class="row">
-
-                        <div class="col-2">
-
+                                <div class="col-6">
+                                    <form action="#" th:action="@{/dataset/public/downloadpipeline}" method="GET">
+                                        <input type="hidden" name="id" th:attr="value = ${dataset.name}">
+                                        <input type="submit" class="form-control submit-button" value="Download pipeline">
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="col-8">
-                            <img src="/images/authorplaceholder.svg" alt="authorplaceholder" height="" width="64">
-                            <h3 class="topdiv-text"><span class="top-bg">Author:</span></h3>
-                            <p class="main-text dataset-attr" th:text="${dataset.author}"></p>
-                        </div>
-
-                        <div class="col-2">
-
+                        <div th:unless="${dataset.pipeline}!=null">
+                            <form action="#" th:action="@{/dataset/public/download}" method="GET">
+                                <input type="hidden" name="id" th:attr="value = ${dataset.name}">
+                                <input type="submit" class="form-control submit-button" value="Download dataset">
+                            </form>
                         </div>
                     </div>
+                    <div class="col-3">
 
-                    <div class="row">
-
-                        <div class="col-2">
-    
-                        </div>
-    
-                        <div class="col-8">
-                            <h3 class="topdiv-text"><span class="top-bg">Dataset:</span></h3>
-                            <p class="main-text dataset-attr" th:text="${dataset.name}"></p>
-                        </div>
-    
-                        <div class="col-2">
-    
-                        </div>
                     </div>
-
-
-                    <div class="row">
-                        <div class="col-2">
-
-                        </div>  
-
-                        <div class="col-8">
-                        <h3 class="topdiv-text"><span class="top-bg">Description:</span></h3>
-                        <p class="main-text dataset-attr" th:text="${dataset.description}"></p>
-                        </div>
-
-                        <div class="col-2">
-                            
-                        </div>  
-                    </div>
-
-                    <div class="row">
-                        <div class="col-2">
-    
-                        </div>  
-    
-                        <div class="col-8">
-                        <h3 class="topdiv-text"><span class="top-bg">DOI:</span></h3>
-                        <p class="main-text dataset-attr" th:text="${dataset.doi}"></p>
-                        </div>
-    
-                        <div class="col-2">
-                                
-                        </div>  
-                    </div>
-
-                    <div class="row">
-                        <div class="col-2">
-        
-                        </div>  
-        
-                        <div class="col-4">
-                        <h3 class="topdiv-text"><span class="top-bg">%Spam:</span></h3>
-                        <p class="main-text dataset-attr" th:text="${dataset.spamPercentage}"></p>
-                        </div>
-
-                        <div class="col-4">
-                        <h3 class="topdiv-text"><span class="top-bg">%Ham:</span></h3>
-                        <p class="main-text dataset-attr" th:text="${dataset.hamPercentage}"></p>
-                        </div>
-        
-                        <div class="col-2">
-                                    
-                        </div>  
-                    </div>
-
-                    <div class="row">
-                        <div class="col-2">
-        
-                        </div>  
-        
-                        <div class="col-8">
-                        <h3 class="topdiv-text"><span class="top-bg">Type:</span></h3>
-                        <p class="main-text dataset-attr" th:text="${dataset.type}"></p>
-                        </div>
-        
-                        <div class="col-2">
-                                    
-                        </div>  
-                    </div>
-
-                    <div class="row">
-                        <div class="col-2">
-            
-                        </div>  
-            
-                        <div class="col-8">
-                        <h3 class="topdiv-text"><span class="top-bg">Language:</span></h3>
-                        <p class="main-text dataset-attr" th:text="${dataset.language}"></p>
-                        </div>
-            
-                        <div class="col-2">
-                                        
-                        </div>  
-                    </div>
-
-                    <div class="row">
-                        <div class="col-2">
-                
-                        </div>  
-                
-                        <div class="col-8">
-                        <h3 class="topdiv-text"><span class="top-bg">Pipeline:</span></h3>
-                        <!--TODO: Remove pom.xml example and replace for th:text="${dataset.pipeline}"-->
-                        <textarea class="ta-pipe" rows="20" cols="60">
-                                <?xml version="1.0" encoding="UTF-8"?>
-                                <project xmlns="http://maven.apache.org/POM/4.0.0" 
-                                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-                                    <modelVersion>4.0.0</modelVersion>
-                                    <parent>
-                                        <groupId>org.springframework.boot</groupId>
-                                        <artifactId>spring-boot-starter-parent</artifactId>
-                                        <version>2.1.1.RELEASE</version>
-                                        <relativePath/>
-                                        <!-- lookup parent from repository -->
-                                    </parent>
-                                    <groupId>com.project</groupId>
-                                    <artifactId>onlinepreprocessor</artifactId>
-                                    <version>0.0.1-SNAPSHOT</version>
-                                    <name>onlinepreprocessor</name>
-                                    <description>Demo project for Spring Boot</description>
-                                
-                                    <properties>
-                                        <java.version>1.8</java.version>
-                                    </properties>
-                                
-                                
-                                
-                                    <repositories>
-                                        <!-- ... possibly other repository elements ... -->
-                                        <repository>
-                                            <id>spring-milestone</id>
-                                            <name>Spring Milestone Repository</name>
-                                            <url>https://repo.spring.io/milestone</url>
-                                        </repository>
-                                    </repositories>
-                                
-                                
-                                    <dependencies>
-                                        <dependency>
-                                            <groupId>org.springframework.boot</groupId>
-                                            <artifactId>spring-boot-starter-web</artifactId>
-                                        </dependency>
-                                
-                                        <dependency>
-                                            <groupId>org.springframework.boot</groupId>
-                                            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-                                        </dependency>
-                                        <dependency>
-                                            <groupId>org.springframework.boot</groupId>
-                                            <artifactId>spring-boot-devtools</artifactId>
-                                            <optional>true</optional>
-                                        </dependency>
-                                
-                                        <dependency>
-                                            <groupId>org.springframework.boot</groupId>
-                                            <artifactId>spring-boot-starter-test</artifactId>
-                                            <scope>test</scope>
-                                        </dependency>
-                                
-                                        <dependency>
-                                            <groupId>org.springframework.boot</groupId>
-                                            <artifactId>spring-boot-starter-data-jpa</artifactId>
-                                        </dependency>
-                                
-                                
-                                        <!--<dependency>
-                                            <groupId>mysql</groupId>
-                                            <artifactId>mysql-connector-java</artifactId>
-                                        </dependency>-->
-                                        <dependency>
-                                            <groupId>mysql</groupId>
-                                            <artifactId>mysql-connector-java</artifactId>
-                                            <version>5.1.20</version>
-                                        </dependency>
-                                
-                                
-                                        <dependency>
-                                            <groupId>org.springframework.boot</groupId>
-                                            <artifactId>spring-boot-starter-mail</artifactId>
-                                            <version>2.0.1.RELEASE</version>
-                                        </dependency>
-                                
-                                        <dependency>
-                                            <groupId>org.springframework.security</groupId>
-                                            <artifactId>spring-security-test</artifactId>
-                                            <scope>test</scope>
-                                        </dependency>
-                                
-                                        <dependency>
-                                            <groupId>org.springframework.boot</groupId>
-                                            <artifactId>spring-boot-starter-security</artifactId>
-                                        </dependency>
-                                
-                                        <dependency>
-                                            <groupId>org.springframework.security</groupId>
-                                            <artifactId>spring-security-web</artifactId>
-                                            <version>5.1.3.RELEASE</version>
-                                        </dependency>
-                                        <dependency>
-                                            <groupId>org.springframework.security</groupId>
-                                            <artifactId>spring-security-config</artifactId>
-                                            <version>5.1.3.RELEASE</version>
-                                        </dependency>
-                                        <dependency>
-                                            <groupId>org.thymeleaf.extras</groupId>
-                                            <artifactId>thymeleaf-extras-springsecurity4</artifactId>
-                                            <version>3.0.4.RELEASE</version>
-                                        </dependency>
-                                
-                                    </dependencies>
-                                    <build>
-                                        <plugins>
-                                            <plugin>
-                                                <groupId>org.springframework.boot</groupId>
-                                                <artifactId>spring-boot-maven-plugin</artifactId>
-                                            </plugin>
-                                        </plugins>
-                                    </build>
-                                
-                                </project>
-                                
-                        </textarea> 
-                        </div>
-                
-                        <div class="col-2">
-                                            
-                        </div>  
-                    </div>
-
-                    <div class="row">
-                        <div class="col-2">
-                    
-                        </div>  
-                    
-                        <div class="col-8">
-                        <h3 class="topdiv-text"><span class="top-bg">Download</span></h3>
-                        <a th:href="@{/dataset/public/download(id=${dataset.name})}">
-                        <img src="/images/download.svg" alt="download.svg" height="64" width="64">
-                        </a>
-                        </div>
-                    
-                        <div class="col-2">
-                                                
-                        </div>  
-                    </div>
-
-                </div>
-
-                <div class="col-2">
-
                 </div>
 
             </div>
+        </div>
 
-            <footer class="fixed-bottom page-footer footer-bg">
-                    <div class="container-fluid">
-                      <div class="row">
-                        <div class="col-5">
-          
-                        </div>  
-          
-                        <div class="col-1">
-                            <a href="https://www.sing-group.org/"><img src="/images/singGrey.svg" alt="singGrey.svg" width="64" height="64"></a>
-                        </div>
-          
-                        <div class="col-1">
-                            <a href="https://www.uvigo.gal/es"><img src="/images/uvigo.png" alt="uvigo.png" width="128" height="64"></a>
-                        </div>
-          
-                        <div class="col-5">
-          
-                        </div>
-                      </div>
-                    </div>
-                  </footer>
+    </div>
+
+    <footer class="fixed-bottom page-footer footer-bg">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-5">
+
+                </div>
+
+                <div class="col-1">
+                    <a href="https://www.sing-group.org/"><img src="/images/singGrey.svg" alt="singGrey.svg" width="64"
+                            height="64"></a>
+                </div>
+
+                <div class="col-1">
+                    <a href="https://www.uvigo.gal/es"><img src="/images/uvigo.png" alt="uvigo.png" width="128" height="64"></a>
+                </div>
+
+                <div class="col-5">
+
+                </div>
+            </div>
+        </div>
+    </footer>
     </div>
 </body>
+
 </html>

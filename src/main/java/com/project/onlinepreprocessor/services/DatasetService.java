@@ -17,8 +17,10 @@ import com.project.onlinepreprocessor.domain.Dataset;
 import com.project.onlinepreprocessor.domain.Datatype;
 import com.project.onlinepreprocessor.domain.File;
 import com.project.onlinepreprocessor.domain.Language;
+import com.project.onlinepreprocessor.domain.License;
 import com.project.onlinepreprocessor.repositories.DatasetRepository;
 import com.project.onlinepreprocessor.repositories.FileRepository;
+import com.project.onlinepreprocessor.repositories.LicenseRepository;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,9 @@ public class DatasetService
 
     @Autowired
     private FileRepository fileRepository;
+
+    @Autowired
+    private LicenseRepository licenseRepository;
 
     @Value("${host.name}")
     private String HOST_NAME;
@@ -380,6 +385,33 @@ public class DatasetService
                 return true;
             }
         }
+    }
+
+    public String getLanguagesString(Dataset dataset)
+    {
+        String languages = "";
+        ArrayList<Language> languagesArray = new ArrayList<Language>(dataset.getLanguage());
+
+        for(int i = 0; i<languagesArray.size(); i++)
+        {
+            languages+=languagesArray.get(i).getLanguage();
+            languages+=" ";
+        }
+
+        return languages;
+    }
+
+    public String getDatatypesString(Dataset dataset)
+    {
+        String datatypes = "";
+        ArrayList<Datatype> datatypesArray = new ArrayList<Datatype>(dataset.getDatatypes());
+
+        for(int i = 0; i<datatypesArray.size();i++)
+        {
+            datatypes+= datatypesArray.get(i).getDatatype();
+            datatypes+=" ";
+        }
+        return datatypes;
     }
         
 }

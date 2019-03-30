@@ -14,131 +14,132 @@
         <div th:include="header.html">
 
         </div>
-    <div th:if="${message != null}">
-    <div class="row page-content">
-        <div class="col-4">
+        <div th:if="${message != null}">
+            <div class="row page-content">
+                <div class="col-4">
 
-        </div>
-
-        <div class="col-4 message">
-            <p class="main-text text-center" th:text="${message}"></p>
-        </div>
-
-        <div class="col-4">
-
-        </div>
-    </div>
-    </div>
-
-    <div class="row page-content">
-        <div class="col-1">
-
-        </div>
-
-        <div class="col-10 form-bg">
-            <img class="header-logo" src="/images/request.svg" alt="logo.png" height="64" width="64">
-            <h1 class="main-text text-center welcome-text"><em>Permission requests</em></h1> 
-        </div>
-
-        <div class="col-1">
-
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-3">
-
-        </div>
-
-        <div class="col-2 form-bg">
-            <div class="row">
-                    <div class="col-2">
-                        <img src="/images/tick.svg" alt="aprobed.svg" width="32" height="32">
-                    </div>
-
-                    <div class="col-10">
-                        <p class="main-text text-center">This icon means that the request have been aprobed.</p>
-                    </div>
-            </div>
-        </div>
-
-        <div class="col-2 form-bg">
-            <div class="row">
-                    <div class="col-2">
-                        <img src="/images/clock.svg" alt="pending.svg" width="32" height="32">
-                    </div>
-
-                    <div class="col-10">
-                        <p class="main-text text-center">This icon means that the request is still not resolved.</p>
-                    </div>
-            </div>
-        </div>
-
-        <div class="col-2 form-bg">
-            <div class="row">
-                <div class="col-2">
-                    <img src="/images/warning.svg" alt="pending.svg" width="32" height="32">
-                </div>
-                <div class="col-10">
-                    <p class="main-text text-center">If a request does not appear here, it means that it has been rejected.</p>
                 </div>
 
+                <div class="col-4 message">
+                    <p class="main-text text-center" th:text="${message}"></p>
+                </div>
+
+                <div class="col-4">
+
+                </div>
             </div>
         </div>
 
-        <div class="col-3">
+        <div class="row page-content pre-footer">
+            <div class="col-3">
 
-        </div>
-    </div>
+            </div>
 
-    <div class="row page-content pre-footer">
-        <div class="col-4">
+            <div class="col-6 form-bg">
+                <img class="header-logo" src="/images/request.svg" alt="logo.png" height="64" width="64">
+                <h2 class="main-text text-center">Permission requests</h1>
+                <div class="row page-content">
+                    <div class="col-4">
 
-        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <img src="/images/tick.svg" alt="aprobed.svg" width="32" height="32">
+                            </div>
 
-        <div class="col-4 form-bg">
-            <h4 class="top-bg topdiv-text text-center">Requests status</h4>
-            <div th:each="request:${permissionRequests}">
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col-1">
+                            <div class="col-10">
+                                <p class="main-text text-center">This icon means that the request have been aprobed.</p>
+                            </div>
+                        </div>
 
                     </div>
 
-                    <div class="col-3">
-                        <div th:if="${request.status}=='pending'">
-                            <img src="/images/clock.svg" alt="pending" width="32" height="32">
+                    <div class="col-4">
+                        <div class="row">
+                            <div class="col-2">
+                                <img src="/images/clock.svg" alt="pending.svg" width="32" height="32">
+                            </div>
+
+                            <div class="col-10">
+                                <p class="main-text text-center">This icon means that the request is still not
+                                    resolved.</p>
+                            </div>
                         </div>
-                        <div th:if="${request.status}=='accepted'">
-                            <img src="/images/tick.svg" alt="accepted" width="32" height="32">
-                        </div>
+
                     </div>
 
-                    <div class="col-8">
-                        <div th:if="${request.permission.id}=='2'">
+                    <div class="col-4">
+                        <div class="row">
+                            <div class="col-2">
+                                <img src="/images/warning.svg" alt="pending.svg" width="32" height="32">
+                            </div>
+                            <div class="col-10">
+                                <p class="main-text text-center">If a request does not appear here, it means that it
+                                    has been rejected.</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="page-content">
+                    <div class="row">
+                        <div class="col-1">
+
+                        </div>
+
+                        <div class="col-10">
+                                <h4 class="top-bg topdiv-text text-center">Requests status</h4>
+                        </div>
+
+                        <div class="col-1">
+
+                        </div>
+
+                    </div>
+                
+                <div th:each="request:${permissionRequests}">
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-1">
+
+                        </div>
+
+                        <div class="col-3">
+                            <div th:if="${request.status}=='pending'">
+                                <img src="/images/clock.svg" alt="pending" width="32" height="32">
+                            </div>
+                            <div th:if="${request.status}=='accepted'">
+                                <img src="/images/tick.svg" alt="accepted" width="32" height="32">
+                            </div>
+                        </div>
+
+                        <div class="col-8">
+                            <div th:if="${request.permission.id}=='2'">
                                 <p class="main-text"><em>Can upload</em> permission request <em th:text="${request.status}"></em></p>
-                        </div>
+                            </div>
 
-                        <div th:if="${request.permission.id}=='3'">
+                            <div th:if="${request.permission.id}=='3'">
                                 <p class="main-text"><em>Can create corpus</em> permission request <em th:text="${request.status}"></em></p>
-                        </div>
+                            </div>
 
-                        <div th:if="${request.permission.id}=='4'">
+                            <div th:if="${request.permission.id}=='4'">
                                 <p class="main-text"><em>Can administer</em> permission request <em th:text="${request.status}"></em></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
+            </div>
+
+            <div class="col-3">
+
+            </div>
         </div>
 
-        <div class="col-4">
+        <div th:include="footer.html">
 
         </div>
-
-    </div>
-
-    <div th:include="footer.html">
-        
-    </div>
 
 
     </div>

@@ -33,9 +33,24 @@
                         <textarea rows="5" class="form-control" name="description" placeholder="Description of the dataset" required="required"></textarea>
                         <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description error</label>
                         </div>
-                        <div class="form-group">
-                        <input type="text" class="form-control" name="doi" placeholder="DOI">
-                        <label class="error-label" th:if="${#fields.hasErrors('doi')}" th:errors="*{doi}">There is an error in the doi format</label>
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <div class="form-group">
+                                <input type="text" class="form-control" name="doi" placeholder="DOI">
+                                <label class="error-label" th:if="${#fields.hasErrors('doi')}" th:errors="*{doi}">There is an error in the doi format</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                <select class="form-control" id="selectLicense" name="license" required>
+                                    <option value="" disabled selected>Select a license for the dataset</option>
+                                    <div th:each="license : ${licenses}">
+                                        <option th:value="${license.name}" th:text="${license.name}"></option>
+                                    </div>
+                                </select>
+                                <label class="error-label" th:if="${#fields.hasErrors('license')}" th:errors="*{license}">There are errors in selected license</label>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row text-center">

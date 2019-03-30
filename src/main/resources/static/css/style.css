@@ -177,3 +177,8 @@ html {
     left:0;
     right:0;
 }
+
+.aligned-input
+{
+    text-align: center;
+}

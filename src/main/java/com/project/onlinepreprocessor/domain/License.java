@@ -22,6 +22,11 @@ public class License
         this.url = url;
     }
 
+    public License()
+    {
+        
+    }
+
     public String getName()
     {
         return name;

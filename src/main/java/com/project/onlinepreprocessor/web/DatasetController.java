@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import com.project.onlinepreprocessor.domain.Dataset;
 import com.project.onlinepreprocessor.forms.LoginForm;
 import com.project.onlinepreprocessor.repositories.DatasetRepository;
+import com.project.onlinepreprocessor.repositories.LicenseRepository;
 import com.project.onlinepreprocessor.services.DatasetService;
 import com.project.onlinepreprocessor.services.UserService;
 
@@ -53,6 +54,9 @@ public class DatasetController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private LicenseRepository licenseRepository;
+
     @GetMapping("/public")
     public String listPublicDatasets(LoginForm loginForm, Model model) {
         HashSet<Dataset> datasets = datasetRepository.getPublicDatasets();
@@ -66,6 +70,11 @@ public class DatasetController {
 
         if (opt.isPresent()) {
             Dataset dataset = opt.get();
+            String languages = datasetService.getLanguagesString(dataset);
+            String datatypes = datasetService.getDatatypesString(dataset);
+
+            model.addAttribute("languages", languages);
+            model.addAttribute("datatypes", datatypes);
             model.addAttribute("dataset", dataset);
             return "detailedDataset";
         } else {
@@ -138,16 +147,22 @@ public class DatasetController {
 
         if (opt.isPresent()) {
             Dataset dataset = opt.get();
+            String languages = datasetService.getLanguagesString(dataset);
+            String datatypes = datasetService.getDatatypesString(dataset);
 
             if (dataset.getAccess().equals("private")) {
                 if (dataset.getAuthor().equals(username)) {
                     model.addAttribute("dataset", dataset);
+                    model.addAttribute("languages", languages);
+                    model.addAttribute("datatypes", datatypes);
                     return "detailed_private_dataset";
                 } else {
                     return "redirect:/error";
                 }
             } else {
                 model.addAttribute("dataset", dataset);
+                model.addAttribute("languages", languages);
+                model.addAttribute("datatypes", datatypes);
                 return "detailed_private_dataset";
             }
         } else {
@@ -279,16 +294,17 @@ public class DatasetController {
 
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
-
+        
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
         model.addAttribute("host", HOST_NAME);
+        model.addAttribute("licenses", licenseRepository.findAll());
 
         return "add_dataset";
     }
 
     @PostMapping("/upload")
-    public String addDataset(Authentication authentication, @Valid Dataset dataset,BindingResult bindingResult,@RequestParam(name="dataset-file", required=true)MultipartFile datasetFile,RedirectAttributes redirectAttributes,  Model model)
+    public String addDataset(Authentication authentication, @Valid Dataset dataset,BindingResult bindingResult,@RequestParam(name="dataset-file", required=true)MultipartFile datasetFile,RedirectAttributes redirectAttributes, Model model)
     {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
@@ -300,6 +316,7 @@ public class DatasetController {
             model.addAttribute("authority", authority);
             model.addAttribute("username", username);
             model.addAttribute("host", HOST_NAME);
+            model.addAttribute("licenses", licenseRepository.findAll());
             return "add_dataset";
         }
         else

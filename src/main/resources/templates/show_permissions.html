@@ -29,15 +29,19 @@
         </div>
     </div>
     </div>
+    <div class="row">
+        <div class="col-1">
 
-    <div class="row page-content">
+        </div>
+    <div class="main-div-bg col-10 page-content pre-footer">
+    <div class="row">
         <div class="col-1">
 
         </div>
 
-        <div class="col-10 form-bg">
+        <div class="col-10">
             <img class="header-logo" src="/images/permissions.svg" alt="logo.png" height="64" width="64">
-            <h1 class="main-text text-center welcome-text"><em>Permissions</em></h1>
+            <h2 class="main-text text-center">Permissions</h2>
         </div>
 
         <div class="col-1">
@@ -45,33 +49,33 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row page-content">
 
             <div class="col-1">
 
             </div>
     
-            <div class="col-1 form-bg">
+            <div class="col-1">
     
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
                 <h4 class="main-text text-center">Can view</h4>
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
                 <h4 class="main-text text-center">Can create corpus</h4>
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
                 <h4 class="main-text text-center">Can upload</h4>
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
                 <h4 class="main-text text-center">Can administer</h4>
             </div>
 
-            <div class="col-1 form-bg">
+            <div class="col-1 ">
 
             </div>
     
@@ -86,28 +90,28 @@
 
         </div>
 
-        <div class="col-1 form-bg">
+        <div class="col-1 ">
 
         </div>
 
-        <div class="col-2 form-bg">
+        <div class="col-2 ">
 
         </div>
 
-        <div class="col-2 form-bg">
+        <div class="col-2 ">
 
         </div>
 
-        <div class="col-2 form-bg">
+        <div class="col-2 ">
             
         </div>
 
-        <div class="col-2 form-bg">
+        <div class="col-2 ">
                 <p class="top-bg topdiv-text text-center">Can administer</p>
                 <p class="main-text text-center">The user with these permissions can administer users of the platform and delete system datasets</p>
         </div>
 
-        <div class="col-1 form-bg">
+        <div class="col-1 ">
 
         </div>
 
@@ -122,30 +126,30 @@
 
             </div>
     
-            <div class="col-1 form-bg">
+            <div class="col-1 ">
     
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
 
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
                 <p class="top-bg topdiv-text text-center">Can create new corpus</p>
                 <p class="main-text text-center">The user with these permissions can create new datasets by mixing system datasets</p>
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
                 <p class="top-bg topdiv-text text-center">Can upload</p>
                 <p class="main-text text-center">The user with these permissions can upload system datasets</p>
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
                 <p class="top-bg topdiv-text text-center">Can reply permission requests</p>
                 <p class="main-text text-center">The user with these permissions can reply to the users permission requests</p>
             </div>
 
-            <div class="col-1 form-bg">
+            <div class="col-1 ">
 
             </div>
     
@@ -160,31 +164,31 @@
 
             </div>
 
-            <div class="col-1 form-bg">
+            <div class="col-1 ">
 
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
                 <p class="top-bg topdiv-text text-center">Can view</p>
                 <p class="main-text text-center">The user with these permissions only have access to see system and protected datasets</p>
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
                 <p class="top-bg topdiv-text text-center">Same as permissions bellow</p>
                 <p class="main-text text-center">The user with these permissions will have all the privileges of the lower permissions</p>
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
                 <p class="top-bg topdiv-text text-center">Same as permissions bellow</p>
                 <p class="main-text text-center">The user with these permissions will have all the privileges of the lower permissions</p>
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
                 <p class="top-bg topdiv-text text-center">Same as permissions bellow</p>
                 <p class="main-text text-center">The user with these permissions will have all the privileges of the lower permissions</p>
             </div>
 
-            <div class="col-1 form-bg">
+            <div class="col-1 ">
 
             </div>
 
@@ -199,17 +203,17 @@
 
             </div>
 
-            <div class="col-1 form-bg">
+            <div class="col-1 ">
 
             </div>
 
-            <div class="col-2 form-bg">
-                <button type="button" class="submit-button form-control">You already have this permission!</button>
+            <div class="col-2 ">
+                <button type="button" class="submit-button form-control">Adquired permission</button>
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
                 <div th:unless="${authority}=='canView'">
-                    <button type="button" class="submit-button form-control">You already have this permission!</button>
+                    <button type="button" class="submit-button form-control">Adquired permission</button>
                 </div>
                 <div th:if="${authority}=='canView'">
                     <form action="#" th:action="@{/permission/request}" method="POST">
@@ -219,9 +223,9 @@
                 </div>
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
                     <div th:unless="${authority}=='canView' or ${authority}=='canCreateCorpus'">
-                        <button type="button" class="submit-button form-control">You already have this permission!</button>
+                        <button type="button" class="submit-button form-control">Adquired permission</button>
                     </div>
                     <div th:if="${authority}=='canView' or ${authority}=='canCreateCorpus'">
                         <form action="#" th:action="@{/permission/request}" method="POST">
@@ -231,9 +235,9 @@
                     </div>
             </div>
 
-            <div class="col-2 form-bg">
+            <div class="col-2 ">
                     <div th:if="${authority}=='canAdminister'">
-                        <button type="button" class="submit-button form-control">You already have this permission!</button>
+                        <button type="button" class="submit-button form-control">Adquired permission</button>
                     </div>
                     <div th:unless="${authority}=='canAdminister'">
                         <form action="#" th:action="@{/permission/request}" method="POST">
@@ -243,7 +247,7 @@
                     </div>
             </div>
 
-            <div class="col-1 form-bg">
+            <div class="col-1 ">
 
             </div>
 
@@ -251,6 +255,12 @@
 
             </div>
     </div>
+    </div>
+
+    <div class="col-1">
+
+    </div>
+</div>
 
     <div th:include="footer.html">
 
