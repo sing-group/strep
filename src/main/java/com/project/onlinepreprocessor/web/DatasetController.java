@@ -282,7 +282,7 @@ public class DatasetController {
         model.addAttribute("username", username);
 
         ArrayList<Dataset> userDatasets = datasetRepository.getUserDatasets(username);
-        model.addAttribute("userDatasets", userDatasets);
+        model.addAttribute("datasets", userDatasets);
 
         return "home";
     }

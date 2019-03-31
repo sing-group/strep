@@ -21,6 +21,11 @@ html {
     color: #203939;
 }
 
+.button
+{
+    color: #9cb805;
+    font-size: 24px;
+}
 .reject-button
 {
     background-color: #ff1a4a;

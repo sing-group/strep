@@ -1,190 +1,203 @@
 <!DOCTYPE HTML>
 <html>
-<head> 
-    <title>Online Preprocessor</title> 
+
+<head>
+    <title>Online Preprocessor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
-    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
+
 <body class="main-bg">
     <div class="container-fluid">
+
+            <div class="modal" id="deleteDatasetModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Delete dataset?</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>Are you sure you want to delete this dataset?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="form-group">
+                          <a type="button" id="deleteConfirmation" class="reject-button form-control">Delete</a>
+                        </div>
+                            <div class="form-group">
+                          <button type="button form-control" class="submit-button form-control" data-dismiss="modal">Cancel</button>
+                        </div>
+                        
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
         <div th:include="header.html">
 
         </div>
-            <div th:if="${authority== 'canView'}">
-                    <div class="row page-content">
 
-                            <div class="col-1">
-            
-                            </div>
-            
-                            <div class="col-10 form-bg">
-                            <img class="header-logo" src="/images/lock.svg" alt="logo.png" height="64" width="64">
-                            <h1 class="main-text text-center welcome-text"><em>Your datasets</em></h1> 
-                                <div class="row">
-                                    <div class="col-4">
+        <div th:if="${message}">
+            <div class="row page-content">
+                <div class="col-4">
 
-                                    </div>
-                                    <div class="col-4">
-                                    <p class="main-text text-center">With more permissions you will be able to upload your own datasets,
-                                            create new datasets mixing system datasets and even be an administrator.
-                                            If you want to do anything of this, solicit new permissions</p>
-                                    <form action="/permission/list" method="get">
-                                        <div class="form-group">
-                                            <input type="submit" class="submit-button form-control" value="Solicit permissions"><br>
-                                        </div>
-                                    </form>  
-                                    </div>
-                                    <div class="col-4">
+                </div>
 
-                                    </div>
-                                </div>  
-                            </div>
-            
-                            <div class="col-1">
-            
-                            </div>
-                        </div>
+                <div class="col-4 message">
+                    <p class="main-text text-center" th:text="${message}"></p>
+                </div>
+
+                <div class="col-4">
+
+                </div>
             </div>
-            <div th:unless="${authority== 'canView'}">
-                    <div class="row page-content">
+        </div>
 
-                            <div class="col-1">
-            
-                            </div>
-            
-                            <div class="col-10 form-bg">
-                            <img class="header-logo" src="/images/userdatasets.svg" alt="logo.png" height="64" width="64">
-                            <h1 class="main-text text-center welcome-text"><em>Your datasets</em></h1> 
-                            </p>
-                            </div>
-            
-                            <div class="col-1">
-            
-                            </div>
-                        </div>
-            
-                        <div class="row page-content">
-            
-                            <div class="col-2">
-                            </div>
-            
-            
-                            <div class="col-8 main-div-bg">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="thead-text">
-                                                Name
-                                            </th>
-                                                
-                                            <th scope="col" class="thead-text">
-                                                Description
-                                            </th>
-            
-                                            <th scope="col" class="thead-text">
-                                                Author
-                                            </th>
-                                                
-                                            <th scope="col" class="thead-text">
-                                                Upload date
-                                            </th>
-            
-                                            <th scope="col" class="thead-text">
-                                                Language
-                                            </th>
-            
-                                            <th scope="col">
-            
-                                            </th>
-            
-                                            <th scope="col">
-                                                
-                                            </th>
+        <div class="row page-content pre-footer">
 
-                                            <th scope="col">
-                                                
-                                            </th>
-                                            <th scope="col">
-                                                
-                                            </th>
-                                        </tr>
-            
-                                    </thead>
-            
-                                    <tr th:each="userDataset : ${userDatasets}">
-                                        <td th:text="${userDataset.name}" class="main-text">
-            
-                                        </td>
-            
-                                        <td th:text="${userDataset.description}" class="main-text">
-            
-                                        </td>
-            
-                                        <td th:text="${userDataset.author}" class="main-text">
-            
-                                        </td>
-            
-                                        <td th:text="${userDataset.uploadDate}" class="main-text">
-            
-                                        </td>
-            
-                                        <td th:text="${userDataset.language}" class="main-text">
-            
-                                        </td>
-                                        <td>
-                                            <a th:href="@{/dataset/detailed(id=${userDataset.name}, type=user)}">
-                                            <img src="/images/detailed.svg" alt="See detail" height="24" width="24">
-                                            </a>
-                                        </td>
-            
-                                        <td>
-                                            <a th:href="@{/dataset/download(id=${userDataset.name},type=user)}">
-                                            <img src="/images/download.svg" alt="Download" height="24" width="24">
-                                            </a>
-                                        </td>
+            <div class="col-2">
 
-                                        <td>
-                                            <a th:href="@{/dataset/delete(id=${userDataset.name}, type=user)}">
-                                                <img src="/images/delete.svg" alt="Delete" height="24" width="24">
-                                            </a>
-                                        </td>
+            </div>
 
-                                        <td>
-                                            <div class="dropdown show">
-                                                <a class="image-button dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <img src="/images/key.svg" alt="Access" width="24" height="24">
-                                                </a>
-                                                <div class="dropdown-menu main-div-bg" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${userDataset.name}, access=private)}">Private</a>
-                                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${userDataset.name}, access=protected)}">Protected</a>
-                                                    <a class="dropdown-item" th:href="@{/dataset/access(id=${userDataset.name}, access=public)}">Public</a>
+            <div class="col-8 form-bg">
+                    <img class="header-logo" src="/images/userdatasets.svg" alt="logo.png" height="64" width="64">
+                    <h2 class="main-text text-center">Your datasets</h2>
+                <div th:each="dataset : ${datasets}">
+                    <div class="page-content">
+                        <div class="card">
+                            <div class="text-center card-header top-bg">
+                                <h4 class="topdiv-text" th:text="${dataset.name}"></h4>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-2 text-center">
+                                        <h5 class="main-text">Author</h5>
+                                        <img src="/images/authorplaceholder.svg" alt="authorplaceholder.svg" height="32"
+                                            width="32">
+                                        <p class="main-text" th:text="${dataset.author}"></p>
+                                    </div>
+
+                                    <div class="col-2 text-center">
+                                        <h5 class="main-text">Upload date</h5>
+                                        <p class="main-text" th:text="${dataset.uploadDate}"></p>
+                                    </div>
+
+                                    <div class="col-2 text-center">
+                                        <h5 class="main-text">License</h5>
+                                        <p class="main-text" th:text="${dataset.license.name}"></p>
+                                    </div>
+
+                                    <div class="col-2 text-center">
+                                        <h5 class="main-text">Languages</h5>
+                                        <div th:each="language : ${dataset.language}">
+                                            <p class="main-text" th:text="${language.language}"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <h5 class="main-text">Datatypes</h5>
+                                        <div th:each="datatype : ${dataset.datatypes}">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <div th:if="${datatype.datatype}=='.eml'">
+                                                        <img src="/images/gmail-logo.svg" alt="gmail-logo.svg" height="16"
+                                                            width="16">
+                                                    </div>
+                                                    <div th:if="${datatype.datatype}=='.tytb'">
+                                                        <img src="/images/youtube.svg" alt="youtube.svg" height="16"
+                                                            width="16">
+                                                    </div>
+                                                    <div th:if="${datatype.datatype}=='.twtid'">
+                                                        <img src="/images/twitter.svg" alt="twitter.svg" height="16"
+                                                            width="16">
+                                                    </div>
+                                                    <div th:if="${datatype.datatype}=='.tsms'">
+                                                        <img src="/images/sms.svg" alt="sms.svg" height="16" width="16">
+                                                    </div>
+                                                    <div th:if="${datatype.datatype}=='.warc'">
+                                                        <img src="/images/internet.svg" alt="internet.svg" height="16"
+                                                            width="16">
+                                                    </div>
                                                 </div>
+                                                <div class="col-6">
+                                                    <p class="main-text" th:text="${datatype.datatype}"></p>
+                                                </div>
+                                                <div class="col-3">
+
+                                                </div>
+
                                             </div>
-                                        </td>
 
-                                    </tr>
-                                </table>
-            
+                                        </div>
+                                    </div>
+
+                                    <div class="col-2 text-center">
+                                        <h5 class="main-text">Actions</h5>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <a th:href="@{/dataset/detailed(id=${dataset.name}, type=user)}">
+                                                    <i class="fas fa-eye button"></i>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-6">
+                                                    <a th:href="@{/dataset/download(id=${dataset.name}, type=user)}">
+                                                        <i class="fas fa-file-download button"></i>
+                                                    </a>
+                                                </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                    <a href="#" id="delete-dataset-button" data-th-href="@{/dataset/delete(id=${dataset.name})}" data-toggle="modal" data-target="#deleteDatasetModal">
+                                                        <img src="/images/delete.svg" alt="Delete" height="24" width="24">
+                                                    </a>
+                                            </div>
+                                            <div class="col-6">
+                                                    <div class="dropdown show">
+                                                            <a class="image-button dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <img src="/images/key.svg" alt="Access" width="24" height="24">
+                                                            </a>
+                                                            <div class="dropdown-menu main-div-bg" aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=private)}">Private</a>
+                                                                <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=protected)}">Protected</a>
+                                                                <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=public)}">Public</a>
+                                                            </div>
+                                                        </div>
+                                            </div>
+                                                
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+
                             </div>
-            
-                            <div class="col-2">
-            
-                            </div>
-            
                         </div>
+                    </div>
                 </div>
 
-                <div th:include="footer.html">
-                    
-                </div>
+                <div class="col-2">
 
                 </div>
-    
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            </div>
+
+            <div th:include="footer.html"></div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/js/functions.js"></script>
+         <script type="text/javascript" src="/js/jqueryFunctions.js"></script>
 </body>
+
 </html>

@@ -51,3 +51,12 @@ function resetFilters()
     var url = "/dataset/createlist?selectedLanguages="+selectedLanguages.value+"&selectedDatatypes="+selectedDatatypes.value+"&date1="+date1.value+"&date2="+date2.value;
     $("#datasets-list").load(url);
 }
+
+$('#deleteDatasetModal').on('show.bs.modal', function(event)
+{
+ var button = $(event.relatedTarget);
+ var href = button.attr('href');
+ var buttonConfirm = $('#deleteConfirmation');
+ buttonConfirm.attr("href", href);
+});
+
