@@ -6,20 +6,30 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 
+import com.project.onlinepreprocessor.domain.Dataset;
+import com.project.onlinepreprocessor.domain.Permission;
 import com.project.onlinepreprocessor.domain.User;
 import com.project.onlinepreprocessor.forms.RegisterForm;
+import com.project.onlinepreprocessor.repositories.DatasetRepository;
+import com.project.onlinepreprocessor.repositories.PermissionRepository;
 import com.project.onlinepreprocessor.repositories.UserRepository;
 import com.project.onlinepreprocessor.services.UserService;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
 import java.util.Base64;
 
 
@@ -36,6 +46,12 @@ public class UserController{
 
     @Autowired
     private JavaMailSender sender;
+
+    @Autowired
+    private DatasetRepository datasetRepository;
+
+    @Autowired
+    private PermissionRepository permissionRepository;
 
 
     @GetMapping("/register")
@@ -107,6 +123,120 @@ public class UserController{
         }
         else
             return"redirect:/user/register";
+    }
+
+    @GetMapping("list")
+    public String listUsers(@RequestParam(name="search", required=false)String searchInput, Authentication authentication, Model model)
+    {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String username = userDetails.getUsername();
+        String authority = userService.getPermissionsByUsername(username);
+
+        model.addAttribute("authority", authority);
+        model.addAttribute("username", username);
+
+        if(searchInput==null)
+        {
+            model.addAttribute("users", userRepository.findAll());
+        }
+        else
+        {
+            model.addAttribute("users", userRepository.searchUsers(searchInput));
+        }
+
+        return "list_users";
+    }
+
+    @GetMapping("detailed")
+    public String detailedUser(@RequestParam("username") String username, Authentication authentication, Model model)
+    {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String sessionUsername = userDetails.getUsername();
+        String authority = userService.getPermissionsByUsername(sessionUsername);
+        String maxUserPermission = userService.getPermissionsByUsername(username);
+
+        model.addAttribute("authority", authority);
+        model.addAttribute("maxUserPermission", maxUserPermission);
+        model.addAttribute("username", sessionUsername);
+
+        Optional<User> optUser = userRepository.findById(username);
+        ArrayList<Dataset> userDatasets = datasetRepository.getUserDatasets(username);
+        Iterable<Permission> permissions = permissionRepository.findAll();
+
+        if(optUser.isPresent())
+        {
+            User user = optUser.get();
+            model.addAttribute("user", user);
+            model.addAttribute("numDatasets", userDatasets.size());
+            model.addAttribute("permissions", permissions);
+        }
+
+        return "detailed_user";
+    }
+
+    @GetMapping("delete")
+    public String deleteUser(@RequestParam("username")String deleteUsername, @RequestParam(name="search", required=false)String searchInput,Authentication authentication, Model model)
+    {
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String username = userDetails.getUsername();
+        String authority = userService.getPermissionsByUsername(username);
+        String message = "";
+
+        model.addAttribute("authority", authority);
+        model.addAttribute("username", username);
+
+        Optional<User> optUser = userRepository.findById(deleteUsername);
+
+        if(optUser.isPresent())
+        {
+            permissionRepository.deletePermissions(optUser.get().getUsername());
+            userRepository.delete(optUser.get());
+            message="User deleted successfully";
+        }
+        else
+        {
+            message="Cannot delete user";
+        }
+        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("message", message);
+        return "list_users";
+    }
+
+    @PostMapping("editpermissions")
+    public String editUserPermissions(@RequestParam("permission")int permission,@RequestParam("username")String username, Authentication authentication, Model model)
+    {
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String sessionUsername = userDetails.getUsername();
+        String authority = userService.getPermissionsByUsername(sessionUsername);
+        model.addAttribute("authority", authority);
+        model.addAttribute("username", sessionUsername);
+        
+
+        String message = userService.editPermissions(permission, username);
+        model.addAttribute("message", message);
+
+        String maxUserPermission = userService.getPermissionsByUsername(username);
+        model.addAttribute("maxUserPermission", maxUserPermission);
+
+        Optional<User> optUser = userRepository.findById(username);
+        ArrayList<Dataset> userDatasets = datasetRepository.getUserDatasets(username);
+        Iterable<Permission> permissions = permissionRepository.findAll();
+
+        if(optUser.isPresent())
+        {
+            User user = optUser.get();
+            model.addAttribute("user", user);
+            model.addAttribute("numDatasets", userDatasets.size());
+            model.addAttribute("permissions", permissions);
+        }
+
+        return "detailed_user";
     }
     
 }

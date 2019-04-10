@@ -65,6 +65,28 @@ public class UserService
         return authority;
     }
 
+    public String editPermissions(int permissionIntId, String username)
+    {
+        String message = "Cannot edit permissions";
+        Long permissionLongId = new Long(permissionIntId);
+
+        Optional<Permission> permissionOpt = permissionRepository.findById(permissionLongId);
+
+        if(permissionOpt.isPresent())
+        {
+            Permission permission = permissionOpt.get();
+
+            permissionRepository.deletePermissions(username);
+            for(int i = 1; i<=permission.getId().intValue();i++)
+            {
+                permissionRepository.addPermission(username, i);
+            }
+            message = "User permissions changed";
+        }
+
+        return message;
+    }
+
     //Auxiliar method for convert permission id to String 
     private String convertPermIdToString(Long maxId)
     {
@@ -82,4 +104,6 @@ public class UserService
             return "canView";
         }
     }
+
+
 }

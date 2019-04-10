@@ -4,6 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.project.onlinepreprocessor.domain.User;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
@@ -15,4 +16,8 @@ public interface UserRepository extends CrudRepository<User, String> {
     value = "SELECT * from user u where hash=?1", 
     nativeQuery = true)
     Optional<User> findUserByHash(String hash);
+
+    @Query(
+    value = "SELECT * from user where username LIKE %?1%", nativeQuery= true)
+    ArrayList<User> searchUsers(String inputSearch);
 }

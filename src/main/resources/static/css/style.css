@@ -91,7 +91,6 @@ html {
 .page-content
 {
     margin-top: 50px;
-    margin-bottom: 50px;
 }
 
 .welcome-items
@@ -186,4 +185,24 @@ html {
 .aligned-input
 {
     text-align: center;
+}
+
+.card
+{
+    border-color: #203939;
+}
+
+.thick-border-bottom
+{
+border-bottom: 5px solid #203939
+}
+
+.light-border-bottom
+{
+border-bottom: 2px solid #203939  
+}
+
+.thick-border-top
+{
+border-top: 5px solid #203939
 }
