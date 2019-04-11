@@ -3,6 +3,7 @@ package com.project.onlinepreprocessor.web;
 import java.util.ArrayList;
 
 import com.project.onlinepreprocessor.domain.PermissionRequest;
+import com.project.onlinepreprocessor.domain.PermissionRequestPK;
 import com.project.onlinepreprocessor.repositories.PermissionRequestRepository;
 import com.project.onlinepreprocessor.services.PermissionService;
 import com.project.onlinepreprocessor.services.UserService;
@@ -72,5 +73,57 @@ public class PermissionController {
         }
         
         return "list_requests";
+    }
+
+    @GetMapping("/listrequests")
+    public String showAllPermissionRequests(Authentication authentication, Model model, @RequestParam(name="message", required=false)String message, 
+    @RequestParam(name="searchInput", required=false)String search)
+    {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String username = userDetails.getUsername();
+        String authority = userService.getPermissionsByUsername(username);
+
+        model.addAttribute("username", username);
+        model.addAttribute("authority", authority);
+
+        ArrayList<PermissionRequest> permissionRequests;
+
+        if(search==null)
+        {
+            permissionRequests = permissionRequestRepository.findPendingRequests();
+        }
+        else
+        {
+            permissionRequests = permissionRequestRepository.findPendingRequestsByUsername(username);
+        }
+        model.addAttribute("permissionRequests", permissionRequests);
+
+        if(message!=null)
+        {
+            model.addAttribute("message", message);
+        }
+
+        return "list_permission_requests";
+    }
+
+    @PostMapping("accept")
+    public String acceptPermissionRequest(Authentication authentication, Model model, @RequestParam("username")String username, @RequestParam("permission")int permission)
+    {
+        PermissionRequestPK permissionRequestPK = new PermissionRequestPK(new Long(permission), username);
+
+        String message = permissionService.acceptPermission(permissionRequestPK);
+
+        return "redirect:/permission/listrequests?message="+message;
+    }
+
+    @PostMapping("reject")
+    public String rejectPermissionRequest(Authentication authentication, Model model, @RequestParam("username") String username, @RequestParam("permission") int permission)
+    {
+        PermissionRequestPK permissionRequestPK = new PermissionRequestPK(new Long(permission), username);
+
+        String message = permissionService.rejectPermission(permissionRequestPK);
+
+        return "redirect:/permission/listrequests?message="+message;
     }
 }

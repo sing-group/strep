@@ -31,4 +31,7 @@ public interface PermissionRepository extends CrudRepository<Permission, Long> {
     @Query(value = "insert into user_perm(user, perm_id) values(?1, ?2)", nativeQuery=true)
     public void addPermission(String username, int permission);
 
+    @Query(value = "SELECT COUNT(perm_id) from user_perm where user=?1 and perm_id=?2", nativeQuery=true)
+    public int havePermission(String username, Long id);
+
 }
