@@ -49,262 +49,302 @@
                 </div>
 
         <div class="col-8  main-div-bg">
-            <img class="header-logo" src="/images/databaseblue.svg" alt="databaseblue.svg" height="64" width="64">
-            <h3 class="main-text text-center">Dataset details</h3>
-            <div class="page-content">
-                <img class="header-logo" src="/images/authorplaceholder.svg" alt="authorplaceholder.svg" height="64"
-                    width="64">
-                <div class="row">
-                    <div class="col-3">
-
+            <div class="thick-border-bottom">
+                    <img class="header-logo" src="/images/databaseblue.svg" alt="databaseblue.svg" height="64" width="64">
+                    <h3 class="main-text text-center">Dataset details</h3>
                     </div>
-                    <div class="col-6 text-center">
-
-                        <h4 class="main-text">Author</h4>
-                        <div class="form-group">
-                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.author}"
-                                readonly>
-                        </div>
-                    </div>
-                    <div class="col-3">
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-
-                    </div>
-                    <div class="col-6 text-center">
-
-                        <h4 class="main-text">Dataset name</h4>
-                        <div class="form-group">
-                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.name}"
-                                readonly>
-                        </div>
-                    </div>
-                    <div class="col-3">
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-
-                    </div>
-                    <div class="col-6 text-center">
-
-                        <h4 class="main-text">Upload date</h4>
-                        <div class="form-group">
-                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.uploadDate}"
-                                readonly>
-                        </div>
-                    </div>
-
-                    <div class="col-3">
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-
-                    </div>
-
-                    <div class="col-6 text-center">
-                        <h4 class="main-text">Description</h4>
-                        <div class="form-group">
-                            <textarea class="form-control" rows="5" th:text="${dataset.description}" readonly></textarea>
-                        </div>
-                    </div>
-
-                    <div class="col-3">
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-
-                    </div>
-                    <div class="col-6 text-center">
-
-                        <h4 class="main-text">DOI</h4>
-                        <div class="form-group">
-                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.doi}"
-                                readonly>
-                        </div>
-                    </div>
-
-                    <div class="col-3">
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-
-                    </div>
-                    <div class="col-6 text-center">
-
-                        <h4 class="main-text">License</h4>
-                        <div class="form-group">
-                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.license.name}"
-                                readonly>
-                        </div>
-                    </div>
-
-                    <div class="col-3">
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-
-                    </div>
-                    <div class="col-6 text-center">
-
-                        <h4 class="main-text">URL</h4>
-                        <div class="form-group">
-                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.url}"
-                                readonly>
-                        </div>
-                    </div>
-
-                    <div class="col-3">
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-
-                    </div>
-                    <div class="col-6 text-center">
-
-                        <h4 class="main-text">Type</h4>
-                        <div class="form-group">
-                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.type}"
-                                readonly>
-                        </div>
-                    </div>
-
-                    <div class="col-3">
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-
-                    </div>
-                    <div class="col-6 text-center">
-
-                        <h4 class="main-text">Access</h4>
-                        <div class="form-group">
-                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.access}"
-                                readonly>
-                        </div>
-                    </div>
-
-                    <div class="col-3">
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-
-                    </div>
-
-                    <div class="col-3 text-center">
-                        <h4 class="main-text">Spam percentage</h4>
-                        <div class="form-group">
-                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.spamPercentage}"
-                                readonly>
-                        </div>
-                    </div>
-
-                    <div class="col-3 text-center">
-                        <h4 class="main-text">Ham percentage</h4>
-                        <div class="form-group">
-                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.hamPercentage}"
-                                readonly>
-                        </div>
-                    </div>
-
-                    <div class="col-3">
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-
-                    </div>
-
-                    <div class="col-6 text-center">
-                        <h4 class="main-text">Languages</h4>
-                        <div class="form-group">
-                            <input type="text" class="form-control aligned-input" th:attr="value = ${languages}">
-                        </div>
-                    </div>
-
-                    <div class="col-3">
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-
-                    </div>
-
-                    <div class="col-6 text-center">
-                        <h4 class="main-text">Datatypes</h4>
-                        <div class="form-group">
-                            <input type="text" class="form-control aligned-input" th:attr="value = ${datatypes}">
-                        </div>
-                    </div>
-                    <div class="col-3">
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-
-                    </div>
-                    <div class="col-6">
-                        <div th:if="${dataset.pipeline}!=null">
-                            <div class="row">
-                                <div class="col-6">
-                                    <form action="#" th:action="@{/dataset/public/download}" method="GET">
-                                        <input type="hidden" name="id" th:attr="value = ${dataset.name}">
-                                        <input type="submit" class="form-control submit-button" value="Download dataset">
-                                    </form>
-                                </div>
-                                <div class="col-6">
-                                    <form action="#" th:action="@{/dataset/public/downloadpipeline}" method="GET">
-                                        <input type="hidden" name="id" th:attr="value = ${dataset.name}">
-                                        <input type="submit" class="form-control submit-button" value="Download pipeline">
-                                    </form>
-                                </div>
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-2">
+    
+                            </div>
+                            <div class="col-4 text-center">
+                                <h5 class="main-text">Author</h5>
+                            </div>
+    
+                            <div class="col-4">
+                                <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.author}"
+                                                readonly>
+                            </div>
+                            <div class="col-2">
+    
                             </div>
                         </div>
-                        <div th:unless="${dataset.pipeline}!=null">
-                            <form action="#" th:action="@{/dataset/public/download}" method="GET">
-                                <input type="hidden" name="id" th:attr="value = ${dataset.name}">
-                                <input type="submit" class="form-control submit-button" value="Download dataset">
-                            </form>
+    
+                        <div class="row page-content">
+                            <div class="col-2">
+    
+                            </div>
+                            <div class="col-4 text-center">
+                                <h5 class="main-text">Dataset name</h5>
+                            </div>
+    
+                            <div class="col-4">
+                                    <div class="form-group">
+                                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.name}"
+                                                readonly>
+                                        </div>
+                            </div>
+    
+                            <div class="col-2">
+    
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-3">
-
-                    </div>
-                </div>
-
-            </div>
+    
+                        <div class="row page-content">
+                            <div class="col-2">
+    
+                            </div>
+                            <div class="col-4 text-center">
+                                <h5 class="main-text">Upload date</h5>
+                            </div>
+    
+                            <div class="col-4">
+                                    <div class="form-group">
+                                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.uploadDate}"
+                                                readonly>
+                                        </div>
+                            </div>
+    
+                            <div class="col-2">
+    
+                            </div>
+                        </div>
+    
+                        <div class="row page-content">
+                            <div class="col-2">
+    
+                            </div>
+                            <div class="col-4 text-center">
+                                <h5 class="main-text">License</h5>
+                            </div>
+    
+                            <div class="col-4">
+                                    <div class="form-group">
+                                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.license.name}"
+                                                readonly>
+                                        </div>
+                            </div>
+    
+                            <div class="col-2">
+    
+                            </div>
+                        </div>
+    
+                        <div class="row page-content">
+                            <div class="col-2">
+    
+                            </div>
+                            <div class="col-4 text-center">
+                                <h5 class="main-text">Spam percentage</h5>
+                            </div>
+    
+                            <div class="col-4">
+                                    <div class="form-group">
+                                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.spamPercentage}"
+                                                readonly>
+                                        </div>
+                            </div>
+    
+                            <div class="col-2">
+    
+                            </div>
+                        </div>
+    
+                        <div class="row page-content">
+                            <div class="col-2">
+    
+                            </div>
+                            <div class="col-4 text-center">
+                                <h5 class="main-text">Ham percentage</h5>
+                            </div>
+    
+                            <div class="col-4">
+                                    <div class="form-group">
+                                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.hamPercentage}"
+                                                readonly>
+                                        </div>
+                            </div>
+    
+                            <div class="col-2">
+    
+                            </div>
+                        </div>
+    
+                        <div class="row page-content">
+                            <div class="col-2">
+    
+                            </div>
+    
+                            <div class="col-4 text-center">
+                                <h5 class="main-text">Dataset description</h5>
+                            </div>
+    
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <textarea class="form-control" th:text="${dataset.description}" rows="5"></textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-2">
+    
+                            </div>
+                        </div>
+    
+                        <div class="row page-content">
+                            <div class="col-2">
+    
+                            </div>
+                            <div class="col-4 text-center">
+                                <h5 class="main-text">DOI</h5>
+                            </div>
+    
+                            <div class="col-4">
+                                    <div class="form-group">
+                                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.doi}"
+                                                readonly>
+                                        </div>
+                            </div>
+    
+                            <div class="col-2">
+    
+                            </div>
+                        </div>
+    
+                        <div class="row page-content">
+                            <div class="col-2">
+    
+                            </div>
+                            <div class="col-4 text-center">
+                                <h5 class="main-text">Access</h5>
+                            </div>
+    
+                            <div class="col-4">
+                                    <div class="form-group">
+                                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.access}"
+                                                readonly>
+                                        </div>
+                            </div>
+    
+                            <div class="col-2">
+    
+                            </div>
+                        </div>
+    
+                        <div class="row page-content">
+                            <div class="col-2">
+    
+                            </div>
+                            <div class="col-4 text-center">
+                                <h5 class="main-text">Languages</h5>
+                            </div>
+    
+                            <div class="col-4">
+                                    <div class="form-group">
+                                            <input type="text" class="form-control aligned-input" th:attr="value = ${languages}"
+                                                readonly>
+                                        </div>
+                            </div>
+    
+                            <div class="col-2">
+    
+                            </div>
+                        </div>
+    
+                        <div class="row page-content">
+                            <div class="col-2">
+    
+                            </div>
+                            <div class="col-4 text-center">
+                                <h5 class="main-text">Data types</h5>
+                            </div>
+    
+                            <div class="col-4">
+                                    <div class="form-group">
+                                            <input type="text" class="form-control aligned-input" th:attr="value = ${datatypes}"
+                                                readonly>
+                                        </div>
+                            </div>
+    
+                            <div class="col-2">
+    
+                            </div>
+                        </div>
+    
+                        <div class="row page-content">
+                            <div class="col-2">
+    
+                            </div>
+                            <div class="col-4 text-center">
+                                <h5 class="main-text">Type</h5>
+                            </div>
+    
+                            <div class="col-4">
+                                    <div class="form-group">
+                                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.type}"
+                                                readonly>
+                                        </div>
+                            </div>
+    
+                            <div class="col-2">
+    
+                            </div>
+                        </div>
+    
+                        <div class="row page-content">
+                            <div class="col-2">
+    
+                            </div>
+                            <div class="col-4 text-center">
+                                <h5 class="main-text">Url</h5>
+                            </div>
+    
+                            <div class="col-4">
+                                    <div class="form-group">
+                                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.url}"
+                                                readonly>
+                                        </div>
+                            </div>
+    
+                            <div class="col-2">
+    
+                            </div>
+                        </div>
+    
+                        <div class="row page-content">
+                            <div class="col-3">
+    
+                            </div>
+    
+                            <div class="col-6">
+                                    <div th:if="${dataset.pipeline}!=null">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <form action="#" th:action="@{/dataset/public/download}" method="GET">
+                                                        <input type="hidden" name="id" th:attr="value = ${dataset.name}">
+                                                        <input type="submit" class="form-control submit-button" value="Download dataset">
+                                                    </form>
+                                                </div>
+                                                <div class="col-6">
+                                                    <form action="#" th:action="@{/dataset/public/downloadpipeline}" method="GET">
+                                                        <input type="hidden" name="id" th:attr="value = ${dataset.name}">
+                                                        <input type="submit" class="form-control submit-button" value="Download pipeline">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div th:unless="${dataset.pipeline}!=null">
+                                            <form action="#" th:action="@{/dataset/public/download}" method="GET">
+                                                <input type="hidden" name="id" th:attr="value = ${dataset.name}">
+                                                <input type="submit" class="form-control submit-button" value="Download dataset">
+                                            </form>
+                                        </div>
+                            </div>
+    
+                            <div class="col-3">
+                                
+                            </div>
+                        </div>
         </div>
 
     </div>
