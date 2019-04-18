@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Online Preprocessor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body class="main-bg">
+    <div class="container-fluid">
+
+        <div th:include="header.html">
+
+        </div>
+
+        <div class="row page-content pre-footer">
+            <div class="col-2">
+
+            </div>
+
+            <div class="col-8 form-bg">
+                <form action="#" th:action="@{/license/modify}" th:object="${license}" method="POST">
+                    <img class="header-logo" src="/images/key.svg" alt="key.svg" height="64" width="64">
+                    <h2 class="main-text text-center">Modify license</h2>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="name" th:attr="value = ${licenseToModify.name}"
+                            required readonly />
+                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label>
+                        <textarea class="form-control" rows="50" cols="80" name="description" th:text="${description}"
+                            required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="url" th:attr="value = ${licenseToModify.url}"
+                            required />
+                        <label class="error-label" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></label>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+
+                        </div>
+
+                        <div class="col-4">
+
+                            <div class="form-group">
+                                <input type="submit" class="submit-button form-control" value="Modify license"><br>
+                            </div>
+
+                        </div>
+                </form>
+
+                <div class="col-4">
+                    <div th:if="${authority}==canAdminister">
+                        <div class="form-group">
+                            <form action="#" th:action="@{/license/delete}" method="POST">
+                                <input type="hidden" name="name" th:attr="value=${license.name}">
+                                <input type="submit" class="form-control reject-button" value="Delete license">
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-2">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-2">
+
+        </div>
+    </div>
+
+    <div th:include="footer.html">
+
+    </div>
+
+
+    </div>
+    <script type="text/javascript" src="/js/functions.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

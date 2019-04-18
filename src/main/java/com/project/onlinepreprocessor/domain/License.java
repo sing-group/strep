@@ -3,16 +3,22 @@ package com.project.onlinepreprocessor.domain;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class License
 {
     @Id
+    @NotNull(message = "Name of the license cannot be null")
     private String name;
 
     @Lob
+    @Size(message = "The description of the license must have at least 100 characters", min=100)
     private byte[] description;
 
+    @NotNull(message = "License url cannot be null")
     private String url;
 
     public License(String name, byte[] description, String url)

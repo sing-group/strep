@@ -26,7 +26,7 @@ insert into datatype(dataType) values(".tsms");
 insert into datatype(dataType) values(".twtid");
 insert into datatype(dataType) values(".warc");
 
-insert into license(name, description, url) values("Public domain", "
+insert into license(name, description, url) values("Public domain", '
 Public Domain Mark
 
 No Known Copyright
@@ -37,38 +37,38 @@ Recommended Uses of the Public Domain Mark
 
 The Public Domain Mark is recommended for works that are free of known copyright around the world. These will typically be very old works.  It is not recommended for use with works that are in the public domain in some jurisdictions if they also known to be restricted by copyright in others.
 
-A work may have limited or “hybrid” public domain status for several reasons.  Some jurisdictions have unusually long copyright terms, which may mean that a work free from copyright restrictions most everywhere in the world could still be protected by the copyright laws of that particular country.  Sometimes a work is no longer restricted by copyright in a jurisdiction because the author or owner failed to comply with local formalities such as renewal, where those formalities apply.  It could also be the case for works that are deemed not protected by copyright by operation of law in a particular jurisdiction, but that are afforded protection under the copyright laws of other jurisdictions.
+A work may have limited or "hybrid" public domain status for several reasons.  Some jurisdictions have unusually long copyright terms, which may mean that a work free from copyright restrictions most everywhere in the world could still be protected by the copyright laws of that particular country.  Sometimes a work is no longer restricted by copyright in a jurisdiction because the author or owner failed to comply with local formalities such as renewal, where those formalities apply.  It could also be the case for works that are deemed not protected by copyright by operation of law in a particular jurisdiction, but that are afforded protection under the copyright laws of other jurisdictions.
 
-CC does not recommend the Public Domain Mark for works with limited, hybrid public domain status at this time, though we will be exploring means for doing so in 2014.", "https://creativecommons.org/share-your-work/public-domain/pdm/");
+CC does not recommend the Public Domain Mark for works with limited, hybrid public domain status at this time, though we will be exploring means for doing so in 2014.', "https://creativecommons.org/share-your-work/public-domain/pdm/");
 
-insert into license(name, description, url) values("CC-0", "Statement of Purpose
+insert into license(name, description, url) values("CC-0", 'Statement of Purpose
 
-The laws of most jurisdictions throughout the world automatically confer exclusive Copyright and Related Rights (defined below) upon the creator and subsequent owner(s) (each and all, an 'owner') of an original work of authorship and/or a database (each, a 'Work').
+The laws of most jurisdictions throughout the world automatically confer exclusive Copyright and Related Rights (defined below) upon the creator and subsequent owner(s) (each and all, an "owner") of an original work of authorship and/or a database (each, a "Work").
 
-Certain owners wish to permanently relinquish those rights to a Work for the purpose of contributing to a commons of creative, cultural and scientific works ('Commons') that the public can reliably and without fear of later claims of infringement build upon, modify, incorporate in other works, reuse and redistribute as freely as possible in any form whatsoever and for any purposes, including without limitation commercial purposes. These owners may contribute to the Commons to promote the ideal of a free culture and the further production of creative, cultural and scientific works, or to gain reputation or greater distribution for their Work in part through the use and efforts of others.
+Certain owners wish to permanently relinquish those rights to a Work for the purpose of contributing to a commons of creative, cultural and scientific works ("Commons") that the public can reliably and without fear of later claims of infringement build upon, modify, incorporate in other works, reuse and redistribute as freely as possible in any form whatsoever and for any purposes, including without limitation commercial purposes. These owners may contribute to the Commons to promote the ideal of a free culture and the further production of creative, cultural and scientific works, or to gain reputation or greater distribution for their Work in part through the use and efforts of others.
 
-For these and/or other purposes and motivations, and without any expectation of additional consideration or compensation, the person associating CC0 with a Work (the 'Affirmer'), to the extent that he or she is an owner of Copyright and Related Rights in the Work, voluntarily elects to apply CC0 to the Work and publicly distribute the Work under its terms, with knowledge of his or her Copyright and Related Rights in the Work and the meaning and intended legal effect of CC0 on those rights.
+For these and/or other purposes and motivations, and without any expectation of additional consideration or compensation, the person associating CC0 with a Work (the "Affirmer"), to the extent that he or she is an owner of Copyright and Related Rights in the Work, voluntarily elects to apply CC0 to the Work and publicly distribute the Work under its terms, with knowledge of his or her Copyright and Related Rights in the Work and the meaning and intended legal effect of CC0 on those rights.
 
-1. Copyright and Related Rights. A Work made available under CC0 may be protected by copyright and related or neighboring rights ('Copyright and Related Rights'). Copyright and Related Rights include, but are not limited to, the following:
+1. Copyright and Related Rights. A Work made available under CC0 may be protected by copyright and related or neighboring rights ("Copyright and Related Rights"). Copyright and Related Rights include, but are not limited to, the following:
 
     the right to reproduce, adapt, distribute, perform, display, communicate, and translate a Work;
     moral rights retained by the original author(s) and/or performer(s);
-    publicity and privacy rights pertaining to a person's image or likeness depicted in a Work;
+    publicity and privacy rights pertaining to a person`s image or likeness depicted in a Work;
     rights protecting against unfair competition in regards to a Work, subject to the limitations in paragraph 4(a), below;
     rights protecting the extraction, dissemination, use and reuse of data in a Work;
     database rights (such as those arising under Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, and under any national implementation thereof, including any amended or successor version of such directive); and
     other similar, equivalent or corresponding rights throughout the world based on applicable law or treaty, and any national implementations thereof.
 
-2. Waiver. To the greatest extent permitted by, but not in contravention of, applicable law, Affirmer hereby overtly, fully, permanently, irrevocably and unconditionally waives, abandons, and surrenders all of Affirmer's Copyright and Related Rights and associated claims and causes of action, whether now known or unknown (including existing as well as future claims and causes of action), in the Work (i) in all territories worldwide, (ii) for the maximum duration provided by applicable law or treaty (including future time extensions), (iii) in any current or future medium and for any number of copies, and (iv) for any purpose whatsoever, including without limitation commercial, advertising or promotional purposes (the 'Waiver'). Affirmer makes the Waiver for the benefit of each member of the public at large and to the detriment of Affirmer's heirs and successors, fully intending that such Waiver shall not be subject to revocation, rescission, cancellation, termination, or any other legal or equitable action to disrupt the quiet enjoyment of the Work by the public as contemplated by Affirmer's express Statement of Purpose.
+2. Waiver. To the greatest extent permitted by, but not in contravention of, applicable law, Affirmer hereby overtly, fully, permanently, irrevocably and unconditionally waives, abandons, and surrenders all of Affirmer`s Copyright and Related Rights and associated claims and causes of action, whether now known or unknown (including existing as well as future claims and causes of action), in the Work (i) in all territories worldwide, (ii) for the maximum duration provided by applicable law or treaty (including future time extensions), (iii) in any current or future medium and for any number of copies, and (iv) for any purpose whatsoever, including without limitation commercial, advertising or promotional purposes (the "Waiver"). Affirmer makes the Waiver for the benefit of each member of the public at large and to the detriment of Affirmer`s heirs and successors, fully intending that such Waiver shall not be subject to revocation, rescission, cancellation, termination, or any other legal or equitable action to disrupt the quiet enjoyment of the Work by the public as contemplated by Affirmer`s express Statement of Purpose.
 
-3. Public License Fallback. Should any part of the Waiver for any reason be judged legally invalid or ineffective under applicable law, then the Waiver shall be preserved to the maximum extent permitted taking into account Affirmer's express Statement of Purpose. In addition, to the extent the Waiver is so judged Affirmer hereby grants to each affected person a royalty-free, non transferable, non sublicensable, non exclusive, irrevocable and unconditional license to exercise Affirmer's Copyright and Related Rights in the Work (i) in all territories worldwide, (ii) for the maximum duration provided by applicable law or treaty (including future time extensions), (iii) in any current or future medium and for any number of copies, and (iv) for any purpose whatsoever, including without limitation commercial, advertising or promotional purposes (the 'License'). The License shall be deemed effective as of the date CC0 was applied by Affirmer to the Work. Should any part of the License for any reason be judged legally invalid or ineffective under applicable law, such partial invalidity or ineffectiveness shall not invalidate the remainder of the License, and in such case Affirmer hereby affirms that he or she will not (i) exercise any of his or her remaining Copyright and Related Rights in the Work or (ii) assert any associated claims and causes of action with respect to the Work, in either case contrary to Affirmer's express Statement of Purpose.
+3. Public License Fallback. Should any part of the Waiver for any reason be judged legally invalid or ineffective under applicable law, then the Waiver shall be preserved to the maximum extent permitted taking into account Affirmer`s express Statement of Purpose. In addition, to the extent the Waiver is so judged Affirmer hereby grants to each affected person a royalty-free, non transferable, non sublicensable, non exclusive, irrevocable and unconditional license to exercise Affirmer`s Copyright and Related Rights in the Work (i) in all territories worldwide, (ii) for the maximum duration provided by applicable law or treaty (including future time extensions), (iii) in any current or future medium and for any number of copies, and (iv) for any purpose whatsoever, including without limitation commercial, advertising or promotional purposes (the "License"). The License shall be deemed effective as of the date CC0 was applied by Affirmer to the Work. Should any part of the License for any reason be judged legally invalid or ineffective under applicable law, such partial invalidity or ineffectiveness shall not invalidate the remainder of the License, and in such case Affirmer hereby affirms that he or she will not (i) exercise any of his or her remaining Copyright and Related Rights in the Work or (ii) assert any associated claims and causes of action with respect to the Work, in either case contrary to Affirmer`s express Statement of Purpose.
 
 4. Limitations and Disclaimers.
 
     No trademark or patent rights held by Affirmer are waived, abandoned, surrendered, licensed or otherwise affected by this document.
     Affirmer offers the Work as-is and makes no representations or warranties of any kind concerning the Work, express, implied, statutory or otherwise, including without limitation warranties of title, merchantability, fitness for a particular purpose, non infringement, or the absence of latent or other defects, accuracy, or the present or absence of errors, whether or not discoverable, all to the greatest extent permissible under applicable law.
-    Affirmer disclaims responsibility for clearing rights of other persons that may apply to the Work or any use thereof, including without limitation any person's Copyright and Related Rights in the Work. Further, Affirmer disclaims responsibility for obtaining any necessary consents, permissions or other rights required for any use of the Work.
-    Affirmer understands and acknowledges that Creative Commons is not a party to this document and has no duty or obligation with respect to this CC0 or use of the Work.","https://creativecommons.org/publicdomain/zero/1.0/legalcode" 
+    Affirmer disclaims responsibility for clearing rights of other persons that may apply to the Work or any use thereof, including without limitation any person`s Copyright and Related Rights in the Work. Further, Affirmer disclaims responsibility for obtaining any necessary consents, permissions or other rights required for any use of the Work.
+    Affirmer understands and acknowledges that Creative Commons is not a party to this document and has no duty or obligation with respect to this CC0 or use of the Work.',"https://creativecommons.org/publicdomain/zero/1.0/legalcode" 
 );
 
 insert into license(name, description, url) values('PDDL', 'ODC Public Domain Dedication and Licence (PDDL)
@@ -88,9 +88,9 @@ READ the full disclaimer here.
 The License
 
 Preamble
-The Open Data Commons – Public Domain Dedication & Licence is a document intended to allow you to freely share, modify, and use this work for any purpose and without any restrictions. This licence is intended for use on databases or their contents (“data”), either together or individually.
+The Open Data Commons - Public Domain Dedication & Licence is a document intended to allow you to freely share, modify, and use this work for any purpose and without any restrictions. This licence is intended for use on databases or their contents ("data"), either together or individually.
 
-Many databases are covered by copyright. Some jurisdictions, mainly in Europe, have specific special rights that cover databases called the “sui generis” database right. Both of these sets of rights, as well as other legal rights used to protect databases and data, can create uncertainty or practical difficulty for those wishing to share databases and their underlying data but retain a limited amount of rights under a “some rights reserved” approach to licensing as outlined in the Science Commons Protocol for Implementing Open Access Data. As a result, this waiver and licence tries to the fullest extent possible to eliminate or fully license any rights that cover this database and data. Any Community Norms or similar statements of use of the database or data do not form a part of this document, and do not act as a contract for access or other terms of use for the database or data.
+Many databases are covered by copyright. Some jurisdictions, mainly in Europe, have specific special rights that cover databases called the "sui generis" database right. Both of these sets of rights, as well as other legal rights used to protect databases and data, can create uncertainty or practical difficulty for those wishing to share databases and their underlying data but retain a limited amount of rights under a "some rights reserved" approach to licensing as outlined in the Science Commons Protocol for Implementing Open Access Data. As a result, this waiver and licence tries to the fullest extent possible to eliminate or fully license any rights that cover this database and data. Any Community Norms or similar statements of use of the database or data do not form a part of this document, and do not act as a contract for access or other terms of use for the database or data.
 
 The position of the recipient of the work
 
@@ -98,13 +98,13 @@ Because this document places the database and its contents in or as close as pos
 
 The position of the dedicator of the work
 
-Copyright law, as with most other law under the banner of “intellectual property”, is inherently national law. This means that there exists several differences in how copyright and other IP rights can be relinquished, waived or licensed in the many legal jurisdictions of the world. This is despite much harmonisation of minimum levels of protection. The internet and other communication technologies span these many disparate legal jurisdictions and thus pose special difficulties for a document relinquishing and waiving intellectual property rights, including copyright and database rights, for use by the global community. Because of this feature of intellectual property law, this document first relinquishes the rights and waives the relevant rights and claims. It then goes on to license these same rights for jurisdictions or areas of law that may make it difficult to relinquish or waive rights or claims.
+Copyright law, as with most other law under the banner of "intellectual property", is inherently national law. This means that there exists several differences in how copyright and other IP rights can be relinquished, waived or licensed in the many legal jurisdictions of the world. This is despite much harmonisation of minimum levels of protection. The internet and other communication technologies span these many disparate legal jurisdictions and thus pose special difficulties for a document relinquishing and waiving intellectual property rights, including copyright and database rights, for use by the global community. Because of this feature of intellectual property law, this document first relinquishes the rights and waives the relevant rights and claims. It then goes on to license these same rights for jurisdictions or areas of law that may make it difficult to relinquish or waive rights or claims.
 
-The purpose of this document is to enable rightsholders to place their work into the public domain. Unlike licences for free and open source software, free cultural works, or open content licences, rightsholders will not be able to “dual license” their work by releasing the same work under different licences. This is because they have allowed anyone to use the work in whatever way they choose. Rightsholders therefore can’t re-license it under copyright or database rights on different terms because they have nothing left to license. Doing so creates truly accessible data to build rich applications and advance the progress of science and the arts.
+The purpose of this document is to enable rightsholders to place their work into the public domain. Unlike licences for free and open source software, free cultural works, or open content licences, rightsholders will not be able to "dual license" their work by releasing the same work under different licences. This is because they have allowed anyone to use the work in whatever way they choose. Rightsholders therefore can’t re-license it under copyright or database rights on different terms because they have nothing left to license. Doing so creates truly accessible data to build rich applications and advance the progress of science and the arts.
 
-This document can cover either or both of the database and its contents (the data). Because databases can have a wide variety of content – not just factual data – rightsholders should use the Open Data Commons – Public Domain Dedication & Licence for an entire database and its contents only if everything can be placed under the terms of this document. Because even factual data can sometimes have intellectual property rights, rightsholders should use this licence to cover both the database and its factual data when making material available under this document; even if it is likely that the data would not be covered by copyright or database rights.
+This document can cover either or both of the database and its contents (the data). Because databases can have a wide variety of content - not just factual data - rightsholders should use the Open Data Commons - Public Domain Dedication & Licence for an entire database and its contents only if everything can be placed under the terms of this document. Because even factual data can sometimes have intellectual property rights, rightsholders should use this licence to cover both the database and its factual data when making material available under this document; even if it is likely that the data would not be covered by copyright or database rights.
 
-Rightsholders can also use this document to cover any copyright or database rights claims over only a database, and leave the contents to be covered by other licences or documents. They can do this because this document refers to the “Work”, which can be either – or both – the database and its contents. As a result, rightsholders need to clearly state what they are dedicating under this document when they dedicate it.
+Rightsholders can also use this document to cover any copyright or database rights claims over only a database, and leave the contents to be covered by other licences or documents. They can do this because this document refers to the "Work", which can be either - or both - the database and its contents. As a result, rightsholders need to clearly state what they are dedicating under this document when they dedicate it.
 
 Just like any licence or other document dealing with intellectual property, rightsholders should be aware that one can only license what one owns. Please ensure that the rights have been cleared to make this material available under this document.
 
@@ -116,23 +116,23 @@ The Rightsholder (the Person holding rights or claims over the Work) agrees as f
 
 1.0 Definitions of Capitalised Words
 
-“Copyright” – Includes rights under copyright and under neighbouring rights and similarly related sets of rights under the law of the relevant jurisdiction under Section 6.4.
+"Copyright" - Includes rights under copyright and under neighbouring rights and similarly related sets of rights under the law of the relevant jurisdiction under Section 6.4.
 
-“Data” – The contents of the Database, which includes the information, independent works, or other material collected into the Database offered under the terms of this Document.
+"Data" - The contents of the Database, which includes the information, independent works, or other material collected into the Database offered under the terms of this Document.
 
-“Database” – A collection of Data arranged in a systematic or methodical way and individually accessible by electronic or other means offered under the terms of this Document.
+"Database" - A collection of Data arranged in a systematic or methodical way and individually accessible by electronic or other means offered under the terms of this Document.
 
-“Database Right” – Means rights over Data resulting from the Chapter III (“sui generis”) rights in the Database Directive (Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases) and any future updates as well as any similar rights available in the relevant jurisdiction under Section 6.4.
+"Database Right" - Means rights over Data resulting from the Chapter III ("sui generis") rights in the Database Directive (Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases) and any future updates as well as any similar rights available in the relevant jurisdiction under Section 6.4.
 
-“Document” – means this relinquishment and waiver of rights and claims and back up licence agreement.
+"Document" - means this relinquishment and waiver of rights and claims and back up licence agreement.
 
-“Person” – Means a natural or legal person or a body of persons corporate or incorporate.
+"Person" - Means a natural or legal person or a body of persons corporate or incorporate.
 
-“Use” – As a verb, means doing any act that is restricted by Copyright or Database Rights whether in the original medium or any other; and includes modifying the Work as may be technically necessary to use it in a different mode or format. This includes the right to sublicense the Work.
+"Use" - As a verb, means doing any act that is restricted by Copyright or Database Rights whether in the original medium or any other; and includes modifying the Work as may be technically necessary to use it in a different mode or format. This includes the right to sublicense the Work.
 
-“Work” – Means either or both of the Database and Data offered under the terms of this Document.
+"Work" - Means either or both of the Database and Data offered under the terms of this Document.
 
-“You” – the Person acquiring rights under the licence elements of this Document.
+"You" - the Person acquiring rights under the licence elements of this Document.
 
 Words in the singular include the plural and vice versa.
 
@@ -208,7 +208,7 @@ Part III: General provisions
 
 5.0 Warranties, disclaimer, and limitation of liability
 
-5.1 The Work is provided by the Rightsholder “as is” and without any warranty of any kind, either express or implied, whether of title, of accuracy or completeness, of the presence of absence of errors, of fitness for purpose, or otherwise. Some jurisdictions do not allow the exclusion of implied warranties, so this exclusion may not apply to You.
+5.1 The Work is provided by the Rightsholder "as is" and without any warranty of any kind, either express or implied, whether of title, of accuracy or completeness, of the presence of absence of errors, of fitness for purpose, or otherwise. Some jurisdictions do not allow the exclusion of implied warranties, so this exclusion may not apply to You.
 
 5.2 Subject to any liability that may not be excluded or limited by law, the Rightsholder is not liable for, and expressly excludes, all liability for loss or damage however and whenever caused to anyone by any use under this Document, whether by You or by anyone else, and whether caused by any fault on the part of the Rightsholder or not. This exclusion of liability includes, but is not limited to, any special, incidental, consequential, punitive, or exemplary damages. This exclusion applies even if the Rightsholder has been advised of the possibility of such damages.
 
@@ -229,7 +229,7 @@ insert into license(name, description, url) values('CC-BY', 'Creative Commons At
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
-Section 1 – Definitions.
+Section 1 - Definitions.
 
     Adapted Material means material subject to Copyright and Similar Rights that is derived from or based upon the Licensed Material and in which the Licensed Material is translated, altered, arranged, transformed, or otherwise modified in a manner requiring permission under the Copyright and Similar Rights held by the Licensor. For purposes of this Public License, where the Licensed Material is a musical work, performance, or sound recording, Adapted Material is always produced where the Licensed Material is synched in timed relation with a moving image.
     Adapters License means the license You apply to Your Copyright and Similar Rights in Your contributions to Adapted Material in accordance with the terms and conditions of this Public License.
@@ -243,7 +243,7 @@ Section 1 – Definitions.
     Sui Generis Database Rights means rights other than copyright resulting from Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, as amended and/or succeeded, as well as other essentially equivalent rights anywhere in the world.
     You means the individual or entity exercising the Licensed Rights under this Public License. Your has a corresponding meaning.
 
-Section 2 – Scope.
+Section 2 - Scope.
 
     License grant.
         Subject to the terms and conditions of this Public License, the Licensor hereby grants You a worldwide, royalty-free, non-sublicensable, non-exclusive, irrevocable license to exercise the Licensed Rights in the Licensed Material to:
@@ -253,7 +253,7 @@ Section 2 – Scope.
         Term. The term of this Public License is specified in Section 6(a).
         Media and formats; technical modifications allowed. The Licensor authorizes You to exercise the Licensed Rights in all media and formats whether now known or hereafter created, and to make technical modifications necessary to do so. The Licensor waives and/or agrees not to assert any right or authority to forbid You from making technical modifications necessary to exercise the Licensed Rights, including technical modifications necessary to circumvent Effective Technological Measures. For purposes of this Public License, simply making modifications authorized by this Section 2(a)(4) never produces Adapted Material.
         Downstream recipients.
-            Offer from the Licensor – Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.
+            Offer from the Licensor - Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.
             No downstream restrictions. You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, the Licensed Material if doing so restricts exercise of the Licensed Rights by any recipient of the Licensed Material.
         No endorsement. Nothing in this Public License constitutes or may be construed as permission to assert or imply that You are, or that Your use of the Licensed Material is, connected with, or sponsored, endorsed, or granted official status by, the Licensor or others designated to receive attribution as provided in Section 3(a)(1)(A)(i).
 
@@ -262,7 +262,7 @@ Section 2 – Scope.
         Patent and trademark rights are not licensed under this Public License.
         To the extent possible, the Licensor waives any right to collect royalties from You for the exercise of the Licensed Rights, whether directly or through a collecting society under any voluntary or waivable statutory or compulsory licensing scheme. In all other cases the Licensor expressly reserves any right to collect such royalties.
 
-Section 3 – License Conditions.
+Section 3 - License Conditions.
 
 Your exercise of the Licensed Rights is expressly made subject to the following conditions.
 
@@ -281,7 +281,7 @@ Your exercise of the Licensed Rights is expressly made subject to the following 
         If requested by the Licensor, You must remove any of the information required by Section 3(a)(1)(A) to the extent reasonably practicable.
         If You Share Adapted Material You produce, the Adapters License You apply must not prevent recipients of the Adapted Material from complying with this Public License.
 
-Section 4 – Sui Generis Database Rights.
+Section 4 - Sui Generis Database Rights.
 
 Where the Licensed Rights include Sui Generis Database Rights that apply to Your use of the Licensed Material:
 
@@ -291,14 +291,14 @@ Where the Licensed Rights include Sui Generis Database Rights that apply to Your
 
 For the avoidance of doubt, this Section 4 supplements and does not replace Your obligations under this Public License where the Licensed Rights include other Copyright and Similar Rights.
 
-Section 5 – Disclaimer of Warranties and Limitation of Liability.
+Section 5 - Disclaimer of Warranties and Limitation of Liability.
 
     Unless otherwise separately undertaken by the Licensor, to the extent possible, the Licensor offers the Licensed Material as-is and as-available, and makes no representations or warranties of any kind concerning the Licensed Material, whether express, implied, statutory, or other. This includes, without limitation, warranties of title, merchantability, fitness for a particular purpose, non-infringement, absence of latent or other defects, accuracy, or the presence or absence of errors, whether or not known or discoverable. Where disclaimers of warranties are not allowed in full or in part, this disclaimer may not apply to You.
     To the extent possible, in no event will the Licensor be liable to You on any legal theory (including, without limitation, negligence) or otherwise for any direct, special, indirect, incidental, consequential, punitive, exemplary, or other losses, costs, expenses, or damages arising out of this Public License or use of the Licensed Material, even if the Licensor has been advised of the possibility of such losses, costs, expenses, or damages. Where a limitation of liability is not allowed in full or in part, this limitation may not apply to You.
 
     The disclaimer of warranties and limitation of liability provided above shall be interpreted in a manner that, to the extent possible, most closely approximates an absolute disclaimer and waiver of all liability.
 
-Section 6 – Term and Termination.
+Section 6 - Term and Termination.
 
     This Public License applies for the term of the Copyright and Similar Rights licensed here. However, if You fail to comply with this Public License, then Your rights under this Public License terminate automatically.
 
@@ -309,12 +309,12 @@ Section 6 – Term and Termination.
     For the avoidance of doubt, the Licensor may also offer the Licensed Material under separate terms or conditions or stop distributing the Licensed Material at any time; however, doing so will not terminate this Public License.
     Sections 1, 5, 6, 7, and 8 survive termination of this Public License.
 
-Section 7 – Other Terms and Conditions.
+Section 7 - Other Terms and Conditions.
 
     The Licensor shall not be bound by any additional or different terms or conditions communicated by You unless expressly agreed.
     Any arrangements, understandings, or agreements regarding the Licensed Material not stated herein are separate from and independent of the terms and conditions of this Public License.
 
-Section 8 – Interpretation.
+Section 8 - Interpretation.
 
     For the avoidance of doubt, this Public License does not, and shall not be interpreted to, reduce, limit, restrict, or impose conditions on any use of the Licensed Material that could lawfully be made without permission under this Public License.
     To the extent possible, if any provision of this Public License is deemed unenforceable, it shall be automatically reformed to the minimum extent necessary to make it enforceable. If the provision cannot be reformed, it shall be severed from this Public License without affecting the enforceability of the remaining terms and conditions.
@@ -324,39 +324,39 @@ Section 8 – Interpretation.
 
 insert into license(name, description, url) values('CDLA-Permissive-1.0', '
 
-Community Data License Agreement – Permissive – Version 1.0
+Community Data License Agreement - Permissive - Version 1.0
 
-This is the Community Data License Agreement – Permissive, Version 1.0 (“Agreement”).  Data is provided to You under this Agreement by each of the Data Providers.  Your exercise of any of the rights and permissions granted below constitutes Your acceptance and agreement to be bound by the terms and conditions of this Agreement.
+This is the Community Data License Agreement - Permissive, Version 1.0 ("Agreement").  Data is provided to You under this Agreement by each of the Data Providers.  Your exercise of any of the rights and permissions granted below constitutes Your acceptance and agreement to be bound by the terms and conditions of this Agreement.
 
-The benefits that each Data Provider receives from making Data available and that You receive from Data or otherwise under these terms and conditions shall be deemed sufficient consideration for the formation of this Agreement.  Accordingly, Data Provider(s) and You (the “Parties”) agree as follows:
+The benefits that each Data Provider receives from making Data available and that You receive from Data or otherwise under these terms and conditions shall be deemed sufficient consideration for the formation of this Agreement.  Accordingly, Data Provider(s) and You (the "Parties") agree as follows:
 
 Section 1.  Definitions
 
-1.1 “Add” means to supplement Data with Your own or someone else’s Data, resulting in Your “Additions.”  Additions do not include Results.
+1.1 "Add" means to supplement Data with Your own or someone else’s Data, resulting in Your "Additions."  Additions do not include Results.
 
-1.2 “Computational Use” means Your analysis (through the use of computational devices or otherwise) or other interpretation of Data.  By way of example and not limitation, “Computational Use” includes the application of any computational analytical technique, the purpose of which is the analysis of any Data in digital form to generate information about Data such as patterns, trends, correlations, inferences, insights and attributes.
+1.2 "Computational Use" means Your analysis (through the use of computational devices or otherwise) or other interpretation of Data.  By way of example and not limitation, "Computational Use" includes the application of any computational analytical technique, the purpose of which is the analysis of any Data in digital form to generate information about Data such as patterns, trends, correlations, inferences, insights and attributes.
 
-1.3 “Data” means the information (including copyrightable information, such as images or text), collectively or individually, whether created or gathered by a Data Provider or an Entity acting on its behalf, to which rights are granted under this Agreement.
+1.3 "Data" means the information (including copyrightable information, such as images or text), collectively or individually, whether created or gathered by a Data Provider or an Entity acting on its behalf, to which rights are granted under this Agreement.
 
-1.4 “Data Provider” means any Entity (including any employee or contractor of such Entity authorized to Publish Data on behalf of such Entity) that Publishes Data under this Agreement prior to Your Receiving it.
+1.4 "Data Provider" means any Entity (including any employee or contractor of such Entity authorized to Publish Data on behalf of such Entity) that Publishes Data under this Agreement prior to Your Receiving it.
 
-1.5 “Enhanced Data” means the subset of Data that You Publish and that is composed of (a) Your Additions and/or (b) Modifications to Data You have received under this Agreement.
+1.5 "Enhanced Data" means the subset of Data that You Publish and that is composed of (a) Your Additions and/or (b) Modifications to Data You have received under this Agreement.
 
-1.6 “Entity” means any natural person or organization that exists under the laws of the jurisdiction in which it is organized, together with all other entities that control, are controlled by, or are under common control with that entity.  For the purposes of this definition, “control” means (a) the power, directly or indirectly, to cause the direction or management of such entity, whether by contract or otherwise, (b) the ownership of more than fifty percent (50%) of the outstanding shares or securities, (c) the beneficial ownership of such entity or, (d) the ability to appoint, whether by agreement or right, the majority of directors of an Entity.
+1.6 "Entity" means any natural person or organization that exists under the laws of the jurisdiction in which it is organized, together with all other entities that control, are controlled by, or are under common control with that entity.  For the purposes of this definition, "control" means (a) the power, directly or indirectly, to cause the direction or management of such entity, whether by contract or otherwise, (b) the ownership of more than fifty percent (50%) of the outstanding shares or securities, (c) the beneficial ownership of such entity or, (d) the ability to appoint, whether by agreement or right, the majority of directors of an Entity.
 
-1.7 “Modify” means to delete, erase, correct or re-arrange Data, resulting in “Modifications.”  Modifications do not include Results.
+1.7 "Modify" means to delete, erase, correct or re-arrange Data, resulting in "Modifications."  Modifications do not include Results.
 
-1.8 “Publish” means to make all or a subset of Data (including Your Enhanced Data) available in any manner which enables its Use, including by providing a copy on physical media or remote access.  For any form of Entity, that is to make the Data available to any individual who is not employed by that Entity or engaged as a contractor or agent to perform work on that Entity’s behalf.  A “Publication” occurs each time You Publish Data.
+1.8 "Publish" means to make all or a subset of Data (including Your Enhanced Data) available in any manner which enables its Use, including by providing a copy on physical media or remote access.  For any form of Entity, that is to make the Data available to any individual who is not employed by that Entity or engaged as a contractor or agent to perform work on that Entity’s behalf.  A "Publication" occurs each time You Publish Data.
 
-1.9 “Receive” or “Receives” means to have been given access to Data, locally or remotely.
+1.9 "Receive" or "Receives" means to have been given access to Data, locally or remotely.
 
-1.10 “Results” means the outcomes or outputs that You obtain from Your Computational Use of Data.  Results shall not include more than a de minimis portion of the Data on which the Computational Use is based.
+1.10 "Results" means the outcomes or outputs that You obtain from Your Computational Use of Data.  Results shall not include more than a de minimis portion of the Data on which the Computational Use is based.
 
-1.11 “Sui Generis Database Rights” means rights, other than copyright, resulting from Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, as amended and/or succeeded, as well as other equivalent rights anywhere in the world.
+1.11 "Sui Generis Database Rights" means rights, other than copyright, resulting from Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, as amended and/or succeeded, as well as other equivalent rights anywhere in the world.
 
-1.12 “Use” means using Data (including accessing, copying, studying, reviewing, adapting, analyzing, evaluating, or making Computational Use of it), either by machines or humans, or a combination of both.
+1.12 "Use" means using Data (including accessing, copying, studying, reviewing, adapting, analyzing, evaluating, or making Computational Use of it), either by machines or humans, or a combination of both.
 
-1.13 “You” or “Your” means any Entity that Receives Data under this Agreement.
+1.13 "You" or "Your" means any Entity that Receives Data under this Agreement.
 
 Section 2.  Right and License to Use and to Publish
 
@@ -394,7 +394,7 @@ Section 5.  Termination
 
 Section 6.  Disclaimer of Warranties and Limitation of Liability
 
-6.1 EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, THE DATA (INCLUDING ENHANCED DATA) IS PROVIDED ON AN “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES OR CONDITIONS OF TITLE, NON-INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+6.1 EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, THE DATA (INCLUDING ENHANCED DATA) IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES OR CONDITIONS OF TITLE, NON-INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
 
 6.2 NEITHER YOU NOR ANY DATA PROVIDERS SHALL HAVE ANY LIABILITY FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING WITHOUT LIMITATION LOST PROFITS), HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OR DISTRIBUTION OF THE DATA OR THE EXERCISE OF ANY RIGHTS GRANTED HEREUNDER, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
@@ -408,7 +408,7 @@ Section 7.  Miscellaneous
 
 7.4 The Data Provider(s) reserve no right or expectation of privacy, data protection or confidentiality in any Data that they Publish under this Agreement.  If You choose to Publish Data under this Agreement, You similarly do so with no reservation or expectation of any rights of privacy or confidentiality in that Data.
 
-7.5 The Community Data License Agreement workgroup under The Linux Foundation is the steward of this Agreement (“Steward”).  No one other than the Steward has the right to modify or publish new versions of this Agreement.  Each version will be given a distinguishing version number.  You may Use and Publish Data Received hereunder under the terms of the version of the Agreement under which You originally Received the Data, or under the terms of any subsequent version published by the Steward.
+7.5 The Community Data License Agreement workgroup under The Linux Foundation is the steward of this Agreement ("Steward").  No one other than the Steward has the right to modify or publish new versions of this Agreement.  Each version will be given a distinguishing version number.  You may Use and Publish Data Received hereunder under the terms of the version of the Agreement under which You originally Received the Data, or under the terms of any subsequent version published by the Steward.
 ', 'https://cdla.io/permissive-1-0/');
 
 insert into license(name, description, url) values('ODC-BY', 'ODC Attribution License (ODC-By)
@@ -440,83 +440,83 @@ You (as defined below)
 agree as follows:
 1.0 Definitions of Capitalised Words
 
-“Collective Database” – Means this Database in unmodified form as part
+"Collective Database" - Means this Database in unmodified form as part
 of a collection of independent databases in themselves that together are
 assembled into a collective whole. A work that constitutes a Collective
 Database will not be considered a Derivative Database.
 
-“Convey” – As a verb, means Using the Database, a Derivative Database,
+"Convey" - As a verb, means Using the Database, a Derivative Database,
 or the Database as part of a Collective Database in any way that enables
 a Person to make or receive copies of the Database or a Derivative
 Database. Conveying does not include interaction with a user through a
 computer network, or creating and Using a Produced Work, where no
 transfer of a copy of the Database or a Derivative Database occurs.
 
-“Contents” – The contents of this Database, which includes the
+"Contents" - The contents of this Database, which includes the
 information, independent works, or other material collected into the
 Database. For example, the contents of the Database could be factual
 data or works such as images, audiovisual material, text, or sounds.
 
-“Database” – A collection of material (the Contents) arranged in a
+"Database" - A collection of material (the Contents) arranged in a
 systematic or methodical way and individually accessible by electronic
 or other means offered under the terms of this License.
 
-“Database Directive” – Means Directive 96/9/EC of the European
+"Database Directive" - Means Directive 96/9/EC of the European
 Parliament and of the Council of 11 March 1996 on the legal protection
 of databases, as amended or succeeded.
 
-“Database Right” – Means rights resulting from the Chapter III (“sui
-generis”) rights in the Database Directive (as amended and as transposed
+"Database Right" - Means rights resulting from the Chapter III ("sui
+generis") rights in the Database Directive (as amended and as transposed
 by member states), which includes the Extraction and Re-utilisation of
 the whole or a Substantial part of the Contents, as well as any similar
 rights available in the relevant jurisdiction under Section 10.4.
 
-“Derivative Database” – Means a database based upon the Database, and
+"Derivative Database" - Means a database based upon the Database, and
 includes any translation, adaptation, arrangement, modification, or any
 other alteration of the Database or of a Substantial part of the
 Contents. This includes, but is not limited to, Extracting or
 Re-utilising the whole or a Substantial part of the Contents in a new
 Database.
 
-“Extraction” – Means the permanent or temporary transfer of all or a
+"Extraction" - Means the permanent or temporary transfer of all or a
 Substantial part of the Contents to another medium by any means or in
 any form.
 
-“License” – Means this license agreement and is both a license of rights
+"License" - Means this license agreement and is both a license of rights
 such as copyright and Database Rights and an agreement in contract.
 
-“Licensor” – Means the Person that offers the Database under the terms
+"Licensor" - Means the Person that offers the Database under the terms
 of this License.
 
-“Person” – Means a natural or legal person or a body of persons
+"Person" - Means a natural or legal person or a body of persons
 corporate or incorporate.
 
-“Produced Work” – a work (such as an image, audiovisual material, text,
+"Produced Work" - a work (such as an image, audiovisual material, text,
 or sounds) resulting from using the whole or a Substantial part of the
 Contents (via a search or other query) from this Database, a Derivative
 Database, or this Database as part of a Collective Database.
 
-“Publicly” – means to Persons other than You or under Your control by
+"Publicly" - means to Persons other than You or under Your control by
 either more than 50% ownership or by the power to direct their
 activities (such as contracting with an independent consultant).
 
-“Re-utilisation” – means any form of making available to the public all
+"Re-utilisation" - means any form of making available to the public all
 or a Substantial part of the Contents by the distribution of copies, by
 renting, by online or other forms of transmission.
 
-“Substantial” – Means substantial in terms of quantity or quality or a
+"Substantial" - Means substantial in terms of quantity or quality or a
 combination of both. The repeated and systematic Extraction or
 Re-utilisation of insubstantial parts of the Contents may amount to the
 Extraction or Re-utilisation of a Substantial part of the Contents.
 
-“Use” – As a verb, means doing any act that is restricted by copyright
+"Use" - As a verb, means doing any act that is restricted by copyright
 or Database Rights whether in the original medium or any other; and
 includes without limitation distributing, copying, publicly performing,
 publicly displaying, and preparing derivative works of the Database, as
 well as modifying the Database as may be technically necessary to use it
 in a different mode or format.
 
-“You” – Means a Person exercising rights under this License who has not
+"You" - Means a Person exercising rights under this License who has not
 previously violated the terms of this License with respect to the
 Database, or who has received express permission from the Licensor to
 exercise rights under this License despite a previous violation.
@@ -671,7 +671,7 @@ Section 4.3:
     under the ODC Attribution License.
 
 DATABASE NAME should be replaced with the name of the Database and a
-hyperlink to the location of the Database. “ODC Attribution License”
+hyperlink to the location of the Database. "ODC Attribution License"
 should contain a hyperlink to the URI of the text of this License. If
 hyperlinks are not possible, You should include the plain text of the
 required URI’s with the above notice.
@@ -737,7 +737,7 @@ to the Extraction or Re-utilisation of a Substantial part of the
 Contents.
 7.0 Warranties and Disclaimer
 
-7.1 The Database is licensed by the Licensor “as is” and without any
+7.1 The Database is licensed by the Licensor "as is" and without any
 warranty of any kind, either express, implied, or arising by statute,
 custom, course of dealing, or trade usage. Licensor specifically
 disclaims any and all implied warranties or conditions of title,
@@ -831,7 +831,7 @@ insert into license(name, description, url) values('CC-BY-SA', "Creative Commons
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-ShareAlike 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
-Section 1 – Definitions.
+Section 1 - Definitions.
 
     Adapted Material means material subject to Copyright and Similar Rights that is derived from or based upon the Licensed Material and in which the Licensed Material is translated, altered, arranged, transformed, or otherwise modified in a manner requiring permission under the Copyright and Similar Rights held by the Licensor. For purposes of this Public License, where the Licensed Material is a musical work, performance, or sound recording, Adapted Material is always produced where the Licensed Material is synched in timed relation with a moving image.
     Adapter's License means the license You apply to Your Copyright and Similar Rights in Your contributions to Adapted Material in accordance with the terms and conditions of this Public License.
@@ -847,7 +847,7 @@ Section 1 – Definitions.
     Sui Generis Database Rights means rights other than copyright resulting from Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, as amended and/or succeeded, as well as other essentially equivalent rights anywhere in the world.
     You means the individual or entity exercising the Licensed Rights under this Public License. Your has a corresponding meaning.
 
-Section 2 – Scope.
+Section 2 - Scope.
 
     License grant.
         Subject to the terms and conditions of this Public License, the Licensor hereby grants You a worldwide, royalty-free, non-sublicensable, non-exclusive, irrevocable license to exercise the Licensed Rights in the Licensed Material to:
@@ -857,8 +857,8 @@ Section 2 – Scope.
         Term. The term of this Public License is specified in Section 6(a).
         Media and formats; technical modifications allowed. The Licensor authorizes You to exercise the Licensed Rights in all media and formats whether now known or hereafter created, and to make technical modifications necessary to do so. The Licensor waives and/or agrees not to assert any right or authority to forbid You from making technical modifications necessary to exercise the Licensed Rights, including technical modifications necessary to circumvent Effective Technological Measures. For purposes of this Public License, simply making modifications authorized by this Section 2(a)(4) never produces Adapted Material.
         Downstream recipients.
-            Offer from the Licensor – Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.
-            Additional offer from the Licensor – Adapted Material. Every recipient of Adapted Material from You automatically receives an offer from the Licensor to exercise the Licensed Rights in the Adapted Material under the conditions of the Adapter’s License You apply.
+            Offer from the Licensor - Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.
+            Additional offer from the Licensor - Adapted Material. Every recipient of Adapted Material from You automatically receives an offer from the Licensor to exercise the Licensed Rights in the Adapted Material under the conditions of the Adapter’s License You apply.
             No downstream restrictions. You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, the Licensed Material if doing so restricts exercise of the Licensed Rights by any recipient of the Licensed Material.
         No endorsement. Nothing in this Public License constitutes or may be construed as permission to assert or imply that You are, or that Your use of the Licensed Material is, connected with, or sponsored, endorsed, or granted official status by, the Licensor or others designated to receive attribution as provided in Section 3(a)(1)(A)(i).
 
@@ -867,7 +867,7 @@ Section 2 – Scope.
         Patent and trademark rights are not licensed under this Public License.
         To the extent possible, the Licensor waives any right to collect royalties from You for the exercise of the Licensed Rights, whether directly or through a collecting society under any voluntary or waivable statutory or compulsory licensing scheme. In all other cases the Licensor expressly reserves any right to collect such royalties.
 
-Section 3 – License Conditions.
+Section 3 - License Conditions.
 
 Your exercise of the Licensed Rights is expressly made subject to the following conditions.
 
@@ -891,7 +891,7 @@ Your exercise of the Licensed Rights is expressly made subject to the following 
         You must include the text of, or the URI or hyperlink to, the Adapter's License You apply. You may satisfy this condition in any reasonable manner based on the medium, means, and context in which You Share Adapted Material.
         You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, Adapted Material that restrict exercise of the rights granted under the Adapter's License You apply.
 
-Section 4 – Sui Generis Database Rights.
+Section 4 - Sui Generis Database Rights.
 
 Where the Licensed Rights include Sui Generis Database Rights that apply to Your use of the Licensed Material:
 
@@ -901,14 +901,14 @@ Where the Licensed Rights include Sui Generis Database Rights that apply to Your
 
 For the avoidance of doubt, this Section 4 supplements and does not replace Your obligations under this Public License where the Licensed Rights include other Copyright and Similar Rights.
 
-Section 5 – Disclaimer of Warranties and Limitation of Liability.
+Section 5 - Disclaimer of Warranties and Limitation of Liability.
 
     Unless otherwise separately undertaken by the Licensor, to the extent possible, the Licensor offers the Licensed Material as-is and as-available, and makes no representations or warranties of any kind concerning the Licensed Material, whether express, implied, statutory, or other. This includes, without limitation, warranties of title, merchantability, fitness for a particular purpose, non-infringement, absence of latent or other defects, accuracy, or the presence or absence of errors, whether or not known or discoverable. Where disclaimers of warranties are not allowed in full or in part, this disclaimer may not apply to You.
     To the extent possible, in no event will the Licensor be liable to You on any legal theory (including, without limitation, negligence) or otherwise for any direct, special, indirect, incidental, consequential, punitive, exemplary, or other losses, costs, expenses, or damages arising out of this Public License or use of the Licensed Material, even if the Licensor has been advised of the possibility of such losses, costs, expenses, or damages. Where a limitation of liability is not allowed in full or in part, this limitation may not apply to You.
 
     The disclaimer of warranties and limitation of liability provided above shall be interpreted in a manner that, to the extent possible, most closely approximates an absolute disclaimer and waiver of all liability.
 
-Section 6 – Term and Termination.
+Section 6 - Term and Termination.
 
     This Public License applies for the term of the Copyright and Similar Rights licensed here. However, if You fail to comply with this Public License, then Your rights under this Public License terminate automatically.
 
@@ -919,12 +919,12 @@ Section 6 – Term and Termination.
     For the avoidance of doubt, the Licensor may also offer the Licensed Material under separate terms or conditions or stop distributing the Licensed Material at any time; however, doing so will not terminate this Public License.
     Sections 1, 5, 6, 7, and 8 survive termination of this Public License.
 
-Section 7 – Other Terms and Conditions.
+Section 7 - Other Terms and Conditions.
 
     The Licensor shall not be bound by any additional or different terms or conditions communicated by You unless expressly agreed.
     Any arrangements, understandings, or agreements regarding the Licensed Material not stated herein are separate from and independent of the terms and conditions of this Public License.
 
-Section 8 – Interpretation.
+Section 8 - Interpretation.
 
     For the avoidance of doubt, this Public License does not, and shall not be interpreted to, reduce, limit, restrict, or impose conditions on any use of the Licensed Material that could lawfully be made without permission under this Public License.
     To the extent possible, if any provision of this Public License is deemed unenforceable, it shall be automatically reformed to the minimum extent necessary to make it enforceable. If the provision cannot be reformed, it shall be severed from this Public License without affecting the enforceability of the remaining terms and conditions.
@@ -934,41 +934,41 @@ Section 8 – Interpretation.
 
 insert into license(name, description, url) values('CDLA-Sharing-1.0', '
 
-Community Data License Agreement – Sharing – Version 1.0
+Community Data License Agreement - Sharing - Version 1.0
 
-This is the Community Data License Agreement – Sharing, Version 1.0 (“Agreement”).  Data is provided to You under this Agreement by each of the Data Providers.  Your exercise of any of the rights and permissions granted below constitutes Your acceptance and agreement to be bound by the terms and conditions of this Agreement.
+This is the Community Data License Agreement - Sharing, Version 1.0 ("Agreement").  Data is provided to You under this Agreement by each of the Data Providers.  Your exercise of any of the rights and permissions granted below constitutes Your acceptance and agreement to be bound by the terms and conditions of this Agreement.
 
-The benefits that each Data Provider receives from making Data available and that You receive from Data or otherwise under these terms and conditions shall be deemed sufficient consideration for the formation of this Agreement.  Accordingly, Data Provider(s) and You (the “Parties”) agree as follows:
+The benefits that each Data Provider receives from making Data available and that You receive from Data or otherwise under these terms and conditions shall be deemed sufficient consideration for the formation of this Agreement.  Accordingly, Data Provider(s) and You (the "Parties") agree as follows:
 
 Section 1.  Definitions
 
-1.1 “Add” means to supplement Data with Your own or someone else’s Data, resulting in Your “Additions.”  Additions do not include Results.
+1.1 "Add" means to supplement Data with Your own or someone else’s Data, resulting in Your "Additions."  Additions do not include Results.
 
-1.2 “Computational Use” means Your analysis (through the use of computational devices or otherwise) or other interpretation of Data.  By way of example and not limitation, “Computational Use” includes the application of any computational analytical technique, the purpose of which is the analysis of any Data in digital form to generate information about Data such as patterns, trends, correlations, inferences, insights and attributes.
+1.2 "Computational Use" means Your analysis (through the use of computational devices or otherwise) or other interpretation of Data.  By way of example and not limitation, "Computational Use" includes the application of any computational analytical technique, the purpose of which is the analysis of any Data in digital form to generate information about Data such as patterns, trends, correlations, inferences, insights and attributes.
 
-1.3 “Data” means the information (including copyrightable information, such as images or text), collectively or individually, whether created or gathered by a Data Provider or an Entity acting on its behalf, to which rights are granted under this Agreement.
+1.3 "Data" means the information (including copyrightable information, such as images or text), collectively or individually, whether created or gathered by a Data Provider or an Entity acting on its behalf, to which rights are granted under this Agreement.
 
-1.4 “Data Provider” means any Entity (including any employee or contractor of such Entity authorized to Publish Data on behalf of such Entity) that Publishes Data under this Agreement prior to Your Receiving it.
+1.4 "Data Provider" means any Entity (including any employee or contractor of such Entity authorized to Publish Data on behalf of such Entity) that Publishes Data under this Agreement prior to Your Receiving it.
 
-1.5 “Enhanced Data” means the subset of Data that You Publish and that is composed of (a) Your Additions and/or (b) Modifications to Data You have received under this Agreement.
+1.5 "Enhanced Data" means the subset of Data that You Publish and that is composed of (a) Your Additions and/or (b) Modifications to Data You have received under this Agreement.
 
-1.6 “Entity” means any natural person or organization that exists under the laws of the jurisdiction in which it is organized, together with all other entities that control, are controlled by, or are under common control with that entity.  For the purposes of this definition, “control” means (a) the power, directly or indirectly, to cause the direction or management of such entity, whether by contract or otherwise, (b) the ownership of more than fifty percent (50%) of the outstanding shares or securities, (c) the beneficial ownership of such entity or, (d) the ability to appoint, whether by agreement or right, the majority of directors of an Entity.
+1.6 "Entity" means any natural person or organization that exists under the laws of the jurisdiction in which it is organized, together with all other entities that control, are controlled by, or are under common control with that entity.  For the purposes of this definition, "control" means (a) the power, directly or indirectly, to cause the direction or management of such entity, whether by contract or otherwise, (b) the ownership of more than fifty percent (50%) of the outstanding shares or securities, (c) the beneficial ownership of such entity or, (d) the ability to appoint, whether by agreement or right, the majority of directors of an Entity.
 
-1.7 “Ledger” means a digital record of Data or grants of rights in Data governed by this Agreement, using any technology having functionality to record and store Data or grants, contributions, or licenses to Data governed by this Agreement.
+1.7 "Ledger" means a digital record of Data or grants of rights in Data governed by this Agreement, using any technology having functionality to record and store Data or grants, contributions, or licenses to Data governed by this Agreement.
 
-1.8 “Modify” means to delete, erase, correct or re-arrange Data, resulting in “Modifications.”  Modifications do not include Results.
+1.8 "Modify" means to delete, erase, correct or re-arrange Data, resulting in "Modifications."  Modifications do not include Results.
 
-1.9 “Publish” means to make all or a subset of Data (including Your Enhanced Data) available in any manner which enables its Use, including by providing a copy on physical media or remote access.  For any form of Entity, that is to make the Data available to any individual who is not employed by that Entity or engaged as a contractor or agent to perform work on that Entity’s behalf.  A “Publication” occurs each time You Publish Data.
+1.9 "Publish" means to make all or a subset of Data (including Your Enhanced Data) available in any manner which enables its Use, including by providing a copy on physical media or remote access.  For any form of Entity, that is to make the Data available to any individual who is not employed by that Entity or engaged as a contractor or agent to perform work on that Entity’s behalf.  A "Publication" occurs each time You Publish Data.
 
-1.10 “Receive” or “Receives” means to have been given access to Data, locally or remotely.
+1.10 "Receive" or "Receives" means to have been given access to Data, locally or remotely.
 
-1.11 “Results” means the outcomes or outputs that You obtain from Your Computational Use of Data.  Results shall not include more than a de minimis portion of the Data on which the Computational Use is based.
+1.11 "Results" means the outcomes or outputs that You obtain from Your Computational Use of Data.  Results shall not include more than a de minimis portion of the Data on which the Computational Use is based.
 
-1.12 “Sui Generis Database Rights” means rights, other than copyright, resulting from Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, as amended and/or succeeded, as well as other equivalent rights anywhere in the world.
+1.12 "Sui Generis Database Rights" means rights, other than copyright, resulting from Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, as amended and/or succeeded, as well as other equivalent rights anywhere in the world.
 
-1.13 “Use” means using Data (including accessing, copying, studying, reviewing, adapting, analyzing, evaluating, or making Computational Use of it), either by machines or humans, or a combination of both.
+1.13 "Use" means using Data (including accessing, copying, studying, reviewing, adapting, analyzing, evaluating, or making Computational Use of it), either by machines or humans, or a combination of both.
 
-1.14 “You” or “Your” means any Entity that Receives Data under this Agreement.
+1.14 "You" or "Your" means any Entity that Receives Data under this Agreement.
 
 Section 2.  Right and License to Use and to Publish
 
@@ -1008,7 +1008,7 @@ Section 5.  Termination
 
 Section 6.  Disclaimer of Warranties and Limitation of Liability
 
-6.1 EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, THE DATA (INCLUDING ENHANCED DATA) IS PROVIDED ON AN “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES OR CONDITIONS OF TITLE, NON-INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+6.1 EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, THE DATA (INCLUDING ENHANCED DATA) IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES OR CONDITIONS OF TITLE, NON-INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
 
 6.2 NEITHER YOU NOR ANY DATA PROVIDERS SHALL HAVE ANY LIABILITY FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING WITHOUT LIMITATION LOST PROFITS), HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OR DISTRIBUTION OF THE DATA OR THE EXERCISE OF ANY RIGHTS GRANTED HEREUNDER, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
@@ -1022,7 +1022,7 @@ Section 7.  Miscellaneous
 
 7.4 The Data Provider(s) reserve no right or expectation of privacy, data protection or confidentiality in any Data that they Publish under this Agreement.  If You choose to Publish Data under this Agreement, You similarly do so with no reservation or expectation of any rights of privacy or confidentiality in that Data.
 
-7.5 The Community Data License Agreement workgroup under The Linux Foundation is the steward of this Agreement (“Steward”).  No one other than the Steward has the right to modify or publish new versions of this Agreement.  Each version will be given a distinguishing version number.  You may Use and Publish Data Received hereunder under the terms of the version of the Agreement under which You originally Received the Data, or under the terms of any subsequent version published by the Steward.
+7.5 The Community Data License Agreement workgroup under The Linux Foundation is the steward of this Agreement ("Steward").  No one other than the Steward has the right to modify or publish new versions of this Agreement.  Each version will be given a distinguishing version number.  You may Use and Publish Data Received hereunder under the terms of the version of the Agreement under which You originally Received the Data, or under the terms of any subsequent version published by the Steward.
 ', 'https://cdla.io/sharing-1-0/');
 
 
@@ -1064,82 +1064,82 @@ You (as defined below)
 agree as follows:
 1.0 Definitions of Capitalised Words
 
-“Collective Database” – Means this Database in unmodified form as part
+"Collective Database" - Means this Database in unmodified form as part
 of a collection of independent databases in themselves that together are
 assembled into a collective whole. A work that constitutes a Collective
 Database will not be considered a Derivative Database.
 
-“Convey” – As a verb, means Using the Database, a Derivative Database,
+"Convey" - As a verb, means Using the Database, a Derivative Database,
 or the Database as part of a Collective Database in any way that enables
 a Person to make or receive copies of the Database or a Derivative
 Database. Conveying does not include interaction with a user through a
 computer network, or creating and Using a Produced Work, where no
 transfer of a copy of the Database or a Derivative Database occurs.
-“Contents” – The contents of this Database, which includes the
+"Contents" - The contents of this Database, which includes the
 information, independent works, or other material collected into the
 Database. For example, the contents of the Database could be factual
 data or works such as images, audiovisual material, text, or sounds.
 
-“Database” – A collection of material (the Contents) arranged in a
+"Database" - A collection of material (the Contents) arranged in a
 systematic or methodical way and individually accessible by electronic
 or other means offered under the terms of this License.
 
-“Database Directive” – Means Directive 96/9/EC of the European
+"Database Directive" - Means Directive 96/9/EC of the European
 Parliament and of the Council of 11 March 1996 on the legal protection
 of databases, as amended or succeeded.
 
-“Database Right” – Means rights resulting from the Chapter III (“sui
-generis”) rights in the Database Directive (as amended and as transposed
+"Database Right" - Means rights resulting from the Chapter III ("sui
+generis") rights in the Database Directive (as amended and as transposed
 by member states), which includes the Extraction and Re-utilisation of
 the whole or a Substantial part of the Contents, as well as any similar
 rights available in the relevant jurisdiction under Section 10.4.
 
-“Derivative Database” – Means a database based upon the Database, and
+"Derivative Database" - Means a database based upon the Database, and
 includes any translation, adaptation, arrangement, modification, or any
 other alteration of the Database or of a Substantial part of the
 Contents. This includes, but is not limited to, Extracting or
 Re-utilising the whole or a Substantial part of the Contents in a new
 Database.
 
-“Extraction” – Means the permanent or temporary transfer of all or a
+"Extraction" - Means the permanent or temporary transfer of all or a
 Substantial part of the Contents to another medium by any means or in
 any form.
 
-“License” – Means this license agreement and is both a license of rights
+"License" - Means this license agreement and is both a license of rights
 such as copyright and Database Rights and an agreement in contract.
 
-“Licensor” – Means the Person that offers the Database under the terms
+"Licensor" - Means the Person that offers the Database under the terms
 of this License.
 
-“Person” – Means a natural or legal person or a body of persons
+"Person" - Means a natural or legal person or a body of persons
 corporate or incorporate.
 
-“Produced Work” – a work (such as an image, audiovisual material, text,
+"Produced Work" - a work (such as an image, audiovisual material, text,
 or sounds) resulting from using the whole or a Substantial part of the
 Contents (via a search or other query) from this Database, a Derivative
 Database, or this Database as part of a Collective Database.
 
-“Publicly” – means to Persons other than You or under Your control by
+"Publicly" - means to Persons other than You or under Your control by
 either more than 50% ownership or by the power to direct their
 activities (such as contracting with an independent consultant).
 
-“Re-utilisation” – means any form of making available to the public all
+"Re-utilisation" - means any form of making available to the public all
 or a Substantial part of the Contents by the distribution of copies, by
 renting, by online or other forms of transmission.
 
-“Substantial” – Means substantial in terms of quantity or quality or a
+"Substantial" - Means substantial in terms of quantity or quality or a
 combination of both. The repeated and systematic Extraction or
 Re-utilisation of insubstantial parts of the Contents may amount to the
 Extraction or Re-utilisation of a Substantial part of the Contents.
 
-“Use” – As a verb, means doing any act that is restricted by copyright
+"Use" - As a verb, means doing any act that is restricted by copyright
 or Database Rights whether in the original medium or any other; and
 includes without limitation distributing, copying, publicly performing,
 publicly displaying, and preparing derivative works of the Database, as
 well as modifying the Database as may be technically necessary to use it
 in a different mode or format.
 
-“You” – Means a Person exercising rights under this License who has not
+"You" - Means a Person exercising rights under this License who has not
 previously violated the terms of this License with respect to the
 Database, or who has received express permission from the Licensor to
 exercise rights under this License despite a previous violation.
@@ -1296,7 +1296,7 @@ Section 4.3:
     here under the Open Database License (ODbL).
 
 DATABASE NAME should be replaced with the name of the Database and a
-hyperlink to the URI of the Database. “Open Database License” should
+hyperlink to the URI of the Database. "Open Database License" should
 contain a hyperlink to the URI of the text of this License. If
 hyperlinks are not possible, You should include the plain text of the
 required URI’s with the above notice.
@@ -1377,7 +1377,7 @@ the ability of any person to exercise those rights.
 
       b. Parallel distribution. You may impose terms or technological
 measures on the Database, a Derivative Database, or the whole or a
-Substantial part of the Contents (a “Restricted Database”) in
+Substantial part of the Contents (a "Restricted Database") in
 contravention of Section 4.74 a. only if You also make a copy of the
 Database or a Derivative Database available to the recipient of the
 Restricted Database:
@@ -1387,7 +1387,7 @@ Restricted Database:
            ii. That is available in a medium that does not alter or restrict
 the terms of this License, or any rights granted under it, or have
 the effect or intent of restricting the ability of any person to
-exercise those rights (an “Unrestricted Database”); and
+exercise those rights (an "Unrestricted Database"); and
 
            iii. The Unrestricted Database is at least as accessible to the
 recipient as a practical matter as the Restricted Database.
@@ -1460,7 +1460,7 @@ to the Extraction or Re-utilisation of a Substantial part of the
 Contents.
 7.0 Warranties and Disclaimer
 
-7.1 The Database is licensed by the Licensor “as is” and without any
+7.1 The Database is licensed by the Licensor "as is" and without any
 warranty of any kind, either express, implied, or arising by statute,
 custom, course of dealing, or trade usage. Licensor specifically
 disclaims any and all implied warranties or conditions of title,
@@ -1557,7 +1557,7 @@ insert into license(name, description, url) values('CC BY-NC', "Creative Commons
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
-Section 1 – Definitions.
+Section 1 - Definitions.
 
     Adapted Material means material subject to Copyright and Similar Rights that is derived from or based upon the Licensed Material and in which the Licensed Material is translated, altered, arranged, transformed, or otherwise modified in a manner requiring permission under the Copyright and Similar Rights held by the Licensor. For purposes of this Public License, where the Licensed Material is a musical work, performance, or sound recording, Adapted Material is always produced where the Licensed Material is synched in timed relation with a moving image.
     Adapter's License means the license You apply to Your Copyright and Similar Rights in Your contributions to Adapted Material in accordance with the terms and conditions of this Public License.
@@ -1572,7 +1572,7 @@ Section 1 – Definitions.
     Sui Generis Database Rights means rights other than copyright resulting from Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, as amended and/or succeeded, as well as other essentially equivalent rights anywhere in the world.
     You means the individual or entity exercising the Licensed Rights under this Public License. Your has a corresponding meaning.
 
-Section 2 – Scope.
+Section 2 - Scope.
 
     License grant.
         Subject to the terms and conditions of this Public License, the Licensor hereby grants You a worldwide, royalty-free, non-sublicensable, non-exclusive, irrevocable license to exercise the Licensed Rights in the Licensed Material to:
@@ -1582,7 +1582,7 @@ Section 2 – Scope.
         Term. The term of this Public License is specified in Section 6(a).
         Media and formats; technical modifications allowed. The Licensor authorizes You to exercise the Licensed Rights in all media and formats whether now known or hereafter created, and to make technical modifications necessary to do so. The Licensor waives and/or agrees not to assert any right or authority to forbid You from making technical modifications necessary to exercise the Licensed Rights, including technical modifications necessary to circumvent Effective Technological Measures. For purposes of this Public License, simply making modifications authorized by this Section 2(a)(4) never produces Adapted Material.
         Downstream recipients.
-            Offer from the Licensor – Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.
+            Offer from the Licensor - Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.
             No downstream restrictions. You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, the Licensed Material if doing so restricts exercise of the Licensed Rights by any recipient of the Licensed Material.
         No endorsement. Nothing in this Public License constitutes or may be construed as permission to assert or imply that You are, or that Your use of the Licensed Material is, connected with, or sponsored, endorsed, or granted official status by, the Licensor or others designated to receive attribution as provided in Section 3(a)(1)(A)(i).
 
@@ -1591,7 +1591,7 @@ Section 2 – Scope.
         Patent and trademark rights are not licensed under this Public License.
         To the extent possible, the Licensor waives any right to collect royalties from You for the exercise of the Licensed Rights, whether directly or through a collecting society under any voluntary or waivable statutory or compulsory licensing scheme. In all other cases the Licensor expressly reserves any right to collect such royalties, including when the Licensed Material is used other than for NonCommercial purposes.
 
-Section 3 – License Conditions.
+Section 3 - License Conditions.
 
 Your exercise of the Licensed Rights is expressly made subject to the following conditions.
 
@@ -1608,9 +1608,9 @@ Your exercise of the Licensed Rights is expressly made subject to the following 
             indicate the Licensed Material is licensed under this Public License, and include the text of, or the URI or hyperlink to, this Public License.
         You may satisfy the conditions in Section 3(a)(1) in any reasonable manner based on the medium, means, and context in which You Share the Licensed Material. For example, it may be reasonable to satisfy the conditions by providing a URI or hyperlink to a resource that includes the required information.
         If requested by the Licensor, You must remove any of the information required by Section 3(a)(1)(A) to the extent reasonably practicable.
-        If You Share Adapted Material You produce, the Adapter's License You apply must not prevent recipients of the Adapted Material from complying with this Public License.
+        If You Share Adapted Material You produce, the Adapter`s License You apply must not prevent recipients of the Adapted Material from complying with this Public License.
 
-Section 4 – Sui Generis Database Rights.
+Section 4 - Sui Generis Database Rights.
 
 Where the Licensed Rights include Sui Generis Database Rights that apply to Your use of the Licensed Material:
 
@@ -1620,14 +1620,14 @@ Where the Licensed Rights include Sui Generis Database Rights that apply to Your
 
 For the avoidance of doubt, this Section 4 supplements and does not replace Your obligations under this Public License where the Licensed Rights include other Copyright and Similar Rights.
 
-Section 5 – Disclaimer of Warranties and Limitation of Liability.
+Section 5 - Disclaimer of Warranties and Limitation of Liability.
 
     Unless otherwise separately undertaken by the Licensor, to the extent possible, the Licensor offers the Licensed Material as-is and as-available, and makes no representations or warranties of any kind concerning the Licensed Material, whether express, implied, statutory, or other. This includes, without limitation, warranties of title, merchantability, fitness for a particular purpose, non-infringement, absence of latent or other defects, accuracy, or the presence or absence of errors, whether or not known or discoverable. Where disclaimers of warranties are not allowed in full or in part, this disclaimer may not apply to You.
     To the extent possible, in no event will the Licensor be liable to You on any legal theory (including, without limitation, negligence) or otherwise for any direct, special, indirect, incidental, consequential, punitive, exemplary, or other losses, costs, expenses, or damages arising out of this Public License or use of the Licensed Material, even if the Licensor has been advised of the possibility of such losses, costs, expenses, or damages. Where a limitation of liability is not allowed in full or in part, this limitation may not apply to You.
 
     The disclaimer of warranties and limitation of liability provided above shall be interpreted in a manner that, to the extent possible, most closely approximates an absolute disclaimer and waiver of all liability.
 
-Section 6 – Term and Termination.
+Section 6 - Term and Termination.
 
     This Public License applies for the term of the Copyright and Similar Rights licensed here. However, if You fail to comply with this Public License, then Your rights under this Public License terminate automatically.
 
@@ -1638,12 +1638,12 @@ Section 6 – Term and Termination.
     For the avoidance of doubt, the Licensor may also offer the Licensed Material under separate terms or conditions or stop distributing the Licensed Material at any time; however, doing so will not terminate this Public License.
     Sections 1, 5, 6, 7, and 8 survive termination of this Public License.
 
-Section 7 – Other Terms and Conditions.
+Section 7 - Other Terms and Conditions.
 
     The Licensor shall not be bound by any additional or different terms or conditions communicated by You unless expressly agreed.
     Any arrangements, understandings, or agreements regarding the Licensed Material not stated herein are separate from and independent of the terms and conditions of this Public License.
 
-Section 8 – Interpretation.
+Section 8 - Interpretation.
 
     For the avoidance of doubt, this Public License does not, and shall not be interpreted to, reduce, limit, restrict, or impose conditions on any use of the Licensed Material that could lawfully be made without permission under this Public License.
     To the extent possible, if any provision of this Public License is deemed unenforceable, it shall be automatically reformed to the minimum extent necessary to make it enforceable. If the provision cannot be reformed, it shall be severed from this Public License without affecting the enforceability of the remaining terms and conditions.
@@ -1656,7 +1656,7 @@ insert into license(name, description, url) values('CC BY-ND','Creative Commons 
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NoDerivatives 4.0 International Public License ("Public License"). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
-Section 1 – Definitions.
+Section 1 - Definitions.
 
     Adapted Material means material subject to Copyright and Similar Rights that is derived from or based upon the Licensed Material and in which the Licensed Material is translated, altered, arranged, transformed, or otherwise modified in a manner requiring permission under the Copyright and Similar Rights held by the Licensor. For purposes of this Public License, where the Licensed Material is a musical work, performance, or sound recording, Adapted Material is always produced where the Licensed Material is synched in timed relation with a moving image.
     Copyright and Similar Rights means copyright and/or similar rights closely related to copyright including, without limitation, performance, broadcast, sound recording, and Sui Generis Database Rights, without regard to how the rights are labeled or categorized. For purposes of this Public License, the rights specified in Section 2(b)(1)-(2) are not Copyright and Similar Rights.
@@ -1669,7 +1669,7 @@ Section 1 – Definitions.
     Sui Generis Database Rights means rights other than copyright resulting from Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, as amended and/or succeeded, as well as other essentially equivalent rights anywhere in the world.
     You means the individual or entity exercising the Licensed Rights under this Public License. Your has a corresponding meaning.
 
-Section 2 – Scope.
+Section 2 - Scope.
 
     License grant.
         Subject to the terms and conditions of this Public License, the Licensor hereby grants You a worldwide, royalty-free, non-sublicensable, non-exclusive, irrevocable license to exercise the Licensed Rights in the Licensed Material to:
@@ -1679,7 +1679,7 @@ Section 2 – Scope.
         Term. The term of this Public License is specified in Section 6(a).
         Media and formats; technical modifications allowed. The Licensor authorizes You to exercise the Licensed Rights in all media and formats whether now known or hereafter created, and to make technical modifications necessary to do so. The Licensor waives and/or agrees not to assert any right or authority to forbid You from making technical modifications necessary to exercise the Licensed Rights, including technical modifications necessary to circumvent Effective Technological Measures. For purposes of this Public License, simply making modifications authorized by this Section 2(a)(4) never produces Adapted Material.
         Downstream recipients.
-            Offer from the Licensor – Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.
+            Offer from the Licensor - Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.
             No downstream restrictions. You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, the Licensed Material if doing so restricts exercise of the Licensed Rights by any recipient of the Licensed Material.
         No endorsement. Nothing in this Public License constitutes or may be construed as permission to assert or imply that You are, or that Your use of the Licensed Material is, connected with, or sponsored, endorsed, or granted official status by, the Licensor or others designated to receive attribution as provided in Section 3(a)(1)(A)(i).
 
@@ -1688,7 +1688,7 @@ Section 2 – Scope.
         Patent and trademark rights are not licensed under this Public License.
         To the extent possible, the Licensor waives any right to collect royalties from You for the exercise of the Licensed Rights, whether directly or through a collecting society under any voluntary or waivable statutory or compulsory licensing scheme. In all other cases the Licensor expressly reserves any right to collect such royalties.
 
-Section 3 – License Conditions.
+Section 3 - License Conditions.
 
 Your exercise of the Licensed Rights is expressly made subject to the following conditions.
 
@@ -1707,7 +1707,7 @@ Your exercise of the Licensed Rights is expressly made subject to the following 
         You may satisfy the conditions in Section 3(a)(1) in any reasonable manner based on the medium, means, and context in which You Share the Licensed Material. For example, it may be reasonable to satisfy the conditions by providing a URI or hyperlink to a resource that includes the required information.
         If requested by the Licensor, You must remove any of the information required by Section 3(a)(1)(A) to the extent reasonably practicable.
 
-Section 4 – Sui Generis Database Rights.
+Section 4 - Sui Generis Database Rights.
 
 Where the Licensed Rights include Sui Generis Database Rights that apply to Your use of the Licensed Material:
 
@@ -1717,14 +1717,14 @@ Where the Licensed Rights include Sui Generis Database Rights that apply to Your
 
 For the avoidance of doubt, this Section 4 supplements and does not replace Your obligations under this Public License where the Licensed Rights include other Copyright and Similar Rights.
 
-Section 5 – Disclaimer of Warranties and Limitation of Liability.
+Section 5 - Disclaimer of Warranties and Limitation of Liability.
 
     Unless otherwise separately undertaken by the Licensor, to the extent possible, the Licensor offers the Licensed Material as-is and as-available, and makes no representations or warranties of any kind concerning the Licensed Material, whether express, implied, statutory, or other. This includes, without limitation, warranties of title, merchantability, fitness for a particular purpose, non-infringement, absence of latent or other defects, accuracy, or the presence or absence of errors, whether or not known or discoverable. Where disclaimers of warranties are not allowed in full or in part, this disclaimer may not apply to You.
     To the extent possible, in no event will the Licensor be liable to You on any legal theory (including, without limitation, negligence) or otherwise for any direct, special, indirect, incidental, consequential, punitive, exemplary, or other losses, costs, expenses, or damages arising out of this Public License or use of the Licensed Material, even if the Licensor has been advised of the possibility of such losses, costs, expenses, or damages. Where a limitation of liability is not allowed in full or in part, this limitation may not apply to You.
 
     The disclaimer of warranties and limitation of liability provided above shall be interpreted in a manner that, to the extent possible, most closely approximates an absolute disclaimer and waiver of all liability.
 
-Section 6 – Term and Termination.
+Section 6 - Term and Termination.
 
     This Public License applies for the term of the Copyright and Similar Rights licensed here. However, if You fail to comply with this Public License, then Your rights under this Public License terminate automatically.
 
@@ -1735,12 +1735,12 @@ Section 6 – Term and Termination.
     For the avoidance of doubt, the Licensor may also offer the Licensed Material under separate terms or conditions or stop distributing the Licensed Material at any time; however, doing so will not terminate this Public License.
     Sections 1, 5, 6, 7, and 8 survive termination of this Public License.
 
-Section 7 – Other Terms and Conditions.
+Section 7 - Other Terms and Conditions.
 
     The Licensor shall not be bound by any additional or different terms or conditions communicated by You unless expressly agreed.
     Any arrangements, understandings, or agreements regarding the Licensed Material not stated herein are separate from and independent of the terms and conditions of this Public License.
 
-Section 8 – Interpretation.
+Section 8 - Interpretation.
 
     For the avoidance of doubt, this Public License does not, and shall not be interpreted to, reduce, limit, restrict, or impose conditions on any use of the Licensed Material that could lawfully be made without permission under this Public License.
     To the extent possible, if any provision of this Public License is deemed unenforceable, it shall be automatically reformed to the minimum extent necessary to make it enforceable. If the provision cannot be reformed, it shall be severed from this Public License without affecting the enforceability of the remaining terms and conditions.
@@ -1752,7 +1752,7 @@ insert into license(name, description, url) values('CC BY-NC-SA',"Creative Commo
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
-Section 1 – Definitions.
+Section 1 - Definitions.
 
     Adapted Material means material subject to Copyright and Similar Rights that is derived from or based upon the Licensed Material and in which the Licensed Material is translated, altered, arranged, transformed, or otherwise modified in a manner requiring permission under the Copyright and Similar Rights held by the Licensor. For purposes of this Public License, where the Licensed Material is a musical work, performance, or sound recording, Adapted Material is always produced where the Licensed Material is synched in timed relation with a moving image.
     Adapter's License means the license You apply to Your Copyright and Similar Rights in Your contributions to Adapted Material in accordance with the terms and conditions of this Public License.
@@ -1769,7 +1769,7 @@ Section 1 – Definitions.
     Sui Generis Database Rights means rights other than copyright resulting from Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, as amended and/or succeeded, as well as other essentially equivalent rights anywhere in the world.
     You means the individual or entity exercising the Licensed Rights under this Public License. Your has a corresponding meaning.
 
-Section 2 – Scope.
+Section 2 - Scope.
 
     License grant.
         Subject to the terms and conditions of this Public License, the Licensor hereby grants You a worldwide, royalty-free, non-sublicensable, non-exclusive, irrevocable license to exercise the Licensed Rights in the Licensed Material to:
@@ -1779,8 +1779,8 @@ Section 2 – Scope.
         Term. The term of this Public License is specified in Section 6(a).
         Media and formats; technical modifications allowed. The Licensor authorizes You to exercise the Licensed Rights in all media and formats whether now known or hereafter created, and to make technical modifications necessary to do so. The Licensor waives and/or agrees not to assert any right or authority to forbid You from making technical modifications necessary to exercise the Licensed Rights, including technical modifications necessary to circumvent Effective Technological Measures. For purposes of this Public License, simply making modifications authorized by this Section 2(a)(4) never produces Adapted Material.
         Downstream recipients.
-            Offer from the Licensor – Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.
-            Additional offer from the Licensor – Adapted Material. Every recipient of Adapted Material from You automatically receives an offer from the Licensor to exercise the Licensed Rights in the Adapted Material under the conditions of the Adapter’s License You apply.
+            Offer from the Licensor - Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.
+            Additional offer from the Licensor - Adapted Material. Every recipient of Adapted Material from You automatically receives an offer from the Licensor to exercise the Licensed Rights in the Adapted Material under the conditions of the Adapter’s License You apply.
             No downstream restrictions. You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, the Licensed Material if doing so restricts exercise of the Licensed Rights by any recipient of the Licensed Material.
         No endorsement. Nothing in this Public License constitutes or may be construed as permission to assert or imply that You are, or that Your use of the Licensed Material is, connected with, or sponsored, endorsed, or granted official status by, the Licensor or others designated to receive attribution as provided in Section 3(a)(1)(A)(i).
 
@@ -1789,7 +1789,7 @@ Section 2 – Scope.
         Patent and trademark rights are not licensed under this Public License.
         To the extent possible, the Licensor waives any right to collect royalties from You for the exercise of the Licensed Rights, whether directly or through a collecting society under any voluntary or waivable statutory or compulsory licensing scheme. In all other cases the Licensor expressly reserves any right to collect such royalties, including when the Licensed Material is used other than for NonCommercial purposes.
 
-Section 3 – License Conditions.
+Section 3 - License Conditions.
 
 Your exercise of the Licensed Rights is expressly made subject to the following conditions.
 
@@ -1813,7 +1813,7 @@ Your exercise of the Licensed Rights is expressly made subject to the following 
         You must include the text of, or the URI or hyperlink to, the Adapter's License You apply. You may satisfy this condition in any reasonable manner based on the medium, means, and context in which You Share Adapted Material.
         You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, Adapted Material that restrict exercise of the rights granted under the Adapter's License You apply.
 
-Section 4 – Sui Generis Database Rights.
+Section 4 - Sui Generis Database Rights.
 
 Where the Licensed Rights include Sui Generis Database Rights that apply to Your use of the Licensed Material:
 
@@ -1823,14 +1823,14 @@ Where the Licensed Rights include Sui Generis Database Rights that apply to Your
 
 For the avoidance of doubt, this Section 4 supplements and does not replace Your obligations under this Public License where the Licensed Rights include other Copyright and Similar Rights.
 
-Section 5 – Disclaimer of Warranties and Limitation of Liability.
+Section 5 - Disclaimer of Warranties and Limitation of Liability.
 
     Unless otherwise separately undertaken by the Licensor, to the extent possible, the Licensor offers the Licensed Material as-is and as-available, and makes no representations or warranties of any kind concerning the Licensed Material, whether express, implied, statutory, or other. This includes, without limitation, warranties of title, merchantability, fitness for a particular purpose, non-infringement, absence of latent or other defects, accuracy, or the presence or absence of errors, whether or not known or discoverable. Where disclaimers of warranties are not allowed in full or in part, this disclaimer may not apply to You.
     To the extent possible, in no event will the Licensor be liable to You on any legal theory (including, without limitation, negligence) or otherwise for any direct, special, indirect, incidental, consequential, punitive, exemplary, or other losses, costs, expenses, or damages arising out of this Public License or use of the Licensed Material, even if the Licensor has been advised of the possibility of such losses, costs, expenses, or damages. Where a limitation of liability is not allowed in full or in part, this limitation may not apply to You.
 
     The disclaimer of warranties and limitation of liability provided above shall be interpreted in a manner that, to the extent possible, most closely approximates an absolute disclaimer and waiver of all liability.
 
-Section 6 – Term and Termination.
+Section 6 - Term and Termination.
 
     This Public License applies for the term of the Copyright and Similar Rights licensed here. However, if You fail to comply with this Public License, then Your rights under this Public License terminate automatically.
 
@@ -1841,12 +1841,12 @@ Section 6 – Term and Termination.
     For the avoidance of doubt, the Licensor may also offer the Licensed Material under separate terms or conditions or stop distributing the Licensed Material at any time; however, doing so will not terminate this Public License.
     Sections 1, 5, 6, 7, and 8 survive termination of this Public License.
 
-Section 7 – Other Terms and Conditions.
+Section 7 - Other Terms and Conditions.
 
     The Licensor shall not be bound by any additional or different terms or conditions communicated by You unless expressly agreed.
     Any arrangements, understandings, or agreements regarding the Licensed Material not stated herein are separate from and independent of the terms and conditions of this Public License.
 
-Section 8 – Interpretation.
+Section 8 - Interpretation.
 
     For the avoidance of doubt, this Public License does not, and shall not be interpreted to, reduce, limit, restrict, or impose conditions on any use of the Licensed Material that could lawfully be made without permission under this Public License.
     To the extent possible, if any provision of this Public License is deemed unenforceable, it shall be automatically reformed to the minimum extent necessary to make it enforceable. If the provision cannot be reformed, it shall be severed from this Public License without affecting the enforceability of the remaining terms and conditions.
@@ -1858,7 +1858,7 @@ insert into license(name, description, url) values("CC BY-NC-ND", "Creative Comm
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
-Section 1 – Definitions.
+Section 1 - Definitions.
 
     Adapted Material means material subject to Copyright and Similar Rights that is derived from or based upon the Licensed Material and in which the Licensed Material is translated, altered, arranged, transformed, or otherwise modified in a manner requiring permission under the Copyright and Similar Rights held by the Licensor. For purposes of this Public License, where the Licensed Material is a musical work, performance, or sound recording, Adapted Material is always produced where the Licensed Material is synched in timed relation with a moving image.
     Copyright and Similar Rights means copyright and/or similar rights closely related to copyright including, without limitation, performance, broadcast, sound recording, and Sui Generis Database Rights, without regard to how the rights are labeled or categorized. For purposes of this Public License, the rights specified in Section 2(b)(1)-(2) are not Copyright and Similar Rights.
@@ -1872,7 +1872,7 @@ Section 1 – Definitions.
     Sui Generis Database Rights means rights other than copyright resulting from Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, as amended and/or succeeded, as well as other essentially equivalent rights anywhere in the world.
     You means the individual or entity exercising the Licensed Rights under this Public License. Your has a corresponding meaning.
 
-Section 2 – Scope.
+Section 2 - Scope.
 
     License grant.
         Subject to the terms and conditions of this Public License, the Licensor hereby grants You a worldwide, royalty-free, non-sublicensable, non-exclusive, irrevocable license to exercise the Licensed Rights in the Licensed Material to:
@@ -1882,7 +1882,7 @@ Section 2 – Scope.
         Term. The term of this Public License is specified in Section 6(a).
         Media and formats; technical modifications allowed. The Licensor authorizes You to exercise the Licensed Rights in all media and formats whether now known or hereafter created, and to make technical modifications necessary to do so. The Licensor waives and/or agrees not to assert any right or authority to forbid You from making technical modifications necessary to exercise the Licensed Rights, including technical modifications necessary to circumvent Effective Technological Measures. For purposes of this Public License, simply making modifications authorized by this Section 2(a)(4) never produces Adapted Material.
         Downstream recipients.
-            Offer from the Licensor – Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.
+            Offer from the Licensor - Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.
             No downstream restrictions. You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, the Licensed Material if doing so restricts exercise of the Licensed Rights by any recipient of the Licensed Material.
         No endorsement. Nothing in this Public License constitutes or may be construed as permission to assert or imply that You are, or that Your use of the Licensed Material is, connected with, or sponsored, endorsed, or granted official status by, the Licensor or others designated to receive attribution as provided in Section 3(a)(1)(A)(i).
 
@@ -1891,7 +1891,7 @@ Section 2 – Scope.
         Patent and trademark rights are not licensed under this Public License.
         To the extent possible, the Licensor waives any right to collect royalties from You for the exercise of the Licensed Rights, whether directly or through a collecting society under any voluntary or waivable statutory or compulsory licensing scheme. In all other cases the Licensor expressly reserves any right to collect such royalties, including when the Licensed Material is used other than for NonCommercial purposes.
 
-Section 3 – License Conditions.
+Section 3 - License Conditions.
 
 Your exercise of the Licensed Rights is expressly made subject to the following conditions.
 
@@ -1910,7 +1910,7 @@ Your exercise of the Licensed Rights is expressly made subject to the following 
         You may satisfy the conditions in Section 3(a)(1) in any reasonable manner based on the medium, means, and context in which You Share the Licensed Material. For example, it may be reasonable to satisfy the conditions by providing a URI or hyperlink to a resource that includes the required information.
         If requested by the Licensor, You must remove any of the information required by Section 3(a)(1)(A) to the extent reasonably practicable.
 
-Section 4 – Sui Generis Database Rights.
+Section 4 - Sui Generis Database Rights.
 
 Where the Licensed Rights include Sui Generis Database Rights that apply to Your use of the Licensed Material:
 
@@ -1920,14 +1920,14 @@ Where the Licensed Rights include Sui Generis Database Rights that apply to Your
 
 For the avoidance of doubt, this Section 4 supplements and does not replace Your obligations under this Public License where the Licensed Rights include other Copyright and Similar Rights.
 
-Section 5 – Disclaimer of Warranties and Limitation of Liability.
+Section 5 - Disclaimer of Warranties and Limitation of Liability.
 
     Unless otherwise separately undertaken by the Licensor, to the extent possible, the Licensor offers the Licensed Material as-is and as-available, and makes no representations or warranties of any kind concerning the Licensed Material, whether express, implied, statutory, or other. This includes, without limitation, warranties of title, merchantability, fitness for a particular purpose, non-infringement, absence of latent or other defects, accuracy, or the presence or absence of errors, whether or not known or discoverable. Where disclaimers of warranties are not allowed in full or in part, this disclaimer may not apply to You.
     To the extent possible, in no event will the Licensor be liable to You on any legal theory (including, without limitation, negligence) or otherwise for any direct, special, indirect, incidental, consequential, punitive, exemplary, or other losses, costs, expenses, or damages arising out of this Public License or use of the Licensed Material, even if the Licensor has been advised of the possibility of such losses, costs, expenses, or damages. Where a limitation of liability is not allowed in full or in part, this limitation may not apply to You.
 
     The disclaimer of warranties and limitation of liability provided above shall be interpreted in a manner that, to the extent possible, most closely approximates an absolute disclaimer and waiver of all liability.
 
-Section 6 – Term and Termination.
+Section 6 - Term and Termination.
 
     This Public License applies for the term of the Copyright and Similar Rights licensed here. However, if You fail to comply with this Public License, then Your rights under this Public License terminate automatically.
 
@@ -1938,12 +1938,12 @@ Section 6 – Term and Termination.
     For the avoidance of doubt, the Licensor may also offer the Licensed Material under separate terms or conditions or stop distributing the Licensed Material at any time; however, doing so will not terminate this Public License.
     Sections 1, 5, 6, 7, and 8 survive termination of this Public License.
 
-Section 7 – Other Terms and Conditions.
+Section 7 - Other Terms and Conditions.
 
     The Licensor shall not be bound by any additional or different terms or conditions communicated by You unless expressly agreed.
     Any arrangements, understandings, or agreements regarding the Licensed Material not stated herein are separate from and independent of the terms and conditions of this Public License.
 
-Section 8 – Interpretation.
+Section 8 - Interpretation.
 
     For the avoidance of doubt, this Public License does not, and shall not be interpreted to, reduce, limit, restrict, or impose conditions on any use of the Licensed Material that could lawfully be made without permission under this Public License.
     To the extent possible, if any provision of this Public License is deemed unenforceable, it shall be automatically reformed to the minimum extent necessary to make it enforceable. If the provision cannot be reformed, it shall be severed from this Public License without affecting the enforceability of the remaining terms and conditions.

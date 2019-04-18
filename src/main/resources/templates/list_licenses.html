@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Online Preprocessor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body class="main-bg">
+    <div class="container-fluid">
+        <div th:include="header.html">
+
+        </div>
+
+        <div th:if="${message}">
+            <div class="row page-content">
+                <div class="col-4">
+
+                </div>
+
+                <div class="col-4 message">
+                    <p class="main-text text-center" th:text="${message}"></p>
+                </div>
+
+                <div class="col-4">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row page-content pre-footer">
+
+            <div class="col-2">
+
+            </div>
+
+            <div class="col-8 form-bg">
+                <img class="header-logo" src="/images/key.svg" alt="key.svg" height="64" width="64">
+                <h2 class="main-text text-center">Licenses</h2>
+
+                <div class="row">
+                    <div class="col-8">
+
+                    </div>
+
+                    <div class="col-4">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="searchInput" placeholder="Search for name of license">
+                                <input type="submit" class="form-control submit-button" value="search">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header top-bg">
+
+                        <div th:unless="${authority}==canAdminister">
+                            <div class="row">
+                                <div class="col-4 text-center">
+                                    <h5 class="topdiv-text">License name</h5>
+                                </div>
+
+                                <div class="col-8 text-center">
+                                    <h5 class="topdiv-text">Original website</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div th:if="${authority}==canAdminister">
+                            <div class="row">
+                                <div class="col-4 text-center">
+                                    <h5 class="topdiv-text">License name</h5>
+                                </div>
+
+                                <div class="col-4 text-center">
+                                    <h5 class="topdiv-text">Original website</h5>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <h5 class="topdiv-text">Actions</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <div th:each="license : ${licenses}">
+                                <li class="list-group-item">
+
+                                    <div th:unless="${authority}==canAdminister">
+                                        <div class="row">
+                                            <div class="col-4 text-center">
+                                                <a href="#" th:href="@{/license/detailed(name=${license.name})}" class="main-text"
+                                                    th:text="${license.name}"></a>
+                                            </div>
+
+                                            <div class="col-8 text-center">
+                                                <a th:href="${license.url}" th:text="${license.url}"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div th:if="${authority}==canAdminister">
+                                        <div class="row">
+                                            <div class="col-4 text-center">
+                                                <a href="#" th:href="@{/license/detailed(name=${license.name})}" class="main-text"
+                                                    th:text="${license.name}"></a>
+                                            </div>
+
+                                            <div class="col-4 text-center">
+                                                <a th:href="${license.url}" th:text="${license.url}"></a>
+                                            </div>
+
+                                            <div class="col-2 text-center">
+                                                <div class="form-group">
+                                                    <form action="#" th:action="@{/license/modify}" method="GET">
+                                                        <input type="hidden" name="name" th:attr="value = ${license.name}" />
+                                                        <input type="submit" class="form-control submit-button" value="Modify" />
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-2 text-center">
+                                                <div class="form-group">
+                                                    <form action="#" th:action="@{/license/delete}" method="POST">
+                                                        <input type="hidden" name="name" th:attr="value = ${license.name}" />
+                                                        <input type="submit" class="form-control reject-button" value="Delete" />
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-2">
+
+        </div>
+    </div>
+
+    <div th:include="footer.html"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -65,6 +65,19 @@
                     </div>
                 </div>
             </li>
+
+            <li class="nav-item dropdown">
+                    <a class="topdiv-text dropdown-toggle nav-link" id="navbar-link" href="#" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Licenses
+                    </a>
+                    <div class="dropdown-menu top-bg" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item topdiv-text" href="/license/list">License list</a>
+                        <div th:if="${authority=='canAdminister'}">
+                            <a class="dropdown-item topdiv-text" href="/license/add/">Add license</a>
+                        </div>
+                    </div>
+                </li>
         </ul>
 
         <!--TODO: Change this for an image passed from parameters-->
