@@ -19,7 +19,9 @@ import com.project.onlinepreprocessor.domain.File;
 import com.project.onlinepreprocessor.domain.Language;
 import com.project.onlinepreprocessor.domain.License;
 import com.project.onlinepreprocessor.repositories.DatasetRepository;
+import com.project.onlinepreprocessor.repositories.DatatypeRepository;
 import com.project.onlinepreprocessor.repositories.FileRepository;
+import com.project.onlinepreprocessor.repositories.LanguageRepository;
 import com.project.onlinepreprocessor.repositories.LicenseRepository;
 
 import org.apache.commons.io.FileUtils;
@@ -44,6 +46,12 @@ public class DatasetService
 
     @Autowired
     private LicenseRepository licenseRepository;
+
+    @Autowired
+    private LanguageRepository languageRepository;
+
+    @Autowired 
+    private DatatypeRepository datatypeRepository;
 
     @Value("${host.name}")
     private String HOST_NAME;
@@ -245,6 +253,106 @@ public class DatasetService
         return true;
     }
 
+    public ArrayList<Dataset> getFilteredDatasets(String[] selectedLanguages, String[] selectedDatatypes, String[] selectedLicenses, String date1, String date2)
+    {
+
+        ArrayList<String> selectedLanguagesList = new ArrayList<String>();
+        ArrayList<String> selectedDatatypesList = new ArrayList<String>();
+        ArrayList<String> selectedLicensesList = new ArrayList<String>();
+
+        if(selectedLanguages==null)
+        {
+            Iterable<Language> languages = languageRepository.findAll();
+            selectedLanguagesList = fillLanguagesList(languages);
+        }
+        else
+        {
+            for(int i = 0; i<selectedLanguages.length;i++)
+            {
+                selectedLanguagesList.add(selectedLanguages[i]);
+            }
+
+        }
+
+        if(selectedLicenses==null)
+        {
+            Iterable<License> licenses = licenseRepository.findAll();
+            selectedLicensesList = fillLicensesList(licenses);
+        }
+        else
+        {
+            for(int i = 0; i<selectedLicenses.length; i++)
+            {
+                selectedLicensesList.add(selectedLicenses[i]);
+            }
+        }
+
+        if(selectedDatatypes==null)
+        {
+            Iterable<Datatype> datatypes = datatypeRepository.findAll();
+            selectedDatatypesList = fillDatatypesList(datatypes);
+        }
+        else
+        {
+            for(int i = 0; i<selectedDatatypes.length; i++)
+            {
+                selectedDatatypesList.add(selectedDatatypes[i]);
+            }
+        }
+
+        ArrayList<String> datasetNames = datasetRepository.getFilteredDatasets(selectedLanguagesList, selectedDatatypesList, selectedLicensesList); 
+        ArrayList<Dataset> datasets = new ArrayList<Dataset>();
+
+        for(String datasetName : datasetNames)
+        {
+            Optional<Dataset> datasetOpt = datasetRepository.findById(datasetName);
+
+            if(datasetOpt.isPresent())
+            {
+                datasets.add(datasetOpt.get());
+            }
+        }
+
+        return datasets;
+    }
+
+    private ArrayList<String> fillLanguagesList(Iterable<Language> languages)
+    {
+        ArrayList<String> languagesList = new ArrayList<String>();
+
+        for(Language language:languages)
+        {
+            languagesList.add(language.getLanguage());
+        }
+
+        return languagesList;
+    }
+
+    private ArrayList<String> fillLicensesList(Iterable<License> licenses)
+    {
+        ArrayList<String> licensesList = new ArrayList<String>();
+
+        for(License license:licenses)
+        {
+            licensesList.add(license.getName());
+        }
+
+        return licensesList;
+    }
+
+    private ArrayList<String> fillDatatypesList(Iterable<Datatype> datatypes)
+    {
+        ArrayList<String> datatypesList = new ArrayList<String>();
+
+        for(Datatype datatype : datatypes)
+        {
+            datatypesList.add(datatype.getDatatype());
+        }
+
+        return datatypesList;
+    }
+
+    /*
     public ArrayList<Dataset> getFilteredDatasets(String selectedLanguages, String selectedDatatypes, String date1, String date2)
     {
         ArrayList<Dataset> systemDatasets = datasetRepository.getSystemDatasets();
@@ -386,7 +494,7 @@ public class DatasetService
             }
         }
     }
-
+    */
     public String getLanguagesString(Dataset dataset)
     {
         String languages = "";
@@ -413,5 +521,6 @@ public class DatasetService
         }
         return datatypes;
     }
+    
         
 }

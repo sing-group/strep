@@ -87,38 +87,30 @@
                                     <div class="col-2">
                                         <h5 class="main-text">Datatypes</h5>
                                         <div th:each="datatype : ${dataset.datatypes}">
-                                            <div class="row">
-                                                <div class="col-3">
-                                                    <div th:if="${datatype.datatype}=='.eml'">
-                                                        <img src="/images/gmail-logo.svg" alt="gmail-logo.svg" height="16"
-                                                            width="16">
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <div th:if="${datatype.datatype}=='.eml'">
+                                                            <img src="/images/gmail-logo.svg" alt="gmail-logo.svg" height="16" width="16">
+                                                        </div>
+                                                        <div th:if="${datatype.datatype}=='.tytb'">
+                                                            <img src="/images/youtube.svg" alt="youtube.svg" height="16" width="16">
+                                                        </div>
+                                                        <div th:if="${datatype.datatype}=='.twtid'">
+                                                            <img src="/images/twitter.svg" alt="twitter.svg" height="16" width="16">
+                                                        </div>
+                                                        <div th:if="${datatype.datatype}=='.tsms'">
+                                                            <img src="/images/sms.svg" alt="sms.svg" height="16" width="16">
+                                                        </div>
+                                                        <div th:if="${datatype.datatype}=='.warc'">
+                                                            <img src="/images/internet.svg" alt="internet.svg" height="16" width="16">
+                                                        </div>
                                                     </div>
-                                                    <div th:if="${datatype.datatype}=='.tytb'">
-                                                        <img src="/images/youtube.svg" alt="youtube.svg" height="16"
-                                                            width="16">
-                                                    </div>
-                                                    <div th:if="${datatype.datatype}=='.twtid'">
-                                                        <img src="/images/twitter.svg" alt="twitter.svg" height="16"
-                                                            width="16">
-                                                    </div>
-                                                    <div th:if="${datatype.datatype}=='.tsms'">
-                                                        <img src="/images/sms.svg" alt="sms.svg" height="16" width="16">
-                                                    </div>
-                                                    <div th:if="${datatype.datatype}=='.warc'">
-                                                        <img src="/images/internet.svg" alt="internet.svg" height="16"
-                                                            width="16">
+                
+                                                    <div class="col-9">
+                                                        <p class="main-text text-center" th:text="${datatype.datatype}"></p>
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
-                                                    <p class="main-text" th:text="${datatype.datatype}"></p>
-                                                </div>
-                                                <div class="col-3">
-
-                                                </div>
-
                                             </div>
-
-                                        </div>
                                     </div>
 
                                     <div class="col-2 text-center">

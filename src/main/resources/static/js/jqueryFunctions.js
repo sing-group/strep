@@ -7,48 +7,41 @@ function retrieveDatasetInfo(id) {
 
 function updateDatasetsList()
 {
-    var selectedLanguages = document.getElementById("selected-languages");
-    var selectedDatatypes = document.getElementById("selected-datatypes");
-    var date1 = document.getElementById("date1");
-    var date2 = document.getElementById("date2");
+    var licenses = document.getElementsByName("license");
+    var languages = document.getElementsByName("language");
+    var datatypes = document.getElementsByName("datatype");
 
-    var url = "/dataset/createlist?selectedLanguages="+selectedLanguages.value+"&selectedDatatypes="+selectedDatatypes.value+"&date1="+date1.value+"&date2="+date2.value;
+    var dateValue1 = document.getElementById("date1").value;
+    var dateValue2 = document.getElementById("date2").value;
 
-    $("#datasets-list").load(url);
-}
+    var url = "/dataset/createlist?date1="+dateValue1+"&date2="+dateValue2;
 
-function resetFilters()
-{
-    var selectedLanguages = document.getElementById("selected-languages");
-    var selectedDatatypes = document.getElementById("selected-datatypes");
-    var date1 = document.getElementById("date1");
-    var date2 = document.getElementById("date2");
-
-    var checkEml = document.getElementById(".eml");
-    var checkTwid = document.getElementById(".twtid");
-    var checkTytb = document.getElementById(".tytb");
-    var checkWarc = document.getElementById(".warc");
-    var checkTsms = document.getElementById(".tsms");
-
-    checkEml.checked = false;
-    checkTwid.checked = false;
-    checkTytb.checked = false;
-    checkWarc.checked = false;
-    checkTsms.checked = false;
-
-    var selectedLanguagesList = document.getElementById("selected-languages-list");
-
-    while(selectedLanguagesList.childElementCount!=0)
+    for(var i = 0;i<licenses.length;i++)
     {
-        selectedLanguagesList.removeChild(selectedLanguagesList.firstChild);
+        if(licenses[i].checked)
+        {
+            url+=encodeURI("&"+licenses[i].name+"="+licenses[i].value);
+        }
     }
 
-    selectedLanguages.value = "";
-    selectedDatatypes.value = "";
-    date1.value = "";
-    date2.value = "";
+    for(var i = 0;i<languages.length;i++)
+    {
+        if(languages[i].checked)
+        {
+            url+=encodeURI("&"+languages[i].name+"="+languages[i].value);
+        }
+    }
 
-    var url = "/dataset/createlist?selectedLanguages="+selectedLanguages.value+"&selectedDatatypes="+selectedDatatypes.value+"&date1="+date1.value+"&date2="+date2.value;
+    for(var i = 0;i<datatypes.length;i++)
+    {
+        if(datatypes[i].checked)
+        {
+            url+=encodeURI("&"+datatypes[i].name+"="+datatypes[i].value);
+        }
+    }
+
+    console.log(url);
+
     $("#datasets-list").load(url);
 }
 

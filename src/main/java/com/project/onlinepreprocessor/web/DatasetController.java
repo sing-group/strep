@@ -12,8 +12,13 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import com.project.onlinepreprocessor.domain.Dataset;
+import com.project.onlinepreprocessor.domain.Datatype;
+import com.project.onlinepreprocessor.domain.Language;
+import com.project.onlinepreprocessor.domain.License;
 import com.project.onlinepreprocessor.forms.LoginForm;
 import com.project.onlinepreprocessor.repositories.DatasetRepository;
+import com.project.onlinepreprocessor.repositories.DatatypeRepository;
+import com.project.onlinepreprocessor.repositories.LanguageRepository;
 import com.project.onlinepreprocessor.repositories.LicenseRepository;
 import com.project.onlinepreprocessor.services.DatasetService;
 import com.project.onlinepreprocessor.services.UserService;
@@ -56,6 +61,12 @@ public class DatasetController {
 
     @Autowired
     private LicenseRepository licenseRepository;
+
+    @Autowired
+    private DatatypeRepository datatypeRepository;
+
+    @Autowired
+    private LanguageRepository languageRepository;
 
     @GetMapping("/public")
     public String listPublicDatasets(LoginForm loginForm, Model model) {
@@ -350,18 +361,11 @@ public class DatasetController {
 
     //TODO:Implement this method
     @GetMapping("/createlist")
-    public String filterDatasets(Authentication authentication, Model model, @RequestParam("selectedLanguages") String selectedLanguages, 
-    @RequestParam("selectedDatatypes") String selectedDatatypes, @RequestParam("date1") String date1, @RequestParam("date2")String date2)
+    public String filterDatasets(Authentication authentication, Model model, @RequestParam(name="language", required=false) String[] languages, 
+    @RequestParam(name="datatype", required=false) String[] datatypes,@RequestParam(name="license", required=false)String[] licenses, 
+    @RequestParam(name="date1", required=false) String date1, @RequestParam(name="date2", required=false)String date2)
     {
-        ArrayList<Dataset> datasets;
-        if(selectedLanguages=="" && selectedDatatypes=="" && date1=="" && date2=="")
-        {
-            datasets = datasetRepository.getSystemDatasets();
-        }
-        else
-        {
-            datasets = datasetService.getFilteredDatasets(selectedLanguages, selectedDatatypes, date1, date2);
-        }
+        ArrayList<Dataset> datasets = datasetService.getFilteredDatasets(languages, datatypes, licenses, date1, date2);
         model.addAttribute("datasets", datasets);
 
         return "create_dataset::datasets";
@@ -375,13 +379,21 @@ public class DatasetController {
 
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
-
+        
         ArrayList<Dataset> datasets = datasetRepository.getSystemDatasets();
+        
+        Iterable<License> licenses = licenseRepository.findAll();
+        Iterable<Datatype> datatypes = datatypeRepository.findAll();
+        Iterable<Language> languages = languageRepository.findAll();
 
         model.addAttribute("host", HOST_NAME);
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
         model.addAttribute("datasets", datasets);
+        model.addAttribute("licenses", licenses);
+        model.addAttribute("datatypes", datatypes);
+        model.addAttribute("languages", languages);
+
         return "create_dataset";
 
     }
