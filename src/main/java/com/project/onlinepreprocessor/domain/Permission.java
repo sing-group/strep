@@ -62,11 +62,19 @@ public class Permission
         this.description = description;
     }
 
+    /**
+     * Return the id of the permission
+     * @return the id of the permission
+     */
     public Long getId()
     {
         return id;
     }
 
+    /**
+     * Stablish the id of the permission
+     * @param id the id of the permission
+     */
     public void setId(Long id)
     {
         this.id = id;

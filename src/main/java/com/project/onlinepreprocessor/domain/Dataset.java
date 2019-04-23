@@ -83,6 +83,10 @@ public class Dataset
      */
     private String url;
 
+
+    /**
+     * The files of the dataset
+     */
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="dataset_files", joinColumns= @JoinColumn(name = "dataset_name", referencedColumnName = "name"), 
     inverseJoinColumns = @JoinColumn(name="file_id", referencedColumnName="id"))
@@ -103,17 +107,29 @@ public class Dataset
      */
     private boolean available;
 
+    /**
+     * The task associated to this dataset
+     */
     @OneToOne
     @JoinColumn(name="task_id", referencedColumnName="id")
     private Task task;
 
+    /**
+     * The license of the dataset
+     */
     @ManyToOne
     @JoinColumn(name = "id", nullable = false)
     private License license;
 
+    /**
+     * The date of the first file of the dataset
+     */
     @Null
     private Date firstFileDate;
 
+    /**
+     * The date of the last file of the dataset
+     */
     @Null
     private Date lastFileDate;
 
@@ -377,41 +393,73 @@ public class Dataset
         this.available = available;
     }
 
+    /**
+     * Returns the task associated to this dataset
+     * @return the task associated to this dataset
+     */
     public Task getTask()
     {
         return task;
     }
 
+    /**
+     * Stablish the task associated to this dataset
+     * @param task the task of the dataset
+     */
     public void setTask(Task task)
     {
         this.task = task;
     }
 
+    /**
+     * Returns the license of the dataset
+     * @return the license of the dataset
+     */
     public License getLicense()
     {
         return this.license;
     }
 
+    /**
+     * Stablish the license of the dataset
+     * @param license the license of the dataset
+     */
     public void setLicense(License license)
     {
         this.license = license;
     }
 
+    /**
+     * Returns the date of the first file of the dataset
+     * @return the date of the first file of the dataset
+     */
     public Date getFirstFileDate()
     {
         return firstFileDate;
     }
 
+    /**
+     * Stablish the date of the first file of the dataset
+     * @param firstFileDate the date of the first file of the dataset
+     */
     public void setFirstFileDate(Date firstFileDate)
     {
         this.firstFileDate = firstFileDate;
     }
 
+    /**
+     * Returns the date of the last file of the dataset
+     * @return the date of the last file of the dataset
+     */
     public Date getLastFileDate()
     {
         return lastFileDate;
     }
 
+    /**
+     * Stablish the date of the last file of the dataset
+     * @param lastFileDate the date of the last file of the dataset
+     */
     public void setLastFileDate(Date lastFileDate)
     {
         this.lastFileDate = lastFileDate;

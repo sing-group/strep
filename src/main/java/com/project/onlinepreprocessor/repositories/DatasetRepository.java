@@ -3,7 +3,6 @@ package com.project.onlinepreprocessor.repositories;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import com.project.onlinepreprocessor.customrepositories.DatasetRepositoryCustom;
 import com.project.onlinepreprocessor.domain.Dataset;
 
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +18,7 @@ import java.util.Collection;
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 // CRUD refers Create, Read, Update, Delete
 
-public interface DatasetRepository extends CrudRepository<Dataset, String>, DatasetRepositoryCustom {
+public interface DatasetRepository extends CrudRepository<Dataset, String>{
 
     @Query(value="select * from dataset where access='public' and available=true",
     nativeQuery=true)
