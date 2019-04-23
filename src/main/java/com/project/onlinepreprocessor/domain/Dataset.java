@@ -2,6 +2,7 @@ package com.project.onlinepreprocessor.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 import com.project.onlinepreprocessor.domain.File;
@@ -109,6 +110,12 @@ public class Dataset
     @ManyToOne
     @JoinColumn(name = "id", nullable = false)
     private License license;
+
+    @Null
+    private Date firstFileDate;
+
+    @Null
+    private Date lastFileDate;
 
     /**
      * The default constructor
@@ -388,5 +395,25 @@ public class Dataset
     public void setLicense(License license)
     {
         this.license = license;
+    }
+
+    public Date getFirstFileDate()
+    {
+        return firstFileDate;
+    }
+
+    public void setFirstFileDate(Date firstFileDate)
+    {
+        this.firstFileDate = firstFileDate;
+    }
+
+    public Date getLastFileDate()
+    {
+        return lastFileDate;
+    }
+
+    public void setLastFileDate(Date lastFileDate)
+    {
+        this.lastFileDate = lastFileDate;
     }
 }

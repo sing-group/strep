@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.HashSet;
 import java.math.BigInteger;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -39,6 +40,9 @@ public interface DatasetRepository extends CrudRepository<Dataset, String>, Data
     
     @Query(value="select distinct(d.name) from dataset d inner join dataset_languages lang on d.name=lang.dataset_name inner join dataset_datatypes data on d.name=data.dataset_name where d.type='systemdataset' and lang.language in ?1 and data.data_type in ?2 and d.id in ?3", nativeQuery=true)
     public ArrayList<String> getFilteredDatasets(Collection<String> languages,Collection<String> datatypes, Collection<String> license);
+
+    @Query(value="select distinct(d.name) from dataset d inner join dataset_languages lang on d.name=lang.dataset_name inner join dataset_datatypes data on d.name=data.dataset_name where d.type='systemdataset' and lang.language in ?1 and data.data_type in ?2 and d.id in ?3 and (d.first_file_date <= ?5 and d.last_file_date >= ?4)", nativeQuery=true)
+    public ArrayList<String> getFilteredDatasetsByDate(Collection<String> languages, Collection<String> datatypes, Collection<String> license, String date1, String date2);
     
 
 }
