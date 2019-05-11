@@ -45,6 +45,102 @@ function updateDatasetsList()
     $("#datasets-list").load(url);
 }
 
+function updateTable()
+{
+    var datasetNames = document.getElementsByName("datasets");
+
+    var url = "/dataset/updateDatatypesTable";
+    for(var i = 0; i<datasetNames.length;i++)
+    {
+        if(datasetNames[i].checked)
+        {
+            if(url=="/dataset/updateDatatypesTable")
+                url+=encodeURI("?"+datasetNames[i].name+"="+datasetNames[i].value);
+            else
+                url+=encodeURI("&"+datasetNames[i].name+"="+datasetNames[i].value);
+        }
+    }
+    console.log(url);
+    $("#datatypes-table").load(url);
+}
+
+function checkIfPosibleSpam()
+{
+    var inputSpam = document.getElementById("inputSpamPercentage");
+    var inputFileNumber = document.getElementById("fileNumber");
+    var datasets = document.getElementsByName("datasets");
+
+
+    var url = "/dataset/checkPosibleSpam?inputSpam="+inputSpam.value+"&fileNumber="+inputFileNumber.value;
+
+    for(var i = 0; i<datasets.length;i++)
+    {
+        if(datasets[i].checked)
+        {
+            url+=encodeURI("&"+datasets[i].name+"="+datasets[i].value);
+        }
+    }
+    console.log(url);
+    $("#info-spam").load(url);
+}
+
+function checkIfPosibleDatatypes()
+{
+    var inputFileNumber = document.getElementById("fileNumber");
+    var datasets = document.getElementsByName("datasets");
+
+    var inputFileNumberValue = checkNullValues(inputFileNumber);
+    var inputSpamEml = document.getElementById("inputSpam.eml");
+    var inputHamEml = document.getElementById("inputHam.eml");
+    var inputSpamTsms = document.getElementById("inputSpam.tsms");
+    var inputHamTsms = document.getElementById("inputHam.tsms");
+    var inputSpamTytb = document.getElementById("inputSpam.tytb");
+    var inputHamTytb = document.getElementById("inputHam.tytb");
+    var inputSpamTwtid = document.getElementById("inputSpam.twtid");
+    var inputHamTwtid = document.getElementById("inputHam.twtid");
+    var inputSpamWarc = document.getElementById("inputSpam.warc");
+    var inputHamWarc = document.getElementById("inputHam.warc");
+
+    var inputSpamEmlValue = checkNullValues(inputSpamEml);
+    var inputHamEmlValue = checkNullValues(inputHamEml);
+    var inputSpamTsmsValue = checkNullValues(inputSpamTsms);
+    var inputHamTsmsValue = checkNullValues(inputHamTsms);
+    var inputSpamTytbValue = checkNullValues(inputSpamTytb);
+    var inputHamTytbValue = checkNullValues(inputHamTytb);
+    var inputSpamTwtidValue = checkNullValues(inputSpamTwtid);
+    var inputHamTwtidValue = checkNullValues(inputHamTwtid);
+    var inputSpamWarcValue = checkNullValues(inputSpamWarc);
+    var inputHamWarcValue = checkNullValues(inputHamWarc);
+
+    var url = "/dataset/checkPosibleDatatypes?inputFileNumber="+inputFileNumberValue;
+
+    for(var i = 0; i<datasets.length;i++)
+    {
+        if(datasets[i].checked)
+        {
+            url+=encodeURI("&"+datasets[i].name+"="+datasets[i].value);
+        }
+    }
+
+    url+="&inputSpamEml="+inputSpamEmlValue+"&inputHamEml="+inputHamEmlValue+"&inputSpamTsms="+inputSpamTsmsValue+"&inputHamTsms="+inputHamTsmsValue+
+    "&inputSpamTytb="+inputSpamTytbValue+"&inputHamTytb="+inputHamTytbValue+"&inputSpamTwtid="+inputSpamTwtidValue+"&inputHamTwtid="+inputHamTwtidValue+
+    "&inputSpamWarc="+inputSpamWarcValue+"&inputHamWarc="+inputHamWarcValue;
+
+    $("#info-datatypes").load(url);
+}
+
+function checkNullValues(input)
+{
+    if(input!=null)
+    {
+        return input.value;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 $('#deleteDatasetModal').on('show.bs.modal', function(event)
 {
  var button = $(event.relatedTarget);

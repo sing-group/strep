@@ -1,5 +1,7 @@
 package com.project.onlinepreprocessor.web;
 
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
@@ -15,22 +17,18 @@ import com.project.onlinepreprocessor.repositories.PermissionRepository;
 import com.project.onlinepreprocessor.repositories.UserRepository;
 import com.project.onlinepreprocessor.services.UserService;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
-import java.util.Base64;
 
 
 

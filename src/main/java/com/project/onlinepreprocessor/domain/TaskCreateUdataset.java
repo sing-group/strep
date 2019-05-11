@@ -8,6 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.JoinColumn;
 
 /**
@@ -73,6 +77,13 @@ public class TaskCreateUdataset extends Task
     private List<License> licenses;
 
     /**
+     * The datasets used to construct the new dataset
+     */
+    @ManyToMany
+    @JoinTable(joinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "dataset", referencedColumnName="name"))
+    private List<Dataset> datasets;
+
+    /**
      * The limit of percentage of .eml files
      */
     @Column(nullable = true)
@@ -123,7 +134,7 @@ public class TaskCreateUdataset extends Task
      * @param limitPercentageWarc The limit of percentage of .warc files
      */
     public TaskCreateUdataset(Dataset dataset, String state, String message, int limitPercentageSpam, int limitSpam, int limitNumberOfFiles, 
-    Date dateFrom, Date dateTo, List<Language> languages, List<Datatype> datatypes,List<License> licenses, int limitPercentageEml,
+    Date dateFrom, Date dateTo, List<Language> languages, List<Datatype> datatypes,List<License> licenses, List<Dataset> datasets, int limitPercentageEml,
      int limitPercentageTytb, int limitPercentageTsms, int limitPercentageTwtid, int limitPercentageWarc) {
         super(dataset, state, message);
         this.limitPercentageSpam = limitPercentageSpam;
@@ -139,6 +150,7 @@ public class TaskCreateUdataset extends Task
         this.limitPercentageTsms = limitPercentageTsms;
         this.limitPercentageTwtid = limitPercentageTwtid;
         this.limitPercentageWarc = limitPercentageWarc;
+        this.datasets = datasets;
     }
 
     /**
@@ -357,6 +369,24 @@ public class TaskCreateUdataset extends Task
     public void setLicenses(List<License> licenses)
     {
         this.licenses = licenses;
+    }
+
+    /**
+     * Return the list of datasets used to construct the new dataset
+     * @return the list of datasets used to construct the new dataset
+     */
+    public List<Dataset> getDatasets()
+    {
+        return this.datasets;
+    }
+
+    /**
+     * Stablish the list of datasets used to construct the new dataset
+     * @param datasets the list of datasets used to construct the new dataset
+     */
+    public void setDatasets(List<Dataset> datasets)
+    {
+        this.datasets = datasets;
     }
     
 

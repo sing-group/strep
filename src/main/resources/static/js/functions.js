@@ -14,11 +14,11 @@ function enableInput(id)
 {
     var length = id.length;
     var idInput = id.substring(0, length-8);
+    var checkbox = document.getElementById(id);
 
     var input = document.getElementById(idInput);
-    var inputStatus = input.getAttribute("disabled");
 
-    if(inputStatus)
+    if(checkbox.checked)
     {
         input.removeAttribute("disabled");
     }

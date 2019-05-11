@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import com.project.onlinepreprocessor.domain.License;
 import com.project.onlinepreprocessor.repositories.LicenseRepository;
-import com.project.onlinepreprocessor.repositories.UserRepository;
 import com.project.onlinepreprocessor.services.LicenseService;
 import com.project.onlinepreprocessor.services.UserService;
 
@@ -21,8 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.Base64;
 
 @Controller
 @RequestMapping("/license")

@@ -118,19 +118,19 @@ public class Dataset
      * The license of the dataset
      */
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "id", nullable = true)
     private License license;
 
     /**
      * The date of the first file of the dataset
      */
-    @Null
+    @Column(nullable = true)
     private Date firstFileDate;
 
     /**
      * The date of the last file of the dataset
      */
-    @Null
+    @Column(nullable = true)
     private Date lastFileDate;
 
     /**

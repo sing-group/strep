@@ -5,10 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -52,6 +50,9 @@ public class DatasetService
 
     @Autowired 
     private DatatypeRepository datatypeRepository;
+
+    @Autowired
+    private TaskService taskService;
 
     @Value("${host.name}")
     private String HOST_NAME;
@@ -219,6 +220,7 @@ public class DatasetService
                 }
         
                 datasetRepository.save(dataset);
+                taskService.addNewSystemTask(dataset);
                 message = "Successfully uploaded: the dataset will be available after it has been processed";
         }
 

@@ -2,12 +2,9 @@ package com.project.onlinepreprocessor.repositories;
 
 import java.util.ArrayList;
 
-import javax.transaction.Transactional;
-
 import com.project.onlinepreprocessor.domain.PermissionRequest;
 import com.project.onlinepreprocessor.domain.PermissionRequestPK;
 
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

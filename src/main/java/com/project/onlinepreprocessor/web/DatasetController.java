@@ -3,24 +3,27 @@ package com.project.onlinepreprocessor.web;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
 import com.project.onlinepreprocessor.domain.Dataset;
 import com.project.onlinepreprocessor.domain.Datatype;
+import com.project.onlinepreprocessor.domain.FileDatatypeType;
 import com.project.onlinepreprocessor.domain.Language;
 import com.project.onlinepreprocessor.domain.License;
 import com.project.onlinepreprocessor.forms.LoginForm;
 import com.project.onlinepreprocessor.repositories.DatasetRepository;
 import com.project.onlinepreprocessor.repositories.DatatypeRepository;
+import com.project.onlinepreprocessor.repositories.FileDatatypeTypeRepository;
 import com.project.onlinepreprocessor.repositories.LanguageRepository;
 import com.project.onlinepreprocessor.repositories.LicenseRepository;
 import com.project.onlinepreprocessor.services.DatasetService;
+import com.project.onlinepreprocessor.services.TaskService;
 import com.project.onlinepreprocessor.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +43,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.lang.Math;
 
 @Controller
 @RequestMapping(path = "/dataset")
@@ -67,6 +71,12 @@ public class DatasetController {
 
     @Autowired
     private LanguageRepository languageRepository;
+
+    @Autowired
+    private TaskService taskService;
+
+    @Autowired
+    private FileDatatypeTypeRepository fileDatatypeTypeRepository;
 
     @GetMapping("/public")
     public String listPublicDatasets(LoginForm loginForm, Model model) {
@@ -299,13 +309,12 @@ public class DatasetController {
     }
 
     @GetMapping("/upload")
-    public String addNewDataset(Authentication authentication, Model model,Dataset dataset)
-    {
+    public String addNewDataset(Authentication authentication, Model model, Dataset dataset) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
-        
+
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
         model.addAttribute("host", HOST_NAME);
@@ -315,25 +324,22 @@ public class DatasetController {
     }
 
     @PostMapping("/upload")
-    public String addDataset(Authentication authentication, @Valid Dataset dataset,BindingResult bindingResult,@RequestParam(name="dataset-file", required=true)MultipartFile datasetFile,RedirectAttributes redirectAttributes, Model model)
-    {
+    public String addDataset(Authentication authentication, @Valid Dataset dataset, BindingResult bindingResult,
+            @RequestParam(name = "dataset-file", required = true) MultipartFile datasetFile,
+            RedirectAttributes redirectAttributes, Model model) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
 
-        if(bindingResult.hasErrors())
-        {   
+        if (bindingResult.hasErrors()) {
             model.addAttribute("authority", authority);
             model.addAttribute("username", username);
             model.addAttribute("host", HOST_NAME);
             model.addAttribute("licenses", licenseRepository.findAll());
             return "add_dataset";
-        }
-        else
-        {
+        } else {
             String message = datasetService.uploadDataset(dataset, datasetFile, username);
-            //TODO: Generate new task for the service/daemon
             redirectAttributes.addFlashAttribute("message", message);
             model.addAttribute("authority", authority);
             model.addAttribute("username", username);
@@ -343,45 +349,198 @@ public class DatasetController {
     }
 
     @GetMapping("/modal")
-    public String getDatasetInfo(Authentication authentication, Model model, @RequestParam("id") String id)
-    {
+    public String getDatasetInfo(Authentication authentication, Model model, @RequestParam("id") String id) {
         Optional<Dataset> opt = datasetRepository.findById(id);
 
-        if(opt.isPresent())
-        {
+        if (opt.isPresent()) {
             Dataset dataset = opt.get();
-            if(dataset.getType().equals("systemdataset"))
-            {
-            model.addAttribute("dataset", dataset);
+            if (dataset.getType().equals("systemdataset")) {
+                model.addAttribute("dataset", dataset);
             }
         }
-        
+
         return "create_dataset::dataset";
     }
 
-    //TODO:Implement this method
+    // TODO:Implement this method
     @GetMapping("/createlist")
-    public String filterDatasets(Authentication authentication, Model model, @RequestParam(name="language", required=false) String[] languages, 
-    @RequestParam(name="datatype", required=false) String[] datatypes,@RequestParam(name="license", required=false)String[] licenses, 
-    @RequestParam(name="date1", required=false) String date1, @RequestParam(name="date2", required=false)String date2)
-    {
+    public String filterDatasets(Authentication authentication, Model model,
+            @RequestParam(name = "language", required = false) String[] languages,
+            @RequestParam(name = "datatype", required = false) String[] datatypes,
+            @RequestParam(name = "license", required = false) String[] licenses,
+            @RequestParam(name = "date1", required = false) String date1,
+            @RequestParam(name = "date2", required = false) String date2) {
         ArrayList<Dataset> datasets = datasetService.getFilteredDatasets(languages, datatypes, licenses, date1, date2);
         model.addAttribute("datasets", datasets);
 
         return "create_dataset::datasets";
     }
 
-    //TODO_ Implement this method
-    @GetMapping("/create")
-    public String getCreateDataset(Authentication authentication, Model model, Dataset dataset)
+    @GetMapping("/updateDatatypesTable")
+    public String updateDatatypesTable(Model model,
+            @RequestParam(name = "datasets", required = false) String[] datasetNames) {
+        ArrayList<String> datatypes = new ArrayList<String>();
+        ArrayList<String> datasets = new ArrayList<String>();
+
+        if (datasetNames != null) {
+            for (String datasetName : datasetNames) {
+                datasets.add(datasetName);
+                System.out.println(datasetName);
+            }
+            datatypes = datasetRepository.getDatasetsDatatypes(datasets);
+        }
+        model.addAttribute("tableDatatypes", datatypes);
+
+        return "create_dataset::datatypes-table";
+    }
+
+    @GetMapping("/checkPosibleSpam")
+    public String showInfoSpam(Model model, @RequestParam(name="inputSpam", required=false) String inputSpam, @RequestParam(name="datasets", required=false)String[] datasets, 
+    @RequestParam(name="fileNumber", required=false) String fileNumber)
     {
+        int inputSpamInt = -1;
+        int availableFiles = -1;
+        int necesaryFiles = -1;
+        int fileNumberInt = -1;
+
+        ArrayList<String> arrayListDatasets = new ArrayList<String>();
+
+        if(inputSpam!="" && datasets!=null && fileNumber!="")
+        {
+            for(String dataset : datasets)
+            {
+                arrayListDatasets.add(dataset);
+            }
+            
+            try {
+                inputSpamInt = Integer.parseInt(inputSpam);
+                fileNumberInt = Integer.parseInt(fileNumber);
+            } catch (NumberFormatException e) {
+            }
+            
+            necesaryFiles = (int) Math.ceil((double)fileNumberInt * ((double)inputSpamInt/100.00));
+            availableFiles = datasetRepository.countSpamFiles(arrayListDatasets);
+
+            String message = "Necesary files:"+necesaryFiles+"\nAvailable files"+availableFiles;
+            if(availableFiles>=necesaryFiles)
+            {
+                model.addAttribute("spamSuccessInfo", message);
+            }
+            else
+            {
+                model.addAttribute("spamInsufficientInfo", message);
+            }
+        }
+        else
+        {
+            model.addAttribute("spamErrorInput", "Enter a valid input for the percentage of spam and for the number of files. Select at least one dataset.");
+        }
+        return "create_dataset::info-spam";
+    }
+
+    @GetMapping("/checkPosibleDatatypes")
+    public String showInfoDatatypes(Model model, @RequestParam("inputSpamEml")int inputSpamEml, @RequestParam("inputHamEml")int inputHamEml,
+    @RequestParam("inputSpamWarc")int inputSpamWarc, @RequestParam("inputHamWarc")int inputHamWarc,
+    @RequestParam("inputSpamTsms")int inputSpamTsms, @RequestParam("inputHamTsms")int inputHamTsms,
+    @RequestParam("inputSpamTytb")int inputSpamTytb,@RequestParam("inputHamTytb")int inputHamTytb,
+    @RequestParam("inputSpamTwtid")int inputSpamTwtid, @RequestParam("inputHamTwtid")int inputHamTwtid, @RequestParam(name="datasets", required=false)String[] datasets, 
+    @RequestParam("inputFileNumber")int fileNumberInput)
+    {
+        if(datasets==null || fileNumberInput==0 || (inputSpamEml+inputHamEml+inputSpamWarc+inputHamWarc+
+        inputSpamTsms+inputHamTsms+inputSpamTytb+inputHamTytb+inputSpamTwtid+inputHamTwtid)!=100)
+        {
+            model.addAttribute("datatypesInputError", "You have to select at least one dataset and enter a valid input in the percentages(sum of percentages must be 100)");
+        }
+        else
+        {
+            HashMap<String, Integer> necesaryFilesMap = new HashMap<String, Integer>();
+
+            necesaryFilesMap.put(".emlspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamEml/100.00)));
+            necesaryFilesMap.put(".emlham", (int) Math.ceil((double)fileNumberInput * ((double)inputHamEml/100.00)));
+
+            necesaryFilesMap.put(".warcspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamWarc/100.00)));
+            necesaryFilesMap.put(".warcham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamWarc/100.00)));
+
+            necesaryFilesMap.put(".tsmsspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTsms/100.00)));
+            necesaryFilesMap.put(".tsmsham", (int) Math.ceil((double)fileNumberInput * ((double)inputHamTsms/100.00)));
+
+            necesaryFilesMap.put(".tytbspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTytb/100.00)));
+            necesaryFilesMap.put(".tytbham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamTytb/100.00)));
+
+            necesaryFilesMap.put(".twtidspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTwtid/100.00)));
+            necesaryFilesMap.put(".twtidham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamTwtid/100.00)));
+
+
+            ArrayList<String> datasetNames = new ArrayList<String>();
+
+            for(String dataset : datasets)
+            {
+                datasetNames.add(dataset);
+            }
+
+            HashMap<String, Integer> databaseFilesMap = new HashMap<String, Integer>();
+
+            databaseFilesMap.put(".emlspam", 0);
+            databaseFilesMap.put(".emlham", 0);
+
+            databaseFilesMap.put(".warcspam", 0);
+            databaseFilesMap.put(".warcham", 0);
+
+            databaseFilesMap.put(".tsmsspam",0);
+            databaseFilesMap.put(".tsmsham", 0);
+
+            databaseFilesMap.put(".tytbspam", 0);
+            databaseFilesMap.put(".tytbham", 0);
+
+            databaseFilesMap.put(".twtidspam", 0);
+            databaseFilesMap.put(".twtidham", 0);
+
+            //Cuantos ficheros hay disponibles de cada tipo en la base de datos
+            ArrayList<FileDatatypeType> filesDatatypeType = fileDatatypeTypeRepository.getFilesByExtensionAndType(datasetNames);
+            for(FileDatatypeType fileDatatypeType : filesDatatypeType)
+            {
+                databaseFilesMap.replace(fileDatatypeType.getExtension()+fileDatatypeType.getType(), fileDatatypeType.getCount());
+            }
+
+            Set<String> keys = databaseFilesMap.keySet();
+            String strInfo = "";
+            boolean success = true;
+
+            for(String key: keys)
+            {
+                if(necesaryFilesMap.get(key)!=0)
+                {
+                    strInfo+=key+"<br>Necesary: "+necesaryFilesMap.get(key)+" Available: "+databaseFilesMap.get(key) + "<br>";
+                }
+                if(databaseFilesMap.get(key) < necesaryFilesMap.get(key))
+                {
+                    success = false;
+                }
+                System.out.println(databaseFilesMap.get(key)+" vs "+necesaryFilesMap.get(key));
+            }
+
+            if(success)
+            {
+                model.addAttribute("datatypesSuccessInfo", strInfo);
+            }
+            else
+            {
+                model.addAttribute("datatypesInsufficientInfo", strInfo);
+            }
+        }
+        return "create_dataset::info-datatypes";
+    }
+
+    // TODO_ Implement this method
+    @GetMapping("/create")
+    public String getCreateDataset(Authentication authentication, Model model, Dataset dataset) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
-        
+
         ArrayList<Dataset> datasets = datasetRepository.getSystemDatasets();
-        
+
         Iterable<License> licenses = licenseRepository.findAll();
         Iterable<Datatype> datatypes = datatypeRepository.findAll();
         Iterable<Language> languages = languageRepository.findAll();
@@ -396,5 +555,44 @@ public class DatasetController {
 
         return "create_dataset";
 
+    }
+
+    // TODO: Implement this method
+    @PostMapping("/create")
+    public String setCreateDataset(Authentication authentication, Model model, @Valid Dataset dataset,
+            BindingResult bindingResult, RedirectAttributes redirectAttributes,
+            @RequestParam(name = "datasets", required = false) String[] datasets,
+            @RequestParam(name = "license", required = false) String[] licenses,
+            @RequestParam(name = "language", required = false) String[] languages,
+            @RequestParam(name = "datatype", required = false) String[] datatypes,
+            @RequestParam(name = "spam-files-limit", required = false) String limitFilesSpam,
+            @RequestParam(name = "spam-percentage-limit", required = false) String limitPercentageSpam,
+            @RequestParam(name = "files-limit", required = false) String limitFiles,
+            @RequestParam(name = "eml-percentage", required = false) String percentageEml,
+            @RequestParam(name = "tsms-percentage", required = false) String percentageTsms,
+            @RequestParam(name = "warc-percentage", required = false) String percentageWarc,
+            @RequestParam(name = "twtid-percentage", required = false) String percentageTwtid,
+            @RequestParam(name = "tytb-percentage", required = false) String percentageTytb,
+            @RequestParam(name = "date1", required = false) String dateFrom,
+            @RequestParam(name = "date2", required = false) String dateTo) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String username = userDetails.getUsername();
+        String authority = userService.getPermissionsByUsername(username);
+        String message = "";
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("authority", authority);
+            model.addAttribute("username", username);
+            model.addAttribute("host", HOST_NAME);
+            model.addAttribute("licenses", licenseRepository.findAll());
+            return "create_dataset";
+        } else {
+            message = taskService.addNewUserDatasetTask(dataset, licenses, languages, datatypes, datasets,
+                    limitFilesSpam, dateFrom, dateTo, limitPercentageSpam, limitFiles, percentageEml, percentageWarc,
+                    percentageTwtid, percentageTytb, percentageTsms);
+            redirectAttributes.addFlashAttribute("message", message);
+            return "redirect:/dataset/home";
+        }
     }
 }

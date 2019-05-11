@@ -1,8 +1,6 @@
 package com.project.onlinepreprocessor.domain;
 
-import java.io.Serializable;
-
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -44,7 +42,7 @@ public class Task
      * The message of the task when failed
      * 
      */
-    @Null
+    @Column(nullable = true)
     private String message;
 
     /**
