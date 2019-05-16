@@ -1,7 +1,12 @@
 function retrieveDatasetInfo(id) {
     var url = "/dataset/modal?id="+id;
     console.log(url);
-    $("#dataset-info").load(url);
+    $("#dataset-info").load( url, function( response, status, xhr ) {
+        if(response.substr(0, 2)=="<!")
+        {
+            location.reload();
+        }
+    });
     $("#datasetModal").modal('show');
 }
 
@@ -42,7 +47,12 @@ function updateDatasetsList()
 
     console.log(url);
 
-    $("#datasets-list").load(url);
+    $("#datasets-list").load( url, function( response, status, xhr ) {
+        if(response.substr(0, 2)=="<!")
+        {
+            location.reload();
+        }
+    });
 }
 
 function updateTable()
@@ -61,7 +71,12 @@ function updateTable()
         }
     }
     console.log(url);
-    $("#datatypes-table").load(url);
+    $("#datatypes-table").load( url, function( response, status, xhr ) {
+        if(response.substr(0, 2)=="<!")
+        {
+            location.reload();
+        }
+    });
 }
 
 function checkIfPosibleSpam()
@@ -81,7 +96,12 @@ function checkIfPosibleSpam()
         }
     }
     console.log(url);
-    $("#info-spam").load(url);
+    $("#info-spam").load( url, function( response, status, xhr ) {
+        if(response.substr(0, 2)=="<!")
+        {
+            location.reload();
+        }
+    });
 }
 
 function checkIfPosibleDatatypes()
@@ -126,7 +146,12 @@ function checkIfPosibleDatatypes()
     "&inputSpamTytb="+inputSpamTytbValue+"&inputHamTytb="+inputHamTytbValue+"&inputSpamTwtid="+inputSpamTwtidValue+"&inputHamTwtid="+inputHamTwtidValue+
     "&inputSpamWarc="+inputSpamWarcValue+"&inputHamWarc="+inputHamWarcValue;
 
-    $("#info-datatypes").load(url);
+    $("#info-datatypes").load( url, function( response, status, xhr ) {
+          if(response.substr(0, 2)=="<!")
+          {
+              location.reload();
+          }
+      });
 }
 
 function checkNullValues(input)
