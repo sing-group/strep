@@ -443,9 +443,31 @@ public class DatasetController {
     @RequestParam("inputSpamWarc")int inputSpamWarc, @RequestParam("inputHamWarc")int inputHamWarc,
     @RequestParam("inputSpamTsms")int inputSpamTsms, @RequestParam("inputHamTsms")int inputHamTsms,
     @RequestParam("inputSpamTytb")int inputSpamTytb,@RequestParam("inputHamTytb")int inputHamTytb,
-    @RequestParam("inputSpamTwtid")int inputSpamTwtid, @RequestParam("inputHamTwtid")int inputHamTwtid, @RequestParam(name="datasets", required=false)String[] datasets, 
+    @RequestParam("inputSpamTwtid")int inputSpamTwtid, @RequestParam("inputHamTwtid")int inputHamTwtid, @RequestParam(name="datasets", required=false)String[] datasetNames, 
     @RequestParam("inputFileNumber")int fileNumberInput)
     {
+        ArrayList<String> datatypes = new ArrayList<String>();
+        ArrayList<String> datasets = new ArrayList<String>();
+
+        if (datasetNames != null) {
+            for (String datasetName : datasetNames) {
+                datasets.add(datasetName);
+                System.out.println(datasetName);
+            }
+            datatypes = datasetRepository.getDatasetsDatatypes(datasets);
+        }
+        model.addAttribute("tableDatatypes", datatypes);
+        model.addAttribute("inputspameml", inputSpamEml);
+        model.addAttribute("inputhameml", inputHamEml);
+        model.addAttribute("inputspamwarc", inputSpamWarc);
+        model.addAttribute("inputhamwarc", inputHamWarc);
+        model.addAttribute("inputspamtytb", inputSpamTytb);
+        model.addAttribute("inputhamtytb", inputHamTytb);
+        model.addAttribute("inputspamtsms", inputSpamTsms);
+        model.addAttribute("inputhamtsms", inputHamTsms);
+        model.addAttribute("inputspamtwtid", inputSpamTwtid);
+        model.addAttribute("inputhamtwtid", inputHamTwtid);
+
         if(datasets==null || fileNumberInput==0 || (inputSpamEml+inputHamEml+inputSpamWarc+inputHamWarc+
         inputSpamTsms+inputHamTsms+inputSpamTytb+inputHamTytb+inputSpamTwtid+inputHamTwtid)!=100)
         {
@@ -470,14 +492,6 @@ public class DatasetController {
             necesaryFilesMap.put(".twtidspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTwtid/100.00)));
             necesaryFilesMap.put(".twtidham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamTwtid/100.00)));
 
-
-            ArrayList<String> datasetNames = new ArrayList<String>();
-
-            for(String dataset : datasets)
-            {
-                datasetNames.add(dataset);
-            }
-
             HashMap<String, Integer> databaseFilesMap = new HashMap<String, Integer>();
 
             databaseFilesMap.put(".emlspam", 0);
@@ -496,21 +510,22 @@ public class DatasetController {
             databaseFilesMap.put(".twtidham", 0);
 
             //Cuantos ficheros hay disponibles de cada tipo en la base de datos
-            ArrayList<FileDatatypeType> filesDatatypeType = fileDatatypeTypeRepository.getFilesByExtensionAndType(datasetNames);
+            ArrayList<FileDatatypeType> filesDatatypeType = fileDatatypeTypeRepository.getFilesByExtensionAndType(datasets);
             for(FileDatatypeType fileDatatypeType : filesDatatypeType)
             {
                 databaseFilesMap.replace(fileDatatypeType.getExtension()+fileDatatypeType.getType(), fileDatatypeType.getCount());
             }
 
             Set<String> keys = databaseFilesMap.keySet();
-            String strInfo = "";
             boolean success = true;
 
             for(String key: keys)
             {
                 if(necesaryFilesMap.get(key)!=0)
                 {
-                    strInfo+=key+"<br>Necesary: "+necesaryFilesMap.get(key)+" Available: "+databaseFilesMap.get(key) + "<br>";
+                    String subkey = key.substring(1);
+                    model.addAttribute("necesary"+subkey, necesaryFilesMap.get(key));
+                    model.addAttribute("available"+subkey, databaseFilesMap.get(key));
                 }
                 if(databaseFilesMap.get(key) < necesaryFilesMap.get(key))
                 {
@@ -521,14 +536,14 @@ public class DatasetController {
 
             if(success)
             {
-                model.addAttribute("datatypesSuccessInfo", strInfo);
+                model.addAttribute("class", "info-label");
             }
             else
             {
-                model.addAttribute("datatypesInsufficientInfo", strInfo);
+                model.addAttribute("class", "error-label");
             }
         }
-        return "create_dataset::info-datatypes";
+        return "create_dataset::datatypes-table";
     }
 
     // TODO_ Implement this method

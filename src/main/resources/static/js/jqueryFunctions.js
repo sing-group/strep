@@ -55,57 +55,12 @@ function updateDatasetsList()
     });
 }
 
-function updateTable()
+function updateTable(id)
 {
     var datasetNames = document.getElementsByName("datasets");
 
-    var url = "/dataset/updateDatatypesTable";
-    for(var i = 0; i<datasetNames.length;i++)
+    if(id=="buttonCheckDatatypes")
     {
-        if(datasetNames[i].checked)
-        {
-            if(url=="/dataset/updateDatatypesTable")
-                url+=encodeURI("?"+datasetNames[i].name+"="+datasetNames[i].value);
-            else
-                url+=encodeURI("&"+datasetNames[i].name+"="+datasetNames[i].value);
-        }
-    }
-    console.log(url);
-    $("#datatypes-table").load( url, function( response, status, xhr ) {
-        if(response.substr(0, 2)=="<!")
-        {
-            location.reload();
-        }
-    });
-}
-
-function checkIfPosibleSpam()
-{
-    var inputSpam = document.getElementById("inputSpamPercentage");
-    var inputFileNumber = document.getElementById("fileNumber");
-    var datasets = document.getElementsByName("datasets");
-
-
-    var url = "/dataset/checkPosibleSpam?inputSpam="+inputSpam.value+"&fileNumber="+inputFileNumber.value;
-
-    for(var i = 0; i<datasets.length;i++)
-    {
-        if(datasets[i].checked)
-        {
-            url+=encodeURI("&"+datasets[i].name+"="+datasets[i].value);
-        }
-    }
-    console.log(url);
-    $("#info-spam").load( url, function( response, status, xhr ) {
-        if(response.substr(0, 2)=="<!")
-        {
-            location.reload();
-        }
-    });
-}
-
-function checkIfPosibleDatatypes()
-{
     var inputFileNumber = document.getElementById("fileNumber");
     var datasets = document.getElementsByName("datasets");
 
@@ -146,12 +101,59 @@ function checkIfPosibleDatatypes()
     "&inputSpamTytb="+inputSpamTytbValue+"&inputHamTytb="+inputHamTytbValue+"&inputSpamTwtid="+inputSpamTwtidValue+"&inputHamTwtid="+inputHamTwtidValue+
     "&inputSpamWarc="+inputSpamWarcValue+"&inputHamWarc="+inputHamWarcValue;
 
-    $("#info-datatypes").load( url, function( response, status, xhr ) {
+    $("#datatypes-table").load( url, function( response, status, xhr ) {
           if(response.substr(0, 2)=="<!")
           {
               location.reload();
           }
       });
+    }
+    else
+    {
+    var url = "/dataset/updateDatatypesTable";
+    for(var i = 0; i<datasetNames.length;i++)
+    {
+        if(datasetNames[i].checked)
+        {
+            if(url=="/dataset/updateDatatypesTable")
+                url+=encodeURI("?"+datasetNames[i].name+"="+datasetNames[i].value);
+            else
+                url+=encodeURI("&"+datasetNames[i].name+"="+datasetNames[i].value);
+        }
+    }
+    console.log(url);
+    $("#datatypes-table").load( url, function( response, status, xhr ) {
+        if(response.substr(0, 2)=="<!")
+        {
+            location.reload();
+        }
+    });
+    }
+}
+
+function checkIfPosibleSpam()
+{
+    var inputSpam = document.getElementById("inputSpamPercentage");
+    var inputFileNumber = document.getElementById("fileNumber");
+    var datasets = document.getElementsByName("datasets");
+
+
+    var url = "/dataset/checkPosibleSpam?inputSpam="+inputSpam.value+"&fileNumber="+inputFileNumber.value;
+
+    for(var i = 0; i<datasets.length;i++)
+    {
+        if(datasets[i].checked)
+        {
+            url+=encodeURI("&"+datasets[i].name+"="+datasets[i].value);
+        }
+    }
+    console.log(url);
+    $("#info-spam").load( url, function( response, status, xhr ) {
+        if(response.substr(0, 2)=="<!")
+        {
+            location.reload();
+        }
+    });
 }
 
 function checkNullValues(input)

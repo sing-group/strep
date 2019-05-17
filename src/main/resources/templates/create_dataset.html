@@ -317,8 +317,8 @@
 
                                                             <div class="col-1">
                                                                 <div class="form-group">
-                                                                    <input class="form-control" type="checkbox" name="datasets"
-                                                                        th:attr="value = ${dataset.name}" onclick="updateTable()">
+                                                                    <input id="checkboxUpdateTable" class="form-control" type="checkbox" name="datasets"
+                                                                        th:attr="value = ${dataset.name}" onclick="updateTable(this.id)">
                                                                 </div>
                                                             </div>
 
@@ -414,9 +414,11 @@
 
                                                     </div>
                                                     <div class="col-8 form-group text-center">
+                                                        <br>
+                                                        <br>
                                                         <p class="main-text">Percentage spam</p>
                                                         <input type="number" class="form-control" placeholder="Spam%" id="inputSpamPercentage"
-                                                            name="spam-percentage">
+                                                            name="spam-percentage" value="0" required>
                                                         <div class="text-center" th:fragment="info-spam" id="info-spam">
                                                             <div th:if="${spamErrorInput}!=null">
                                                                 <p class="error-label" th:text="${spamErrorInput}"></p>
@@ -450,10 +452,6 @@
 
                                             <div class="col-8 text-center">
                                                     <p class="main-text">Datatypes</p>
-                                                    <p class="main-text">You can fill this table with the percentage of
-                                                        spam and
-                                                        ham of all the types that are in the selected datasets. </p>
-    
                                                     <div class="row">
                                                         <div class="col-3">
     
@@ -477,11 +475,34 @@
                                                                 </div>
                                                                 
                                                                 <div class="col-3 form-group">
-                                                                    <input class="form-control" type="number" th:id="'inputSpam'+${datatype}" th:name="'inputSpam'+${datatype}" value="0">
+                                                                    <div th:if="${__${'inputspam'+ #strings.replace(datatype,'.','')}__}!=null">
+                                                                    <input class="form-control" type="number" th:id="'inputSpam'+${datatype}" th:name="'inputSpam'+${datatype}" th:attr="value = ${__${'inputspam'+ #strings.replace(datatype,'.','')}__}" required>
+                                                                    </div>
+                                                                    <div th:unless="${__${'inputspam'+ #strings.replace(datatype,'.','')}__}!=null">
+                                                                        <input class="form-control" type="number" th:id="'inputSpam'+${datatype}" th:name="'inputSpam'+${datatype}" value="0" required>
+                                                                    </div>
+                                                                    <div th:if="${__${'necesary'+ #strings.replace(datatype,'.','') + 'spam'}__}!=null">
+                                                                        <p th:class="${class}" th:text="'Necesary: ' + ${__${'necesary'+ #strings.replace(datatype,'.','')+'spam'}__}"></p>
+                                                                    </div>
+                                                                    <div th:if="${__${'available'+ #strings.replace(datatype,'.','')+'spam'}__}!=null">
+                                                                        <p th:class="${class}" th:text="'Necesary: ' + ${__${'available'+ #strings.replace(datatype,'.','')+'spam'}__}"></p>
+                                                                    </div>
                                                                 </div>
     
                                                                 <div class="col-3 form-group">
-                                                                    <input class="form-control" type="number" th:id="'inputHam'+${datatype}" th:name="'inputHam'+${datatype}" value="0">
+                                                                        <div th:if="${__${'inputham'+ #strings.replace(datatype,'.','')}__}!=null">
+                                                                            <input class="form-control" type="number" th:id="'inputHam'+${datatype}" th:name="'inputHam'+${datatype}" th:attr="value = ${__${'inputham'+ #strings.replace(datatype,'.','')}__}" required>
+                                                                        </div>
+                                                                        <div th:unless="${__${'inputham'+ #strings.replace(datatype,'.','')}__}!=null">
+                                                                            <input class="form-control" type="number" th:id="'inputHam'+${datatype}" th:name="'inputHam'+${datatype}" value="0" required>
+                                                                        </div>
+
+                                                                            <div th:if="${__${'necesary'+ #strings.replace(datatype,'.','') + 'ham'}__}!=null">
+                                                                                <p th:class="${class}" th:text="'Necesary: ' + ${__${'necesary'+ #strings.replace(datatype,'.','')+'ham'}__}"></p>
+                                                                            </div>
+                                                                            <div th:if="${__${'available'+ #strings.replace(datatype,'.','')+'ham'}__}!=null">
+                                                                                <p th:class="${class}" th:text="'Necesary: ' + ${__${'available'+ #strings.replace(datatype,'.','')+'ham'}__}"></p>
+                                                                            </div>
                                                                 </div>
     
                                                                 <div class="col-3">
@@ -489,30 +510,32 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-4">
-    
-                                                        </div>
-                                                        <div class="col-4 form-group">
-                                                            <input type="button" class="form-control submit-button" onclick="checkIfPosibleDatatypes()" value="Check">
-                                                            <div th:fragment="info-datatypes" id="info-datatypes">
-                                                                <div th:if="${datatypesInputError}">
-                                                                    <p class="error-label" th:text="${datatypesInputError}"></p>
+
+                                                            <div class="row">
+                                                                <div class="col-4">
+
                                                                 </div>
-                                                                <div th:unless="${datatypesInputError}">
-                                                                    <div th:if="${datatypesSuccessInfo}">
-                                                                        <p class="info-label" th:utext="${datatypesSuccessInfo}">Prueba suficientes ficheros</p>
-                                                                    </div>
-                                                                    <div th:if="${datatypesInsufficientInfo}">
-                                                                        <p class="error-label" th:utext="${datatypesInsufficientInfo}">Prueba insuficientes ficheros</p>
-                                                                    </div>
+
+                                                                <div class="col-4">
+                                                                    <input id="buttonCheckDatatypes" type="button" class="form-control submit-button" onclick="updateTable(this.id)" value="Check">
+                                                                    <div th:if="${datatypesInputError}">
+                                                                            <p class="error-label" th:text="${datatypesInputError}"></p>
+                                                                        </div>
+                                                                        <div th:unless="${datatypesInputError}">
+                                                                            <div th:if="${datatypesSuccessInfo}">
+                                                                                <p class="info-label" th:utext="${datatypesSuccessInfo}">Prueba suficientes ficheros</p>
+                                                                            </div>
+                                                                            <div th:if="${datatypesInsufficientInfo}">
+                                                                                <p class="error-label" th:utext="${datatypesInsufficientInfo}">Prueba insuficientes ficheros</p>
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+
+                                                                <div class="col-4">
+
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-4">
-    
-                                                        </div>
+                                                        
                                                     </div>
                                             </div>
                                         </div>
