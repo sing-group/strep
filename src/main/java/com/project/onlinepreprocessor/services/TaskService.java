@@ -26,6 +26,7 @@ import com.project.onlinepreprocessor.repositories.TaskRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class TaskService {
@@ -47,16 +48,21 @@ public class TaskService {
     @Autowired
     private FileDatatypeTypeRepository fileDatatypeTypeRepository;
 
+    @Autowired
+    private DatasetService datasetService;
+
     public void addNewSystemTask(Dataset dataset) {
         TaskCreateSdataset taskCreateSdataset = new TaskCreateSdataset(dataset, "waiting", null);
+        dataset.setTask(taskCreateSdataset);
         taskRepository.save(taskCreateSdataset);
+        datasetRepository.save(dataset);
     }
 
-    
+    //TODO: add pipeline and username to parameters of this method and call to method addUserDataset of datasetService
     public String addNewUserDatasetTask(Dataset dataset, String[] licenses, String[] languages, String[] datatypes,
             String[] datasets, String dateFrom, String dateTo, int inputSpamEml, int inputHamEml, int inputSpamWarc,
             int inputHamWarc, int inputSpamTsms, int inputHamTsms, int inputSpamTytb, int inputHamTytb,
-            int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage) {
+            int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage, String username, MultipartFile pipeline) {
 
         String message = "";
 
@@ -111,7 +117,10 @@ public class TaskService {
                         fileNumberInput, dateFromFormatted, dateToFormatted, languagesArray, datatypesArray, licensesArray, datasetsArray
                         ,inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTytb, inputHamTytb, inputSpamTsms, inputHamTsms,
                         inputSpamTwtid,inputHamTwtid);
+                        Dataset toSaveDataset = datasetService.addUserDataset(dataset, username, pipeline);
+                        toSaveDataset.setTask(taskCreateUdataset);
                         taskRepository.save(taskCreateUdataset);
+                        datasetRepository.save(toSaveDataset);
 
                     } else {
 
@@ -120,7 +129,10 @@ public class TaskService {
                         fileNumberInput, null, null, languagesArray, datatypesArray, licensesArray, datasetsArray
                         ,inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTytb, inputHamTytb, inputSpamTsms, inputHamTsms,
                         inputSpamTwtid,inputHamTwtid);
+                        Dataset toSaveDataset = datasetService.addUserDataset(dataset, username, pipeline);
+                        toSaveDataset.setTask(taskCreateUdataset);
                         taskRepository.save(taskCreateUdataset);
+                        datasetRepository.save(toSaveDataset);
 
                     }
 

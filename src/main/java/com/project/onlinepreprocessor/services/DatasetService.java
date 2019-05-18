@@ -228,6 +228,26 @@ public class DatasetService
 
     }
 
+    //TODO: Implement method addUserDataset
+    public Dataset addUserDataset(Dataset dataset, String username, MultipartFile pipeline)
+    {
+        try
+        {
+
+            Date date = new Date();
+            dataset.setUploadDate(date);
+            dataset.setAuthor(username);
+            dataset.setPipeline(pipeline.getBytes());
+            dataset.setType("userdataset");
+            dataset.setAvailable(false);
+
+        }catch(IOException e)
+        {
+
+        }
+        return dataset;
+    }
+
     private void store(MultipartFile datasetFile, Dataset dataset) throws IOException
     {
         datasetFile.transferTo(new java.io.File(BASE_PATH+dataset.getName()+".zip"));

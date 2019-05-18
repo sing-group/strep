@@ -572,7 +572,8 @@ public class DatasetController {
 
     }
 
-    // TODO: Implement this method
+    // TODO: Add pipeline to request param
+    // Add pipeline and username in call to addNewUserDataset method
     @PostMapping("/create")
     public String setCreateDataset(Authentication authentication, Model model, @Valid Dataset dataset,
             BindingResult bindingResult, RedirectAttributes redirectAttributes,
@@ -593,7 +594,8 @@ public class DatasetController {
             @RequestParam(name="inputSpam.twtid", required = false, defaultValue="0")int inputSpamTwtid,
             @RequestParam(name="inputHam.twtid", required = false, defaultValue="0")int inputHamTwtid,
             @RequestParam(name = "date1", required = false) String dateFrom,
-            @RequestParam(name = "date2", required = false) String dateTo) {
+            @RequestParam(name = "date2", required = false) String dateTo,
+            @RequestParam("dataset-pipeline")MultipartFile pipeline) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -612,7 +614,7 @@ public class DatasetController {
             message = taskService.addNewUserDatasetTask(dataset, licenses, languages, datatypes,
              datasets, dateFrom, dateTo, inputSpamEml, inputHamEml, inputSpamWarc, 
              inputHamWarc, inputSpamTsms, inputHamTsms, inputSpamTytb, inputHamTytb,
-              inputSpamTwtid, inputHamTwtid, inputFileNumber,inputSpamPercentage);
+              inputSpamTwtid, inputHamTwtid, inputFileNumber,inputSpamPercentage, username, pipeline);
             redirectAttributes.addFlashAttribute("message", message);
             return "redirect:/dataset/home";
         }
