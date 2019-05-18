@@ -22,22 +22,33 @@ import javax.persistence.JoinColumn;
 @PrimaryKeyJoinColumn(referencedColumnName="id")
 public class TaskCreateUdataset extends Task
 {
+    private int limitSpamPercentageEml;
+
+    private int limitHamPercentageEml;
+
+    private int limitSpamPercentageTwtid;
+    
+    private int limitHamPercentageTwtid;
+
+    private int limitSpamPercentageTytb;
+
+    private int limitHamPercentageTytb;
+    
+    private int limitSpamPercentageWarc;
+
+    private int limitHamPercentageWarc;
+
+    private int limitSpamPercentageTsms;
+
+    private int limitHamPercentageTsms;
     /**
      * The limit of percentage of spam in the new dataset
      */
-    @Column(nullable = true)
     private int limitPercentageSpam;
-
-    /**
-     * The limit of files of type spam in the new dataset
-     */
-    @Column(nullable = true)
-    private int limitSpam;
 
     /**
      * The limit of files of the new dataset
      */
-    @Column(nullable = true)
     private int limitNumberOfFiles;
 
     /**
@@ -83,36 +94,6 @@ public class TaskCreateUdataset extends Task
     @JoinTable(joinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "dataset", referencedColumnName="name"))
     private List<Dataset> datasets;
 
-    /**
-     * The limit of percentage of .eml files
-     */
-    @Column(nullable = true)
-    private int limitPercentageEml;
-
-    /**
-     * The limit of percentage of .tytb files
-     */
-    @Column(nullable = true)
-    private int limitPercentageTytb;
-
-    /**
-     * The limit of percentage of .tsms files
-     */
-    @Column(nullable = true)
-    private int limitPercentageTsms;
-
-    /**
-     * The limit of percentage of .twtid files
-     */
-    @Column(nullable = true)
-    private int limitPercentageTwtid;
-
-    /**
-     * The limit of percentage of .warc files
-     */
-    @Column(nullable = true)
-    private int limitPercentageWarc;
-
 
     /**
      * Creates an instance of TaskCreateUdataset
@@ -120,7 +101,6 @@ public class TaskCreateUdataset extends Task
      * @param state The state of the task
      * @param message The message of the task when failed
      * @param limitPercentageSpam The limit of percentage of spam in the new dataset
-     * @param limitSpam The limit of files of type spam in the new dataset
      * @param limitNumberOfFiles The limit of files of the new dataset
      * @param dateFrom The date from which you can pick up files from the original datasets
      * @param dateTo  The date until which you can pick up files from the original datasets
@@ -133,23 +113,30 @@ public class TaskCreateUdataset extends Task
      * @param limitPercentageTwtid The limit of percentage of .twtid files
      * @param limitPercentageWarc The limit of percentage of .warc files
      */
-    public TaskCreateUdataset(Dataset dataset, String state, String message, int limitPercentageSpam, int limitSpam, int limitNumberOfFiles, 
-    Date dateFrom, Date dateTo, List<Language> languages, List<Datatype> datatypes,List<License> licenses, List<Dataset> datasets, int limitPercentageEml,
-     int limitPercentageTytb, int limitPercentageTsms, int limitPercentageTwtid, int limitPercentageWarc) {
+    public TaskCreateUdataset(Dataset dataset, String state, String message, int limitPercentageSpam, int limitNumberOfFiles,
+    Date dateFrom, Date dateTo, List<Language> languages, List<Datatype> datatypes,List<License> licenses, List<Dataset> datasets,
+    int limitSpamPercentageEml,
+    int limitHamPercentageEml,int limitSpamPercentageWarc, int limitHamPercentageWarc, int limitSpamPercentageTytb, int limitHamPercentageTytb,
+    int limitSpamPercentageTsms, int limitHamPercentageTsms, int limitSpamPercentageTwtid, int limitHamPercentageTwtid)
+    {
         super(dataset, state, message);
+        this.limitSpamPercentageEml = limitSpamPercentageEml;
+        this.limitHamPercentageEml = limitHamPercentageEml;
+        this.limitSpamPercentageTsms = limitSpamPercentageTsms;
+        this.limitHamPercentageTsms = limitHamPercentageTsms;
+        this.limitSpamPercentageTwtid = limitSpamPercentageTwtid;
+        this.limitHamPercentageTwtid = limitHamPercentageTwtid;
+        this.limitSpamPercentageWarc = limitSpamPercentageWarc;
+        this.limitHamPercentageWarc = limitHamPercentageWarc;
+        this.limitSpamPercentageTytb = limitSpamPercentageTytb;
+        this.limitHamPercentageTytb = limitHamPercentageTytb;
         this.limitPercentageSpam = limitPercentageSpam;
-        this.limitSpam = limitSpam;
         this.limitNumberOfFiles = limitNumberOfFiles;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.languages = languages;
         this.datatypes = datatypes;
         this.licenses = licenses;
-        this.limitPercentageEml = limitPercentageEml;
-        this.limitPercentageTytb = limitPercentageTytb;
-        this.limitPercentageTsms = limitPercentageTsms;
-        this.limitPercentageTwtid = limitPercentageTwtid;
-        this.limitPercentageWarc = limitPercentageWarc;
         this.datasets = datasets;
     }
 
@@ -175,22 +162,6 @@ public class TaskCreateUdataset extends Task
      */
     public void setLimitPercentageSpam(int limitPercentageSpam) {
         this.limitPercentageSpam = limitPercentageSpam;
-    }
-
-    /**
-     * Return the limit of files of type spam in the new dataset
-     * @return the limit of files of type spam in the new dataset
-     */
-    public int getLimitSpam() {
-        return this.limitSpam;
-    }
-
-    /**
-     * Stablish the limit of files of type spam in the new dataset
-     * @param limitSpam the limit of files of type spam in the new dataset
-     */
-    public void setLimitSpam(int limitSpam) {
-        this.limitSpam = limitSpam;
     }
 
     /**
@@ -274,86 +245,6 @@ public class TaskCreateUdataset extends Task
     }
 
     /**
-     * Return the limit of percentage of .eml files
-     * @return the limit of percentage of .eml files
-     */
-    public int getLimitPercentageEml() {
-        return this.limitPercentageEml;
-    }
-
-    /**
-     * Stablish the limit of percentage of .eml files
-     * @param limitPercentageEml the limit of percentage of .eml files
-     */
-    public void setLimitPercentageEml(int limitPercentageEml) {
-        this.limitPercentageEml = limitPercentageEml;
-    }
-
-    /**
-     * Return the limit of percentage of .tytb files
-     * @return the limit of percentage of .tytb files
-     */
-    public int getLimitPercentageTytb() {
-        return this.limitPercentageTytb;
-    }
-
-    /**
-     * Stablish the limit of percentage of .tytb files
-     * @param limitPercentageTytb the limit of percentage of .tytb files
-     */
-    public void setLimitPercentageTytb(int limitPercentageTytb) {
-        this.limitPercentageTytb = limitPercentageTytb;
-    }
-
-    /**
-     * Return the limit of percentage of .tsms files
-     * @return the limit of percentage of .tsms files
-     */
-    public int getLimitPercentageTsms() {
-        return this.limitPercentageTsms;
-    }
-
-    /**
-     * Stablish the limit of percentage of .tsms files
-     * @param limitPercentageTsms the limit of percentage of .tsms files
-     */
-    public void setLimitPercentageTsms(int limitPercentageTsms) {
-        this.limitPercentageTsms = limitPercentageTsms;
-    }
-
-    /**
-     * Return the limit of percentage of .twtid files
-     * @return the limit of percentage of .twtid files
-     */
-    public int getLimitPercentageTwtid() {
-        return this.limitPercentageTwtid;
-    }
-
-    /**
-     * Stablish the limit of percentage of .twtid files
-     * @param limitPercentageTwtid the limit of percentage of .twtid files
-     */
-    public void setLimitPercentageTwtid(int limitPercentageTwtid) {
-        this.limitPercentageTwtid = limitPercentageTwtid;
-    }
-
-    /**
-     * Return the limit of percentage of .warc files
-     * @return the limit of percentage of .warc files
-     */
-    public int getLimitPercentageWarc() {
-        return this.limitPercentageWarc;
-    }
-
-    /**
-     * Stablish the limit of percentage of .warc files
-     * @param limitPercentageWarc the limit of percentage of .warc files
-     */
-    public void setLimitPercentageWarc(int limitPercentageWarc) {
-        this.limitPercentageWarc = limitPercentageWarc;
-    }
-
-    /**
      * Return the list of licenses selected in the filters to construct the new dataset
      * @return the list of licenses selected in the filters to construct the new dataset
      */
@@ -388,6 +279,106 @@ public class TaskCreateUdataset extends Task
     {
         this.datasets = datasets;
     }
+
+    public int getLimitSpamPercentageEml()
+    {
+        return this.limitSpamPercentageEml;
+    }
     
+    public void setLimitSpamPercentageEml(int limitSpamPercentageEml)
+    {
+        this.limitSpamPercentageEml = limitSpamPercentageEml;
+    }
+    
+    public int getLimitHamPercentageEml()
+    {
+        return this.limitHamPercentageEml;
+    }
+    
+    public void setLimitHamPercentageEml(int limitHamPercentageEml)
+    {
+        this.limitHamPercentageEml = limitHamPercentageEml;
+    }
+
+    public int getLimitSpamPercentageWarc()
+    {
+        return this.limitSpamPercentageWarc;
+    }
+    
+    public void setLimitSpamPercentageWarc(int limitSpamPercentageWarc)
+    {
+        this.limitSpamPercentageWarc = limitSpamPercentageWarc;
+    }
+    
+    public int getLimitHamPercentageWarc()
+    {
+        return this.limitHamPercentageWarc;
+    }
+    
+    public void setLimitHamPercentageWarc(int limitHamPercentageWarc)
+    {
+        this.limitHamPercentageWarc = limitHamPercentageWarc;
+    }
+    
+
+    public int getLimitSpamPercentageTsms()
+    {
+        return this.limitSpamPercentageTsms;
+    }
+    
+    public void setLimitSpamPercentageTsms(int limitSpamPercentageTsms)
+    {
+        this.limitSpamPercentageTsms = limitSpamPercentageTsms;
+    }
+    
+    public int getLimitHamPercentageTsms()
+    {
+        return this.limitHamPercentageTsms;
+    }
+    
+    public void setLimitHamPercentageTsms(int limitHamPercentageTsms)
+    {
+        this.limitHamPercentageTsms = limitHamPercentageTsms;
+    }
+
+    public int getLimitSpamPercentageTytb()
+    {
+        return this.limitSpamPercentageTytb;
+    }
+    
+    public void setLimitSpamPercentageTytb(int limitSpamPercentageTytb)
+    {
+        this.limitSpamPercentageTytb = limitSpamPercentageTytb;
+    }
+    
+    public int getLimitHamPercentageTytb()
+    {
+        return this.limitHamPercentageTytb;
+    }
+    
+    public void setLimitHamPercentageTytb(int limitHamPercentageTytb)
+    {
+        this.limitHamPercentageTytb = limitHamPercentageTytb;
+    }
+
+    public int getLimitSpamPercentageTwtid()
+    {
+        return this.limitSpamPercentageTwtid;
+    }
+    
+    public void setLimitSpamPercentageTwtid(int limitSpamPercentageTwtid)
+    {
+        this.limitSpamPercentageTwtid = limitSpamPercentageTwtid;
+    }
+    
+    public int getLimitHamPercentageTwtid()
+    {
+        return this.limitHamPercentageTwtid;
+    }
+    
+    public void setLimitHamPercentageTwtid(int limitHamPercentageTwtid)
+    {
+        this.limitHamPercentageTwtid = limitHamPercentageTwtid;
+    }
 
 }

@@ -110,7 +110,7 @@ public class Dataset
     /**
      * The task associated to this dataset
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="task_id", referencedColumnName="id")
     private Task task;
 

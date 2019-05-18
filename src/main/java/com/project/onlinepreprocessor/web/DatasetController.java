@@ -509,7 +509,7 @@ public class DatasetController {
             databaseFilesMap.put(".twtidspam", 0);
             databaseFilesMap.put(".twtidham", 0);
 
-            //Cuantos ficheros hay disponibles de cada tipo en la base de datos
+            //How many files are available of each datatype
             ArrayList<FileDatatypeType> filesDatatypeType = fileDatatypeTypeRepository.getFilesByExtensionAndType(datasets);
             for(FileDatatypeType fileDatatypeType : filesDatatypeType)
             {
@@ -580,14 +580,18 @@ public class DatasetController {
             @RequestParam(name = "license", required = false) String[] licenses,
             @RequestParam(name = "language", required = false) String[] languages,
             @RequestParam(name = "datatype", required = false) String[] datatypes,
-            @RequestParam(name = "spam-files-limit", required = false) String limitFilesSpam,
-            @RequestParam(name = "spam-percentage-limit", required = false) String limitPercentageSpam,
-            @RequestParam(name = "files-limit", required = false) String limitFiles,
-            @RequestParam(name = "eml-percentage", required = false) String percentageEml,
-            @RequestParam(name = "tsms-percentage", required = false) String percentageTsms,
-            @RequestParam(name = "warc-percentage", required = false) String percentageWarc,
-            @RequestParam(name = "twtid-percentage", required = false) String percentageTwtid,
-            @RequestParam(name = "tytb-percentage", required = false) String percentageTytb,
+            @RequestParam(name="inputSpamPercentage", required = false, defaultValue="0")int inputSpamPercentage,
+            @RequestParam(name="inputFileNumber", required = false, defaultValue="0")int inputFileNumber,
+            @RequestParam(name="inputSpam.eml", required = false, defaultValue="0")int inputSpamEml,
+            @RequestParam(name="inputHam.eml", required = false, defaultValue="0")int inputHamEml,
+            @RequestParam(name="inputSpam.warc", required = false, defaultValue="0")int inputSpamWarc,
+            @RequestParam(name="inputHam.warc", required = false, defaultValue="0")int inputHamWarc,
+            @RequestParam(name="inputSpam.tsms", required = false, defaultValue="0")int inputSpamTsms,
+            @RequestParam(name="inputHam.tsms", required = false, defaultValue="0")int inputHamTsms,
+            @RequestParam(name="inputSpam.tytb", required = false, defaultValue="0")int inputSpamTytb,
+            @RequestParam(name="inputHam.tytb", required = false, defaultValue="0")int inputHamTytb,
+            @RequestParam(name="inputSpam.twtid", required = false, defaultValue="0")int inputSpamTwtid,
+            @RequestParam(name="inputHam.twtid", required = false, defaultValue="0")int inputHamTwtid,
             @RequestParam(name = "date1", required = false) String dateFrom,
             @RequestParam(name = "date2", required = false) String dateTo) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -601,11 +605,14 @@ public class DatasetController {
             model.addAttribute("username", username);
             model.addAttribute("host", HOST_NAME);
             model.addAttribute("licenses", licenseRepository.findAll());
+            model.addAttribute("datasets", datasetRepository.getSystemDatasets());
             return "create_dataset";
         } else {
-            message = taskService.addNewUserDatasetTask(dataset, licenses, languages, datatypes, datasets,
-                    limitFilesSpam, dateFrom, dateTo, limitPercentageSpam, limitFiles, percentageEml, percentageWarc,
-                    percentageTwtid, percentageTytb, percentageTsms);
+            System.out.println(inputSpamTsms);
+            message = taskService.addNewUserDatasetTask(dataset, licenses, languages, datatypes,
+             datasets, dateFrom, dateTo, inputSpamEml, inputHamEml, inputSpamWarc, 
+             inputHamWarc, inputSpamTsms, inputHamTsms, inputSpamTytb, inputHamTytb,
+              inputSpamTwtid, inputHamTwtid, inputFileNumber,inputSpamPercentage);
             redirectAttributes.addFlashAttribute("message", message);
             return "redirect:/dataset/home";
         }

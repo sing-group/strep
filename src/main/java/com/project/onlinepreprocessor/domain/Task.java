@@ -29,8 +29,7 @@ public class Task
     /**
      * The dataset associated to this task
      */
-    @OneToOne
-    @JoinColumn(name="dataset_name", referencedColumnName="name")
+    @OneToOne(mappedBy = "task")
     private Dataset dataset;
 
     /**

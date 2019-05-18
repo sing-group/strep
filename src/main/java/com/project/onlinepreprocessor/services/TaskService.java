@@ -4,18 +4,22 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import com.project.onlinepreprocessor.domain.Dataset;
 import com.project.onlinepreprocessor.domain.Datatype;
 import com.project.onlinepreprocessor.domain.File;
+import com.project.onlinepreprocessor.domain.FileDatatypeType;
 import com.project.onlinepreprocessor.domain.Language;
 import com.project.onlinepreprocessor.domain.License;
 import com.project.onlinepreprocessor.domain.TaskCreateSdataset;
 import com.project.onlinepreprocessor.domain.TaskCreateUdataset;
 import com.project.onlinepreprocessor.repositories.DatasetRepository;
 import com.project.onlinepreprocessor.repositories.DatatypeRepository;
+import com.project.onlinepreprocessor.repositories.FileDatatypeTypeRepository;
 import com.project.onlinepreprocessor.repositories.LanguageRepository;
 import com.project.onlinepreprocessor.repositories.LicenseRepository;
 import com.project.onlinepreprocessor.repositories.TaskRepository;
@@ -40,15 +44,19 @@ public class TaskService {
     @Autowired
     private LanguageRepository languageRepository;
 
+    @Autowired
+    private FileDatatypeTypeRepository fileDatatypeTypeRepository;
+
     public void addNewSystemTask(Dataset dataset) {
         TaskCreateSdataset taskCreateSdataset = new TaskCreateSdataset(dataset, "waiting", null);
         taskRepository.save(taskCreateSdataset);
     }
 
+    
     public String addNewUserDatasetTask(Dataset dataset, String[] licenses, String[] languages, String[] datatypes,
-            String[] datasets, String limitFilesSpam, String dateFrom, String dateTo, String limitPercentageSpam,
-            String limitFiles, String percentageEml, String percentageWarc, String percentageTwtid,
-            String percentageTytb, String percentageTsms) {
+            String[] datasets, String dateFrom, String dateTo, int inputSpamEml, int inputHamEml, int inputSpamWarc,
+            int inputHamWarc, int inputSpamTsms, int inputHamTsms, int inputSpamTytb, int inputHamTytb,
+            int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage) {
 
         String message = "";
 
@@ -56,6 +64,8 @@ public class TaskService {
         ArrayList<Language> languagesArray = new ArrayList<Language>();
         ArrayList<Datatype> datatypesArray = new ArrayList<Datatype>();
         ArrayList<Dataset> datasetsArray = new ArrayList<Dataset>();
+
+        System.out.println(inputSpamTsms);
 
         if (licenses != null) {
             licensesArray = toArrayListLicenses(licenses);
@@ -73,15 +83,6 @@ public class TaskService {
             datasetsArray = toArrayListDatasets(datasets);
         }
 
-        int limitFilesSpamNumber = checkNullsAndEmptyStrings(limitFilesSpam);
-        int limitPercentageSpamNumber = checkNullsAndEmptyStrings(limitPercentageSpam);
-        int limitFilesNumber = checkNullsAndEmptyStrings(limitFiles);
-        int limitPercentageEmlNumber = checkNullsAndEmptyStrings(percentageEml);
-        int limitPercentageWarcNumber = checkNullsAndEmptyStrings(percentageWarc);
-        int limitPercentageTwtidNumber = checkNullsAndEmptyStrings(percentageTwtid);
-        int limitPercentageTytbNumber = checkNullsAndEmptyStrings(percentageTytb);
-        int limitPercentageTsmsNumber = checkNullsAndEmptyStrings(percentageTsms);
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
 
@@ -96,38 +97,29 @@ public class TaskService {
                 if (optDataset.isPresent()) {
                     message = "Already exists a dataset with this name";
                 } 
-                else if (!correctFilters(datatypes, datasets, percentageEml, percentageWarc, percentageTwtid,
-                        percentageTytb, percentageTsms)) {
-                    message = "There are no files to satisfy datatype percentage parameters";
-                    
+                else if (!correctFilters(datasets, inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, 
+                inputSpamTsms, inputHamTsms, inputSpamTytb, inputHamTytb, inputSpamTwtid, inputHamTwtid, fileNumberInput
+                ,inputSpamPercentage)) {
+                    message = "There are no files to satisfy datatype percentage parameters";  
                 } 
-                else if(!invalidPercentages(datatypes, percentageEml, percentageWarc, percentageTwtid, percentageTytb, percentageTsms))
-                {
-                    message = "Datatypes parameters percentages incorrects";
-                }
-                else if (!correctParameters(datasets, limitFilesSpam, limitPercentageSpam, limitFiles)) {
-                    message = "Incompatible parameters";
-                } else {
+                 else {
                     if (!dateFrom.equals("") && !dateTo.equals("")) {
-
                         datasetRepository.save(dataset);
                         dateFromFormatted = simpleDateFormat.parse(dateFrom);
                         dateToFormatted = simpleDateFormat.parse(dateTo);
-                        TaskCreateUdataset taskCreateUdataset = new TaskCreateUdataset(dataset, "waiting", null,
-                                limitPercentageSpamNumber, limitFilesSpamNumber, limitFilesNumber, dateFromFormatted,
-                                dateToFormatted, languagesArray, datatypesArray, licensesArray, datasetsArray,
-                                limitPercentageEmlNumber, limitPercentageTytbNumber, limitPercentageTsmsNumber,
-                                limitPercentageTwtidNumber, limitPercentageWarcNumber);
+                        TaskCreateUdataset taskCreateUdataset = new TaskCreateUdataset(dataset, "waiting", null, inputSpamPercentage,
+                        fileNumberInput, dateFromFormatted, dateToFormatted, languagesArray, datatypesArray, licensesArray, datasetsArray
+                        ,inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTytb, inputHamTytb, inputSpamTsms, inputHamTsms,
+                        inputSpamTwtid,inputHamTwtid);
                         taskRepository.save(taskCreateUdataset);
 
                     } else {
 
                         datasetRepository.save(dataset);
-                        TaskCreateUdataset taskCreateUdataset = new TaskCreateUdataset(dataset, "waiting", null,
-                                limitPercentageSpamNumber, limitFilesSpamNumber, limitFilesNumber, null, null,
-                                languagesArray, datatypesArray, licensesArray, datasetsArray, limitPercentageEmlNumber,
-                                limitPercentageTytbNumber, limitPercentageTsmsNumber, limitPercentageTwtidNumber,
-                                limitPercentageWarcNumber);
+                        TaskCreateUdataset taskCreateUdataset = new TaskCreateUdataset(dataset, "waiting", null, inputSpamPercentage,
+                        fileNumberInput, null, null, languagesArray, datatypesArray, licensesArray, datasetsArray
+                        ,inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTytb, inputHamTytb, inputSpamTsms, inputHamTsms,
+                        inputSpamTwtid,inputHamTwtid);
                         taskRepository.save(taskCreateUdataset);
 
                     }
@@ -141,194 +133,96 @@ public class TaskService {
 
         return message;
     }
+    
 
     // Method for check if there are files with the indicated datatypes in the
     // selected datasets
-    private boolean correctFilters(String[] datatypes, String[] datasets, String percentageEml, String percentageWarc,
-            String percentageTwtid, String percentageTytb, String percentageTsms) {
-        boolean correct = false;
-        ArrayList<String> datasetsArray = new ArrayList<String>();
-        ArrayList<String> filtersDatatypesArray = new ArrayList<String>();
-        ArrayList<String> datasetsDatatypesArray = new ArrayList<String>();
+    private boolean correctFilters(String[] datasetNames, int inputSpamEml, int inputHamEml, int inputSpamWarc, int inputHamWarc,
+     int inputSpamTsms, int inputHamTsms, int inputSpamTytb, int inputHamTytb, int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage) {
 
-        if (datatypes == null) {
-            System.out.println("Datatypes null");
-            correct = true;
-        } else {
+            boolean success = true;
+            int total = inputSpamEml+inputHamEml+inputSpamWarc+inputHamWarc+inputSpamTsms+inputHamTsms+inputSpamTytb+inputHamTytb+inputSpamTwtid+inputHamTwtid;
+            ArrayList<String> datasets = new ArrayList<String>();
 
-            for(String dataset : datasets)
+            for(String datasetName : datasetNames)
             {
-                datasetsArray.add(dataset);
+                datasets.add(datasetName);
             }
 
-            datasetsDatatypesArray = datasetRepository.getDatasetsDatatypes(datasetsArray);
-
-            for(String datatype : datatypes)
+            if((total!=100 && total!=0) || (total==0 && inputSpamPercentage==0) || fileNumberInput==0)
             {
-                if(indicatedPercentage(datatype, percentageEml, percentageWarc, percentageTwtid, percentageTytb, percentageTsms))
-                {
-                    filtersDatatypesArray.add(datatype);
-                }
-            }
-            if(!filtersDatatypesArray.isEmpty())
-            {
-                if(new HashSet<String>(filtersDatatypesArray).equals(new HashSet<String>(datasetsDatatypesArray)))
-                {
-                    correct = true;
-                }
-                else
-                {
-                    correct = false;
-                }
+                success = false;
+                System.out.println(total);
+                System.out.println(inputSpamPercentage);
+                System.out.println(fileNumberInput);
+                System.out.println("FIRST IF");
             }
             else
             {
-                correct = true;
-            }
-        }
+            HashMap<String, Integer> necesaryFilesMap = new HashMap<String, Integer>();
 
-        return correct;
-    }
+            necesaryFilesMap.put(".emlspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamEml/100.00)));
+            necesaryFilesMap.put(".emlham", (int) Math.ceil((double)fileNumberInput * ((double)inputHamEml/100.00)));
 
-    private boolean indicatedPercentage(String datatype, String percentageEml, String percentageWarc,
-            String percentageTwtid, String percentageTytb, String percentageTsms) {
-        boolean indicatedPercentage = false;
+            necesaryFilesMap.put(".warcspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamWarc/100.00)));
+            necesaryFilesMap.put(".warcham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamWarc/100.00)));
 
-        switch (datatype) {
-        case ".eml":
-            if (!percentageEml.equals("")) {
-                indicatedPercentage = true;
-            }
-            break;
-        case ".warc":
-            if (!percentageWarc.equals("")) {
-                indicatedPercentage = true;
-            }
-            break;
-        case ".twtid":
-            if (!percentageTwtid.equals("")) {
-                indicatedPercentage = true;
-            }
-            break;
-        case ".tytb":
-            if (!percentageTytb.equals("")) {
-                indicatedPercentage = true;
-            }
-            break;
-        case ".tsms":
-            if (!percentageTsms.equals("")) {
-                indicatedPercentage = true;
-            }
-            break;
-        default:
-            System.out.println("Default condition");
-            break;
-        }
-        return indicatedPercentage;
-    }
+            necesaryFilesMap.put(".tsmsspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTsms/100.00)));
+            necesaryFilesMap.put(".tsmsham", (int) Math.ceil((double)fileNumberInput * ((double)inputHamTsms/100.00)));
 
-    // TODO: Complete this method
-    // Method to check if the parameters are compatible
-    private boolean correctParameters(String[] datasets, String limitFilesSpam, String limitPercentageSpam,
-            String limitFiles) {
+            necesaryFilesMap.put(".tytbspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTytb/100.00)));
+            necesaryFilesMap.put(".tytbham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamTytb/100.00)));
 
-        boolean correct = true;
+            necesaryFilesMap.put(".twtidspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTwtid/100.00)));
+            necesaryFilesMap.put(".twtidham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamTwtid/100.00)));
 
-        int limitFilesSpamNumber = checkNullsAndEmptyStrings(limitFilesSpam);
-        int limitPercentageSpamNumber = checkNullsAndEmptyStrings(limitPercentageSpam);
-        int limitFilesNumber = checkNullsAndEmptyStrings(limitFiles);
+            HashMap<String, Integer> databaseFilesMap = new HashMap<String, Integer>();
 
-        int numFilesDatasets = 0;
-        int percentageSpamDatasets = 0;
-        int spamFilesDatasets = 0;
+            databaseFilesMap.put(".emlspam", 0);
+            databaseFilesMap.put(".emlham", 0);
 
-        ArrayList<Dataset> datasetsArray = new ArrayList<Dataset>();
+            databaseFilesMap.put(".warcspam", 0);
+            databaseFilesMap.put(".warcham", 0);
 
-        if ((!limitPercentageSpam.equals("") && limitPercentageSpamNumber > 100)
-                || (!limitPercentageSpam.equals("") && limitPercentageSpamNumber < 0)
-                || (!limitFilesSpam.equals("") && limitFilesSpamNumber < 0)
-                || (!limitFiles.equals("") && limitFilesNumber < 0)) {
-            correct = false;
-        } else {
-            datasetsArray = toArrayListDatasets(datasets);
+            databaseFilesMap.put(".tsmsspam",0);
+            databaseFilesMap.put(".tsmsham", 0);
 
-            for (Dataset dataset : datasetsArray) {
-                for (File file : dataset.getFiles()) {
-                    System.out.println("File name = " + file.getPath());
-                    System.out.println("Type = " + file.getType());
-                    if (file.getType().equals("spam")) {
-                        spamFilesDatasets += 1;
-                    }
-                    numFilesDatasets += 1;
-                }
-            }
-            try
+            databaseFilesMap.put(".tytbspam", 0);
+            databaseFilesMap.put(".tytbham", 0);
+
+            databaseFilesMap.put(".twtidspam", 0);
+            databaseFilesMap.put(".twtidham", 0);
+
+            //How many files are available of each datatype
+            ArrayList<FileDatatypeType> filesDatatypeType = fileDatatypeTypeRepository.getFilesByExtensionAndType(datasets);
+            for(FileDatatypeType fileDatatypeType : filesDatatypeType)
             {
-            percentageSpamDatasets = (spamFilesDatasets * 100) / numFilesDatasets;
-            }catch(ArithmeticException e)
-            {
-                //TODO: Change this
-                correct = true;
+                databaseFilesMap.replace(fileDatatypeType.getExtension()+fileDatatypeType.getType(), fileDatatypeType.getCount());
             }
-        }
 
-        return correct;
-    }
+            Set<String> keys = databaseFilesMap.keySet();
 
-    //method to check if the sum of the datatypes filters percentages is 100 
-    private boolean invalidPercentages(String[] datatypes, String percentageEml, String percentageWarc, String percentageTwtid, String percentageTytb, String percentageTsms)
-    {
-        boolean validPercentages = false;
-        int percentagesValue = 0;
-
-        if(datatypes==null)
-        {
-            validPercentages = true;
-        }
-        else
-        {
-            int percentageEmlNumber = checkNullsAndEmptyStrings(percentageEml);
-            int percentageWarcNumber = checkNullsAndEmptyStrings(percentageWarc);
-            int percentageTwtidNumber = checkNullsAndEmptyStrings(percentageTwtid);
-            int percentageTytbNumber = checkNullsAndEmptyStrings(percentageTytb);
-            int percentageTsmsNumber = checkNullsAndEmptyStrings(percentageTsms);
-
-            if(percentageEmlNumber>=0 || percentageWarcNumber>=0 || percentageTwtidNumber>=0 || percentageTytbNumber>=0 || percentageTsmsNumber>=0)
+            for(String key: keys)
             {
-                percentagesValue += sumIfNotNegative(percentageEmlNumber);
-                percentagesValue += sumIfNotNegative(percentageWarcNumber);
-                percentagesValue += sumIfNotNegative(percentageTwtidNumber);
-                percentagesValue += sumIfNotNegative(percentageTytbNumber);
-                percentagesValue += sumIfNotNegative(percentageTsmsNumber);
-
-                if(percentagesValue == 100)
+                if(databaseFilesMap.get(key) < necesaryFilesMap.get(key))
                 {
-                    validPercentages = true;
+                    success = false;
+                    System.out.println("SECOND IF");
                 }
-                else
-                {
-                    validPercentages = false;
-                }
+                System.out.println(databaseFilesMap.get(key)+" vs "+necesaryFilesMap.get(key));
             }
-            else
+
+            int necesarySpamFiles = (int) Math.ceil((double)fileNumberInput * ((double)inputSpamPercentage/100.00));
+            int availableSpamFiles = datasetRepository.countSpamFiles(datasets);
+
+            if(availableSpamFiles<necesarySpamFiles)
             {
-                validPercentages = true;
+                success = false;
+                System.out.println("THIRD IF");
             }
-        }
+            }
 
-        return validPercentages;
-    }
-
-    private int sumIfNotNegative(int percentage)
-    {
-        int result = 0;
-
-        if(percentage>=0)
-        {
-            result+=percentage;
-        }
-        
-        return result;
+            return success;
     }
 
     private ArrayList<Dataset> toArrayListDatasets(String[] datasets) {
