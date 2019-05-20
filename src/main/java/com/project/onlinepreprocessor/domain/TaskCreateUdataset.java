@@ -381,4 +381,98 @@ public class TaskCreateUdataset extends Task
         this.limitHamPercentageTwtid = limitHamPercentageTwtid;
     }
 
+    public String toStringLicenses()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if(this.getLicenses().size()==0)
+        {
+            stringBuilder.append("Not licenses selected");
+        }
+        else
+        {
+            for(License license : this.getLicenses())
+            {
+                stringBuilder.append(license.getName() + " ");
+            }
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public String toStringDatatypes()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if(this.getDatatypes().size()==0)
+        {
+            stringBuilder.append("Not datatypes selected");
+        }
+        else
+        {
+            for(Datatype datatype : this.getDatatypes())
+            {
+                stringBuilder.append(datatype.getDatatype() + " ");
+            }
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public String toStringLanguages()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if(this.getLanguages().size()==0)
+        {
+            stringBuilder.append("Not languages selected");
+        }
+        else
+        {
+            for(Language language : this.getLanguages())
+            {
+                stringBuilder.append(language.getLanguage() + " ");
+            } 
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public String toStringDate()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if(dateTo!=null && dateFrom!=null)
+        {
+            stringBuilder.append("From "+this.getDateFrom().toString()+" until "+ this.getDateTo().toString());
+        }
+        else
+        {
+            stringBuilder.append("Not dates selected");
+        }
+
+        return stringBuilder.toString();
+    }
+
+    //Modify this method to show only the selected parameters: by spam or by datatypes
+    public String toStringParameters()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("File number: " + this.limitNumberOfFiles +"\n");
+        stringBuilder.append("%Spam: " + this.limitPercentageSpam +"\n");
+        stringBuilder.append("% Spam .eml: "+ this.limitSpamPercentageEml+"\n");
+        stringBuilder.append("% Spam .warc: " + this.limitSpamPercentageWarc + "\n");
+        stringBuilder.append("% Spam .tsms: " + this.limitSpamPercentageTsms + "\n");
+        stringBuilder.append("% Spam .twtid: " + this.limitSpamPercentageTwtid +"\n");
+        stringBuilder.append("% Spam .tytb: " + this.limitSpamPercentageTytb + "\n");
+        stringBuilder.append("% Ham .eml: "+ this.limitHamPercentageEml+"\n");
+        stringBuilder.append("% Ham .warc: " + this.limitHamPercentageWarc + "\n");
+        stringBuilder.append("% Ham .tsms: " + this.limitHamPercentageTsms + "\n");
+        stringBuilder.append("% Ham .twtid: " + this.limitHamPercentageTwtid +"\n");
+        stringBuilder.append("% Ham .tytb: " + this.limitHamPercentageTytb + "\n");
+
+        return stringBuilder.toString();
+    }
+
 }

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <title>Online preprocessor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+
+        <div th:include="header.html">
+
+        </div>
+
+        <div class="row page-content">
+            <div class="col-1">
+
+            </div>
+
+            <div class="col-10 main-div-bg text-center">
+                <img class="header-logo" src="/images/clipboard.svg" alt="clipboard.svg" height="64" width="64">
+                <h2 class="main-text text-center">Detailed user task</h2>
+                <h5 class="main-text text-center" th:text="${'Dataset name: ' + task.dataset.name}"></h5>
+                <div class="page-content">
+                    <h5 class="main-text text-center">Selected datasets</h5>
+                    <div class="card">
+                        <div class="card-header top-bg">
+                            <div class="row">
+                                <div class="col-3 text-center">
+                                    <h4 class="topdiv-text">Name</h4>
+                                </div>
+
+                                <div class="col-3 text-center">
+                                    <h4 class="topdiv-text">License</h4>
+                                </div>
+
+                                <div class="col-3 text-center">
+                                    <h4 class="topdiv-text">Languages</h4>
+                                </div>
+
+                                <div class="col-3 text-center">
+                                    <h4 class="topdiv-text">Datatypes</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <div th:each="dataset : ${task.datasets}">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <p class="main-text text-center" th:text="${dataset.name}"></p>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <p class="main-text text-center" th:text="${dataset.license.name}"></p>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <div th:each="language : ${dataset.language}">
+                                                    <p class="main-text text-center" th:text="${language.language}"></p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <div th:each="datatype : ${dataset.datatypes}">
+                                                    <div class="row">
+
+                                                        <div class="col-6 text-right">
+                                                            <div th:switch="${datatype.datatype}">
+                                                                <img th:case=".eml" src="/images/gmail-logo.svg" alt="email.svg" height="16" width="16">
+                                                                <img th:case=".tsms" src="/images/sms.svg" alt="sms.svg" height="16" width="16">
+                                                                <img th:case=".twtid" src="/images/twitter.svg" alt="twitter.svg" height="16" width="16">
+                                                                <img th:case=".tytb" src="/images/youtube.svg" alt="youtube.svg" height="16" width="16">
+                                                                <img th:case=".warc" src="/images/internet.svg" alt="internet.svg" height="16" width="16">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6 text-left">
+                                                            <p class="main-text" th:text="${datatype.datatype}"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="col-1">
+
+            </div>
+        </div>
+
+        <div class="row page-content pre-footer">
+            <div class="col-1">
+
+            </div>
+
+            <div class="col-10">
+
+                <div class="row">
+                    <div class="col-5 main-div-bg text-center">
+                       <h5 class="main-text">Licenses</h5>
+                       <p class="main-text" th:text="${licenses}"></p>
+                       <h5 class="main-text">Languages</h5>
+                       <p class="main-text" th:text="${languages}"></p>
+                       <h5 class="main-text">Datatypes</h5>
+                       <p class="main-text" th:text="${datatypes}"></p>
+                       <h5 class="main-text">Dates</h5>
+                       <p class="main-text" th:text="${dates}"></p>
+                    </div>
+
+                    <div class="col-2">
+
+                    </div>
+
+                    <div class="col-5 main-div-bg text-center">
+                        <h5 class="main-text">Selected parameters</h5>
+                        <pre>
+                            <p class="main-text" th:text="${parameters}"></p>
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-1">
+
+            </div>
+        </div>
+    </div>
+
+    <div th:include="footer.html">
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

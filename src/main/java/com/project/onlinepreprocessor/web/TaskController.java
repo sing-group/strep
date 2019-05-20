@@ -1,5 +1,9 @@
 package com.project.onlinepreprocessor.web;
 
+import java.util.Optional;
+
+import com.project.onlinepreprocessor.domain.Task;
+import com.project.onlinepreprocessor.domain.TaskCreateUdataset;
 import com.project.onlinepreprocessor.repositories.TaskRepository;
 import com.project.onlinepreprocessor.services.UserService;
 
@@ -69,12 +73,32 @@ public class TaskController
 
     }
 
-    /*
-    //TODO: Implement this method
     @GetMapping("/detailed")
-    public String detailedTask()
+    public String detailedTask(Authentication authentication, Model model, @RequestParam(name="task")int id)
     {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
+        String username = userDetails.getUsername();
+        String authority = userService.getPermissionsByUsername(username);
+
+        model.addAttribute("authority", authority);
+        model.addAttribute("username", username);
+
+        Long idLong = new Long(id);
+        Optional<TaskCreateUdataset> optTask = taskRepository.findTaskCreateUdatasetById(idLong);
+
+        if(optTask.isPresent())
+        {
+            TaskCreateUdataset task = optTask.get();
+
+            model.addAttribute("task", task);
+            model.addAttribute("licenses", task.toStringLicenses());
+            model.addAttribute("languages", task.toStringLanguages());
+            model.addAttribute("datatypes", task.toStringDatatypes());
+            model.addAttribute("dates", task.toStringDate());
+            model.addAttribute("parameters", task.toStringParameters());
+        }
+
+        return "user_task_detailed";
     }
-    */
 }
