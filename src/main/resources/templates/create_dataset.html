@@ -416,9 +416,10 @@
                                                     <div class="col-8 form-group text-center">
                                                         <br>
                                                         <br>
+                                                        <input class="form-control" type="radio" name="mode" value="spam" checked>
                                                         <p class="main-text">Percentage spam</p>
                                                         <input type="number" class="form-control" placeholder="Spam%" id="inputSpamPercentage"
-                                                            name="spam-percentage" value="0" required>
+                                                            name="inputSpamPercentage" value="0" required>
                                                         <div class="text-center" th:fragment="info-spam" id="info-spam">
                                                             <div th:if="${spamErrorInput}!=null">
                                                                 <p class="error-label" th:text="${spamErrorInput}"></p>
@@ -451,6 +452,7 @@
                                             </div>
 
                                             <div class="col-8 text-center">
+                                                    <input class="form-control" type="radio" name="mode" value="datatype">
                                                     <p class="main-text">Datatypes</p>
                                                     <div class="row">
                                                         <div class="col-3">
@@ -537,24 +539,6 @@
                                                             </div>
                                                         
                                                     </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row files">
-                                            <div class="col-3">
-
-                                            </div>
-
-                                            <div class="col-6 text-center">
-                                                <div class="form-group">
-                                                    <label for="dataset-file" class="main-text">Dataset pipeline</label>
-                                                    <input type="file" class="form-control-file" name="dataset-pipeline"
-                                                        id="dataset-pipeline" required="required">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-3">
-
                                             </div>
                                         </div>
 

@@ -94,6 +94,11 @@ public class TaskCreateUdataset extends Task
     @JoinTable(joinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "dataset", referencedColumnName="name"))
     private List<Dataset> datasets;
 
+    /**
+     * To identify the selected mode: spam or datatypes
+     */
+    private boolean spamMode;
+
 
     /**
      * Creates an instance of TaskCreateUdataset
@@ -117,7 +122,7 @@ public class TaskCreateUdataset extends Task
     Date dateFrom, Date dateTo, List<Language> languages, List<Datatype> datatypes,List<License> licenses, List<Dataset> datasets,
     int limitSpamPercentageEml,
     int limitHamPercentageEml,int limitSpamPercentageWarc, int limitHamPercentageWarc, int limitSpamPercentageTytb, int limitHamPercentageTytb,
-    int limitSpamPercentageTsms, int limitHamPercentageTsms, int limitSpamPercentageTwtid, int limitHamPercentageTwtid)
+    int limitSpamPercentageTsms, int limitHamPercentageTsms, int limitSpamPercentageTwtid, int limitHamPercentageTwtid, boolean spamMode)
     {
         super(dataset, state, message);
         this.limitSpamPercentageEml = limitSpamPercentageEml;
@@ -138,6 +143,7 @@ public class TaskCreateUdataset extends Task
         this.datatypes = datatypes;
         this.licenses = licenses;
         this.datasets = datasets;
+        this.spamMode = spamMode;
     }
 
     /**
@@ -379,6 +385,16 @@ public class TaskCreateUdataset extends Task
     public void setLimitHamPercentageTwtid(int limitHamPercentageTwtid)
     {
         this.limitHamPercentageTwtid = limitHamPercentageTwtid;
+    }
+
+    public boolean getSpamMode()
+    {
+        return this.spamMode;
+    }
+
+    public void setSpamMode(boolean spamMode)
+    {
+        this.spamMode = spamMode;
     }
 
     public String toStringLicenses()

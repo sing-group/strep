@@ -62,7 +62,7 @@ public class TaskService {
     public String addNewUserDatasetTask(Dataset dataset, String[] licenses, String[] languages, String[] datatypes,
             String[] datasets, String dateFrom, String dateTo, int inputSpamEml, int inputHamEml, int inputSpamWarc,
             int inputHamWarc, int inputSpamTsms, int inputHamTsms, int inputSpamTytb, int inputHamTytb,
-            int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage, String username, MultipartFile pipeline) {
+            int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage, String username, boolean spamMode) {
 
         String message = "";
 
@@ -116,8 +116,8 @@ public class TaskService {
                         TaskCreateUdataset taskCreateUdataset = new TaskCreateUdataset(dataset, "waiting", null, inputSpamPercentage,
                         fileNumberInput, dateFromFormatted, dateToFormatted, languagesArray, datatypesArray, licensesArray, datasetsArray
                         ,inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTytb, inputHamTytb, inputSpamTsms, inputHamTsms,
-                        inputSpamTwtid,inputHamTwtid);
-                        Dataset toSaveDataset = datasetService.addUserDataset(dataset, username, pipeline);
+                        inputSpamTwtid,inputHamTwtid, spamMode);
+                        Dataset toSaveDataset = datasetService.addUserDataset(dataset, username);
                         toSaveDataset.setTask(taskCreateUdataset);
                         taskRepository.save(taskCreateUdataset);
                         datasetRepository.save(toSaveDataset);
@@ -128,8 +128,8 @@ public class TaskService {
                         TaskCreateUdataset taskCreateUdataset = new TaskCreateUdataset(dataset, "waiting", null, inputSpamPercentage,
                         fileNumberInput, null, null, languagesArray, datatypesArray, licensesArray, datasetsArray
                         ,inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTytb, inputHamTytb, inputSpamTsms, inputHamTsms,
-                        inputSpamTwtid,inputHamTwtid);
-                        Dataset toSaveDataset = datasetService.addUserDataset(dataset, username, pipeline);
+                        inputSpamTwtid,inputHamTwtid, spamMode);
+                        Dataset toSaveDataset = datasetService.addUserDataset(dataset, username);
                         toSaveDataset.setTask(taskCreateUdataset);
                         taskRepository.save(taskCreateUdataset);
                         datasetRepository.save(toSaveDataset);

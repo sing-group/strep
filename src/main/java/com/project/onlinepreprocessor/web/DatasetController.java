@@ -595,7 +595,7 @@ public class DatasetController {
             @RequestParam(name="inputHam.twtid", required = false, defaultValue="0")int inputHamTwtid,
             @RequestParam(name = "date1", required = false) String dateFrom,
             @RequestParam(name = "date2", required = false) String dateTo,
-            @RequestParam("dataset-pipeline")MultipartFile pipeline) {
+            @RequestParam(name = "mode", required = false, defaultValue="spam")String mode) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -610,11 +610,18 @@ public class DatasetController {
             model.addAttribute("datasets", datasetRepository.getSystemDatasets());
             return "create_dataset";
         } else {
-            System.out.println(inputSpamTsms);
+            System.out.println(mode);
+            boolean modeSpam = false;
+
+            if(mode.equals("spam"))
+            {
+                modeSpam = true;
+            }
+
             message = taskService.addNewUserDatasetTask(dataset, licenses, languages, datatypes,
              datasets, dateFrom, dateTo, inputSpamEml, inputHamEml, inputSpamWarc, 
              inputHamWarc, inputSpamTsms, inputHamTsms, inputSpamTytb, inputHamTytb,
-              inputSpamTwtid, inputHamTwtid, inputFileNumber,inputSpamPercentage, username, pipeline);
+              inputSpamTwtid, inputHamTwtid, inputFileNumber,inputSpamPercentage, username, modeSpam);
             redirectAttributes.addFlashAttribute("message", message);
             return "redirect:/dataset/home";
         }

@@ -13,12 +13,18 @@ insert into permission(id, name, description) values (3,"canUpload", "Users can:
 insert into permission(id, name, description) values (4,"canAdminister", "grant all privileges");
 insert into user_perm(user,perm_id) values ("admin",4);
 
-insert into language(language) values("spanish");
-insert into language(language) values("english");
-insert into language(language) values("portuguese");
-insert into language(language) values("galician");
-insert into language(language) values("russian");
-insert into language(language) values("italian");
+insert into language(language) values("ES");
+insert into language(language) values("EN");
+insert into language(language) values("DE");
+insert into language(language) values("BE");
+insert into language(language) values("FR");
+insert into language(language) values("BG");
+insert into language(language) values("CZ");
+insert into language(language) values("EE");
+insert into language(language) values("IT");
+insert into language(language) values("GL"); 
+insert into language(language) values("HT");
+
 
 insert into datatype(dataType) values(".eml");
 insert into datatype(dataType) values(".tytb");

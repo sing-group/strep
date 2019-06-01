@@ -229,25 +229,18 @@ public class DatasetService
     }
 
     //TODO: Implement method addUserDataset
-    public Dataset addUserDataset(Dataset dataset, String username, MultipartFile pipeline)
+    public Dataset addUserDataset(Dataset dataset, String username)
     {
         String name = dataset.getName().replace(" ", "").toLowerCase();
         String url = HOST_NAME+"/dataset/detailed/"+name;
 
-        try
-        {
-            Date date = new Date();
-            dataset.setUploadDate(date);
-            dataset.setAuthor(username);
-            dataset.setPipeline(pipeline.getBytes());
-            dataset.setType("userdataset");
-            dataset.setAvailable(false);
-            dataset.setUrl(url);
-
-        }catch(IOException e)
-        {
-
-        }
+        Date date = new Date();
+        dataset.setUploadDate(date);
+        dataset.setAuthor(username);
+        dataset.setType("userdataset");
+        dataset.setAvailable(false);
+        dataset.setUrl(url);
+        
         return dataset;
     }
 
