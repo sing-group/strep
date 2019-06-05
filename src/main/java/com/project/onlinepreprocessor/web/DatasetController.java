@@ -513,7 +513,8 @@ public class DatasetController {
             ArrayList<FileDatatypeType> filesDatatypeType = fileDatatypeTypeRepository.getFilesByExtensionAndType(datasets);
             for(FileDatatypeType fileDatatypeType : filesDatatypeType)
             {
-                databaseFilesMap.replace(fileDatatypeType.getExtension()+fileDatatypeType.getType(), fileDatatypeType.getCount());
+                System.out.println(fileDatatypeType.getId().getExtension()+fileDatatypeType.getId().getType()+"\t"+fileDatatypeType.getCount());
+                databaseFilesMap.replace(fileDatatypeType.getId().getExtension()+fileDatatypeType.getId().getType(), fileDatatypeType.getCount());
             }
 
             Set<String> keys = databaseFilesMap.keySet();

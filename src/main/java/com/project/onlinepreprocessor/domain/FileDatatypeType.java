@@ -1,28 +1,28 @@
 package com.project.onlinepreprocessor.domain;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class FileDatatypeType
 {
-    @Id
     private int count;
 
-    private String extension;
-
-    private String type;
+    @EmbeddedId
+    private FileDatatypeTypePK id;
 
     public FileDatatypeType()
     {
 
     }
 
-    public FileDatatypeType(int count, String extension, String type)
+    public FileDatatypeType(int count, FileDatatypeTypePK id)
     {
         this.count = count;
-        this.extension = extension;
-        this.type = type;
+        this.id = id;
     }
 
     public int getCount()
@@ -35,23 +35,13 @@ public class FileDatatypeType
         this.count = count;
     }
 
-    public String getExtension()
+    public FileDatatypeTypePK getId()
     {
-        return this.extension;
+        return this.id;
     }
 
-    public void setExtension(String extension)
+    public void setId(FileDatatypeTypePK id)
     {
-        this.extension = extension;
-    }
-
-    public String getType()
-    {
-        return this.type;
-    }
-
-    public void setType(String type)
-    {
-        this.type = type;
+        this.id = id;
     }
 }

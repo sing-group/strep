@@ -212,7 +212,7 @@ public class TaskService {
             ArrayList<FileDatatypeType> filesDatatypeType = fileDatatypeTypeRepository.getFilesByExtensionAndType(datasets);
             for(FileDatatypeType fileDatatypeType : filesDatatypeType)
             {
-                databaseFilesMap.replace(fileDatatypeType.getExtension()+fileDatatypeType.getType(), fileDatatypeType.getCount());
+                databaseFilesMap.replace(fileDatatypeType.getId().getExtension()+fileDatatypeType.getId().getType(), fileDatatypeType.getCount());
             }
 
             Set<String> keys = databaseFilesMap.keySet();
