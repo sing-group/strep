@@ -34,6 +34,11 @@ public class License
     private String url;
 
     /**
+     * Stablish the restriction level of the license
+     */
+    private int restrictionLevel;
+
+    /**
      * Creates an instance of the license
      * @param name the name of the license
      * @param description the legal code of the license
@@ -106,6 +111,24 @@ public class License
     public void setUrl(String url)
     {
         this.url = url;
+    }
+
+    /**
+     * Returns the restriction level of the license
+     * @return
+     */
+    public int getRestrictionLevel()
+    {
+        return this.restrictionLevel;
+    }
+
+    /**
+     * Stablish the restriction level of the license
+     * @param restrictionLevel
+     */
+    public void setRestrictionLevel(int restrictionLevel)
+    {
+        this.restrictionLevel = restrictionLevel;
     }
 
 

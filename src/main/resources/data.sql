@@ -32,7 +32,7 @@ insert into datatype(dataType) values(".tsms");
 insert into datatype(dataType) values(".twtid");
 insert into datatype(dataType) values(".warc");
 
-insert into license(name, description, url) values("Public domain", '
+insert into license(restriction_level, name, description, url) values(1, "Public domain", '
 Public Domain Mark
 
 No Known Copyright
@@ -47,7 +47,7 @@ A work may have limited or "hybrid" public domain status for several reasons.  S
 
 CC does not recommend the Public Domain Mark for works with limited, hybrid public domain status at this time, though we will be exploring means for doing so in 2014.', "https://creativecommons.org/share-your-work/public-domain/pdm/");
 
-insert into license(name, description, url) values("CC-0", 'Statement of Purpose
+insert into license(restriction_level,name, description, url) values(2, "CC-0", 'Statement of Purpose
 
 The laws of most jurisdictions throughout the world automatically confer exclusive Copyright and Related Rights (defined below) upon the creator and subsequent owner(s) (each and all, an "owner") of an original work of authorship and/or a database (each, a "Work").
 
@@ -77,7 +77,7 @@ For these and/or other purposes and motivations, and without any expectation of 
     Affirmer understands and acknowledges that Creative Commons is not a party to this document and has no duty or obligation with respect to this CC0 or use of the Work.',"https://creativecommons.org/publicdomain/zero/1.0/legalcode" 
 );
 
-insert into license(name, description, url) values('PDDL', 'ODC Public Domain Dedication and Licence (PDDL)
+insert into license(restriction_level,name, description, url) values(3, 'PDDL', 'ODC Public Domain Dedication and Licence (PDDL)
 Disclaimer
 
 PLEASE READ:
@@ -231,7 +231,7 @@ Part III: General provisions
 6.4 This Document takes effect in the relevant jurisdiction in which the Document terms are sought to be enforced. If the rights waived or granted under applicable law in the relevant jurisdiction includes additional rights not waived or granted under this Document, these additional rights are included in this Document in order to meet the intent of this Document.
 ', 'https://www.opendatacommons.org/licenses/pddl/1.0/');
 
-insert into license(name, description, url) values('CC-BY', 'Creative Commons Attribution 4.0 International Public License
+insert into license(restriction_level,name, description, url) values(4,'CC-BY', 'Creative Commons Attribution 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -328,7 +328,7 @@ Section 8 - Interpretation.
     Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.
 ', 'https://creativecommons.org/licenses/by/4.0/legalcode' );
 
-insert into license(name, description, url) values('CDLA-Permissive-1.0', '
+insert into license(restriction_level,name, description, url) values(5, 'CDLA-Permissive-1.0', '
 
 Community Data License Agreement - Permissive - Version 1.0
 
@@ -417,7 +417,7 @@ Section 7.  Miscellaneous
 7.5 The Community Data License Agreement workgroup under The Linux Foundation is the steward of this Agreement ("Steward").  No one other than the Steward has the right to modify or publish new versions of this Agreement.  Each version will be given a distinguishing version number.  You may Use and Publish Data Received hereunder under the terms of the version of the Agreement under which You originally Received the Data, or under the terms of any subsequent version published by the Steward.
 ', 'https://cdla.io/permissive-1-0/');
 
-insert into license(name, description, url) values('ODC-BY', 'ODC Attribution License (ODC-By)
+insert into license(restriction_level,name, description, url) values(6,'ODC-BY', 'ODC Attribution License (ODC-By)
 Preamble
 
 The Open Data Commons Attribution License is a license agreement
@@ -833,7 +833,7 @@ jurisdiction includes additional rights not granted under this License,
 these additional rights are granted in this License in order to meet the
 terms of this License.', 'https://opendatacommons.org/licenses/by/1.0/index.html');
 
-insert into license(name, description, url) values('CC-BY-SA', "Creative Commons Attribution-ShareAlike 4.0 International Public License
+insert into license(restriction_level,name, description, url) values(7, 'CC-BY-SA', "Creative Commons Attribution-ShareAlike 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-ShareAlike 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -938,7 +938,7 @@ Section 8 - Interpretation.
     Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.
 ", 'https://creativecommons.org/licenses/by-sa/4.0/legalcode');
 
-insert into license(name, description, url) values('CDLA-Sharing-1.0', '
+insert into license(restriction_level,name, description, url) values(8, 'CDLA-Sharing-1.0', '
 
 Community Data License Agreement - Sharing - Version 1.0
 
@@ -1032,7 +1032,7 @@ Section 7.  Miscellaneous
 ', 'https://cdla.io/sharing-1-0/');
 
 
-insert into license(name, description, url) values('ODbL', 'ODC Open Database License (ODbL)
+insert into license(restriction_level,name, description, url) values(9, 'ODbL', 'ODC Open Database License (ODbL)
 Preamble
 
 The Open Database License (ODbL) is a license agreement intended to
@@ -1559,7 +1559,7 @@ jurisdiction includes additional rights not granted under this License,
 these additional rights are granted in this License in order to meet the
 terms of this License.', 'https://opendatacommons.org/licenses/odbl/1.0/index.html');
 
-insert into license(name, description, url) values('CC BY-NC', "Creative Commons Attribution-NonCommercial 4.0 International Public License
+insert into license(restriction_level,name, description, url) values(10, 'CC BY-NC', "Creative Commons Attribution-NonCommercial 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -1658,7 +1658,7 @@ Section 8 - Interpretation.
 ", "https://creativecommons.org/licenses/by-nc/4.0/legalcode");
 
 
-insert into license(name, description, url) values('CC BY-ND','Creative Commons Attribution-NoDerivatives 4.0 International Public License
+insert into license(restriction_level,name, description, url) values(11, 'CC BY-ND','Creative Commons Attribution-NoDerivatives 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NoDerivatives 4.0 International Public License ("Public License"). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -1754,7 +1754,7 @@ Section 8 - Interpretation.
     Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.
 ', 'https://creativecommons.org/licenses/by-nd/4.0/legalcode');
 
-insert into license(name, description, url) values('CC BY-NC-SA',"Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License
+insert into license(restriction_level,name, description, url) values(12,'CC BY-NC-SA',"Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -1860,7 +1860,7 @@ Section 8 - Interpretation.
     Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.
 ",'https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode');
 
-insert into license(name, description, url) values("CC BY-NC-ND", "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License
+insert into license(restriction_level,name, description, url) values(13, "CC BY-NC-ND", "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -1958,7 +1958,7 @@ Section 8 - Interpretation.
 ","https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode" );
 
 
-insert into license(name, description, url) values('TREC License', 'Agreement for use of the
+insert into license(restriction_level,name, description, url) values(14, 'TREC License', 'Agreement for use of the
 2007 TREC Public Spam Corpus
 
 By clicking "I accept this agreement" below, in consideration of the right to download and use the information designated as the 2007 TREC Public Spam Corpus,

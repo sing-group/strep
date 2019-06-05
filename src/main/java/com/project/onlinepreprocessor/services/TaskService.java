@@ -98,6 +98,9 @@ public class TaskService {
             if (datasets == null) {
                 message = "You have to select at least one dataset";
             } else {
+                String shortName = dataset.getName().replaceAll(" ", "");
+                dataset.setName(shortName);
+                
                 Optional<Dataset> optDataset = datasetRepository.findById(dataset.getName());
 
                 if (optDataset.isPresent()) {
