@@ -9,6 +9,7 @@ import com.project.onlinepreprocessor.domain.File;
 import com.project.onlinepreprocessor.domain.Task;
 import java.util.Set;
 import java.util.Date;
+import java.util.List;
 
 /**
  * JPA Bean for the Dataset objects managed by application
@@ -132,6 +133,12 @@ public class Dataset
      */
     @Column(nullable = true)
     private Date lastFileDate;
+
+    /**
+     * The preprocessing tasks of this dataset
+     */
+    @OneToMany(mappedBy = "preprocessDataset", cascade = CascadeType.ALL)
+    private List<TaskCreateUPreprocessing> preprocessingTasks;
 
     /**
      * The default constructor
@@ -463,5 +470,23 @@ public class Dataset
     public void setLastFileDate(Date lastFileDate)
     {
         this.lastFileDate = lastFileDate;
+    }
+
+    /**
+     * Return the preprocessing tasks asociated to this dataset
+     * @return the preprocessing tasks asociated to this dataset
+     */
+    public List<TaskCreateUPreprocessing> getPreprocessingTasks()
+    {
+        return this.preprocessingTasks;
+    }
+
+    /**
+     * Stablish the preprocessing tasks of this dataset
+     * @param preprocessingTasks the preprocessing tasks of this dataset
+     */
+    public void setPreprocessingTasks(List<TaskCreateUPreprocessing> preprocessingTasks)
+    {
+        this.preprocessingTasks = preprocessingTasks;
     }
 }
