@@ -121,7 +121,8 @@ public class DatasetController {
     }
 
     @GetMapping("/list")
-    public String listDatasets(@RequestParam("type") String type, Authentication authentication, Model model) {
+    public String listDatasets(@RequestParam(name = "type", required = false, defaultValue = "community") String type,
+            Authentication authentication, Model model) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -129,33 +130,47 @@ public class DatasetController {
         ArrayList<Dataset> datasets = new ArrayList<Dataset>();
 
         switch (type) {
+        case "community":
+            datasets = datasetRepository.getProtectedDatasets();
+            break;
+
         case "system":
             datasets = datasetRepository.getSystemDatasets();
             break;
-        case "protected":
-            datasets = datasetRepository.getProtectedDatasets();
-            break;
+
         case "user":
             if (authority == "canView") {
-                datasets = datasetRepository.getSystemDatasets();
-                type = "system";
+                datasets = datasetRepository.getProtectedDatasets();
+                type = "community";
             } else {
-                datasets = datasetRepository.getUserDatasets(username);
+                datasets = datasetRepository.getUserDatasets(username, "userdataset");
             }
             break;
-        }
 
+        case "usersystem":
+            if (authority == "canUpload" || authority == "canAdminister") {
+                datasets = datasetRepository.getUserDatasets(username, "systemdataset");
+            } else {
+                datasets = datasetRepository.getProtectedDatasets();
+                type = "community";
+            }
+
+            break;
+
+        default:
+            datasets = datasetRepository.getProtectedDatasets();
+            type = "community";
+        }
+        model.addAttribute("type", type);
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
-        model.addAttribute("type", type);
         model.addAttribute("datasets", datasets);
 
         return "list_datasets";
     }
 
     @GetMapping("/detailed")
-    public String detailDataset(Authentication authentication, @RequestParam("id") String name,
-            @RequestParam("type") String type, Model model) {
+    public String detailDataset(Authentication authentication, @RequestParam("id") String name, Model model) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -292,22 +307,6 @@ public class DatasetController {
 
     }
 
-    @GetMapping("/home")
-    public String listHomeDatasets(Authentication authentication, Model model) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
-        String username = userDetails.getUsername();
-        String authority = userService.getPermissionsByUsername(username);
-
-        model.addAttribute("authority", authority);
-        model.addAttribute("username", username);
-
-        ArrayList<Dataset> userDatasets = datasetRepository.getUserDatasets(username);
-        model.addAttribute("datasets", userDatasets);
-
-        return "home";
-    }
-
     @GetMapping("/upload")
     public String addNewDataset(Authentication authentication, Model model, Dataset dataset) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -346,6 +345,91 @@ public class DatasetController {
             return "redirect:/dataset/list?type=user";
         }
 
+    }
+
+    @GetMapping("/edit")
+    public String editDataset(Authentication authentication, @RequestParam("id")String name, Model model, Dataset dataset)
+    {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String username = userDetails.getUsername();
+        String authority = userService.getPermissionsByUsername(username);
+
+        Optional<Dataset> optDataset = datasetRepository.findById(name);
+
+        if(optDataset.isPresent())
+        {
+            Dataset toUpdateDataset = optDataset.get();
+
+            if(toUpdateDataset.getAuthor().equals(username))
+            {
+                model.addAttribute("authority", authority);
+                model.addAttribute("username", username);
+                model.addAttribute("host", HOST_NAME);
+                model.addAttribute("licenses", licenseRepository.findAll());
+                model.addAttribute("toUpdateDataset", toUpdateDataset);
+                return "edit_dataset";
+            }
+            else
+            {
+                return "redirect:/error";
+            }
+        }
+        else
+        {
+            return "redirect:/error";
+        }
+    }
+
+    @PostMapping("/edit")
+    public String editDataset(Authentication authentication, Model model, @Valid Dataset dataset, BindingResult bindingResult, RedirectAttributes redirectAttributes, 
+    @RequestParam(name="id")String name)
+    {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String username = userDetails.getUsername();
+        String authority = userService.getPermissionsByUsername(username);
+
+        Optional<Dataset> optDataset = datasetRepository.findById(name);
+
+        if(bindingResult.hasErrors())
+        {
+            System.out.println("ERRORES");
+            if(optDataset.isPresent())
+        {
+            Dataset toUpdateDataset = optDataset.get();
+
+            if(toUpdateDataset.getAuthor().equals(username))
+            {
+                model.addAttribute("authority", authority);
+                model.addAttribute("username", username);
+                model.addAttribute("host", HOST_NAME);
+                model.addAttribute("licenses", licenseRepository.findAll());
+                model.addAttribute("toUpdateDataset", toUpdateDataset);
+                return "edit_dataset";
+            }
+            else
+            {
+                return "redirect:/error";
+            }
+            
+        }
+        else
+            {
+                return "redirect:/error";
+            }
+            
+        }
+        else
+        {
+            System.out.println(dataset.getName());
+            String message = datasetService.updateDataset(dataset, username);
+            redirectAttributes.addFlashAttribute("message", message);
+            model.addAttribute("authority", authority);
+            model.addAttribute("username", username);
+            return "redirect:/dataset/list?type=user";
+        }
+        
     }
 
     @GetMapping("/modal")
@@ -395,9 +479,9 @@ public class DatasetController {
     }
 
     @GetMapping("/checkPosibleSpam")
-    public String showInfoSpam(Model model, @RequestParam(name="inputSpam", required=false) String inputSpam, @RequestParam(name="datasets", required=false)String[] datasets, 
-    @RequestParam(name="fileNumber", required=false) String fileNumber)
-    {
+    public String showInfoSpam(Model model, @RequestParam(name = "inputSpam", required = false) String inputSpam,
+            @RequestParam(name = "datasets", required = false) String[] datasets,
+            @RequestParam(name = "fileNumber", required = false) String fileNumber) {
         int inputSpamInt = -1;
         int availableFiles = -1;
         int necesaryFiles = -1;
@@ -405,47 +489,42 @@ public class DatasetController {
 
         ArrayList<String> arrayListDatasets = new ArrayList<String>();
 
-        if(inputSpam!="" && datasets!=null && fileNumber!="")
-        {
-            for(String dataset : datasets)
-            {
+        if (inputSpam != "" && datasets != null && fileNumber != "") {
+            for (String dataset : datasets) {
                 arrayListDatasets.add(dataset);
             }
-            
+
             try {
                 inputSpamInt = Integer.parseInt(inputSpam);
                 fileNumberInt = Integer.parseInt(fileNumber);
             } catch (NumberFormatException e) {
             }
-            
-            necesaryFiles = (int) Math.ceil((double)fileNumberInt * ((double)inputSpamInt/100.00));
+
+            necesaryFiles = (int) Math.ceil((double) fileNumberInt * ((double) inputSpamInt / 100.00));
             availableFiles = datasetRepository.countSpamFiles(arrayListDatasets);
 
-            String message = "Necesary files:"+necesaryFiles+"\nAvailable files"+availableFiles;
-            if(availableFiles>=necesaryFiles)
-            {
+            String message = "Necesary files:" + necesaryFiles + "\nAvailable files" + availableFiles;
+            if (availableFiles >= necesaryFiles) {
                 model.addAttribute("spamSuccessInfo", message);
-            }
-            else
-            {
+            } else {
                 model.addAttribute("spamInsufficientInfo", message);
             }
-        }
-        else
-        {
-            model.addAttribute("spamErrorInput", "Enter a valid input for the percentage of spam and for the number of files. Select at least one dataset.");
+        } else {
+            model.addAttribute("spamErrorInput",
+                    "Enter a valid input for the percentage of spam and for the number of files. Select at least one dataset.");
         }
         return "create_dataset::info-spam";
     }
 
     @GetMapping("/checkPosibleDatatypes")
-    public String showInfoDatatypes(Model model, @RequestParam("inputSpamEml")int inputSpamEml, @RequestParam("inputHamEml")int inputHamEml,
-    @RequestParam("inputSpamWarc")int inputSpamWarc, @RequestParam("inputHamWarc")int inputHamWarc,
-    @RequestParam("inputSpamTsms")int inputSpamTsms, @RequestParam("inputHamTsms")int inputHamTsms,
-    @RequestParam("inputSpamTytb")int inputSpamTytb,@RequestParam("inputHamTytb")int inputHamTytb,
-    @RequestParam("inputSpamTwtid")int inputSpamTwtid, @RequestParam("inputHamTwtid")int inputHamTwtid, @RequestParam(name="datasets", required=false)String[] datasetNames, 
-    @RequestParam("inputFileNumber")int fileNumberInput)
-    {
+    public String showInfoDatatypes(Model model, @RequestParam("inputSpamEml") int inputSpamEml,
+            @RequestParam("inputHamEml") int inputHamEml, @RequestParam("inputSpamWarc") int inputSpamWarc,
+            @RequestParam("inputHamWarc") int inputHamWarc, @RequestParam("inputSpamTsms") int inputSpamTsms,
+            @RequestParam("inputHamTsms") int inputHamTsms, @RequestParam("inputSpamTytb") int inputSpamTytb,
+            @RequestParam("inputHamTytb") int inputHamTytb, @RequestParam("inputSpamTwtid") int inputSpamTwtid,
+            @RequestParam("inputHamTwtid") int inputHamTwtid,
+            @RequestParam(name = "datasets", required = false) String[] datasetNames,
+            @RequestParam("inputFileNumber") int fileNumberInput) {
         ArrayList<String> datatypes = new ArrayList<String>();
         ArrayList<String> datasets = new ArrayList<String>();
 
@@ -468,29 +547,38 @@ public class DatasetController {
         model.addAttribute("inputspamtwtid", inputSpamTwtid);
         model.addAttribute("inputhamtwtid", inputHamTwtid);
 
-        if(datasets==null || fileNumberInput==0 || (inputSpamEml+inputHamEml+inputSpamWarc+inputHamWarc+
-        inputSpamTsms+inputHamTsms+inputSpamTytb+inputHamTytb+inputSpamTwtid+inputHamTwtid)!=100)
-        {
-            model.addAttribute("datatypesInputError", "You have to select at least one dataset and enter a valid input in the percentages(sum of percentages must be 100)");
-        }
-        else
-        {
+        if (datasets == null || fileNumberInput == 0
+                || (inputSpamEml + inputHamEml + inputSpamWarc + inputHamWarc + inputSpamTsms + inputHamTsms
+                        + inputSpamTytb + inputHamTytb + inputSpamTwtid + inputHamTwtid) != 100) {
+            model.addAttribute("datatypesInputError",
+                    "You have to select at least one dataset and enter a valid input in the percentages(sum of percentages must be 100)");
+        } else {
             HashMap<String, Integer> necesaryFilesMap = new HashMap<String, Integer>();
 
-            necesaryFilesMap.put(".emlspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamEml/100.00)));
-            necesaryFilesMap.put(".emlham", (int) Math.ceil((double)fileNumberInput * ((double)inputHamEml/100.00)));
+            necesaryFilesMap.put(".emlspam",
+                    (int) Math.ceil((double) fileNumberInput * ((double) inputSpamEml / 100.00)));
+            necesaryFilesMap.put(".emlham",
+                    (int) Math.ceil((double) fileNumberInput * ((double) inputHamEml / 100.00)));
 
-            necesaryFilesMap.put(".warcspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamWarc/100.00)));
-            necesaryFilesMap.put(".warcham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamWarc/100.00)));
+            necesaryFilesMap.put(".warcspam",
+                    (int) Math.ceil((double) fileNumberInput * ((double) inputSpamWarc / 100.00)));
+            necesaryFilesMap.put(".warcham",
+                    (int) Math.ceil((double) fileNumberInput * ((double) inputHamWarc / 100.00)));
 
-            necesaryFilesMap.put(".tsmsspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTsms/100.00)));
-            necesaryFilesMap.put(".tsmsham", (int) Math.ceil((double)fileNumberInput * ((double)inputHamTsms/100.00)));
+            necesaryFilesMap.put(".tsmsspam",
+                    (int) Math.ceil((double) fileNumberInput * ((double) inputSpamTsms / 100.00)));
+            necesaryFilesMap.put(".tsmsham",
+                    (int) Math.ceil((double) fileNumberInput * ((double) inputHamTsms / 100.00)));
 
-            necesaryFilesMap.put(".tytbspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTytb/100.00)));
-            necesaryFilesMap.put(".tytbham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamTytb/100.00)));
+            necesaryFilesMap.put(".tytbspam",
+                    (int) Math.ceil((double) fileNumberInput * ((double) inputSpamTytb / 100.00)));
+            necesaryFilesMap.put(".tytbham",
+                    (int) Math.ceil((double) fileNumberInput * ((double) inputHamTytb / 100.00)));
 
-            necesaryFilesMap.put(".twtidspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTwtid/100.00)));
-            necesaryFilesMap.put(".twtidham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamTwtid/100.00)));
+            necesaryFilesMap.put(".twtidspam",
+                    (int) Math.ceil((double) fileNumberInput * ((double) inputSpamTwtid / 100.00)));
+            necesaryFilesMap.put(".twtidham",
+                    (int) Math.ceil((double) fileNumberInput * ((double) inputHamTwtid / 100.00)));
 
             HashMap<String, Integer> databaseFilesMap = new HashMap<String, Integer>();
 
@@ -500,7 +588,7 @@ public class DatasetController {
             databaseFilesMap.put(".warcspam", 0);
             databaseFilesMap.put(".warcham", 0);
 
-            databaseFilesMap.put(".tsmsspam",0);
+            databaseFilesMap.put(".tsmsspam", 0);
             databaseFilesMap.put(".tsmsham", 0);
 
             databaseFilesMap.put(".tytbspam", 0);
@@ -509,38 +597,34 @@ public class DatasetController {
             databaseFilesMap.put(".twtidspam", 0);
             databaseFilesMap.put(".twtidham", 0);
 
-            //How many files are available of each datatype
-            ArrayList<FileDatatypeType> filesDatatypeType = fileDatatypeTypeRepository.getFilesByExtensionAndType(datasets);
-            for(FileDatatypeType fileDatatypeType : filesDatatypeType)
-            {
-                System.out.println(fileDatatypeType.getId().getExtension()+fileDatatypeType.getId().getType()+"\t"+fileDatatypeType.getCount());
-                databaseFilesMap.replace(fileDatatypeType.getId().getExtension()+fileDatatypeType.getId().getType(), fileDatatypeType.getCount());
+            // How many files are available of each datatype
+            ArrayList<FileDatatypeType> filesDatatypeType = fileDatatypeTypeRepository
+                    .getFilesByExtensionAndType(datasets);
+            for (FileDatatypeType fileDatatypeType : filesDatatypeType) {
+                System.out.println(fileDatatypeType.getId().getExtension() + fileDatatypeType.getId().getType() + "\t"
+                        + fileDatatypeType.getCount());
+                databaseFilesMap.replace(fileDatatypeType.getId().getExtension() + fileDatatypeType.getId().getType(),
+                        fileDatatypeType.getCount());
             }
 
             Set<String> keys = databaseFilesMap.keySet();
             boolean success = true;
 
-            for(String key: keys)
-            {
-                if(necesaryFilesMap.get(key)!=0)
-                {
+            for (String key : keys) {
+                if (necesaryFilesMap.get(key) != 0) {
                     String subkey = key.substring(1);
-                    model.addAttribute("necesary"+subkey, necesaryFilesMap.get(key));
-                    model.addAttribute("available"+subkey, databaseFilesMap.get(key));
+                    model.addAttribute("necesary" + subkey, necesaryFilesMap.get(key));
+                    model.addAttribute("available" + subkey, databaseFilesMap.get(key));
                 }
-                if(databaseFilesMap.get(key) < necesaryFilesMap.get(key))
-                {
+                if (databaseFilesMap.get(key) < necesaryFilesMap.get(key)) {
                     success = false;
                 }
-                System.out.println(databaseFilesMap.get(key)+" vs "+necesaryFilesMap.get(key));
+                System.out.println(databaseFilesMap.get(key) + " vs " + necesaryFilesMap.get(key));
             }
 
-            if(success)
-            {
+            if (success) {
                 model.addAttribute("class", "info-label");
-            }
-            else
-            {
+            } else {
                 model.addAttribute("class", "error-label");
             }
         }
@@ -582,21 +666,21 @@ public class DatasetController {
             @RequestParam(name = "license", required = false) String[] licenses,
             @RequestParam(name = "language", required = false) String[] languages,
             @RequestParam(name = "datatype", required = false) String[] datatypes,
-            @RequestParam(name="inputSpamPercentage", required = false, defaultValue="0")int inputSpamPercentage,
-            @RequestParam(name="inputFileNumber", required = false, defaultValue="0")int inputFileNumber,
-            @RequestParam(name="inputSpam.eml", required = false, defaultValue="0")int inputSpamEml,
-            @RequestParam(name="inputHam.eml", required = false, defaultValue="0")int inputHamEml,
-            @RequestParam(name="inputSpam.warc", required = false, defaultValue="0")int inputSpamWarc,
-            @RequestParam(name="inputHam.warc", required = false, defaultValue="0")int inputHamWarc,
-            @RequestParam(name="inputSpam.tsms", required = false, defaultValue="0")int inputSpamTsms,
-            @RequestParam(name="inputHam.tsms", required = false, defaultValue="0")int inputHamTsms,
-            @RequestParam(name="inputSpam.tytb", required = false, defaultValue="0")int inputSpamTytb,
-            @RequestParam(name="inputHam.tytb", required = false, defaultValue="0")int inputHamTytb,
-            @RequestParam(name="inputSpam.twtid", required = false, defaultValue="0")int inputSpamTwtid,
-            @RequestParam(name="inputHam.twtid", required = false, defaultValue="0")int inputHamTwtid,
+            @RequestParam(name = "inputSpamPercentage", required = false, defaultValue = "0") int inputSpamPercentage,
+            @RequestParam(name = "inputFileNumber", required = false, defaultValue = "0") int inputFileNumber,
+            @RequestParam(name = "inputSpam.eml", required = false, defaultValue = "0") int inputSpamEml,
+            @RequestParam(name = "inputHam.eml", required = false, defaultValue = "0") int inputHamEml,
+            @RequestParam(name = "inputSpam.warc", required = false, defaultValue = "0") int inputSpamWarc,
+            @RequestParam(name = "inputHam.warc", required = false, defaultValue = "0") int inputHamWarc,
+            @RequestParam(name = "inputSpam.tsms", required = false, defaultValue = "0") int inputSpamTsms,
+            @RequestParam(name = "inputHam.tsms", required = false, defaultValue = "0") int inputHamTsms,
+            @RequestParam(name = "inputSpam.tytb", required = false, defaultValue = "0") int inputSpamTytb,
+            @RequestParam(name = "inputHam.tytb", required = false, defaultValue = "0") int inputHamTytb,
+            @RequestParam(name = "inputSpam.twtid", required = false, defaultValue = "0") int inputSpamTwtid,
+            @RequestParam(name = "inputHam.twtid", required = false, defaultValue = "0") int inputHamTwtid,
             @RequestParam(name = "date1", required = false) String dateFrom,
             @RequestParam(name = "date2", required = false) String dateTo,
-            @RequestParam(name = "mode", required = false, defaultValue="spam")String mode) {
+            @RequestParam(name = "mode", required = false, defaultValue = "spam") String mode) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -614,17 +698,16 @@ public class DatasetController {
             System.out.println(mode);
             boolean modeSpam = false;
 
-            if(mode.equals("spam"))
-            {
+            if (mode.equals("spam")) {
                 modeSpam = true;
             }
 
-            message = taskService.addNewUserDatasetTask(dataset, licenses, languages, datatypes,
-             datasets, dateFrom, dateTo, inputSpamEml, inputHamEml, inputSpamWarc, 
-             inputHamWarc, inputSpamTsms, inputHamTsms, inputSpamTytb, inputHamTytb,
-              inputSpamTwtid, inputHamTwtid, inputFileNumber,inputSpamPercentage, username, modeSpam);
+            message = taskService.addNewUserDatasetTask(dataset, licenses, languages, datatypes, datasets, dateFrom,
+                    dateTo, inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTsms, inputHamTsms,
+                    inputSpamTytb, inputHamTytb, inputSpamTwtid, inputHamTwtid, inputFileNumber, inputSpamPercentage,
+                    username, modeSpam);
             redirectAttributes.addFlashAttribute("message", message);
-            return "redirect:/dataset/home";
+            return "redirect:/dataset/list";
         }
     }
 }

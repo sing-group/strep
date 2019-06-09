@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Online Preprocessor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body class="main-bg">
+    <div class="container-fluid">
+
+        <div th:include="header.html">
+
+        </div>
+
+        <div class="row page-content">
+            <div class="col-2">
+
+            </div>
+
+            <div class="col-8 form-bg">
+                <form action="#" th:action="@{/dataset/edit}" th:object="${dataset}" method="POST">
+                    <img class="header-logo" src="/images/databaseblue.svg" alt="databaseblue.svg" height="64"
+                        width="64">
+                    <h2 class="main-text-header text-center">Update dataset</h2>
+                    <div class="form-group">
+                        <input th:attr="value = ${toUpdateDataset.name}" type="text" class="form-control" name="name"
+                            placeholder="Name of the dataset" required="required" onchange="dynamicUrl(this.value)"
+                            readonly>
+                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Dataset name error</label>
+                        </div>
+                        <div class="form-group">
+                        <textarea th:text="${toUpdateDataset.description}"rows="5" class="form-control" name="description" placeholder="Description of the dataset" required="required"></textarea>
+                        <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description error</label>
+                        </div>
+                        <div th:if="${toUpdateDataset.type}=='systemdataset'">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <div class="form-group">
+                                <input th:attr="value = ${toUpdateDataset.doi}" type="text" class="form-control" name="doi" placeholder="DOI">
+                                <label class="error-label" th:if="${#fields.hasErrors('doi')}" th:errors="*{doi}">There is an error in the doi format</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                <select class="form-control" id="selectLicense" name="license" required>
+                                    <option th:attr="value = ${toUpdateDataset.license.name}" disabled selected>Select a license for the dataset</option>
+                                    <div th:each="license : ${licenses}">
+                                        <option th:value="${license.name}" th:text="${license.name}"></option>
+                                    </div>
+                                </select>
+                                <label class="error-label" th:if="${#fields.hasErrors('license')}" th:errors="*{license}">There are errors in selected license</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div th:if="${toUpdateDataset.type}=='userdataset'">
+                            <div class="row">
+                                <div class="col-4">
+
+                                </div>
+
+                                <div class="col-4">
+                                        <div class="form-group">
+                                                <input th:attr="value = ${toUpdateDataset.doi}" type="text" class="form-control" name="doi" placeholder="DOI">
+                                                <label class="error-label" th:if="${#fields.hasErrors('doi')}" th:errors="*{doi}">There is an error in the doi format</label>
+                                                </div>
+                                </div>
+
+                                <div class="col-4">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row text-center">
+                            <div class="col-4"> 
+                                <label>Acess type</label>
+                            </div>
+
+                            <div class="col-8">
+                                <label>This is the url to the dataset when it has public access</label>
+                            </div>
+                        </div>
+
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <label class="radio-inline main-text"><input type="radio" name="access" value="private" required="required" checked>Private</label>
+                                <label class="radio-inline main-text"><input type="radio" name="access" value="protected" required="required">Protected</label>
+                                <label class="radio-inline main-text"><input type="radio" name="access" value="public" required="required">Public</label>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <input th:attr="value = ${toUpdateDataset.url}" type="text" class="form-control" id="url" name="url" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="id" th:attr="value = ${toUpdateDataset.name}">
+                            
+                        <div class="form-group submit-dataset">
+                        <input type="submit" class="submit-button form-control" value="Update dataset"><br>
+                        </div>
+                    </form>
+            </div>
+
+            <div class="col-2">
+
+            </div>
+        </div>
+
+        <div th:include="footer.html">
+
+        </div>
+
+
+    </div>
+    <script type="text/javascript" src="/js/functions.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

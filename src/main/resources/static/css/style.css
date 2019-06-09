@@ -50,10 +50,34 @@ body
 .topdiv-text, .thead-text
 {
     color: #dfe6ea;
+    font-size: 0.8vw;
 }
+
+.title-text
+{
+    color: #203939;
+    font-size: 0.8vw;
+    font-weight: bold;
+    font-family: 'Lora', serif;
+}
+
+.normal-text
+{
+    color: #203939;
+    font-size: 0.8vw;
+    font-family: 'PT Sans', sans-serif;
+}
+
 .main-text
 {
     color: #203939;
+    font-size: 0.8vw;
+}
+
+.main-text-header
+{
+    color: #203939;
+    font-size: 2vw;
 }
  .error-message, .author
 {
@@ -65,7 +89,7 @@ body
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
+    max-width: 100%;
 }
 
 .footer-logo
@@ -219,4 +243,19 @@ border-top: 5px solid #203939
 
 .monospaced-text { 
 	font-family: "lucida console", monospace; 
+}
+
+.card
+{
+    word-break: normal;
+}
+
+.nav-pills
+{
+    background: white;
+}
+
+.table
+{
+    background: white;
 }

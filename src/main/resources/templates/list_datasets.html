@@ -4,10 +4,12 @@
 <head>
     <title>Online Preprocessor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body class="main-bg">
@@ -32,149 +34,388 @@
             </div>
         </div>
 
-        <div class="row page-content pre-footer">
+        <main class="page-content pre-footer">
+            <div class="row">
+                <div class="col-1">
 
-            <div class="col-2">
+                </div>
 
-            </div>
+                <div class="col-10 text-center form-bg">
+                    <img class="header-logo" src="/images/databaseblue.svg" alt="dataset.svg" height="64" width="64">
+                    <h4 class="main-text-header">Datasets</h4>
 
-            <div class="col-8 form-bg">
-                <div th:if="${type}=='system'">
-                    <img class="header-logo" src="/images/system.svg" alt="logo.png" height="64" width="64">
-                    <h2 class="main-text text-center">System datasets</h2>
-                </div>
-                <div th:if="${type}=='protected'">
-                    <img class="header-logo" src="/images/shield.svg" alt="logo.png" height="64" width="64">
-                    <h2 class="main-text text-center">Protected datasets</h2>
-                </div>
-                <div th:if="${type}=='user'">
-                    <img class="header-logo" src="/images/userdatasets.svg" alt="logo.png" height="64" width="64">
-                    <h2 class="main-text text-center">Your datasets</h2>
-                </div>
-                <div th:each="dataset : ${datasets}">
-                    <div class="page-content">
-                        <div class="card">
-                            <div class="text-center card-header top-bg">
-                                <h4 class="topdiv-text" th:text="${dataset.name}"></h4>
+                    <div th:if="${authority=='canUpload' or authority=='canAdminister'}">
+                        <div class="row">
+                            <div class="col-4">
+
                             </div>
 
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-2 text-center">
-                                        <h5 class="main-text">Author</h5>
-                                        <img src="/images/authorplaceholder.svg" alt="authorplaceholder.svg" height="32"
-                                            width="32">
-                                        <p class="main-text" th:text="${dataset.author}"></p>
-                                    </div>
+                            <div class="col-2">
+                                <a class="btn btn-small submit-button" href="/dataset/create">
 
-                                    <div class="col-2 text-center">
-                                        <h5 class="main-text">Upload date</h5>
-                                        <p class="main-text" th:text="${dataset.uploadDate}"></p>
-                                    </div>
+                                    <i class="fas fa-plus-circle pull-left main-text">
+                                        Create dataset
+                                    </i>
+                                </a>
+                            </div>
 
-                                    <div class="col-2 text-center">
-                                        <h5 class="main-text">License</h5>
-                                        <p class="main-text" th:text="${dataset.license.name}"></p>
-                                    </div>
+                            <div class="col-2">
 
-                                    <div class="col-2 text-center">
-                                        <h5 class="main-text">Languages</h5>
-                                        <div th:each="language : ${dataset.language}">
-                                            <p class="main-text" th:text="${language.language}"></p>
-                                        </div>
-                                    </div>
+                                <a class="btn btn-small submit-button" href="/dataset/upload">
+                                    <i class="fas fa-file-upload pull-left main-text">Upload dataset</i>
+                                </a>
 
-                                    <div class="col-2">
-                                        <h5 class="main-text">Datatypes</h5>
-                                        <div th:each="datatype : ${dataset.datatypes}">
-                                                <div class="row">
-                                                    <div class="col-3">
-                                                        <div th:if="${datatype.datatype}=='.eml'">
-                                                            <img src="/images/gmail-logo.svg" alt="gmail-logo.svg" height="16" width="16">
-                                                        </div>
-                                                        <div th:if="${datatype.datatype}=='.tytb'">
-                                                            <img src="/images/youtube.svg" alt="youtube.svg" height="16" width="16">
-                                                        </div>
-                                                        <div th:if="${datatype.datatype}=='.twtid'">
-                                                            <img src="/images/twitter.svg" alt="twitter.svg" height="16" width="16">
-                                                        </div>
-                                                        <div th:if="${datatype.datatype}=='.tsms'">
-                                                            <img src="/images/sms.svg" alt="sms.svg" height="16" width="16">
-                                                        </div>
-                                                        <div th:if="${datatype.datatype}=='.warc'">
-                                                            <img src="/images/internet.svg" alt="internet.svg" height="16" width="16">
-                                                        </div>
-                                                    </div>
-                
-                                                    <div class="col-9">
-                                                        <p class="main-text text-center" th:text="${datatype.datatype}"></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </div>
+                            </div>
 
-                                    <div class="col-2 text-center">
-                                        <h5 class="main-text">Actions</h5>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <a th:href="@{/dataset/detailed(id=${dataset.name}, type=user)}">
-                                                    <i class="fas fa-eye button"></i>
-                                                </a>
-                                            </div>
-
-                                            <div class="col-6">
-                                                    <a th:href="@{/dataset/download(id=${dataset.name}, type=user)}">
-                                                        <i class="fas fa-file-download button"></i>
-                                                    </a>
-                                                </div>
-                                        </div>
-
-                                        <div th:if="${type}==user">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                    <a th:href="@{/dataset/delete(id=${dataset.name}, type=user)}">
-                                                        <img src="/images/delete.svg" alt="Delete" height="24" width="24">
-                                                    </a>
-
-                                            </div>
-                                            <div class="col-6">
-                                                    <div class="dropdown show">
-                                                            <a class="image-button dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <img src="/images/key.svg" alt="Access" width="24" height="24">
-                                                            </a>
-                                                            <div class="dropdown-menu main-div-bg" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=private)}">Private</a>
-                                                                <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=protected)}">Protected</a>
-                                                                <a class="dropdown-item" th:href="@{/dataset/access(id=${dataset.name}, access=public)}">Public</a>
-                                                            </div>
-                                                        </div>
-                                            </div>
-                                                
-                                        </div>
-                                    </div>
-                                       
-                                    </div>
-                                </div>
+                            <div class="col-4">
 
                             </div>
                         </div>
                     </div>
+
+                    <div th:if="${authority=='canCreateCorpus'}">
+                        <div class="row">
+                            <div class="col-5">
+
+                            </div>
+
+                            <div class="col-2">
+                                <a class="btn btn-small submit-button" href="/dataset/create">
+
+                                    <i class="fas fa-plus-circle pull-left main-text">
+                                        Create dataset
+                                    </i>
+                                </a>
+                            </div>
+
+                            <div class="col-5">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row page-content">
+                        <div class="col-6">
+                            <ul class="nav nav-pills">
+                                <li class="nav-item">
+                                    <a class="nav-link" th:classappend="${type=='community'} ? 'active' : ''"
+                                        href="/dataset/list?type=community">Community
+                                        datasets</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:classappend="${type=='system'} ? 'active' : ''"
+                                        href="/dataset/list?type=system">System datasets</a>
+                                </li>
+
+                                <div th:if="${authority=='canView'}">
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled" href="/dataset/list?type=user">Your user
+                                            datasets</a>
+                                    </li>
+                                </div>
+
+                                <div th:unless="${authority=='canView'}">
+                                    <li class="nav-item">
+                                        <a class="nav-link" th:classappend="${type=='user'} ? 'active' : ''"
+                                            href="/dataset/list?type=user">Your user datasets</a>
+                                    </li>
+                                </div>
+                                <div th:if="${authority=='canUpload' or authority=='canAdminister'}">
+                                    <li class="nav-item active">
+                                        <a class="nav-link" th:classappend="${type=='usersystem'} ? 'active' : ''"
+                                            href="/dataset/list?type=usersystem">Your system
+                                            datasets</a>
+                                    </li>
+                                </div>
+
+                                <div th:unless="${authority=='canUpload' or authority=='canAdminister'}">
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled" href="/dataset/list?type=usersystem">Your
+                                            system
+                                            datasets</a>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+
+                        <div class="col-6">
+
+                        </div>
+                    </div>
+
+                    <div th:if="${type=='community' or type=='system'}">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Author</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">License</th>
+                                        <th scope="col">Languages</th>
+                                        <th scope="col">Datatypes</th>
+                                        <th scope="col">View</th>
+                                        <th scope="col">Download</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <div th:each="dataset : ${datasets}">
+                                        <tr>
+                                            <th scope="row" th:text="${dataset.name}">
+
+                                            </th>
+
+                                            <td th:text="${dataset.author}"></td>
+                                            <td th:text="${dataset.uploadDate}"></td>
+                                            <td th:text="${dataset.license.name}"></td>
+                                            <td>
+                                                <a class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"
+                                                    href="#">
+                                                    <i class="fas fa-language"></i>
+                                                    <span class="icon-caret-down"></span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <div th:each="language : ${dataset.language}">
+                                                        <li th:text="${language.language}"></li>
+                                                    </div>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"
+                                                    href="#">
+                                                    <i class="fas fa-file-signature"></i>
+                                                    <span class="icon-caret-down"></span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <div th:each="datatype : ${dataset.datatypes}">
+                                                        <li th:text="${datatype.datatype}"></li>
+                                                    </div>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-small btn-info"
+                                                    th:href="@{'/dataset/detailed?id=' + ${dataset.name}}">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-small btn-success"
+                                                    th:href="@{'/dataset/download?id=' + ${dataset.name}}">
+                                                    <i class="fas fa-file-download"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div th:if="${type=='usersystem'}">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Author</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">License</th>
+                                        <th scope="col">Languages</th>
+                                        <th scope="col">Datatypes</th>
+                                        <th scope="col">View</th>
+                                        <th scope="col">Download</th>
+                                        <th scope="col">Edit</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <div th:each="dataset : ${datasets}">
+                                        <tr>
+                                            <th scope="row" th:text="${dataset.name}">
+
+                                            </th>
+
+                                            <td th:text="${dataset.author}"></td>
+                                            <td th:text="${dataset.uploadDate}"></td>
+                                            <td th:text="${dataset.license.name}"></td>
+                                            <td>
+                                                <a class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"
+                                                    href="#">
+                                                    <i class="fas fa-language"></i>
+                                                    <span class="icon-caret-down"></span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <div th:each="language : ${dataset.language}">
+                                                        <li th:text="${language.language}"></li>
+                                                    </div>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"
+                                                    href="#">
+                                                    <i class="fas fa-file-signature"></i>
+                                                    <span class="icon-caret-down"></span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <div th:each="datatype : ${dataset.datatypes}">
+                                                        <li th:text="${datatype.datatype}"></li>
+                                                    </div>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-small btn-info"
+                                                    th:href="@{'/dataset/detailed?id=' + ${dataset.name}}">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-small btn-success"
+                                                    th:href="@{'/dataset/download?id=' + ${dataset.name}}">
+                                                    <i class="fas fa-file-download"></i>
+                                                </a>
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-small btn-secondary"
+                                                    th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
+                                                    <i class="fas fa-pen-square"></i>
+                                                </a>
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-small btn-danger"
+                                                    th:href="@{'/dataset/delete?id=' + ${dataset.name}}">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div th:if="${type=='user'}">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Author</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">License</th>
+                                        <th scope="col">Languages</th>
+                                        <th scope="col">Datatypes</th>
+                                        <th scope="col">View</th>
+                                        <th scope="col">Preprocess</th>
+                                        <th scope="col">Creation details</th>
+                                        <th scope="col">Download</th>
+                                        <th scope="col">Edit</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <div th:each="dataset : ${datasets}">
+                                        <tr>
+                                            <th scope="row" th:text="${dataset.name}">
+
+                                            </th>
+
+                                            <td th:text="${dataset.author}"></td>
+                                            <td th:text="${dataset.uploadDate}"></td>
+                                            <td th:text="${dataset.license.name}"></td>
+                                            <td>
+                                                <a class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"
+                                                    href="#">
+                                                    <i class="fas fa-language"></i>
+                                                    <span class="icon-caret-down"></span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <div th:each="language : ${dataset.language}">
+                                                        <li th:text="${language.language}"></li>
+                                                    </div>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"
+                                                    href="#">
+                                                    <i class="fas fa-file-signature"></i>
+                                                    <span class="icon-caret-down"></span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <div th:each="datatype : ${dataset.datatypes}">
+                                                        <li th:text="${datatype.datatype}"></li>
+                                                    </div>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-small btn-info"
+                                                    th:href="@{'/dataset/detailed?id=' + ${dataset.name}}">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-small btn-info"
+                                                    th:href="@{'/dataset/preprocess?id=' + ${dataset.name}}">
+                                                    <i class="fas fa-tasks"></i>
+                                                </a>
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-small btn-info"
+                                                    th:href="@{'/task/detailed?id=' + ${dataset.name}}">
+                                                    <i class="fas fa-info-circle"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-small btn-success"
+                                                    th:href="@{'/dataset/download?id=' + ${dataset.name}}">
+                                                    <i class="fas fa-file-download"></i>
+                                                </a>
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-small btn-secondary"
+                                                    th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
+                                                    <i class="fas fa-pen-square"></i>
+                                                </a>
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-small btn-danger"
+                                                    th:href="@{'/dataset/delete?id=' + ${dataset.name}}">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="col-2">
+                <div class="col-1">
 
                 </div>
             </div>
 
-            <div th:include="footer.html"></div>
-        </div>
+        </main>
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+        <div th:include="footer.html"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -16,11 +16,13 @@ import com.project.onlinepreprocessor.domain.Datatype;
 import com.project.onlinepreprocessor.domain.File;
 import com.project.onlinepreprocessor.domain.Language;
 import com.project.onlinepreprocessor.domain.License;
+import com.project.onlinepreprocessor.domain.TaskCreateSdataset;
 import com.project.onlinepreprocessor.repositories.DatasetRepository;
 import com.project.onlinepreprocessor.repositories.DatatypeRepository;
 import com.project.onlinepreprocessor.repositories.FileRepository;
 import com.project.onlinepreprocessor.repositories.LanguageRepository;
 import com.project.onlinepreprocessor.repositories.LicenseRepository;
+import com.project.onlinepreprocessor.repositories.TaskRepository;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +52,9 @@ public class DatasetService
 
     @Autowired 
     private DatatypeRepository datatypeRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     @Autowired
     private TaskService taskService;
@@ -244,6 +249,55 @@ public class DatasetService
         return dataset;
     }
 
+    public String updateDataset(Dataset dataset, String username)
+    {
+        String message = "";
+        String datasetName = dataset.getName();
+
+        Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
+
+        if(optDataset.isPresent())
+        {
+            Dataset oldDataset = optDataset.get();
+            System.out.println(oldDataset.getName());
+            String author = oldDataset.getAuthor();
+
+            if(username.equals(author))
+            {
+                Dataset newDataset = updateDataset(oldDataset, dataset);
+                datasetRepository.save(newDataset);
+                message = "Successfully updated";
+            }
+            else
+            {
+                message = "Unable to update the dataset, you are not the propietary";
+            }
+        }
+        else
+        {
+            message = "Unable to update the dataset";
+        }
+
+        return message;
+    }
+
+    private Dataset updateDataset(Dataset oldDataset, Dataset newDataset)
+    {
+        String access = newDataset.getAccess();
+        String description = newDataset.getDescription();
+        License license = newDataset.getLicense();
+
+        oldDataset.setAccess(access);
+        oldDataset.setDescription(description);
+
+        if(license!=null)
+        {
+            oldDataset.setLicense(license);
+        }
+    
+        return oldDataset;
+    }
+
     private void store(MultipartFile datasetFile, Dataset dataset) throws IOException
     {
         datasetFile.transferTo(new java.io.File(BASE_PATH+dataset.getName()+".zip"));
@@ -253,6 +307,7 @@ public class DatasetService
     {
         java.io.File datasetDirectory = new java.io.File(BASE_PATH+dataset.getName());
         java.io.File zipDirectory = new java.io.File(BASE_PATH+dataset.getName()+".zip");
+        String datasetName = dataset.getName();
         
         if(datasetDirectory.exists())
         {
@@ -264,7 +319,6 @@ public class DatasetService
                 return false;
             }
         }
-
         zipDirectory.delete();
 
         datasetRepository.delete(dataset);

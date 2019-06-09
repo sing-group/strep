@@ -40,16 +40,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers("/user/register").permitAll()
                 .antMatchers("/user/accountconfirmation").permitAll()
                 .antMatchers("/dataset/public/**").permitAll()
-                .antMatchers("/user/editProfile","/dataset/home", "/dataset/system/**","/dataset/protected/**", "/permission","/permission/solicit").hasAuthority("canView").anyRequest()
+                .antMatchers("/user/editProfile","/dataset/list", "/dataset/system/**","/dataset/protected/**", "/permission","/permission/solicit").hasAuthority("canView").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/").failureUrl("/")
-                .defaultSuccessUrl("/dataset/home")
+                .defaultSuccessUrl("/dataset/list")
                 .usernameParameter("username")
                 .passwordParameter("password");
         //TODO: Complete this when the urls are final
         http.
                 authorizeRequests()
-                .antMatchers("/dataset/home").hasAnyAuthority("canView", "canUpload", "canCreateCorpus", "canAdminister");
+                .antMatchers("/dataset/list").hasAnyAuthority("canView", "canUpload", "canCreateCorpus", "canAdminister");
 }
 
 	@Override

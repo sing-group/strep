@@ -4,9 +4,13 @@
 <head>
     <title>Online Preprocessor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lora&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -16,334 +20,150 @@
         </div>
 
         <div class="row page-content pre-footer">
-            <div class="col-2">
+            <div class="col-1">
 
             </div>
 
-            <div class="col-8  main-div-bg">
-                <div class="thick-border-bottom">
-                <img class="header-logo" src="/images/databaseblue.svg" alt="databaseblue.svg" height="64" width="64">
-                <h3 class="main-text text-center">Dataset details</h3>
-                </div>
-                <div class="page-content">
+            <div class="col-10">
+
+                <div class="jumbotron border border-info">
                     <div class="row">
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Author</h5>
-                        </div>
-
                         <div class="col-4">
-                            <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.author}"
-                                            readonly>
-                        </div>
-                        <div class="col-2">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Dataset name</h5>
-                        </div>
-
-                        <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.name}"
-                                            readonly>
-                                    </div>
-                        </div>
-
-                        <div class="col-2">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Upload date</h5>
-                        </div>
-
-                        <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.uploadDate}"
-                                            readonly>
-                                    </div>
-                        </div>
-
-                        <div class="col-2">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">License</h5>
-                        </div>
-
-                        <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.license.name}"
-                                            readonly>
-                                    </div>
-                        </div>
-
-                        <div class="col-2">
                             <div class="row">
                                 <div class="col-6 text-center">
-                                    <p class="main-text">Info:</p>
+                                    <p class="title-text">Author: </p>
+                                    <p class="title-text">Name: </p>
+                                    <p class="title-text">Upload date: </p>
+                                    <p class="title-text">License: </p>
+                                    <p class="title-text">Spam percentage: </p>
+                                    <p class="title-text">Ham percentage: </p>
                                 </div>
-                                <div class="col-6">
-                                    <a href="#" th:href="@{/license/detailed(name=${dataset.license.name})}"><img src="/images/info-button.svg" alt="info-button.svg" height="16" width="16"></a>
+
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${dataset.author}"></p>
+                                    <p class="normal-text" th:text="${dataset.name}"></p>
+                                    <p class="normal-text" th:text="${dataset.uploadDate}"></p>
+                                    <p class="normal-text" th:text="${dataset.license.name}"></p>
+                                    <p class="normal-text" th:text="${dataset.spamPercentage}"></p>
+                                    <p class="normal-text" th:text="${dataset.hamPercentage}"></p>
                                 </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Spam percentage</h5>
-                        </div>
-
-                        <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.spamPercentage}"
-                                            readonly>
-                                    </div>
-                        </div>
-
-                        <div class="col-2">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Ham percentage</h5>
-                        </div>
-
-                        <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.hamPercentage}"
-                                            readonly>
-                                    </div>
-                        </div>
-
-                        <div class="col-2">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-                        <div class="col-2">
-
-                        </div>
-
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Dataset description</h5>
-                        </div>
-
-                        <div class="col-4">
-                            <div class="form-group">
-                                <textarea class="form-control" th:text="${dataset.description}" rows="5"></textarea>
                             </div>
                         </div>
 
-                        <div class="col-2">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-                        <div class="col-2">
-
-                        </div>
                         <div class="col-4 text-center">
-                            <h5 class="main-text">DOI</h5>
+                            <p class="title-text">Description: </p>
+                            <p class="normal-text" th:text="${dataset.description}"></p>
                         </div>
 
                         <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.doi}"
-                                            readonly>
-                                    </div>
-                        </div>
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Access: </p>
+                                    <p class="title-text">Languages: </p>
+                                    <p class="title-text">Datatypes: </p>
+                                    <p class="title-text">Type: </p>
+                                    <p class="title-text">Share url: </p>
+                                </div>
 
-                        <div class="col-2">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Access</h5>
-                        </div>
-
-                        <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.access}"
-                                            readonly>
-                                    </div>
-                        </div>
-
-                        <div class="col-2">
-
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${dataset.access}"></p>
+                                    <p class="normal-text" th:text="${languages}"></p>
+                                    <p class="normal-text" th:text="${datatypes}"></p>
+                                    <p class="normal-text" th:text="${dataset.type}"></p>
+                                    <p class="normal-text" th:text="${dataset.url}"></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row page-content">
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Languages</h5>
-                        </div>
-
-                        <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${languages}"
-                                            readonly>
-                                    </div>
-                        </div>
-
-                        <div class="col-2">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Data types</h5>
-                        </div>
-
-                        <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${datatypes}"
-                                            readonly>
-                                    </div>
-                        </div>
-
-                        <div class="col-2">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Type</h5>
-                        </div>
-
-                        <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.type}"
-                                            readonly>
-                                    </div>
-                        </div>
-
-                        <div class="col-2">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Url</h5>
-                        </div>
-
-                        <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${dataset.url}"
-                                            readonly>
-                                    </div>
-                        </div>
-
-                        <div class="col-2">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
+                    <div class="row">
                         <div class="col-3">
 
                         </div>
 
-                        <div class="col-6">
-                                <div th:if="${dataset.pipeline}!=null">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <form action="#" th:action="@{/dataset/public/download}" method="GET">
-                                                    <input type="hidden" name="id" th:attr="value = ${dataset.name}">
-                                                    <input type="submit" class="form-control submit-button" value="Download dataset">
-                                                </form>
-                                            </div>
-                                            <div class="col-6">
-                                                <form action="#" th:action="@{/dataset/public/downloadpipeline}" method="GET">
-                                                    <input type="hidden" name="id" th:attr="value = ${dataset.name}">
-                                                    <input type="submit" class="form-control submit-button" value="Download pipeline">
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div th:unless="${dataset.pipeline}!=null">
-                                        <form action="#" th:action="@{/dataset/public/download}" method="GET">
-                                            <input type="hidden" name="id" th:attr="value = ${dataset.name}">
-                                            <input type="submit" class="form-control submit-button" value="Download dataset">
-                                        </form>
-                                    </div>
+                        <div class="col-6 text-center">
+
+                            <p class="title-text">Actions</p>
+
+                            <div th:if="${dataset.author == username and dataset.type != 'userdataset'}">
+                                <div class="btn-group">
+                                    <a class="btn btn-small btn-success"
+                                        th:href="@{'/dataset/download?id=' + ${dataset.name}}">
+                                        <i class="fas fa-file-download"></i>
+                                    </a>
+                                    <a class="btn btn-small btn-secondary"
+                                        th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
+                                        <i class="fas fa-pen-square"></i>
+                                    </a>
+                                    <a class="btn btn-small btn-danger"
+                                        th:href="@{'/dataset/delete?id=' + ${dataset.name}}">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+
+                            <div th:if="${dataset.author == username and dataset.type == 'userdataset'}">
+                                <div class="btn-group">
+                                    <a class="btn btn-small btn-success"
+                                        th:href="@{'/dataset/download?id=' + ${dataset.name}}">
+                                        <i class="fas fa-file-download"></i>
+                                    </a>
+                                    <a class="btn btn-small btn-secondary"
+                                        th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
+                                        <i class="fas fa-pen-square"></i>
+                                    </a>
+                                    <a class="btn btn-small btn-danger"
+                                        th:href="@{'/dataset/delete?id=' + ${dataset.name}}">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                    <a class="btn btn-small btn-info"
+                                        th:href="@{'/dataset/preprocess?id=' + ${dataset.name}}">
+                                        <i class="fas fa-tasks"></i>
+                                    </a>
+                                    <a class="btn btn-small btn-info"
+                                        th:href="@{'/task/detailed?id=' + ${dataset.name}}">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+
+                            <div th:if="${dataset.author!=username}">
+                                <a class="btn btn-small btn-success"
+                                    th:href="@{'/dataset/download?id=' + ${dataset.name}}">
+                                    <i class="fas fa-file-download"></i>
+                                </a>
+                            </div>
+
+
                         </div>
 
                         <div class="col-3">
-                            
+
                         </div>
                     </div>
-
                 </div>
+
             </div>
 
-            <div class="col-2">
+            <div class="col-1">
 
-                </div>
-
+            </div>
         </div>
 
         <div th:include="footer.html">
 
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 </body>
 

@@ -31,6 +31,9 @@ public interface DatasetRepository extends CrudRepository<Dataset, String>{
     @Query(value="select * from dataset where author=?1 and available=true", nativeQuery=true)
     public ArrayList<Dataset> getUserDatasets(String username);
 
+    @Query(value="select * from dataset where author=?1 and type=?2 and available=true", nativeQuery=true)
+    public ArrayList<Dataset> getUserDatasets(String username, String type);
+
     @Query(value="select file_id from dataset_files where dataset_name=?1", nativeQuery=true)
     public ArrayList<BigInteger> getFileIds(String name);
 
