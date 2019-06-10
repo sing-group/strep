@@ -6,8 +6,10 @@ import java.util.Optional;
 import com.project.onlinepreprocessor.domain.Task;
 import com.project.onlinepreprocessor.domain.TaskCreateUdataset;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface TaskRepository extends CrudRepository<Task, Long>
 {
@@ -25,4 +27,9 @@ public interface TaskRepository extends CrudRepository<Task, Long>
 
     @Query("select t from TaskCreateUdataset t where t.id=?1")
     public Optional<TaskCreateUdataset> findTaskCreateUdatasetById(long id);
+
+    @Transactional
+    @Modifying
+    @Query(value="delete from task_create_udataset_datasets where dataset=?1", nativeQuery=true)
+    public void deleteUserTasks(String datasetName);
 }

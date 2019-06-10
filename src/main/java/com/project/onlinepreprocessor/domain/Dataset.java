@@ -57,7 +57,8 @@ public class Dataset
     /**
      * The languages of the dataset
      */
-    @ManyToMany
+    @ManyToMany(cascade =
+        {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="dataset_languages", joinColumns=@JoinColumn(name="dataset_name", referencedColumnName="name"), 
     inverseJoinColumns = @JoinColumn(name="language", referencedColumnName="language"))
     private Set<Language> language;
@@ -65,7 +66,8 @@ public class Dataset
     /**
      * The data types of the dataset
      */
-    @ManyToMany
+    @ManyToMany(cascade =
+        {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="dataset_datatypes", joinColumns=@JoinColumn(name="dataset_name", referencedColumnName="name"),
     inverseJoinColumns = @JoinColumn(name="dataType", referencedColumnName="dataType"))
     private Set<Datatype> datatypes;
@@ -88,7 +90,8 @@ public class Dataset
     /**
      * The files of the dataset
      */
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade =
+        {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="dataset_files", joinColumns= @JoinColumn(name = "dataset_name", referencedColumnName = "name"), 
     inverseJoinColumns = @JoinColumn(name="file_id", referencedColumnName="id"))
     private Set<File> files;
@@ -111,7 +114,7 @@ public class Dataset
     /**
      * The task associated to this dataset
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="task_id", referencedColumnName="id")
     private Task task;
 

@@ -320,6 +320,10 @@ public class DatasetService
             }
         }
         zipDirectory.delete();
+        if(dataset.getType().equals("systemdataset"))
+        {
+            taskRepository.deleteUserTasks(datasetName);
+        }
 
         datasetRepository.delete(dataset);
         return true;

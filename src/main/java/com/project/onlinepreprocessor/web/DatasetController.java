@@ -245,17 +245,11 @@ public class DatasetController {
     }
 
     @GetMapping("/delete")
-    public String deleteDataset(Authentication authentication, Model model, @RequestParam("id") String name) {
+    public String deleteDataset(Authentication authentication, Model model, @RequestParam("id") String name, RedirectAttributes redirectAttributes) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
-        String authority = userService.getPermissionsByUsername(username);
-
         Optional<Dataset> opt = datasetRepository.findById(name);
-
-        model.addAttribute("authority", authority);
-        model.addAttribute("username", username);
-        model.addAttribute("type", "user");
 
         if (opt.isPresent() && opt.get().getAuthor().equals(username)) {
             Dataset dataset = opt.get();
@@ -268,9 +262,7 @@ public class DatasetController {
             model.addAttribute("message", "Error deleting dataset");
         }
 
-        ArrayList<Dataset> datasets = datasetRepository.getUserDatasets(username);
-        model.addAttribute("datasets", datasets);
-        return "list_datasets";
+        return "redirect:/dataset/list";
     }
 
     @GetMapping("/access")

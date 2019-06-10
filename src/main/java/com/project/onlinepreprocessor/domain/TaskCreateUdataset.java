@@ -3,14 +3,12 @@ package com.project.onlinepreprocessor.domain;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.JoinColumn;
 
@@ -66,7 +64,8 @@ public class TaskCreateUdataset extends Task
     /**
      * The languages selected in the filters to construct the new dataset
      */
-    @ManyToMany
+    @ManyToMany(cascade =
+        {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="taskcreateudataset_languages", joinColumns= @JoinColumn(name = "task_id", referencedColumnName = "id"), 
     inverseJoinColumns = @JoinColumn(name="language", referencedColumnName="language"))
     private List<Language> languages;
@@ -74,7 +73,8 @@ public class TaskCreateUdataset extends Task
     /**
      * The datatypes selected in the filters to construct the new dataset
      */
-    @ManyToMany
+    @ManyToMany(cascade =
+        {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="taskcreateudataset_datatypes", joinColumns= @JoinColumn(name = "task_id", referencedColumnName = "id"), 
     inverseJoinColumns = @JoinColumn(name="datatype", referencedColumnName="dataType"))
     private List<Datatype> datatypes;
@@ -82,7 +82,8 @@ public class TaskCreateUdataset extends Task
     /**
      * The licenses selected in the filters to construct the new dataset
      */
-    @ManyToMany
+    @ManyToMany(cascade =
+        {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="taskcreateudataset_licenses", joinColumns= @JoinColumn(name = "task_id", referencedColumnName = "id"), 
     inverseJoinColumns = @JoinColumn(name="license", referencedColumnName="name"))
     private List<License> licenses;
@@ -90,7 +91,8 @@ public class TaskCreateUdataset extends Task
     /**
      * The datasets used to construct the new dataset
      */
-    @ManyToMany
+    @ManyToMany(cascade =
+    {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(joinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "dataset", referencedColumnName="name"))
     private List<Dataset> datasets;
 
