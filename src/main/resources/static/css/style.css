@@ -250,7 +250,7 @@ border-top: 5px solid #203939
     word-break: normal;
 }
 
-.nav-pills
+.nav-pills .nav-item
 {
     background: white;
 }

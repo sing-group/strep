@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 
 <html>
+
 <head>
 
     <title>Online preprocessor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 
 </head>
@@ -26,121 +27,293 @@
 
             </div>
 
-            <div class="col-10 main-div-bg text-center">
-                <img class="header-logo" src="/images/clipboard.svg" alt="clipboard.svg" height="64" width="64">
-                <h2 class="main-text text-center">Detailed user task</h2>
-                <h5 class="main-text text-center" th:text="${'Dataset name: ' + task.dataset.name}"></h5>
-                <div class="page-content">
-                    <h5 class="main-text text-center">Selected datasets</h5>
-                    <div class="card">
-                        <div class="card-header top-bg">
+            <div class="col-10 text-center">
+                <div class="jumbotron border border-info">
+                    <div class="row">
+
+                        <div class="col-4">
+                            <p class="title-text">Dataset details </p>
                             <div class="row">
-                                <div class="col-3 text-center">
-                                    <h4 class="topdiv-text">Name</h4>
+
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Dataset name: </p>
                                 </div>
 
-                                <div class="col-3 text-center">
-                                    <h4 class="topdiv-text">License</h4>
+
+
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${dataset.name}"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Spam percentage: </p>
                                 </div>
 
-                                <div class="col-3 text-center">
-                                    <h4 class="topdiv-text">Languages</h4>
+
+
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${dataset.spamPercentage}"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Ham percentage: </p>
                                 </div>
 
-                                <div class="col-3 text-center">
-                                    <h4 class="topdiv-text">Datatypes</h4>
+
+
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${dataset.hamPercentage}"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Datasets used for creation: </p>
+                                </div>
+
+
+
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${systemdatasets}"></p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card-body">
-                            <ul class="list-group">
-                                <div th:each="dataset : ${task.datasets}">
-                                    <li class="list-group-item">
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <p class="main-text text-center" th:text="${dataset.name}"></p>
-                                            </div>
 
-                                            <div class="col-3">
-                                                <p class="main-text text-center" th:text="${dataset.license.name}"></p>
-                                            </div>
+                        <div class="col-4">
+                            <p class="title-text">Filters selected</p>
 
-                                            <div class="col-3">
-                                                <div th:each="language : ${dataset.language}">
-                                                    <p class="main-text text-center" th:text="${language.language}"></p>
-                                                </div>
-                                            </div>
+                            <div class="row">
 
-                                            <div class="col-3">
-                                                <div th:each="datatype : ${dataset.datatypes}">
-                                                    <div class="row">
-
-                                                        <div class="col-6 text-right">
-                                                            <div th:switch="${datatype.datatype}">
-                                                                <img th:case=".eml" src="/images/gmail-logo.svg" alt="email.svg" height="16" width="16">
-                                                                <img th:case=".tsms" src="/images/sms.svg" alt="sms.svg" height="16" width="16">
-                                                                <img th:case=".twtid" src="/images/twitter.svg" alt="twitter.svg" height="16" width="16">
-                                                                <img th:case=".tytb" src="/images/youtube.svg" alt="youtube.svg" height="16" width="16">
-                                                                <img th:case=".warc" src="/images/internet.svg" alt="internet.svg" height="16" width="16">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-6 text-left">
-                                                            <p class="main-text" th:text="${datatype.datatype}"></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Licenses: </p>
                                 </div>
-                            </ul>
+
+
+
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${licenses}"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Languages: </p>
+                                </div>
+
+
+
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${languages}"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Datatypes: </p>
+                                </div>
+
+
+
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${datatypes}"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Messages date: </p>
+                                </div>
+
+
+
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${dates}"></p>
+                                </div>
+                            </div>
+
                         </div>
+
+                        <div class="col-4">
+                            <p class="title-text">Parameters selected</p>
+                            <div th:if="${task.spamMode}">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="title-text">Creation mode: </p>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="normal-text">Spam</p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="title-text">File number: </p>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="normal-text" th:text="${task.limitNumberOfFiles}">Spam</p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="title-text">Limit spam percentage: </p>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="normal-text" th:text="${task.limitPercentageSpam}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div th:unless="${task.spamMode}">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="title-text">Creation mode: </p>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="normal-text">Datatypes</p>
+                                    </div>
+                                </div>
+                                <div th:if="${task.limitSpamPercentageEml}!=0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="title-text">Spam Eml percentage: </p>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="normal-text" th:text="${task.limitSpamPercentageEml}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:if="${task.limitHamPercentageEml}!=0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="title-text">Ham Eml percentage: </p>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="normal-text" th:text="${task.limitHamPercentageEml}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div th:if="${task.limitSpamPercentageTwtid}!=0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="title-text">Spam Twtid percentage: </p>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="normal-text" th:text="${task.limitSpamPercentageTwtid}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div th:if="${task.limitHamPercentageTwtid}!=0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="title-text">Ham Twtid percentage: </p>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="normal-text" th:text="${task.limitHamPercentageTwtid}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div th:if="${task.limitSpamPercentageTytb}!=0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="title-text">Spam Tytb percentage: </p>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="normal-text" th:text="${task.limitSpamPercentageTytb}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div th:if="${task.limitHamPercentageTytb}!=0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="title-text">Ham Tytb percentage: </p>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="normal-text" th:text="${task.limitHamPercentageTytb}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div th:if="${task.limitSpamPercentageTsms}!=0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="title-text">Spam Tsms percentage: </p>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="normal-text" th:text="${task.limitSpamPercentageTsms}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div th:if="${task.limitHamPercentageTsms}!=0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="title-text">Ham Tsms percentage: </p>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="normal-text" th:text="${task.limitHamPercentageTsms}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:if="${task.limitSpamPercentageWarc}!=0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="title-text">Spam Warc percentage: </p>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="normal-text" th:text="${task.limitSpamPercentageWarc}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:if="${task.limitHamPercentageWarc}!=0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="title-text">Ham Warc percentage: </p>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <p class="normal-text" th:text="${task.limitHamPercentageWarc}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
-
-            <div class="col-1">
-
             </div>
         </div>
 
-        <div class="row page-content pre-footer">
-            <div class="col-1">
+        <div class="col-1">
 
-            </div>
-
-            <div class="col-10">
-
-                <div class="row">
-                    <div class="col-5 main-div-bg text-center">
-                       <h5 class="main-text">Licenses</h5>
-                       <p class="main-text" th:text="${licenses}"></p>
-                       <h5 class="main-text">Languages</h5>
-                       <p class="main-text" th:text="${languages}"></p>
-                       <h5 class="main-text">Datatypes</h5>
-                       <p class="main-text" th:text="${datatypes}"></p>
-                       <h5 class="main-text">Dates</h5>
-                       <p class="main-text" th:text="${dates}"></p>
-                    </div>
-
-                    <div class="col-2">
-
-                    </div>
-
-                    <div class="col-5 main-div-bg text-center">
-                        <h5 class="main-text">Selected parameters</h5>
-                        <pre>
-                            <p class="main-text" th:text="${parameters}"></p>
-                        </pre>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-1">
-
-            </div>
         </div>
     </div>
 
@@ -148,12 +321,16 @@
 
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
 </body>
+
 </html>

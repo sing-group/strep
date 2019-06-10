@@ -2,8 +2,10 @@ package com.project.onlinepreprocessor.web;
 
 import java.util.Optional;
 
+import com.project.onlinepreprocessor.domain.Dataset;
 import com.project.onlinepreprocessor.domain.Task;
 import com.project.onlinepreprocessor.domain.TaskCreateUdataset;
+import com.project.onlinepreprocessor.repositories.DatasetRepository;
 import com.project.onlinepreprocessor.repositories.TaskRepository;
 import com.project.onlinepreprocessor.services.UserService;
 
@@ -18,19 +20,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(path = "/task")
-public class TaskController
-{
+public class TaskController {
     @Autowired
     private TaskRepository taskRepository;
 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private DatasetRepository datasetRepository;
 
-    //TODO: Implement this method
+    // TODO: Implement this method
     @GetMapping("/upload")
-    public String listSystemTasks(Authentication authentication, Model model, @RequestParam(name="searchInput", required=false)String inputSearch)
-    {
+    public String listSystemTasks(Authentication authentication, Model model,
+            @RequestParam(name = "searchInput", required = false) String inputSearch) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -38,12 +41,9 @@ public class TaskController
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
-        if(inputSearch!=null)
-        {
+        if (inputSearch != null) {
             model.addAttribute("tasks", taskRepository.getSystemTasksFiltered(username, inputSearch));
-        }
-        else
-        {
+        } else {
             model.addAttribute("tasks", taskRepository.getSystemTasks(username));
         }
 
@@ -51,8 +51,8 @@ public class TaskController
     }
 
     @GetMapping("/create")
-    public String listUserTasks(Authentication authentication, Model model, @RequestParam(name="searchInput", required=false)String inputSearch)
-    {
+    public String listUserTasks(Authentication authentication, Model model,
+            @RequestParam(name = "searchInput", required = false) String inputSearch) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -60,12 +60,9 @@ public class TaskController
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
-        if(inputSearch!=null)
-        {
+        if (inputSearch != null) {
             model.addAttribute("tasks", taskRepository.getUserTasksFiltered(username, inputSearch));
-        }
-        else
-        {
+        } else {
             model.addAttribute("tasks", taskRepository.getUserTasks(username));
         }
 
@@ -74,8 +71,7 @@ public class TaskController
     }
 
     @GetMapping("/detailed")
-    public String detailedTask(Authentication authentication, Model model, @RequestParam(name="task")int id)
-    {
+    public String detailedTask(Authentication authentication, Model model, @RequestParam(name = "task") int id) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -87,16 +83,28 @@ public class TaskController
         Long idLong = new Long(id);
         Optional<TaskCreateUdataset> optTask = taskRepository.findTaskCreateUdatasetById(idLong);
 
-        if(optTask.isPresent())
-        {
+        if (optTask.isPresent()) {
             TaskCreateUdataset task = optTask.get();
+            Optional<Dataset> optDataset = datasetRepository.findById(task.getDataset().getName());
 
-            model.addAttribute("task", task);
-            model.addAttribute("licenses", task.toStringLicenses());
-            model.addAttribute("languages", task.toStringLanguages());
-            model.addAttribute("datatypes", task.toStringDatatypes());
-            model.addAttribute("dates", task.toStringDate());
-            model.addAttribute("parameters", task.toStringParameters());
+            if (optDataset.isPresent()) {
+                Dataset dataset = optDataset.get();
+                String sDatasetsNames = "";
+
+                for(Dataset systemDataset : task.getDatasets())
+                {
+                    sDatasetsNames += systemDataset.getName()+ " ";
+                }
+
+                model.addAttribute("dataset", dataset);
+                model.addAttribute("systemdatasets", sDatasetsNames);
+                model.addAttribute("task", task);
+                model.addAttribute("licenses", task.toStringLicenses());
+                model.addAttribute("languages", task.toStringLanguages());
+                model.addAttribute("datatypes", task.toStringDatatypes());
+                model.addAttribute("dates", task.toStringDate());
+            }
+
         }
 
         return "user_task_detailed";

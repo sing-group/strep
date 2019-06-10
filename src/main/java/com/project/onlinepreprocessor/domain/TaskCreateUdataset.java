@@ -462,33 +462,12 @@ public class TaskCreateUdataset extends Task
 
         if(dateTo!=null && dateFrom!=null)
         {
-            stringBuilder.append("From "+this.getDateFrom().toString()+" until "+ this.getDateTo().toString());
+            stringBuilder.append(this.getDateFrom().toString()+"-"+ this.getDateTo().toString());
         }
         else
         {
             stringBuilder.append("Not dates selected");
         }
-
-        return stringBuilder.toString();
-    }
-
-    //Modify this method to show only the selected parameters: by spam or by datatypes
-    public String toStringParameters()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append("File number: " + this.limitNumberOfFiles +"\n");
-        stringBuilder.append("%Spam: " + this.limitPercentageSpam +"\n");
-        stringBuilder.append("% Spam .eml: "+ this.limitSpamPercentageEml+"\n");
-        stringBuilder.append("% Spam .warc: " + this.limitSpamPercentageWarc + "\n");
-        stringBuilder.append("% Spam .tsms: " + this.limitSpamPercentageTsms + "\n");
-        stringBuilder.append("% Spam .twtid: " + this.limitSpamPercentageTwtid +"\n");
-        stringBuilder.append("% Spam .tytb: " + this.limitSpamPercentageTytb + "\n");
-        stringBuilder.append("% Ham .eml: "+ this.limitHamPercentageEml+"\n");
-        stringBuilder.append("% Ham .warc: " + this.limitHamPercentageWarc + "\n");
-        stringBuilder.append("% Ham .tsms: " + this.limitHamPercentageTsms + "\n");
-        stringBuilder.append("% Ham .twtid: " + this.limitHamPercentageTwtid +"\n");
-        stringBuilder.append("% Ham .tytb: " + this.limitHamPercentageTytb + "\n");
 
         return stringBuilder.toString();
     }
