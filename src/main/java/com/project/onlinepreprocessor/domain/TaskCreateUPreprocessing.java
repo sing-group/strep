@@ -56,13 +56,14 @@ public class TaskCreateUPreprocessing extends Task
      * @param csv the name of the csv generated
      * @param date the date of upload of the task
      */
-    public TaskCreateUPreprocessing(Dataset dataset, String state, String message, String description, byte[] pipeline, String csv, Date date)
+    public TaskCreateUPreprocessing(Dataset dataset, String state, String message, String description, byte[] pipeline, String csv, Date date, Dataset preprocessDataset)
     {
         super(dataset, state, message);
         this.description = description;
         this.pipeline = pipeline;
         this.csv = csv;
         this.date = date;
+        this.preprocessDataset = preprocessDataset;
     }
 
     /**

@@ -176,3 +176,6 @@ $('#deleteDatasetModal').on('show.bs.modal', function(event)
  buttonConfirm.attr("href", href);
 });
 
+$(function () {
+    $('[data-toggle="popover"]').popover()
+  })

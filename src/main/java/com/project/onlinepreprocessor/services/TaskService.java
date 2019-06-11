@@ -1,5 +1,7 @@
 package com.project.onlinepreprocessor.services;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import com.project.onlinepreprocessor.domain.FileDatatypeType;
 import com.project.onlinepreprocessor.domain.Language;
 import com.project.onlinepreprocessor.domain.License;
 import com.project.onlinepreprocessor.domain.TaskCreateSdataset;
+import com.project.onlinepreprocessor.domain.TaskCreateUPreprocessing;
 import com.project.onlinepreprocessor.domain.TaskCreateUdataset;
 import com.project.onlinepreprocessor.repositories.DatasetRepository;
 import com.project.onlinepreprocessor.repositories.DatatypeRepository;
@@ -25,6 +28,7 @@ import com.project.onlinepreprocessor.repositories.LicenseRepository;
 import com.project.onlinepreprocessor.repositories.TaskRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,6 +55,9 @@ public class TaskService {
     @Autowired
     private DatasetService datasetService;
 
+    @Value("${pipeline.storage}")
+    private String PIPELINE_PATH;
+
     public void addNewSystemTask(Dataset dataset) {
         TaskCreateSdataset taskCreateSdataset = new TaskCreateSdataset(dataset, "waiting", null);
         dataset.setTask(taskCreateSdataset);
@@ -58,7 +65,7 @@ public class TaskService {
         datasetRepository.save(dataset);
     }
 
-    //TODO: add pipeline and username to parameters of this method and call to method addUserDataset of datasetService
+
     public String addNewUserDatasetTask(Dataset dataset, String[] licenses, String[] languages, String[] datatypes,
             String[] datasets, String dateFrom, String dateTo, int inputSpamEml, int inputHamEml, int inputSpamWarc,
             int inputHamWarc, int inputSpamTsms, int inputHamTsms, int inputSpamTytb, int inputHamTytb,
@@ -147,6 +154,63 @@ public class TaskService {
         }
 
         return message;
+    }
+
+    public String createPreprocessingTask(Dataset dataset, TaskCreateUPreprocessing task, MultipartFile pipeline)
+    {
+        String message = "";
+        try
+        {
+            TaskCreateUPreprocessing toCreateTask = new TaskCreateUPreprocessing(null, "waiting", null, task.getDescription(), pipeline.getBytes(), null, new Date(), dataset);
+            taskRepository.save(toCreateTask);
+            message = "Task successfully created";
+        }
+        catch(IOException ioException)
+        {
+            message = "Unable to access the pipeline";
+            return message;
+        }
+
+        return message;
+        
+    }
+
+    public String downloadPipeline(Long taskId, String username)
+    {
+        String fileName = null;
+
+        
+        TaskCreateUPreprocessing task = taskRepository.findTaskCreateUPreprocessingById(taskId);
+        Dataset dataset = task.getPreprocessDataset();
+        String name = dataset.getName()+taskId;
+        if(dataset.getAuthor().equals(username))
+        {
+            java.io.File file = new java.io.File(PIPELINE_PATH+name);
+            if(file.exists())
+            {
+                fileName = name;
+            }
+            else
+            {
+                byte[] pipeline = task.getPipeline();
+
+                FileOutputStream fos;
+
+                try
+                {
+                    fos = new FileOutputStream(file);
+                    fos.write(pipeline);
+                    fos.close();
+
+                    fileName = name;
+                }
+                catch(IOException ioException)
+                {
+                    return null;
+                }
+            } 
+        }
+        return fileName;
     }
     
 

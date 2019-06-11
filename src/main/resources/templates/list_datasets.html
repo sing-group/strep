@@ -357,14 +357,14 @@
 
                                             <td>
                                                 <a class="btn btn-small btn-info"
-                                                    th:href="@{'/dataset/preprocess?id=' + ${dataset.name}}">
+                                                    th:href="@{'/task/preprocess?id=' + ${dataset.name}}">
                                                     <i class="fas fa-tasks"></i>
                                                 </a>
                                             </td>
 
                                             <td>
                                                 <a class="btn btn-small btn-info"
-                                                    th:href="@{'/task/detailed?id=' + ${dataset.name}}">
+                                                    th:href="@{'/task/detailed?task=' + ${dataset.task.id}}">
                                                     <i class="fas fa-info-circle"></i>
                                                 </a>
                                             </td>
