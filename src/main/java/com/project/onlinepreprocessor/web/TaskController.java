@@ -55,7 +55,7 @@ public class TaskController {
     // TODO: Implement this method
     @GetMapping("/upload")
     public String listSystemTasks(Authentication authentication, Model model,
-            @RequestParam(name = "searchInput", required = false) String inputSearch) {
+            @RequestParam(name = "searchInput", required = false) String inputSearch, @RequestParam(name="state", required=false, defaultValue="waiting")String state) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -63,10 +63,12 @@ public class TaskController {
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
+        model.addAttribute("state", state);
+
         if (inputSearch != null) {
-            model.addAttribute("tasks", taskRepository.getSystemTasksFiltered(username, inputSearch));
+            model.addAttribute("tasks", taskRepository.getSystemTasksFiltered(username, inputSearch, state));
         } else {
-            model.addAttribute("tasks", taskRepository.getSystemTasks(username));
+            model.addAttribute("tasks", taskRepository.getSystemTasks(username, state));
         }
 
         return "system_task_list";
@@ -74,7 +76,7 @@ public class TaskController {
 
     @GetMapping("/create")
     public String listUserTasks(Authentication authentication, Model model,
-            @RequestParam(name = "searchInput", required = false) String inputSearch) {
+            @RequestParam(name = "searchInput", required = false) String inputSearch, @RequestParam(name="state", required=false, defaultValue="waiting")String state) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -82,10 +84,12 @@ public class TaskController {
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
+        model.addAttribute("state", state);
+        
         if (inputSearch != null) {
-            model.addAttribute("tasks", taskRepository.getUserTasksFiltered(username, inputSearch));
+            model.addAttribute("tasks", taskRepository.getUserTasksFiltered(username, inputSearch, state));
         } else {
-            model.addAttribute("tasks", taskRepository.getUserTasks(username));
+            model.addAttribute("tasks", taskRepository.getUserTasks(username, state));
         }
 
         return "user_task_list";
@@ -223,7 +227,7 @@ public class TaskController {
                 FileInputStream fis = new FileInputStream(new java.io.File(PIPELINE_PATH + fileName));
                 HttpHeaders httpHeaders = new HttpHeaders();
                 httpHeaders.set("content-type", "application/xml");
-                httpHeaders.set("content-disposition", "attachment;" + "filename=" + fileName + ".xml");
+                httpHeaders.set("content-disposition", "attachment;" + "filename=" + fileName);
                 ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
                         new InputStreamResource(fis), httpHeaders, HttpStatus.CREATED);
                 return response;

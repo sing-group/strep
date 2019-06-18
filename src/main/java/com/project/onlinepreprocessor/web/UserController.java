@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 
@@ -160,14 +161,16 @@ public class UserController{
         model.addAttribute("username", sessionUsername);
 
         Optional<User> optUser = userRepository.findById(username);
-        ArrayList<Dataset> userDatasets = datasetRepository.getUserDatasets(username);
+        ArrayList<Dataset> systemDatasets = datasetRepository.getUserDatasets(username, "systemdataset");
+        ArrayList<Dataset> userDatasets = datasetRepository.getUserDatasets(username, "userdataset");
         Iterable<Permission> permissions = permissionRepository.findAll();
 
         if(optUser.isPresent())
         {
             User user = optUser.get();
             model.addAttribute("user", user);
-            model.addAttribute("numDatasets", userDatasets.size());
+            model.addAttribute("userdatasetsnum", userDatasets.size());
+            model.addAttribute("systemdatasetsnum", systemDatasets.size());
             model.addAttribute("permissions", permissions);
         }
 
@@ -205,36 +208,13 @@ public class UserController{
     }
 
     @PostMapping("editpermissions")
-    public String editUserPermissions(@RequestParam("permission")int permission,@RequestParam("username")String username, Authentication authentication, Model model)
+    public String editUserPermissions(@RequestParam("permission")int permission,@RequestParam("username")String username, Authentication authentication, Model model, RedirectAttributes redirectAttributes)
     {
-
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
-        String sessionUsername = userDetails.getUsername();
-        String authority = userService.getPermissionsByUsername(sessionUsername);
-        model.addAttribute("authority", authority);
-        model.addAttribute("username", sessionUsername);
-        
-
         String message = userService.editPermissions(permission, username);
-        model.addAttribute("message", message);
+        redirectAttributes.addAttribute("username", username);
+        redirectAttributes.addAttribute("message", message);
 
-        String maxUserPermission = userService.getPermissionsByUsername(username);
-        model.addAttribute("maxUserPermission", maxUserPermission);
-
-        Optional<User> optUser = userRepository.findById(username);
-        ArrayList<Dataset> userDatasets = datasetRepository.getUserDatasets(username);
-        Iterable<Permission> permissions = permissionRepository.findAll();
-
-        if(optUser.isPresent())
-        {
-            User user = optUser.get();
-            model.addAttribute("user", user);
-            model.addAttribute("numDatasets", userDatasets.size());
-            model.addAttribute("permissions", permissions);
-        }
-
-        return "detailed_user";
+        return "redirect:/user/detailed";
     }
     
 }

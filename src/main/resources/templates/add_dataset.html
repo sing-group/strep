@@ -24,7 +24,7 @@
             <div class="col-8 form-bg">
                 <form action="#" th:action="@{/dataset/upload}" th:object="${dataset}" enctype="multipart/form-data" method="POST">
                     <img class="header-logo" src="/images/databaseblue.svg" alt="databaseblue.svg" height="64" width="64">
-                    <h2 class="main-text text-center">Upload dataset</h2>
+                    <h2 class="main-text-header text-center">Upload dataset</h2>
                         <div class="form-group">
                         <input type="text" class="form-control" name="name" placeholder="Name of the dataset" required="required" onchange="dynamicUrl(this.value)">
                         <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Dataset name error</label>

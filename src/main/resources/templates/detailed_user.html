@@ -4,9 +4,13 @@
 <head>
     <title>Online Preprocessor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lora&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -16,230 +20,166 @@
         </div>
 
         <div class="row page-content pre-footer">
-            <div class="col-3">
+            <div class="col-1">
 
             </div>
 
-            <div class="col-6  main-div-bg">
-                <div class="thick-border-bottom">
-                <img class="header-logo" src="/images/userdatasets.svg" alt="user.svg" height="64" width="64">
-                <h3 class="main-text text-center">User details</h3>
-                </div>
-                <div class="page-content">
+            <div class="col-10">
+                <div class="jumbotron border border-info">
                     <div class="row">
-                        <div class="col-2">
-
+                        <div class="col-2 text-center">
+                            <img src="/images/authorplaceholder.svg" alt="userphoto.svg" width="64" height="64">
                         </div>
+
                         <div class="col-4 text-center">
-                            <h5 class="main-text">Photo</h5>
-                        </div>
 
-                        <div class="col-4">
-                            <img class="header-logo" src="/images/authorplaceholder.svg" alt="authorplaceholder.svg" height="64" width="64">   
-                        </div>
-                        <div class="col-2">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Username</h5>
-                        </div>
-
-                        <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${user.username}"
-                                            readonly>
-                                    </div>
-                        </div>
-
-                        <div class="col-2">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Email</h5>
-                        </div>
-
-                        <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${user.email}"
-                                            readonly>
-                                    </div>
-                        </div>
-
-                        <div class="col-2">
+                            <p class="title-text">User details</p>
                             <div class="row">
-                                <div class="col-2">
-
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Username</p>
                                 </div>
 
-                                <div class="col-6">
-                                    <p class="main-text">Verified: </p>
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${user.username}"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Email</p>
                                 </div>
 
-                                <div class="col-2">
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${user.email}"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Confirmed</p>
+                                </div>
+
+                                <div class="col-6 text-center">
                                     <div th:if="${user.confirmedAccount}">
-                                        <img src="/images/tick.svg" alt="tick.svg" height="16" width="16">
+                                        <img src="/images/tick.svg" alt="Confirmed" height="16" width="16">
                                     </div>
+
                                     <div th:unless="${user.confirmedAccount}">
-                                        <img src="/images/warning.svg" alt="warning.svg" height="16" width="16">
+                                        <img src="/images/warning.svg" alt="Not confirmed" height="16" width="16">
                                     </div>
                                 </div>
-
-                                <div class="col-2">
-
-                                </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Name</h5>
-                        </div>
-
-                        <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${user.name}"
-                                            readonly>
-                                    </div>
-                        </div>
-
-                        <div class="col-2">
-                            
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-
-                        <div class="col-2">
-
-                        </div>
-                        <div class="col-4 text-center">
-                            <h5 class="main-text">Surname</h5>
-                        </div>
-
-                        <div class="col-4">
-                                <div class="form-group">
-                                        <input type="text" class="form-control aligned-input" th:attr="value = ${user.surname}"
-                                            readonly>
-                                    </div>
-                        </div>
-
-                        <div class="col-2">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-
-                            <div class="col-2">
-    
-                            </div>
-                            <div class="col-4 text-center">
-                                <h5 class="main-text">Uploaded datasets</h5>
-                            </div>
-    
-                            <div class="col-4">
-                                    <div class="form-group">
-                                            <input type="text" class="form-control aligned-input" th:attr="value = ${numDatasets}"
-                                                readonly>
-                                        </div>
-                            </div>
-    
-                            <div class="col-2">
-    
-                            </div>
-                        </div>
-                    <div class="row page-content">
-
-                            <div class="col-2">
-    
-                                </div>
-                                <div class="col-4 text-center">
-                                    <h5 class="main-text">User permissions</h5>
-                                </div>
-        
-                                <div class="col-4">
-                                        <form action="#" th:action="@{/user/editpermissions}" method="POST">
-                                        <ul class="list-group">
-                                            <div th:each="permission : ${permissions}">
-                                                <li  class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-8 text-center">
-                                                            <p class="main-text" th:text="${permission.name}"></p>
-                                                        </div>
-                                                        <div class="col-4">
-                                                            <div class="form-group">
-                                                                <div th:if="${permission.name} == ${maxUserPermission}">
-                                                                <input type="radio" name="permission" th:attr="value = ${permission.id}" checked>
-                                                                </div>
-
-                                                                <div th:unless="${permission.name} == ${maxUserPermission}">
-                                                                    <input type="radio" name="permission" th:attr="value = ${permission.id}">
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </div>
-                                        </ul>
-                                </div>
-        
-                                <div class="col-2">
-        
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Name</p>
                                 </div>
 
-                    </div>
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${user.name}"></p>
+                                </div>
+                            </div>
 
-                    <div class="row page-content">
-                        <div class="col-2">
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Surname</p>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${user.surname}"></p>
+                                </div>
+                            </div>
 
                         </div>
 
-                        <div class="col-4">
-                            <div class="form-group">
+
+                        <div class="col-3 text-center">
+                            <p class="title-text">Statistics</p>
+
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Uploaded datasets</p>
+                                </div>
+
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${systemdatasetsnum}"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <p class="title-text">Created datasets</p>
+                                </div>
+
+                                <div class="col-6 text-center">
+                                    <p class="normal-text" th:text="${userdatasetsnum}"></p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-3 text-center">
+
+                            <p class="title-text">Permissions</p>
+                            <form action="#" th:action="@{/user/editpermissions}" method="POST">
                                 <input type="hidden" name="username" th:attr="value = ${user.username}">
-                                <input type="submit" class="form-control submit-button" value="Edit permissions">
-                                </form>
-                            </div>
-                        </div>
+                                <ul class="list-group">
+                                    <div th:each="permission : ${permissions}">
+                                        <li class="list-group-item text-center">
+                                            <div class="row">
+                                                <div class="col-8 ">
+                                                    <p class="title-text" th:text="${permission.name}"></p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <div th:if="${permission.name} == ${maxUserPermission}">
+                                                            <input type="radio" name="permission"
+                                                                th:attr="value = ${permission.id}" checked>
+                                                        </div>
 
-                        <div class="col-4">
-                            <div class="form-group">
-                                <form action="#" th:action="@{/user/delete}" method="GET">
-                                    <input type="hidden" name="username" th:attr="value = ${user.username}">
-                                    <input type="submit" class="form-control reject-button" value="Delete user">
-                                </form>
-                            </div>
-                        </div>
+                                                        <div th:unless="${permission.name} == ${maxUserPermission}">
+                                                            <input type="radio" name="permission"
+                                                                th:attr="value = ${permission.id}">
+                                                        </div>
 
-                        <div class="col-2">
-
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>
+                                <p class="title-text">Edit permissions</p>
+                                <button type="submit" class="btn btn-small btn-warning">
+                                    <i class="fas fa-key"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-5">
+
+                        </div>
+
+                        <div class="col-2 text-center">
+                            <p class="title-text">Delete user</p>
+                            <form action="#" th:action="@{/user/delete}" method="GET">
+                                <input type="hidden" name="username" th:attr="value = ${user.username}">
+                                <button type="submit" class="btn btn-small btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+
+                            </form>
+                        </div>
+
+                        <div class="col-5">
+
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-3">
+            <div class="col-1">
 
-                </div>
+            </div>
 
         </div>
 
@@ -247,11 +187,14 @@
 
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 </body>
 

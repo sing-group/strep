@@ -24,7 +24,7 @@
             <div class="col-8 form-bg">
                 <form action="#" th:action="@{/license/add}" th:object="${license}" method="POST">
                     <img class="header-logo" src="/images/key.svg" alt="key.svg" height="64" width="64">
-                    <h2 class="main-text text-center">Upload license</h2>
+                    <h2 class="main-text-header text-center">Upload license</h2>
                         <div class="form-group">
                             <input class="form-control" type="text" name="name" placeholder="Name of the license" required/>
                             <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>

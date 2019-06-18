@@ -182,7 +182,7 @@ public class TaskService {
         
         TaskCreateUPreprocessing task = taskRepository.findTaskCreateUPreprocessingById(taskId);
         Dataset dataset = task.getPreprocessDataset();
-        String name = dataset.getName()+taskId;
+        String name = dataset.getName()+taskId+".xml";
         if(dataset.getAuthor().equals(username))
         {
             java.io.File file = new java.io.File(PIPELINE_PATH+name);

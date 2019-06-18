@@ -4,9 +4,10 @@
 <head>
     <title>Online Preprocessor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
@@ -40,7 +41,7 @@
 
             <div class="col-8 form-bg">
                 <img class="header-logo" src="/images/permissions.svg" alt="permissions.svg" height="64" width="64">
-                <h2 class="main-text text-center">Permission requests</h2>
+                <h2 class="main-text-header text-center">Permission requests</h2>
 
                 <div class="row">
                     <div class="col-8">
@@ -49,102 +50,74 @@
 
                     <div class="col-4">
                         <form class="form-inline">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="searchInput" placeholder="Search for an username">
-                            <input type="submit" class="form-control submit-button" value="search">
-                        </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="searchInput"
+                                    placeholder="Search for an username">
+                                <input type="submit" class="form-control submit-button" value="search">
+                            </div>
                         </form>
                     </div>
                 </div>
-                    <div class="card">
-                        <div class="card-header top-bg">
-                            <div class="row">
-                                <div class="col-4 text-center">
-                                    <h5 class="topdiv-text">Username</h5>
-                                </div>
 
-                                <div class="col-4 text-center">
-                                    <h5 class="topdiv-text">Permission</h5>
-                                </div>
+                <div class="table-responsive text-center">
+                    <table class="table">
+                        <thead>
+                            <th scope="col">Username</th>
+                            <th scope="col">Permission</th>
+                            <th scope="col">Actions</th>
+                        </thead>
 
-                                <div class="col-4 text-center">
-                                    <h5 class="topdiv-text">Actions</h5>
-                                </div>
+                        <tbody>
+                            <div th:each="permissionRequest : ${permissionRequests}">
+                                <tr>
+                                <th scope="row" th:text="${permissionRequest.user.username}"></th>
+                                <td th:text="${permissionRequest.permission.name}"></td>
+                                <td>
+                                    <div class="btn-group">
+
+                                        <form action="/permission/accept" method="POST">
+                                            <input type="hidden" name="username" th:attr="value = ${permissionRequest.user.username}">
+                                            <input type="hidden" name="permission" th:attr="value = ${permissionRequest.permission.id}">
+                                            <button type="submit" class="btn btn-small btn-success">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </form>
+
+                                        <form action="/permission/reject" method="POST"> 
+                                            <input type="hidden" name="username" th:attr="value = ${permissionRequest.user.username}">
+                                            <input type="hidden" name="permission" th:attr="value = ${permissionRequest.permission.id}">
+                                            <button type="submit" class="btn btn-small btn-danger">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </form>
+
+                                    </div>
+                                </td>
+                                </tr>
                             </div>
-                        </div>
-
-                        <div class="card-body">
-                            <ul class="list-group">
-                                <div th:each="permissionRequest : ${permissionRequests}">
-                                    <li class="list-group-item">
-                                        <div class="row">
-                                            <div class="col-4 text-center">
-                                                <a href="#" th:href="@{/user/detailed(username=${permissionRequest.user.username})}"
-                                                 class="main-text" th:text="${permissionRequest.user.username}"></a>
-                                            </div>
-
-                                            <div class="col-4 text-center">
-                                                <p class="main-text" th:text="${permissionRequest.permission.name}"></p>
-                                            </div>
-
-                                            <div class="col-4 text-center">
-                                                <div class="row">
-                                                    <div class="col-2">
-
-                                                    </div>
-
-                                                    <div class="col-4">
-                                                        <form action="#" th:action="@{/permission/accept}" method="post">
-                                                        <div class="form-group">
-                                                            <input type="hidden" name="username" th:attr="value = ${permissionRequest.user.username}">
-                                                            <input type="hidden" name="permission" th:attr="value = ${permissionRequest.permission.id}">
-                                                            <input type="submit" class="form-control submit-button" value="Accept">
-                                                        </div>
-                                                        </form>
-                                                    </div>
-
-                                                    <div class="col-4">
-                                                            <form action="#" th:action="@{/permission/reject}" method="post">
-                                                                <div class="form-group">
-                                                                    <input type="hidden" name="username" th:attr="value = ${permissionRequest.user.username}">
-                                                                    <input type="hidden" name="permission" th:attr="value = ${permissionRequest.permission.id}">
-                                                                    <input type="submit" class="form-control reject-button" value="Reject">
-                                                                </div>
-                                                                </form>
-                                                                
-                                                               
-                                                            
-                                                    </div>
-
-
-                                                    <div class="col-2">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </div>
-                            </ul>
-                        </div>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
-            <div class="col-2">
-
-            </div>
-            </div>
-
-            <div th:include="footer.html"></div>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+        <div class="col-2">
+
+        </div>
+    </div>
+
+    <div th:include="footer.html"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

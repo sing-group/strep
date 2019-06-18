@@ -21,14 +21,26 @@ public interface TaskRepository extends CrudRepository<Task, Long>
     @Query("select t from TaskCreateSdataset t where t.dataset.author=?1 and t.dataset.name LIKE %?2%")
     public ArrayList<Task> getSystemTasksFiltered(String username, String inputSearch);
 
+    @Query("select t from TaskCreateSdataset t where t.dataset.author=?1 and t.dataset.name LIKE %?2% and t.state=?3")
+    public ArrayList<Task> getSystemTasksFiltered(String username, String inputSearch, String state);
+
+    @Query("select t from TaskCreateSdataset t where t.dataset.author=?1 and t.state=?2")
+    public ArrayList<Task> getSystemTasks(String username, String state);
+
     @Query("select t from TaskCreateUdataset t where t.dataset.author=?1")
     public ArrayList<Task> getUserTasks(String username);
+
+    @Query("select t from TaskCreateUdataset t where t.dataset.author=?1 and t.state=?2")
+    public ArrayList<Task> getUserTasks(String username, String state);
 
     @Query("select t from TaskCreateUPreprocessing t where t.id=?1")
     public TaskCreateUPreprocessing findTaskCreateUPreprocessingById(Long id);
 
     @Query("select t from TaskCreateUdataset t where t.dataset.author=?1 and t.dataset.name LIKE %?2%")
     public ArrayList<Task> getUserTasksFiltered(String username, String inputSearch);
+
+    @Query("select t from TaskCreateUdataset t where t.dataset.author=?1 and t.dataset.name LIKE %?2% and t.state=?3")
+    public ArrayList<Task> getUserTasksFiltered(String username, String inputSearch, String state);
 
     @Query("select t from TaskCreateUdataset t where t.id=?1")
     public Optional<TaskCreateUdataset> findTaskCreateUdatasetById(long id);

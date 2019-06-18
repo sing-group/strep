@@ -42,7 +42,6 @@ public class LicenseController
 
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
-        String message = "";
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
@@ -181,7 +180,7 @@ public class LicenseController
 
     }
 
-    @PostMapping("/delete")
+    @GetMapping("/delete")
     public String deleteLicense(Authentication authentication, Model model, @RequestParam("name")String name, RedirectAttributes redirectAttributes)
     {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();

@@ -20,53 +20,6 @@
 
         </div>
 
-        <div class="modal fade" id="datasetModal" tabindex="-1" role="dialog" aria-labelledby="datasetModal"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header top-bg">
-                        <h5 class="modal-title topdiv-text" id="datasetModalLabel">Dataset info</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body main-div-bg">
-                        <div th:fragment="dataset" id="dataset-info">
-                            <h5 class="main-text text-center">Dataset name</h5>
-                            <p class="main-text text-center" th:text="${dataset.name}"></p>
-
-                            <h5 class="main-text text-center">Description</h5>
-                            <p class="main-text text-center" th:text="${dataset.description}"></p>
-
-                            <h5 class="main-text text-center">Upload date</h5>
-                            <p class="main-text text-center" th:text="${dataset.uploadDate}"></p>
-
-                            <h5 class="main-text text-center">Percentage spam</h5>
-                            <p class="main-text text-center" th:text="${dataset.spamPercentage}"></p>
-
-                            <h5 class="main-text text-center">Percentage ham</h5>
-                            <p class="main-text text-center" th:text="${dataset.hamPercentage}"></p>
-
-                            <h5 class="main-text text-center">Languages</h5>
-                            <div th:each="language : ${dataset.language}">
-                                <p class="main-text text-center" th:text="${language.language}"></p>
-                            </div>
-
-                            <h5 class="main-text text-center">Data types</h5>
-                            <div th:each="datatype : ${dataset.datatypes}">
-                                <p class="main-text text-center" th:text="${datatype.datatype}"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer top-bg">
-                        <div class="form-group">
-                            <button type="button" class="form-control submit-button" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div id="form">
             <form action="#" th:action="@{/dataset/create}" th:object="${dataset}" enctype="multipart/form-data" method="POST">
 
@@ -200,10 +153,10 @@
 
                         <img class="header-logo" src="/images/databaseblue.svg" alt="databaseblue.svg" width="64"
                             height="64">
-                        <h3 class="main-text text-center">Create new dataset</h3>
+                        <h3 class="main-text-header text-center">Create new dataset</h3>
 
                         <div class="page-content">
-                            <h4 class="main-text text-center">Select datasets</h4>
+                            <h4 class="main-text-header text-center">Select datasets</h4>
 
                             <div class="row">
                                 <div class="col-1">
@@ -211,131 +164,56 @@
                                 </div>
                                 <div class="col-10">
 
-                                    <div class="card">
-                                        <div class="card-header top-bg">
+                                    <div class="table-responsive text-center">
+                                        <table class="table">
+                                            <thead>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Author</th>
+                                                <th scope="col">License</th>
+                                                <th scope="col">Languages</th>
+                                                <th scope="col">Datatypes</th>
+                                                <th scope="col">Select</th>
+                                            </thead>
 
-                                            <div class="row">
-                                                <div class="col-1">
-
-                                                </div>
-
-                                                <div class="col-2 text-center">
-                                                    <h5 class="topdiv-text">Name</h5>
-                                                </div>
-
-                                                <div class="col-2 text-center">
-                                                    <h5 class="topdiv-text">License</h5>
-                                                </div>
-
-                                                <div class="col-2">
-                                                    <h5 class="topdiv-text">Languages</h5>
-                                                </div>
-
-                                                <div class="col-2">
-                                                    <h5 class="topdiv-text">Datatypes</h5>
-                                                </div>
-
-                                                <div class="col-2">
-                                                    <h5 class="topdiv-text">%Spam</h5>
-                                                </div>
-
-                                                <div class="col-1">
-
-                                                </div>
-
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="card-body">
-
-                                            <div th:fragment="datasets" class="list-group" id="datasets-list">
+                                            <tbody>
                                                 <div th:each="dataset : ${datasets}">
-                                                    <li class="list-group-item">
-                                                        <div class="row">
-                                                            <div class="col-1">
-                                                                <div class="form-group">
-                                                                    <button class="image-button" th:attr="id=${dataset.name}"
-                                                                        onclick="retrieveDatasetInfo(this.id)">
-                                                                        <img src="/images/info-button.svg" alt="info.svg"
-                                                                            height="16" width="16">
-                                                                    </button>
+                                                    <th scope="row" th:text="${dataset.name}"></th>
+                                                    <td th:text="${dataset.author}"></td>
+                                                    <td th:text="${dataset.license.name}"></td>
+                                                    <td>
+                                                            <a class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"
+                                                                href="#">
+                                                                <i class="fas fa-language"></i>
+                                                                <span class="icon-caret-down"></span>
+                                                            </a>
+                                                            <ul class="dropdown-menu">
+                                                                <div th:each="language : ${dataset.language}">
+                                                                    <li th:text="${language.language}"></li>
                                                                 </div>
-                                                            </div>
-
-                                                            <div class="col-2 text-center">
-                                                                <p class="main-text" th:text="${dataset.name}"></p>
-                                                            </div>
-
-                                                            <div class="col-2 text-center">
-                                                                <p class="main-text" th:text="${dataset.license.name}"></p>
-                                                            </div>
-
-                                                            <div class="col-2">
-                                                                <div class="text-center" th:each="language : ${dataset.language}">
-                                                                    <p class="main-text" th:text="${language.language}"></p>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-2">
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"
+                                                                href="#">
+                                                                <i class="fas fa-file-signature"></i>
+                                                                <span class="icon-caret-down"></span>
+                                                            </a>
+                                                            <ul class="dropdown-menu">
                                                                 <div th:each="datatype : ${dataset.datatypes}">
-                                                                    <div class="row">
-                                                                        <div class="col-3">
-                                                                            <div th:if="${datatype.datatype}=='.eml'">
-                                                                                <img src="/images/gmail-logo.svg" alt="gmail-logo.svg"
-                                                                                    height="16" width="16">
-                                                                            </div>
-                                                                            <div th:if="${datatype.datatype}=='.tytb'">
-                                                                                <img src="/images/youtube.svg" alt="youtube.svg"
-                                                                                    height="16" width="16">
-                                                                            </div>
-                                                                            <div th:if="${datatype.datatype}=='.twtid'">
-                                                                                <img src="/images/twitter.svg" alt="twitter.svg"
-                                                                                    height="16" width="16">
-                                                                            </div>
-                                                                            <div th:if="${datatype.datatype}=='.tsms'">
-                                                                                <img src="/images/sms.svg" alt="sms.svg"
-                                                                                    height="16" width="16">
-                                                                            </div>
-                                                                            <div th:if="${datatype.datatype}=='.warc'">
-                                                                                <img src="/images/internet.svg" alt="internet.svg"
-                                                                                    height="16" width="16">
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="col-9">
-                                                                            <p class="main-text text-center" th:text="${datatype.datatype}"></p>
-                                                                        </div>
-                                                                    </div>
+                                                                    <li th:text="${datatype.datatype}"></li>
                                                                 </div>
-                                                            </div>
-
-                                                            <div class="col-2 text-center">
-                                                                <p class="main-text" th:text="${dataset.spamPercentage}"></p>
-                                                            </div>
-
-                                                            <div class="col-1">
-                                                                <div class="form-group">
-                                                                    <input id="checkboxUpdateTable" class="form-control" type="checkbox" name="datasets"
-                                                                        th:attr="value = ${dataset.name}" onclick="updateTable(this.id)">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-2">
-
-                                                            </div>
-                                                        </div>
-                                                    </li>
+                                                            </ul>
+                                                        </td>
+                                                    <td><input id="checkboxUpdateTable" class="form-control" type="checkbox" name="datasets"
+                                                        th:attr="value = ${dataset.name}" onclick="updateTable(this.id)"></td>
                                                 </div>
-                                            </div>
+                                            </tbody>
 
-                                        </div>
+                                        </table>
                                     </div>
-
                                     <div class="page-content">
 
-                                        <h4 class="main-text text-center">Dataset metadata</h4>
+                                        <h4 class="main-text-header text-center">Dataset metadata</h4>
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="name" placeholder="Name of the dataset"
                                                 required="required" onchange="dynamicUrl(this.value)">
@@ -414,8 +292,6 @@
 
                                                     </div>
                                                     <div class="col-8 form-group text-center">
-                                                        <br>
-                                                        <br>
                                                         <input class="form-control" type="radio" name="mode" value="spam" checked>
                                                         <p class="main-text">Percentage spam</p>
                                                         <input type="number" class="form-control" placeholder="Spam%" id="inputSpamPercentage"

@@ -4,10 +4,10 @@
 <head>
     <title>Online Preprocessor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
@@ -41,84 +41,114 @@
 
             <div class="col-8 form-bg">
                 <img class="header-logo" src="/images/clipboard.svg" alt="clipboard.svg" height="64" width="64">
-                <h2 class="main-text text-center">System tasks</h2>
+                <h2 class="main-text-center text-center">Extracting metadata tasks</h2>
 
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-6">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"
+                                    href="/task/upload?state=waiting">Waiting</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''"
+                                    href="/task/upload?state=executing">Executing</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''"
+                                    href="/task/upload?state=failed">Failed</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" th:classappend="${state=='success'} ? 'active' : ''"
+                                    href="/task/upload?state=success">Success</a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="col-2">
 
                     </div>
 
                     <div class="col-4">
                         <form class="form-inline">
                             <div class="form-group">
-                                <input type="text" class="form-control" name="searchInput" placeholder="Search by dataset name">
-                                <input type="submit" class="form-control submit-button" value="search">
+                                <form action="/tasks/upload" method="GET">
+                                    <input type="hidden" name="state" th:attr="value = ${state}">
+                                    <input type="text" class="form-control" name="searchInput"
+                                        placeholder="Search by dataset name">
+                                    <input type="submit" class="form-control submit-button" value="search">
+                                </form>
+
                             </div>
                         </form>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header top-bg">
-                        <div class="row">
-                            <div class="col-4">
-                                <h4 class="topdiv-text text-center">State</h4>
-                            </div>
 
-                            <div class="col-4">
-                                <h4 class="topdiv-text text-center">Message</h4>
-                            </div>
+                <div class="table-responsive text-center">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Dataset</th>
+                                <th scope="col">Message</th>
+                            </tr>
+                        </thead>
 
-                            <div class="col-4">
-                                <h4 class="topdiv-text text-center">Dataset</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <ul class="list-group">
+                        <tbody>
                             <div th:each="task : ${tasks}">
-                                <li class="list-group-item">
-                                        <div class="row">
-                                            <div class="col-4 text-center">
-                                                <div th:switch="${task.state}">
-                                                    <img th:case="waiting" src="/images/clock.svg" alt="clock.svg" height="32" width="32">
-                                                    <img th:case="failed" src="/images/warning.svg" alt="warning.svg" height="32" width="32">
-                                                    <img th:case="success" src="/images/tick.svg" alt="tick.svg" height="32" width="32">
-                                                    <img th:case="executing" src="/images/process.svg" alt="executing.svg" height="32" width="32">
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div th:if="${task.message}!=null">
-                                                    <p class="main-text text-center" th:text="${task.message}"></p>
-                                                </div>
-                                                <div th:unless="${task.message}!=null">
-                                                    <p class="main-text text-center">Not message yet</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <p class="main-text text-center" th:text="${task.dataset.name}"></p>
-                                            </div>
-                                        </div> 
-                                </li>
+                                <tr>
+                                    <td th:text="${task.dataset.uploadDate}">
+
+                                    </td>
+
+                                    <td th:text="${task.dataset.name}">
+
+                                    </td>
+                                    <td>
+                                        <div th:if="${task.message}==null">
+                                            <button type="button" class="btn btn-small btn-danger" data-toggle="popover"
+                                                title="Message" data-content="Not message provided">
+                                                <i class="fas fa-envelope"></i>
+                                            </button>
+                                        </div>
+
+                                        <div th:if="${task.message}!=null">
+                                            <button type="button" class="btn btn-small btn-danger" data-toggle="popover"
+                                                title="Message" th:attr="data-content = ${task.message}">
+                                                <i class="fas fa-envelope"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
                             </div>
-                        </ul>
-                    </div>
+
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        <div class="col-2">
+            <div class="col-2">
 
+            </div>
         </div>
+
+        <div th:include="footer.html"></div>
     </div>
 
-    <div th:include="footer.html"></div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/jqueryFunctions.js"></script>
 </body>
 
 </html>
