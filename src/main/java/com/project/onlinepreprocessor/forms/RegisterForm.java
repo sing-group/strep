@@ -11,7 +11,7 @@ public class RegisterForm
     private String username;
 
     @Email(message="Provide a valid email.")
-    @Size(min=15,max=40)
+    @Size(min=15,max=50)
     private String email;
 
     @Size(min=8, max=30,message="Password must have at least 8 characters")

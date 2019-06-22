@@ -20,10 +20,10 @@
                           <a class="nav-link" id="topdivhome" href="/">Home</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" id="topdivpublic" href="/dataset/public">Public datasets</a>
+                          <a class="nav-link" id="topdivpublic" href="/dataset/public" th:text="#{public.home.title}"></a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" id="topdivregister" href="/user/register">Register</a>
+                          <a class="nav-link" id="topdivregister" href="/user/register" th:text="#{signup.home.title}"></a>
                         </li>
                       </ul>       
                     </div>
@@ -37,29 +37,29 @@
 
                     <form action="#" th:action="@{/user/register}" th:object="${registerForm}" method="POST">
                         <img class="header-logo" src="/images/signup.svg" alt="logo.png" height="64" width="64">
-                        <h2 class="main-text text-center">Sign up</h2>
+                        <h2 class="main-text text-center" th:text="#{register.title}"></h2>
                             <div class="form-group">
-                            <input type="text" class="form-control" name="username" placeholder="Username" required="required">
+                            <input type="text" class="form-control" name="username" th:attr="placeholder = #{register.placeholder.username}" required="required">
                             <label class="error-label" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</label>
                             </div>
                             <div class="form-group">
-                            <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+                            <input type="password" class="form-control" name="password" th:attr="placeholder = #{register.placeholder.password}" required="required">
                             <label class="error-label" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</label>
                             </div>
                             <div class="form-group">
-                            <input type="email" class="form-control" name="email" placeholder="Email" required="required">
+                            <input type="email" class="form-control" name="email" th:attr="placeholder = #{register.placeholder.email}" required="required">
                             <label class="error-label" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</label>
                             </div>
                             <div class="form-group">
-                            <input class="form-control" type="text" name="name" placeholder="Name" required="required">
+                            <input class="form-control" type="text" name="name" th:attr="placeholder = #{register.placeholder.name}" required="required">
                             <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</label> 
                             </div>
                             <div class="form-group">
-                                <input class="form-control" type="text" name="surname" placeholder="Surname" required="required">
+                                <input class="form-control" type="text" name="surname" th:attr="placeholder = #{register.placeholder.surname}" required="required">
                                 <label class="error-label" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</label> 
                             </div>
                             <div class="form-group">
-                            <input type="submit" class="submit-button form-control" value="Register"><br>
+                            <input type="submit" class="submit-button form-control" th:attr="value = #{register.title}"><br>
                             </div>
                         </form>
             </div>

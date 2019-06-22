@@ -42,7 +42,7 @@
 
                 <div class="col-10 text-center form-bg">
                     <img class="header-logo" src="/images/databaseblue.svg" alt="dataset.svg" height="64" width="64">
-                    <h4 class="main-text-header">Datasets</h4>
+                    <h4 class="main-text-header" th:text="#{list.datasets.title}"></h4>
 
                     <div th:if="${authority=='canUpload' or authority=='canAdminister'}">
                         <div class="row">
@@ -53,8 +53,8 @@
                             <div class="col-2">
                                 <a class="btn btn-small submit-button" href="/dataset/create">
 
-                                    <i class="fas fa-plus-circle pull-left main-text">
-                                        Create dataset
+                                    <i class="fas fa-plus-circle pull-left main-text" th:text="#{list.datasets.createbutton}">
+                                        
                                     </i>
                                 </a>
                             </div>
@@ -62,7 +62,7 @@
                             <div class="col-2">
 
                                 <a class="btn btn-small submit-button" href="/dataset/upload">
-                                    <i class="fas fa-file-upload pull-left main-text">Upload dataset</i>
+                                    <i class="fas fa-file-upload pull-left main-text" th:text="#{list.datasets.uploadbutton}"></i>
                                 </a>
 
                             </div>
@@ -82,8 +82,8 @@
                             <div class="col-2">
                                 <a class="btn btn-small submit-button" href="/dataset/create">
 
-                                    <i class="fas fa-plus-circle pull-left main-text">
-                                        Create dataset
+                                    <i class="fas fa-plus-circle pull-left main-text" th:text="#{list.datasets.createbutton}">
+                                    
                                     </i>
                                 </a>
                             </div>
@@ -99,40 +99,35 @@
                             <ul class="nav nav-pills">
                                 <li class="nav-item">
                                     <a class="nav-link" th:classappend="${type=='community'} ? 'active' : ''"
-                                        href="/dataset/list?type=community">Community
-                                        datasets</a>
+                                        href="/dataset/list?type=community" th:text="#{list.datasets.table.community}"></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" th:classappend="${type=='system'} ? 'active' : ''"
-                                        href="/dataset/list?type=system">System datasets</a>
+                                        href="/dataset/list?type=system" th:text="#{list.datasets.table.system}"></a>
                                 </li>
 
                                 <div th:if="${authority=='canView'}">
                                     <li class="nav-item">
-                                        <a class="nav-link disabled" href="/dataset/list?type=user">Your user
-                                            datasets</a>
+                                        <a class="nav-link disabled" href="/dataset/list?type=user" th:text="#{list.datasets.table.user}"></a>
                                     </li>
                                 </div>
 
                                 <div th:unless="${authority=='canView'}">
                                     <li class="nav-item">
                                         <a class="nav-link" th:classappend="${type=='user'} ? 'active' : ''"
-                                            href="/dataset/list?type=user">Your user datasets</a>
+                                            href="/dataset/list?type=user" th:text="#{list.datasets.table.user}"></a>
                                     </li>
                                 </div>
                                 <div th:if="${authority=='canUpload' or authority=='canAdminister'}">
                                     <li class="nav-item active">
                                         <a class="nav-link" th:classappend="${type=='usersystem'} ? 'active' : ''"
-                                            href="/dataset/list?type=usersystem">Your system
-                                            datasets</a>
+                                            href="/dataset/list?type=usersystem" th:text="#{list.datasets.table.usersystem}"></a>
                                     </li>
                                 </div>
 
                                 <div th:unless="${authority=='canUpload' or authority=='canAdminister'}">
                                     <li class="nav-item">
-                                        <a class="nav-link disabled" href="/dataset/list?type=usersystem">Your
-                                            system
-                                            datasets</a>
+                                        <a class="nav-link disabled" href="/dataset/list?type=usersystem" th:text="#{list.datasets.table.usersystem}"></a>
                                     </li>
                                 </div>
                             </ul>
@@ -148,14 +143,14 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Author</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">License</th>
-                                        <th scope="col">Languages</th>
-                                        <th scope="col">Datatypes</th>
-                                        <th scope="col">View</th>
-                                        <th scope="col">Download</th>
+                                        <th scope="col" th:text="#{list.datasets.table.name}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.author}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.date}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.license}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.languages}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.datatypes}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.view}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.download}"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -216,16 +211,16 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Author</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">License</th>
-                                        <th scope="col">Languages</th>
-                                        <th scope="col">Datatypes</th>
-                                        <th scope="col">View</th>
-                                        <th scope="col">Download</th>
-                                        <th scope="col">Edit</th>
-                                        <th scope="col">Delete</th>
+                                        <th scope="col"th:text="#{list.datasets.table.name}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.author}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.date}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.license}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.languages}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.datatypes}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.view}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.download}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.edit}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.delete}"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -300,18 +295,18 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Author</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">License</th>
-                                        <th scope="col">Languages</th>
-                                        <th scope="col">Datatypes</th>
-                                        <th scope="col">View</th>
-                                        <th scope="col">Preprocess</th>
-                                        <th scope="col">Creation details</th>
-                                        <th scope="col">Download</th>
-                                        <th scope="col">Edit</th>
-                                        <th scope="col">Delete</th>
+                                        <th scope="col"th:text="#{list.datasets.table.name}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.author}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.date}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.license}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.languages}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.datatypes}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.view}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.preprocess}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.creationdetails}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.download}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.edit}"></th>
+                                        <th scope="col" th:text="#{list.datasets.table.delete}"></th>
                                     </tr>
                                 </thead>
                                 <tbody>

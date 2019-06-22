@@ -25,10 +25,10 @@
                         <a class="nav-link" id="topdivhome" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="topdivpublic" href="/dataset/public">Public datasets</a>
+                        <a class="nav-link" id="topdivpublic" href="/dataset/public" th:text="#{public.home.title}"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="topdivregister" href="/user/register">Register</a>
+                        <a class="nav-link" id="topdivregister" href="/user/register" th:text="#{signup.home.title}"></a>
                     </li>
                 </ul>
                 <div sec:authorize="isAnonymous()">
@@ -55,19 +55,19 @@
 
             <div class="col-8 form-bg">
                 <img class="header-logo" src="/images/public.svg" alt="public.svg" height="64" width="64">
-                <h2 class="main-text-header text-center">System datasets</h2>
+                <h2 class="main-text-header text-center" th:text="#{public.title}"></h2>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Author</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">License</th>
-                                <th scope="col">Languages</th>
-                                <th scope="col">Datatypes</th>
-                                <th scope="col">View</th>
-                                <th scope="col">Download</th>
+                                <th scope="col" th:text="#{public.table.name}"></th>
+                                <th scope="col" th:text="#{public.table.author}"></th>
+                                <th scope="col" th:text="#{public.table.date}"></th>
+                                <th scope="col" th:text="#{public.table.license}"></th>
+                                <th scope="col" th:text="#{public.table.languages}"></th>
+                                <th scope="col" th:text="#{public.table.datatypes}"></th>
+                                <th scope="col" th:text="#{public.table.view}"></th>
+                                <th scope="col" th:text="#{public.table.download}"></th>
                             </tr>
                         </thead>
                         <tbody>

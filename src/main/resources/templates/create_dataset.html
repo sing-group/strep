@@ -177,6 +177,7 @@
 
                                             <tbody>
                                                 <div th:each="dataset : ${datasets}">
+                                                    <tr>
                                                     <th scope="row" th:text="${dataset.name}"></th>
                                                     <td th:text="${dataset.author}"></td>
                                                     <td th:text="${dataset.license.name}"></td>
@@ -206,6 +207,7 @@
                                                         </td>
                                                     <td><input id="checkboxUpdateTable" class="form-control" type="checkbox" name="datasets"
                                                         th:attr="value = ${dataset.name}" onclick="updateTable(this.id)"></td>
+                                                    </tr>
                                                 </div>
                                             </tbody>
 
