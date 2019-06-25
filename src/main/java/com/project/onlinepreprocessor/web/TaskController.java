@@ -52,6 +52,9 @@ public class TaskController {
     @Value("${pipeline.storage}")
     private String PIPELINE_PATH;
 
+    @Value("${csv.storage}")
+    private String OUTPUT_PATH;
+
     // TODO: Implement this method
     @GetMapping("/upload")
     public String listSystemTasks(Authentication authentication, Model model,
@@ -240,5 +243,37 @@ public class TaskController {
             return null;
         }
 
+    }
+
+    @GetMapping("/preprocess/downloadcsv")
+    public ResponseEntity<InputStreamResource> downloadCsv(Authentication authentication, @RequestParam("id") Long taskId)
+    {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String username = userDetails.getUsername();
+        String fileName = taskService.downloadCsv(taskId, username);
+
+        if(fileName!=null)
+        {
+            System.out.println(fileName);
+            try
+            {
+                FileInputStream fis = new FileInputStream(new java.io.File(OUTPUT_PATH + fileName));
+                HttpHeaders httpHeaders = new HttpHeaders();
+                httpHeaders.set("content-type", "text/csv");
+                httpHeaders.set("content-disposition", "attachment;" + "filename=" + fileName);
+                ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
+                        new InputStreamResource(fis), httpHeaders, HttpStatus.CREATED);
+                return response;
+            }
+            catch(FileNotFoundException fnfException)
+            {
+                return null;
+            }
+        }
+        else
+        {
+            return null;
+        }
     }
 }

@@ -58,6 +58,9 @@ public class TaskService {
     @Value("${pipeline.storage}")
     private String PIPELINE_PATH;
 
+    @Value("${csv.storage}")
+    private String OUTPUT_PATH;
+
     public void addNewSystemTask(Dataset dataset) {
         TaskCreateSdataset taskCreateSdataset = new TaskCreateSdataset(dataset, "waiting", null);
         dataset.setTask(taskCreateSdataset);
@@ -179,7 +182,6 @@ public class TaskService {
     {
         String fileName = null;
 
-        
         TaskCreateUPreprocessing task = taskRepository.findTaskCreateUPreprocessingById(taskId);
         Dataset dataset = task.getPreprocessDataset();
         String name = dataset.getName()+taskId+".xml";
@@ -209,6 +211,24 @@ public class TaskService {
                     return null;
                 }
             } 
+        }
+        return fileName;
+    }
+
+    public String downloadCsv(Long taskId, String username)
+    {
+        String fileName = null;
+
+        TaskCreateUPreprocessing task = taskRepository.findTaskCreateUPreprocessingById(taskId);
+        Dataset dataset = task.getPreprocessDataset();
+        String name = dataset.getName()+taskId+".csv";
+        if(dataset.getAuthor().equals(username))
+        {
+            java.io.File file = new java.io.File(OUTPUT_PATH+name);
+            if(file.exists())
+            {
+                fileName = name;
+            }
         }
         return fileName;
     }
@@ -371,4 +391,5 @@ public class TaskService {
 
         return value;
     }
+
 }
