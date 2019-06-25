@@ -9,6 +9,7 @@ import com.project.onlinepreprocessor.domain.Permission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -85,6 +86,26 @@ public class UserService
         }
 
         return message;
+    }
+
+    public void editProfile(String username, MultipartFile multipartFile)
+    {
+        Optional<User> optUser = userRepository.findById(username);
+
+        if(optUser.isPresent())
+        {
+            try
+            {
+                User user = optUser.get();
+                user.setPhoto(multipartFile.getBytes());
+                userRepository.save(user);
+            }
+            catch(Exception e)
+            {
+
+            }
+        }
+
     }
 
     //Auxiliar method for convert permission id to String 

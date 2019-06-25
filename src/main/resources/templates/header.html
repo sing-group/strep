@@ -86,7 +86,7 @@
                 <option  id="es" value="es" th:text="es" onclick="changeLocale(this.id)"></option>
             </select>
         <a href="/user/editprofile">
-            <img class="user-photo" src="/images/authorplaceholderwhite.svg" alt="photo" height="32" width="32">
+            <img class="user-photo" th:src="@{'/user/image?username='+${username}}" alt="photo" height="32" width="32">
         </a>
         <p th:text="${username}" class="topdiv-text"></p>
         <div class="float-right logout-icon"></div>

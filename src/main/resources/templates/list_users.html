@@ -70,7 +70,7 @@
 
                         <tbody>
                             <div th:each="user : ${users}">
-                                <td><img src="/images/authorplaceholder.svg" alt="userphoto.svg" width="32" height="32">
+                                <td><img class="user-photo" th:src="@{'/user/image?username='+${user.username}}" alt="photo" height="32" width="32">
                                 </td>
                                 <td th:text="${user.username}"></td>
                                 <td>

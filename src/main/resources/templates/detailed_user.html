@@ -28,7 +28,7 @@
                 <div class="jumbotron border border-info">
                     <div class="row">
                         <div class="col-2 text-center">
-                            <img src="/images/authorplaceholder.svg" alt="userphoto.svg" width="64" height="64">
+                            <img class="user-photo" th:src="@{'/user/image?username='+${username}}" alt="photo" height="64" width="64">
                         </div>
 
                         <div class="col-4 text-center">
