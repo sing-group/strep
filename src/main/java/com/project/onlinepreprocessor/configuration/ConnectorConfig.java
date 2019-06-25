@@ -12,7 +12,11 @@ import org.apache.catalina.Context;
 @Configuration
 public class ConnectorConfig {
  
- @Bean
+/**
+ * Configuration bean to implement https
+ * @return a tomcat server
+ */
+@Bean
 public ServletWebServerFactory servletContainer() {
     TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
         @Override
@@ -29,6 +33,10 @@ public ServletWebServerFactory servletContainer() {
     return tomcat;
 }
 
+/**
+ * This method redirects to port 8443 when an user sends a request to port 8080
+ * @return a connection to port 8443
+ */
 private Connector redirectConnector() {
     Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
     connector.setScheme("http");

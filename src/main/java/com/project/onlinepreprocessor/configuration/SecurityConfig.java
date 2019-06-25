@@ -14,13 +14,21 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
-    
+    /**
+     * Password encrypter
+     */
     @Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    /**
+     * The source of the data, in this case the database
+     */
 	@Autowired
 	private DataSource dataSource;
 
+    /**
+     * This method stablish an jdbc based authentication
+     */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth)throws Exception
 	{
@@ -31,6 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 		.passwordEncoder(bCryptPasswordEncoder);
 	}
 
+    /**
+     * This method configure the authorized requests based on the authorities of the session user
+     */
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
                 http.
@@ -52,6 +63,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .passwordParameter("password");
     }
 
+    /**
+     * This method configure serve allways the specified resources directories
+     */
 	@Override
     public void configure(WebSecurity web) throws Exception {
         web

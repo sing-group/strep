@@ -7,13 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
 import com.project.onlinepreprocessor.domain.Dataset;
 import com.project.onlinepreprocessor.domain.Datatype;
-import com.project.onlinepreprocessor.domain.File;
 import com.project.onlinepreprocessor.domain.FileDatatypeType;
 import com.project.onlinepreprocessor.domain.Language;
 import com.project.onlinepreprocessor.domain.License;
@@ -32,35 +30,70 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+/*
+* Service class to abstract to the controller of tasks jobs not related to the presentation
+* @author Ismael Vázquez
+*/
 @Service
 public class TaskService {
+    /**
+     * The repository to access datasets data
+     */
     @Autowired
     private DatasetRepository datasetRepository;
 
+    /**
+     * The repository to access task data
+     */
     @Autowired
     private TaskRepository taskRepository;
 
+    /**
+     * The repository to access datatypes data
+     */
     @Autowired
     private DatatypeRepository datatypeRepository;
 
+    /**
+     * The repository to access license data
+     */
     @Autowired
     private LicenseRepository licenseRepository;
 
+    /**
+     * The repository to access language data
+     */
     @Autowired
     private LanguageRepository languageRepository;
 
+    /**
+     * The repository to access fileDatatypeType data
+     */
     @Autowired
     private FileDatatypeTypeRepository fileDatatypeTypeRepository;
 
+    /**
+     * The datasets service
+     */
     @Autowired
     private DatasetService datasetService;
 
+    /**
+     * The path of the stored XML pipeline files
+     */
     @Value("${pipeline.storage}")
     private String PIPELINE_PATH;
 
+    /**
+     * The path of the stored csv result of the preprocessing tasks
+     */
     @Value("${csv.storage}")
     private String OUTPUT_PATH;
 
+    /**
+     * Insert a system task to the database
+     * @param dataset the dataset
+     */
     public void addNewSystemTask(Dataset dataset) {
         TaskCreateSdataset taskCreateSdataset = new TaskCreateSdataset(dataset, "waiting", null);
         dataset.setTask(taskCreateSdataset);
@@ -69,6 +102,9 @@ public class TaskService {
     }
 
 
+    /**
+     * This method creates a new user task
+     */
     public String addNewUserDatasetTask(Dataset dataset, String[] licenses, String[] languages, String[] datatypes,
             String[] datasets, String dateFrom, String dateTo, int inputSpamEml, int inputHamEml, int inputSpamWarc,
             int inputHamWarc, int inputSpamTsms, int inputHamTsms, int inputSpamTytb, int inputHamTytb,
@@ -178,6 +214,12 @@ public class TaskService {
         
     }
 
+    /**
+     * This method take the pipeline of the specified task in the database and store if not exists in the pipeline storage
+     * @param taskId the id of the task
+     * @param username the username that want to download the pipeline
+     * @return the name of the file in the pipeline storage or null if it's not accesible
+     */
     public String downloadPipeline(Long taskId, String username)
     {
         String fileName = null;
@@ -215,6 +257,12 @@ public class TaskService {
         return fileName;
     }
 
+    /**
+     * This method return the filename of the csv if it's available or null if it's not
+     * @param taskId the id of the task
+     * @param username the username of the user that want to download the csv
+     * @return the filename of the csv if it's available or null if it's not
+     */
     public String downloadCsv(Long taskId, String username)
     {
         String fileName = null;
@@ -324,6 +372,7 @@ public class TaskService {
             return success;
     }
 
+    //Method for convert array to arraylist
     private ArrayList<Dataset> toArrayListDatasets(String[] datasets) {
         ArrayList<Dataset> datasetsArray = new ArrayList<Dataset>();
 
@@ -337,6 +386,7 @@ public class TaskService {
         return datasetsArray;
     }
 
+    //Method for convert array to arraylist
     private ArrayList<Datatype> toArrayListDatatypes(String[] datatypes) {
         ArrayList<Datatype> datatypesArray = new ArrayList<Datatype>();
 
@@ -350,6 +400,7 @@ public class TaskService {
         return datatypesArray;
     }
 
+    //Method for convert array to arraylist
     private ArrayList<License> toArrayListLicenses(String[] licenses) {
         ArrayList<License> licensesArray = new ArrayList<License>();
 
@@ -363,6 +414,7 @@ public class TaskService {
         return licensesArray;
     }
 
+    //Method for convert array to arraylist
     private ArrayList<Language> toArrayListLanguages(String[] languages) {
         ArrayList<Language> languagesArray = new ArrayList<Language>();
 
@@ -376,20 +428,5 @@ public class TaskService {
         return languagesArray;
     }
 
-    private int checkNullsAndEmptyStrings(String requestParam) {
-        int value;
-
-        if (requestParam == null || requestParam.equals("")) {
-            value = -1;
-        } else {
-            try {
-                value = Integer.parseInt(requestParam);
-            } catch (NumberFormatException e) {
-                value = -1;
-            }
-        }
-
-        return value;
-    }
 
 }

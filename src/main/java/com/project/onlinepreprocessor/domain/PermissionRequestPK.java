@@ -8,7 +8,7 @@ import javax.persistence.Embeddable;
 
 /**
  * JPA Bean for the Dataset objects managed by application
- * @author Ismael Vázqez
+ * @author Ismael Vázquez
  */
 @Embeddable
 public class PermissionRequestPK implements Serializable

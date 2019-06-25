@@ -17,13 +17,34 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 
+/**
+ * Service class to abstract to the controller of user tasks not related to the presentation
+ * @author Ismael Vázquez
+ */
 @Service("userService")
 public class UserService
 {
+    /**
+     * The repository to access user data
+     */
     private UserRepository userRepository;
+
+    /**
+     * The repository to access permission data
+     */
     private PermissionRepository permissionRepository;
+
+    /**
+     * The password encoder object
+     */
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    /**
+     * The constructor for create instances of UserService
+     * @param userRepository the user repository
+     * @param permissionRepository the permission repository
+     * @param bCryptPasswordEncoder the password encoder
+     */
     @Autowired
     public UserService(UserRepository userRepository, PermissionRepository permissionRepository, BCryptPasswordEncoder bCryptPasswordEncoder)
     {
@@ -32,6 +53,10 @@ public class UserService
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    /**
+     * Save the specified user
+     * @param user the specified user
+     */
     public void saveUser(User user)
     {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -47,6 +72,11 @@ public class UserService
         }
     }
 
+    /**
+     * Return the max authority for the specified user
+     * @param username the user username
+     * @return the max authority for the specified user
+     */
     public String getPermissionsByUsername(String username)
     {
         ArrayList<BigInteger> permissions = permissionRepository.getUserPermissions(username);
@@ -66,6 +96,12 @@ public class UserService
         return authority;
     }
 
+    /**
+     * Edit the permissions for the specified user
+     * @param permissionIntId the permission id 
+     * @param username the user username
+     * @return a description message for the performed operations
+     */
     public String editPermissions(int permissionIntId, String username)
     {
         String message = "Cannot edit permissions";
@@ -88,6 +124,11 @@ public class UserService
         return message;
     }
 
+    /**
+     * This method uploads a photo of the specified user
+     * @param username the user username
+     * @param multipartFile the uploaded photo
+     */
     public void editProfile(String username, MultipartFile multipartFile)
     {
         Optional<User> optUser = userRepository.findById(username);
@@ -108,7 +149,11 @@ public class UserService
 
     }
 
-    //Auxiliar method for convert permission id to String 
+    /**
+     * Auxiliar method to convert perm id to String
+     * @param maxId the id of the max permission of the user
+     * @return perm id converted to String
+     */
     private String convertPermIdToString(Long maxId)
     {
         switch(maxId.intValue())

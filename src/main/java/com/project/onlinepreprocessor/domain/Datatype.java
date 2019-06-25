@@ -8,7 +8,7 @@ import javax.persistence.ManyToMany;
 
 /**
  * JPA Bean for the Dataset objects managed by application
- * @author Ismael Vázqez
+ * @author Ismael Vázquez
  */
 @Entity
 public class Datatype

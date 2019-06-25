@@ -1,19 +1,26 @@
 package com.project.onlinepreprocessor.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Size;
-
-import com.project.onlinepreprocessor.domain.File;
-import com.project.onlinepreprocessor.domain.Task;
-import java.util.Set;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * JPA Bean for the Dataset objects managed by application
- * @author Ismael Vázqez
+ * @author Ismael Vázquez
  */
 @Entity
 public class Dataset
@@ -150,6 +157,18 @@ public class Dataset
 
     }
 
+    /**
+     * Constructor for create dataset instances
+     * @param name the name of the dataset
+     * @param url the url of the dataset
+     * @param author the author of the dataset
+     * @param description the description of the dataset
+     * @param access the access of the dataset
+     * @param spamPercentage the spam percentage of the dataset
+     * @param hamPercentage the ham percentage of the dataset
+     * @param type the type of the dataset
+     * @param license the license of the dataset
+     */
     public Dataset(String name,String url, String author, String description, String access, Integer spamPercentage, Integer hamPercentage, 
      String type, License license)
     {

@@ -5,7 +5,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
  * JPA Bean for the Dataset objects managed by application
- * @author Ismael Vázqez
+ * @author Ismael Vázquez
  */
 @Entity
 @PrimaryKeyJoinColumn(referencedColumnName = "id")

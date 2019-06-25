@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * This controller responds to all requests related to permissions
+ */
 @Controller
 @RequestMapping("/permission")
 public class PermissionController {
+    
     @Autowired
     private UserService userService;
 
@@ -53,7 +57,6 @@ public class PermissionController {
         return "redirect:/permission/requests?message="+message;
     }
 
-    //TODO: Implement this method
     @GetMapping("/requests")
     public String showAllRequests(Authentication authentication, Model model,@RequestParam(value="message",required=false)String message)
     {

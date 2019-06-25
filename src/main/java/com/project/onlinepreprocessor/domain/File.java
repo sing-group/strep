@@ -7,7 +7,7 @@ import com.project.onlinepreprocessor.domain.Dataset;
 
 /**
  * JPA Bean for the File objects managed by application
- * @author Ismael Vázqez
+ * @author Ismael Vázquez
  */
 @Entity
 public class File

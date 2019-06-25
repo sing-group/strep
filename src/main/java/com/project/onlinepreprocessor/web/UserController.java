@@ -1,15 +1,11 @@
 package com.project.onlinepreprocessor.web;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Optional;
 
-import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletOutputStream;
@@ -25,7 +21,6 @@ import com.project.onlinepreprocessor.repositories.PermissionRepository;
 import com.project.onlinepreprocessor.repositories.UserRepository;
 import com.project.onlinepreprocessor.services.UserService;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -34,17 +29,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
 import org.springframework.util.StreamUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * This controller responds to all requests related to users
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -107,7 +103,6 @@ public class UserController {
         }
     }
 
-    // TODO: Make a redirect to a confirmation page when confirmation is OK
     @GetMapping("/accountconfirmation")
     public String confirmation(@RequestParam("hash") String hash) {
         Optional<User> opt = userRepository.findUserByHash(hash);

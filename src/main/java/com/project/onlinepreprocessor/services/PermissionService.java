@@ -15,19 +15,38 @@ import com.project.onlinepreprocessor.domain.Permission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service class to abstract to the controller of permission tasks not related to the presentation
+ * @author Ismael Vázquez
+ */
 @Service
 public class PermissionService
 {
+    /**
+     * The repository to access permission data
+     */
     @Autowired
     private PermissionRepository permissionRepository;
 
+    /**
+     * The repository to access permission request data
+     */
     @Autowired
     private PermissionRequestRepository permissionRequestRepository;
 
+    /**
+     * The repository to access user data
+     */
     @Autowired
     private UserRepository userRepository;
 
 
+    /**
+     * Method to add a permission request for the especified user and permission
+     * @param username the user username
+     * @param id the permission id
+     * @return A description message of the performed operations
+     */
     public String addPermissionRequest(String username, int id)
     {
         String message = "";
@@ -77,6 +96,11 @@ public class PermissionService
         return message;
     }
 
+    /**
+     * Method to accept a permission request
+     * @param permissionRequestPK the combined permission request key
+     * @return A description message of the performed operations
+     */ 
     public String acceptPermission(PermissionRequestPK permissionRequestPK)
     {
         String message = "";
@@ -105,6 +129,11 @@ public class PermissionService
         return message;
     }
 
+    /**
+     * Method to reject a permission request
+     * @param permissionRequestPK the combined permission request key
+     * @return A description message of the performed operations
+     */ 
     public String rejectPermission(PermissionRequestPK permissionRequestPK)
     {
         String message = "";

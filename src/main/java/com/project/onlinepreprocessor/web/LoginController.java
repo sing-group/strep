@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
+/**
+ * This controller responds to all requests related to login
+ */
 @Controller 
 public class LoginController 
 {

@@ -11,7 +11,7 @@ import java.util.Set;
 
 /**
  * JPA Bean for the User objects managed by application
- * @author Ismael Vázqez
+ * @author Ismael Vázquez
  */
 @Entity
 public class User

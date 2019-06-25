@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 
+/**
+ * This controller responds to all requests related to errors
+ */
 @Controller
 public class CustomErrorController implements ErrorController
 {

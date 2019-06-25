@@ -5,10 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 import com.project.onlinepreprocessor.domain.Dataset;
-import com.project.onlinepreprocessor.domain.Task;
 import com.project.onlinepreprocessor.domain.TaskCreateUPreprocessing;
 import com.project.onlinepreprocessor.domain.TaskCreateUdataset;
 import com.project.onlinepreprocessor.repositories.DatasetRepository;
@@ -26,7 +23,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,9 +30,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * This controller responds to all requests related to tasks
+ */
 @Controller
 @RequestMapping(path = "/task")
 public class TaskController {
+
     @Autowired
     private TaskRepository taskRepository;
 
@@ -55,7 +55,6 @@ public class TaskController {
     @Value("${csv.storage}")
     private String OUTPUT_PATH;
 
-    // TODO: Implement this method
     @GetMapping("/upload")
     public String listSystemTasks(Authentication authentication, Model model,
             @RequestParam(name = "searchInput", required = false) String inputSearch, @RequestParam(name="state", required=false, defaultValue="waiting")String state) {

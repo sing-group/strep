@@ -14,30 +14,60 @@ import javax.persistence.JoinColumn;
 
 /**
  * JPA Bean for the Dataset objects managed by application
- * @author Ismael Vázqez
+ * @author Ismael Vázquez
  */
 @Entity
 @PrimaryKeyJoinColumn(referencedColumnName="id")
 public class TaskCreateUdataset extends Task
 {
+    /**
+     * The spam percentage limit for eml files
+     */
     private int limitSpamPercentageEml;
 
+    /**
+     * The ham percentage limit for eml files
+     */
     private int limitHamPercentageEml;
 
+    /**
+     * The spam percentage limit for twtid files
+     */
     private int limitSpamPercentageTwtid;
     
+    /**
+     * The ham percentage limit for twtid files
+     */
     private int limitHamPercentageTwtid;
 
+    /**
+     * The spam percentage limit for tytb files
+     */
     private int limitSpamPercentageTytb;
 
+    /**
+     * The ham percentage limit for tytb files
+     */
     private int limitHamPercentageTytb;
     
+    /**
+     * The spam percentage limit for warc files
+     */
     private int limitSpamPercentageWarc;
 
+    /**
+     * The ham percentage limit for warc files
+     */
     private int limitHamPercentageWarc;
 
+    /**
+     * The spam percentage limit for tsms files
+     */
     private int limitSpamPercentageTsms;
 
+    /**
+     * The ham percentage limit for tsms files
+     */
     private int limitHamPercentageTsms;
     /**
      * The limit of percentage of spam in the new dataset
@@ -288,117 +318,209 @@ public class TaskCreateUdataset extends Task
         this.datasets = datasets;
     }
 
+    /**
+     * Return the spam percentage limit for eml files
+     * @return the spam percentage limit for eml files
+     */
     public int getLimitSpamPercentageEml()
     {
         return this.limitSpamPercentageEml;
     }
     
+    /**
+     * Stablish the spam percentage limit for eml files
+     * @param limitSpamPercentageEml the spam percentage limit for eml files
+     */
     public void setLimitSpamPercentageEml(int limitSpamPercentageEml)
     {
         this.limitSpamPercentageEml = limitSpamPercentageEml;
     }
     
+    /**
+     * Return the ham percentage limit for eml files
+     * @return the ham percentage limit for eml files
+     */
     public int getLimitHamPercentageEml()
     {
         return this.limitHamPercentageEml;
     }
     
+    /**
+     * Stablish the ham percentage limit for eml files
+     * @param limitHamPercentageEml the ham percentage limit for eml files
+     */
     public void setLimitHamPercentageEml(int limitHamPercentageEml)
     {
         this.limitHamPercentageEml = limitHamPercentageEml;
     }
 
+    /**
+     * Return the spam percentage limit for warc files
+     * @return the spam percentage limit for warc files
+     */
     public int getLimitSpamPercentageWarc()
     {
         return this.limitSpamPercentageWarc;
     }
     
+    /**
+     * Stablish the spam percentage limit for warc files
+     * @param limitSpamPercentageWarc the spam percentage limit for warc files
+     */
     public void setLimitSpamPercentageWarc(int limitSpamPercentageWarc)
     {
         this.limitSpamPercentageWarc = limitSpamPercentageWarc;
     }
     
+    /**
+     * Return the ham percentage limit for warc files
+     * @return the ham percentage limit for warc files
+     */
     public int getLimitHamPercentageWarc()
     {
         return this.limitHamPercentageWarc;
     }
     
+    /**
+     * Stablish the ham percentage limit for warc files 
+     * @param limitHamPercentageWarc the ham percentage limit for warc files
+     */
     public void setLimitHamPercentageWarc(int limitHamPercentageWarc)
     {
         this.limitHamPercentageWarc = limitHamPercentageWarc;
     }
     
 
+    /**
+     * Return the spam percentage limit for tsms files
+     * @return the spam percentage limit for tsms files
+     */
     public int getLimitSpamPercentageTsms()
     {
         return this.limitSpamPercentageTsms;
     }
     
+    /**
+     * Stablish the spam percentage limit for tsms files
+     * @param limitSpamPercentageTsms the spam percentage limit for tsms files
+     */
     public void setLimitSpamPercentageTsms(int limitSpamPercentageTsms)
     {
         this.limitSpamPercentageTsms = limitSpamPercentageTsms;
     }
-    
+
+    /**
+     * Return the ham percentage limit for tsms files
+     * @return the ham percentage limit for tsms files
+     */
     public int getLimitHamPercentageTsms()
     {
         return this.limitHamPercentageTsms;
     }
     
+    /**
+     * Stablish the ham percentage limit for tsms files
+     * @param limitHamPercentageTsms the ham percentage limit for tsms files
+     */
     public void setLimitHamPercentageTsms(int limitHamPercentageTsms)
     {
         this.limitHamPercentageTsms = limitHamPercentageTsms;
     }
 
+    /**
+     * Return the spam percentage limit for tytb files
+     * @return the spam percentage limit for tytb files
+     */
     public int getLimitSpamPercentageTytb()
     {
         return this.limitSpamPercentageTytb;
     }
     
+    /**
+     * Stablish the spam percentage limit for tytb files
+     * @param limitSpamPercentageTytb the spam percentage limit for tytb files
+     */
     public void setLimitSpamPercentageTytb(int limitSpamPercentageTytb)
     {
         this.limitSpamPercentageTytb = limitSpamPercentageTytb;
     }
     
+    /**
+     * Return the ham percentage limit for tytb files
+     * @return the ham percentage limit for tytb files
+     */
     public int getLimitHamPercentageTytb()
     {
         return this.limitHamPercentageTytb;
     }
     
+    /**
+     * Stablish the ham percentage limit for tytb files
+     * @param limitHamPercentageTytb the ham percentage limit for tytb files
+     */
     public void setLimitHamPercentageTytb(int limitHamPercentageTytb)
     {
         this.limitHamPercentageTytb = limitHamPercentageTytb;
     }
 
+    /**
+     * Return the spam percentage limit for twtid files
+     * @return the spam percentage limit for twtid files
+     */
     public int getLimitSpamPercentageTwtid()
     {
         return this.limitSpamPercentageTwtid;
     }
     
+    /**
+     * Stablish the spam percentage limit for twtid files
+     * @param limitSpamPercentageTwtid the spam percentage limit for twtid files
+     */
     public void setLimitSpamPercentageTwtid(int limitSpamPercentageTwtid)
     {
         this.limitSpamPercentageTwtid = limitSpamPercentageTwtid;
     }
     
+    /**
+     * Return the ham percentage limit for twtid files
+     * @return the ham percentage limit for twtid files
+     */
     public int getLimitHamPercentageTwtid()
     {
         return this.limitHamPercentageTwtid;
     }
     
+    /**
+     * Stablish the ham percentage limit for twtid files
+     * @param limitHamPercentageTwtid the ham percentage limit for twtid files
+     */
     public void setLimitHamPercentageTwtid(int limitHamPercentageTwtid)
     {
         this.limitHamPercentageTwtid = limitHamPercentageTwtid;
     }
 
+    /**
+     * Return true if selected mode is spam false if it's datatype
+     * @return true if selected mode is spam false if it's datatype
+     */
     public boolean getSpamMode()
     {
         return this.spamMode;
     }
 
+    /**
+     * Stablish the mode
+     * @param spamMode the mode
+     */
     public void setSpamMode(boolean spamMode)
     {
         this.spamMode = spamMode;
     }
 
+    /**
+     * A toString method for license names
+     * @return String with license name
+     */
     public String toStringLicenses()
     {
         StringBuilder stringBuilder = new StringBuilder();
@@ -418,6 +540,10 @@ public class TaskCreateUdataset extends Task
         return stringBuilder.toString();
     }
 
+    /**
+     * A toString method for datatype names
+     * @return a String with datatype names
+     */
     public String toStringDatatypes()
     {
         StringBuilder stringBuilder = new StringBuilder();
@@ -437,6 +563,10 @@ public class TaskCreateUdataset extends Task
         return stringBuilder.toString();
     }
 
+    /**
+     * A toString method for language names
+     * @return a toString method for language names
+     */
     public String toStringLanguages()
     {
         StringBuilder stringBuilder = new StringBuilder();
@@ -456,6 +586,10 @@ public class TaskCreateUdataset extends Task
         return stringBuilder.toString();
     }
 
+    /**
+     * A toString method for message dates
+     * @return String for message dates
+     */
     public String toStringDate()
     {
         StringBuilder stringBuilder = new StringBuilder();

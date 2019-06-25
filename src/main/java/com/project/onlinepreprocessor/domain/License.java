@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 /**
  * JPA Bean for the Dataset objects managed by application
- * @author Ismael Vázqez
+ * @author Ismael Vázquez
  */
 @Entity
 public class License

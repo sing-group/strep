@@ -11,7 +11,7 @@ import java.util.Set;
 
 /**
  * JPA Bean for the Permission objects managed by application
- * @author Ismael Vázqez
+ * @author Ismael Vázquez
  */
 @Entity
 public class Permission
@@ -40,6 +40,9 @@ public class Permission
     @ManyToMany(mappedBy="permissions")
     private Set<User> users;
 
+    /**
+     * The permission requests associated to this permission
+     */
     @OneToMany(mappedBy="permission", cascade=CascadeType.ALL,orphanRemoval = true)
     private Set<PermissionRequest> permissionRequests = new HashSet<PermissionRequest>();
 

@@ -11,7 +11,7 @@ import javax.persistence.MapsId;
 
 /**
  * JPA Bean for the Dataset objects managed by application
- * @author Ismael Vázqez
+ * @author Ismael Vázquez
  */
 @Entity
 public class PermissionRequest implements Serializable

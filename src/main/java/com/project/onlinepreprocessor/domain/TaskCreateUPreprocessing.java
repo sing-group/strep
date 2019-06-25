@@ -9,6 +9,10 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+/**
+ * JPA Bean for the Dataset objects managed by application
+ * @author Ismael Vázquez
+ */
 @Entity
 @PrimaryKeyJoinColumn(referencedColumnName="id")
 public class TaskCreateUPreprocessing extends Task

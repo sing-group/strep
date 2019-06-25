@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 /**
  * JPA Bean for the DatasetType objects managed by application
- * @author Ismael Vázqez
+ * @author Ismael Vázquez
  */
 
 @Entity

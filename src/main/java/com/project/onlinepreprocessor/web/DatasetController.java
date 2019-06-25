@@ -46,9 +46,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.lang.Math;
 
+/**
+ * This controller responds to all requests related to datasets
+ */
 @Controller
 @RequestMapping(path = "/dataset")
 public class DatasetController {
+    
     @Value("${dataset.storage}")
     private String BASE_PATH;
 
@@ -458,7 +462,7 @@ public class DatasetController {
         return "create_dataset::dataset";
     }
 
-    // TODO:Implement this method
+    
     @GetMapping("/createlist")
     public String filterDatasets(Authentication authentication, Model model,
             @RequestParam(name = "language", required = false) String[] languages,
@@ -643,7 +647,6 @@ public class DatasetController {
         return "create_dataset::datatypes-table";
     }
 
-    // TODO_ Implement this method
     @GetMapping("/create")
     public String getCreateDataset(Authentication authentication, Model model, Dataset dataset) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -669,8 +672,7 @@ public class DatasetController {
 
     }
 
-    // TODO: Add pipeline to request param
-    // Add pipeline and username in call to addNewUserDataset method
+    
     @PostMapping("/create")
     public String setCreateDataset(Authentication authentication, Model model, @Valid Dataset dataset,
             BindingResult bindingResult, RedirectAttributes redirectAttributes,
