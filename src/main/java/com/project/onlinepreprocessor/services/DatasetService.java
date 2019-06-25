@@ -195,7 +195,7 @@ public class DatasetService
         String message = "";
 
         String name = dataset.getName().replace(" ", "").toLowerCase();
-        String url = HOST_NAME+"/dataset/detailed/"+name;
+        String url = HOST_NAME+"/dataset/public/detailed/"+name;
         Date date = new Date();
         
         dataset.setName(name);

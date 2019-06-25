@@ -26,9 +26,9 @@
             <div class="col-4 form-bg text-center">
                 <form action="#" th:action="@{/user/editprofile}" enctype="multipart/form-data" method="POST">
                     <div class="form-group">
-                            <p class="title-text">Photo</p>
+                            <p class="title-text" th:text="#{editprofile.photo}"></p>
                             <input type="file" name="photo" required>
-                            <input type="submit" class="form-control submit-button" value="Upload photo">
+                            <input type="submit" class="form-control submit-button" th:attr="value=#{editprofile.button}">
                     </div>
 
 
