@@ -81,6 +81,10 @@
         </ul>
 
         <!--TODO: Change this for an image passed from parameters-->
+            <select id="locales">
+                <option  id="en" value="en" th:text="en" onclick="changeLocale(this.id)"></option>
+                <option  id="es" value="es" th:text="es" onclick="changeLocale(this.id)"></option>
+            </select>
         <a href="/user/editprofile">
             <img class="user-photo" src="/images/authorplaceholderwhite.svg" alt="photo" height="32" width="32">
         </a>

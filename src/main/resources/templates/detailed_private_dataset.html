@@ -31,12 +31,12 @@
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-6 text-center">
-                                    <p class="title-text">Author: </p>
-                                    <p class="title-text">Name: </p>
-                                    <p class="title-text">Upload date: </p>
-                                    <p class="title-text">License: </p>
-                                    <p class="title-text">Spam percentage: </p>
-                                    <p class="title-text">Ham percentage: </p>
+                                    <p class="title-text" th:text="#{detailed.dataset.author}"> </p>
+                                    <p class="title-text" th:text="#{detailed.dataset.name}"> </p>
+                                    <p class="title-text" th:text="#{detailed.dataset.uploaddate}"> </p>
+                                    <p class="title-text" th:text="#{detailed.dataset.license}"> </p>
+                                    <p class="title-text" th:text="#{detailed.dataset.spampercentage}"> </p>
+                                    <p class="title-text" th:text="#{detailed.dataset.hampercentage}"> </p>
                                 </div>
 
                                 <div class="col-6 text-center">
@@ -51,18 +51,18 @@
                         </div>
 
                         <div class="col-4 text-center">
-                            <p class="title-text">Description: </p>
+                            <p class="title-text" th:text="#{detailed.dataset.description}"> </p>
                             <p class="normal-text" th:text="${dataset.description}"></p>
                         </div>
 
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-6 text-center">
-                                    <p class="title-text">Access: </p>
-                                    <p class="title-text">Languages: </p>
-                                    <p class="title-text">Datatypes: </p>
-                                    <p class="title-text">Type: </p>
-                                    <p class="title-text">Share url: </p>
+                                    <p class="title-text" th:text="#{detailed.dataset.access}"> </p>
+                                    <p class="title-text" th:text="#{detailed.dataset.languages}"> </p>
+                                    <p class="title-text" th:text="#{detailed.dataset.datatypes}"> </p>
+                                    <p class="title-text" th:text="#{detailed.dataset.type}"> </p>
+                                    <p class="title-text" th:text="#{detailed.dataset.share}"> </p>
                                 </div>
 
                                 <div class="col-6 text-center">
@@ -83,7 +83,7 @@
 
                         <div class="col-6 text-center">
 
-                            <p class="title-text">Actions</p>
+                            <p class="title-text" th:text="#{detailed.dataset.actions}"></p>
 
                             <div th:if="${dataset.author == username and dataset.type != 'userdataset'}">
                                 <div class="btn-group">
@@ -155,16 +155,6 @@
         <div th:include="footer.html">
 
         </div>
-
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
 </body>
 
 </html>

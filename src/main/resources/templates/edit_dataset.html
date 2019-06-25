@@ -25,15 +25,15 @@
                 <form action="#" th:action="@{/dataset/edit}" th:object="${dataset}" method="POST">
                     <img class="header-logo" src="/images/databaseblue.svg" alt="databaseblue.svg" height="64"
                         width="64">
-                    <h2 class="main-text-header text-center">Update dataset</h2>
+                    <h2 class="main-text-header text-center" th:text="#{edit.dataset.title}"></h2>
                     <div class="form-group">
-                        <input th:attr="value = ${toUpdateDataset.name}" type="text" class="form-control" name="name"
-                            placeholder="Name of the dataset" required="required" onchange="dynamicUrl(this.value)"
+                        <input th:attr="value = ${toUpdateDataset.name},placeholder = #{edit.dataset.placeholder.name} " type="text" class="form-control" name="name"
+                             required="required" onchange="dynamicUrl(this.value)"
                             readonly>
                         <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Dataset name error</label>
                         </div>
                         <div class="form-group">
-                        <textarea th:text="${toUpdateDataset.description}"rows="5" class="form-control" name="description" placeholder="Description of the dataset" required="required"></textarea>
+                        <textarea th:text="${toUpdateDataset.description}" rows="5" class="form-control" name="description" th:attr="placeholder = #{edit.dataset.placeholder.description}" required="required"></textarea>
                         <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description error</label>
                         </div>
                         <div th:if="${toUpdateDataset.type}=='systemdataset'">
@@ -79,11 +79,11 @@
 
                         <div class="row text-center">
                             <div class="col-4"> 
-                                <label>Acess type</label>
+                                <label th:text="#{edit.dataset.label.access}"></label>
                             </div>
 
                             <div class="col-8">
-                                <label>This is the url to the dataset when it has public access</label>
+                                <label th:text="#{edit.dataset.label.url}"></label>
                             </div>
                         </div>
 
@@ -103,7 +103,7 @@
                         <input type="hidden" name="id" th:attr="value = ${toUpdateDataset.name}">
                             
                         <div class="form-group submit-dataset">
-                        <input type="submit" class="submit-button form-control" value="Update dataset"><br>
+                        <input type="submit" class="submit-button form-control" th:attr="value = #{edit.dataset.button}"><br>
                         </div>
                     </form>
             </div>
@@ -119,13 +119,6 @@
 
 
     </div>
-    <script type="text/javascript" src="/js/functions.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>

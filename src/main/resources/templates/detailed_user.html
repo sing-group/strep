@@ -33,10 +33,10 @@
 
                         <div class="col-4 text-center">
 
-                            <p class="title-text">User details</p>
+                            <p class="title-text" th:text="#{detailed.user.details}"></p>
                             <div class="row">
                                 <div class="col-6 text-center">
-                                    <p class="title-text">Username</p>
+                                    <p class="title-text" th:text="#{detailed.user.username}"></p>
                                 </div>
 
                                 <div class="col-6 text-center">
@@ -46,7 +46,7 @@
 
                             <div class="row">
                                 <div class="col-6 text-center">
-                                    <p class="title-text">Email</p>
+                                    <p class="title-text"  th:text="#{detailed.user.email}"></p>
                                 </div>
 
                                 <div class="col-6 text-center">
@@ -56,7 +56,7 @@
 
                             <div class="row">
                                 <div class="col-6 text-center">
-                                    <p class="title-text">Confirmed</p>
+                                    <p class="title-text"  th:text="#{detailed.user.confirmed}"></p>
                                 </div>
 
                                 <div class="col-6 text-center">
@@ -71,7 +71,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-6 text-center">
-                                    <p class="title-text">Name</p>
+                                    <p class="title-text"  th:text="#{detailed.user.name}"></p>
                                 </div>
 
                                 <div class="col-6 text-center">
@@ -81,7 +81,7 @@
 
                             <div class="row">
                                 <div class="col-6 text-center">
-                                    <p class="title-text">Surname</p>
+                                    <p class="title-text"  th:text="#{detailed.user.surname}"></p>
                                 </div>
                                 <div class="col-6 text-center">
                                     <p class="normal-text" th:text="${user.surname}"></p>
@@ -92,11 +92,11 @@
 
 
                         <div class="col-3 text-center">
-                            <p class="title-text">Statistics</p>
+                            <p class="title-text"  th:text="#{detailed.user.statistics}"></p>
 
                             <div class="row">
                                 <div class="col-6 text-center">
-                                    <p class="title-text">Uploaded datasets</p>
+                                    <p class="title-text"  th:text="#{detailed.user.uploaded}"></p>
                                 </div>
 
                                 <div class="col-6 text-center">
@@ -106,7 +106,7 @@
 
                             <div class="row">
                                 <div class="col-6 text-center">
-                                    <p class="title-text">Created datasets</p>
+                                    <p class="title-text"  th:text="#{detailed.user.created}"></p>
                                 </div>
 
                                 <div class="col-6 text-center">
@@ -118,7 +118,7 @@
 
                         <div class="col-3 text-center">
 
-                            <p class="title-text">Permissions</p>
+                            <p class="title-text"  th:text="#{detailed.user.permissions}"></p>
                             <form action="#" th:action="@{/user/editpermissions}" method="POST">
                                 <input type="hidden" name="username" th:attr="value = ${user.username}">
                                 <ul class="list-group">
@@ -146,7 +146,7 @@
                                         </li>
                                     </div>
                                 </ul>
-                                <p class="title-text">Edit permissions</p>
+                                <p class="title-text"  th:text="#{detailed.user.edit}"></p>
                                 <button type="submit" class="btn btn-small btn-warning">
                                     <i class="fas fa-key"></i>
                                 </button>
@@ -160,7 +160,7 @@
                         </div>
 
                         <div class="col-2 text-center">
-                            <p class="title-text">Delete user</p>
+                            <p class="title-text"  th:text="#{detailed.user.delete}"></p>
                             <form action="#" th:action="@{/user/delete}" method="GET">
                                 <input type="hidden" name="username" th:attr="value = ${user.username}">
                                 <button type="submit" class="btn btn-small btn-danger">
@@ -186,16 +186,6 @@
         <div th:include="footer.html">
 
         </div>
-
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
 </body>
 
 </html>

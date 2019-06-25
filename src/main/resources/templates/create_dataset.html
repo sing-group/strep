@@ -28,7 +28,7 @@
 
                         <div class="main-div-bg pre-footer">
                             <div class="text-center">
-                                <h5 class="main-text">Filters</h5>
+                                <h5 class="main-text" th:text="#{create.dataset.title}"></h5>
                             </div>
 
                             <div class="row">
@@ -40,8 +40,8 @@
                                 <div class="col-10">
                                     <ul class="list-group">
                                         <li class="list-group-item top-bg topdiv-text">
-                                            <a class="topdiv-text" data-toggle="collapse" href="#licenses">
-                                                Licenses
+                                            <a class="topdiv-text" data-toggle="collapse" th:text="#{create.dataset.licenses}" href="#licenses">
+                                                
                                             </a>
                                         </li>
                                         <div class="collapse main-div-bg" id="licenses">
@@ -63,8 +63,7 @@
                                             </ul>
                                         </div>
                                         <li class="list-group-item top-bg topdiv-text">
-                                            <a class="topdiv-text" data-toggle="collapse" href="#datatypes">
-                                                Datatypes
+                                            <a class="topdiv-text" data-toggle="collapse" th:text="#{create.dataset.datatypes}" href="#datatypes">
                                             </a>
                                         </li>
                                         <div class="collapse main-div-bg" id="datatypes">
@@ -87,8 +86,7 @@
                                             </ul>
                                         </div>
                                         <li class="list-group-item top-bg topdiv-text">
-                                            <a class="topdiv-text" data-toggle="collapse" href="#languages">
-                                                Languages
+                                            <a class="topdiv-text" data-toggle="collapse" th:text="#{create.dataset.languages}" href="#languages">
                                             </a>
                                         </li>
 
@@ -113,7 +111,7 @@
                                     </ul>
 
                                     <div class="text-center">
-                                        <p class="main-text">Messages date</p>
+                                        <p class="main-text" th:text="#{create.dataset.messagesdate}"></p>
                                     </div>
                                     <div class="row">
                                         <div class="col-6 form-group">
@@ -132,7 +130,7 @@
 
                                         <div class="col-4 form-group">
                                             <input type="button" onclick="updateDatasetsList()" class="form-control submit-button"
-                                                value="Apply">
+                                                th:attr="value = #{create.dataset.apply}">
                                         </div>
 
                                         <div class="col-4">
@@ -153,10 +151,10 @@
 
                         <img class="header-logo" src="/images/databaseblue.svg" alt="databaseblue.svg" width="64"
                             height="64">
-                        <h3 class="main-text-header text-center">Create new dataset</h3>
+                        <h3 class="main-text-header text-center" th:text="#{create.dataset.title}"></h3>
 
                         <div class="page-content">
-                            <h4 class="main-text-header text-center">Select datasets</h4>
+                            <h4 class="main-text-header text-center" th:text="#{create.dataset.select}"></h4>
 
                             <div class="row">
                                 <div class="col-1">
@@ -167,12 +165,12 @@
                                     <div class="table-responsive text-center">
                                         <table class="table">
                                             <thead>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Author</th>
-                                                <th scope="col">License</th>
-                                                <th scope="col">Languages</th>
-                                                <th scope="col">Datatypes</th>
-                                                <th scope="col">Select</th>
+                                                <th scope="col" th:text="#{create.dataset.table.name}"></th>
+                                                <th scope="col" th:text="#{create.dataset.table.author}"></th>
+                                                <th scope="col" th:text="#{create.dataset.table.license}"></th>
+                                                <th scope="col" th:text="#{create.dataset.table.languages}"></th>
+                                                <th scope="col" th:text="#{create.dataset.table.datatypes}"></th>
+                                                <th scope="col" th:text="#{create.dataset.table.select}"></th>
                                             </thead>
 
                                             <tbody>
@@ -215,15 +213,15 @@
                                     </div>
                                     <div class="page-content">
 
-                                        <h4 class="main-text-header text-center">Dataset metadata</h4>
+                                        <h4 class="main-text-header text-center" th:text="#{create.dataset.metadata}"></h4>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="name" placeholder="Name of the dataset"
+                                            <input type="text" class="form-control" name="name" th:attr="placeholder = #{create.dataset.placeholder.name}"
                                                 required="required" onchange="dynamicUrl(this.value)">
                                             <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Dataset
                                                 name error</label>
                                         </div>
                                         <div class="form-group">
-                                            <textarea rows="5" class="form-control" name="description" placeholder="Description of the dataset"
+                                            <textarea rows="5" class="form-control" name="description" th:attr="placeholder = #{create.dataset.placeholder.name}"
                                                 required="required"></textarea>
                                             <label class="error-label" th:if="${#fields.hasErrors('description')}"
                                                 th:errors="*{description}">Description
@@ -237,11 +235,11 @@
 
                                         <div class="row text-center">
                                             <div class="col-4">
-                                                <label>Acess type</label>
+                                                <label th:text="#{create.dataset.label.visibility}"></label>
                                             </div>
 
                                             <div class="col-8">
-                                                <label>This is the url to the dataset when it has public access</label>
+                                                <label th:text="#{create.dataset.label.url}"></label>
                                             </div>
                                         </div>
 
@@ -269,11 +267,10 @@
                                                 </div>
 
                                                 <div class="col-6 text-center">
-                                                    <h4 class="main-text">Parameters(You can filter by spam percentage
-                                                        or by datatypes)</h4>
+                                                    <h4 class="main-text" th:text="#{create.dataset.parameters}"></h4>
                                                     <div class="row">
                                                         <div class="col-6 form-group">
-                                                            <p class="main-text">Files number*</p>
+                                                            <p class="main-text" th:text="#{create.dataset.filenumber}"></p>
                                                         </div>
                                                         <div class="col-6 form-group">
                                                             <input type="number" class="form-control" id="fileNumber" name="inputFileNumber" value="0" required>
@@ -295,7 +292,7 @@
                                                     </div>
                                                     <div class="col-8 form-group text-center">
                                                         <input class="form-control" type="radio" name="mode" value="spam" checked>
-                                                        <p class="main-text">Percentage spam</p>
+                                                        <p class="main-text" th:text="#{create.dataset.spampercentage}"></p>
                                                         <input type="number" class="form-control" placeholder="Spam%" id="inputSpamPercentage"
                                                             name="inputSpamPercentage" value="0" required>
                                                         <div class="text-center" th:fragment="info-spam" id="info-spam">
@@ -310,7 +307,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <input type="button" class="form-control submit-button" name="checkSpamButton" value="Check" 
+                                                            <input type="button" class="form-control submit-button" name="checkSpamButton" th:attr="value = #{create.dataset.button.check}" 
                                                              onclick="checkIfPosibleSpam()">
                                                         </div>
                                                     </div>
@@ -331,7 +328,7 @@
 
                                             <div class="col-8 text-center">
                                                     <input class="form-control" type="radio" name="mode" value="datatype">
-                                                    <p class="main-text">Datatypes</p>
+                                                    <p class="main-text" th:text="#{create.dataset.datatypespercentage}"></p>
                                                     <div class="row">
                                                         <div class="col-3">
     
@@ -397,16 +394,16 @@
                                                                 </div>
 
                                                                 <div class="col-4">
-                                                                    <input id="buttonCheckDatatypes" type="button" class="form-control submit-button" onclick="updateTable(this.id)" value="Check">
+                                                                    <input id="buttonCheckDatatypes" type="button" class="form-control submit-button" onclick="updateTable(this.id)" th:attr="value = #{create.dataset.button.check}">
                                                                     <div th:if="${datatypesInputError}">
                                                                             <p class="error-label" th:text="${datatypesInputError}"></p>
                                                                         </div>
                                                                         <div th:unless="${datatypesInputError}">
                                                                             <div th:if="${datatypesSuccessInfo}">
-                                                                                <p class="info-label" th:utext="${datatypesSuccessInfo}">Prueba suficientes ficheros</p>
+                                                                                <p class="info-label" th:utext="${datatypesSuccessInfo}"></p>
                                                                             </div>
                                                                             <div th:if="${datatypesInsufficientInfo}">
-                                                                                <p class="error-label" th:utext="${datatypesInsufficientInfo}">Prueba insuficientes ficheros</p>
+                                                                                <p class="error-label" th:utext="${datatypesInsufficientInfo}"></p>
                                                                             </div>
                                                                         </div>
                                                                 </div>
@@ -421,7 +418,7 @@
                                         </div>
 
                                         <div class="form-group submit-dataset">
-                                            <input type="submit" class="submit-button form-control" value="Create dataset"><br>
+                                            <input type="submit" class="submit-button form-control" th:attr="value = #{create.dataset.button.submit}"><br>
                                         </div>
 
             </form>
@@ -446,14 +443,7 @@
     <div th:include="footer" class="sticky-bottom">
 
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-
-    <script type="text/javascript" src="/js/functions.js"></script>
-    <script type="text/javascript" src="/js/jqueryFunctions.js"></script>
+    
 </body>
 
 </html>

@@ -41,7 +41,7 @@
 
             <div class="col-8 form-bg">
                 <img class="header-logo" src="/images/public.svg" alt="public.svg" height="64" width="64">
-                <h2 class="main-text-header text-center">Users list</h2>
+                <h2 class="main-text-header text-center" th:text="#{list.users.title}"></h2>
 
                 <div class="row">
                     <div class="col-8">
@@ -52,8 +52,8 @@
                         <form class="form-inline">
                             <div class="form-group">
                                 <input type="text" class="form-control" name="search"
-                                    placeholder="Search for an username">
-                                <input type="submit" class="form-control submit-button" value="search">
+                                    th:attr="placeholder = #{list.users.placeholder.search}">
+                                <input type="submit" class="form-control submit-button" th:attr="value = #{list.users.search}">
                             </div>
                         </form>
                     </div>
@@ -61,11 +61,11 @@
                 <div class="table-responsive text-center">
                     <table class="table">
                         <thead>
-                            <th scope="col">Photo</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Permissions</th>
-                            <th scope="col">User details</th>
-                            <th scope="col">Delete user</th>
+                            <th scope="col" th:text="#{list.users.photo}"></th>
+                            <th scope="col" th:text="#{list.users.username}"></th>
+                            <th scope="col" th:text="#{list.users.permissions}"></th>
+                            <th scope="col" th:text="#{list.users.details}"></th>
+                            <th scope="col" th:text="#{list.users.delete}"></th>
                         </thead>
 
                         <tbody>
@@ -111,16 +111,6 @@
 
     <div th:include="footer.html"></div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>

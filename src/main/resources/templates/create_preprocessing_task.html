@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="col-6 text-center form-bg">
-                    <p class="title-text">Dataset to preprocess: </p>
+                    <p class="title-text" th:text="#{createpreprocessing.title}"> </p>
                     <p class="normal-text" th:text="${dataset.name}"></p>
                         
                     <form action="#" th:action="@{/task/preprocess/create}" th:object="${task}" 
@@ -55,15 +55,15 @@
                                 
                                 <div class="col-4 text-center">
                                     <input type="hidden" name="preprocessDataset" th:attr="value = ${dataset.name}">
-                                    <p class="title-text">Description of the preprocessing task</p>
+                                    <p class="title-text" th:text="#{createpreprocessing.description}"></p>
                                     <textarea class="form-control" rows="10"
-                                        placeholder="Description of the preprocessing operations"
+                                        th:attr="placeholder = #{createpreprocessing.placeholder.description}"
                                         name="description" required></textarea>
                                         
-                                    <p class="title-text">Pipeline XML</p>
+                                    <p class="title-text" th:text="#{createpreprocessing.pipeline}"></p>
                                     <input type="file" name="multipart" required>
                                     
-                                    <input class="form-control submit-button" type="submit" value="Create task">
+                                    <input class="form-control submit-button" type="submit" th:attr="value = #{createpreprocessing.submit.button}">
                                 </div>
 
                                 <div class="col-4">
@@ -86,17 +86,6 @@
 
         <div th:include="footer.html"></div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/js/jqueryFunctions.js"></script>
 </body>
 
 </html>

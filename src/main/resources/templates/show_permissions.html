@@ -41,7 +41,7 @@
 
         <div class="col-10">
             <img class="header-logo" src="/images/permissions.svg" alt="logo.png" height="64" width="64">
-            <h2 class="main-text text-center">Permissions</h2>
+            <h2 class="main-text text-center" th:text="#{list.permission.title}"></h2>
         </div>
 
         <div class="col-1">
@@ -108,7 +108,7 @@
 
         <div class="col-2 ">
                 <p class="top-bg topdiv-text text-center">Can administer</p>
-                <p class="main-text text-center">The user with these permissions can administer users of the platform and delete system datasets</p>
+                <p class="main-text text-center" th:text="#{list.permission.canadminister}"></p>
         </div>
 
         <div class="col-1 ">
@@ -136,17 +136,17 @@
 
             <div class="col-2 ">
                 <p class="top-bg topdiv-text text-center">Can create new corpus</p>
-                <p class="main-text text-center">The user with these permissions can create new datasets by mixing system datasets</p>
+                <p class="main-text text-center" th:text="#{list.permission.cancreatenewcorpus}"></p>
             </div>
 
             <div class="col-2 ">
                 <p class="top-bg topdiv-text text-center">Can upload</p>
-                <p class="main-text text-center">The user with these permissions can upload system datasets</p>
+                <p class="main-text text-center" th:text="#{list.permission.canupload}"></p>
             </div>
 
             <div class="col-2 ">
-                <p class="top-bg topdiv-text text-center">Can reply permission requests</p>
-                <p class="main-text text-center">The user with these permissions can reply to the users permission requests</p>
+                <p class="top-bg topdiv-text text-center" th:text="#{list.permission.canreply.title}"></p>
+                <p class="main-text text-center" th:text="#{list.permission.canreply}"></p>
             </div>
 
             <div class="col-1 ">
@@ -170,22 +170,22 @@
 
             <div class="col-2 ">
                 <p class="top-bg topdiv-text text-center">Can view</p>
-                <p class="main-text text-center">The user with these permissions only have access to see system and protected datasets</p>
+                <p class="main-text text-center" th:text="#{list.permission.canviewdescription}"></p>
             </div>
 
             <div class="col-2 ">
-                <p class="top-bg topdiv-text text-center">Same as permissions bellow</p>
-                <p class="main-text text-center">The user with these permissions will have all the privileges of the lower permissions</p>
+                <p class="top-bg topdiv-text text-center" th:text="#{list.permission.same.title}"></p>
+                <p class="main-text text-center" th:text="#{list.permission.same}"></p>
             </div>
 
             <div class="col-2 ">
-                <p class="top-bg topdiv-text text-center">Same as permissions bellow</p>
-                <p class="main-text text-center">The user with these permissions will have all the privileges of the lower permissions</p>
+                <p class="top-bg topdiv-text text-center" th:text="#{list.permission.same.title}"></p>
+                <p class="main-text text-center" th:text="#{list.permission.same}"></p>
             </div>
 
             <div class="col-2 ">
-                <p class="top-bg topdiv-text text-center">Same as permissions bellow</p>
-                <p class="main-text text-center">The user with these permissions will have all the privileges of the lower permissions</p>
+                <p class="top-bg topdiv-text text-center" th:text="#{list.permission.same.title}"></p>
+                <p class="main-text text-center" th:text="#{list.permission.same}"></p>
             </div>
 
             <div class="col-1 ">
@@ -208,41 +208,41 @@
             </div>
 
             <div class="col-2 ">
-                <button type="button" class="submit-button form-control">Adquired permission</button>
+                <button type="button" class="submit-button form-control" th:text="#{list.permission.adquiredpermission}"></button>
             </div>
 
             <div class="col-2 ">
                 <div th:unless="${authority}=='canView'">
-                    <button type="button" class="submit-button form-control">Adquired permission</button>
+                    <button type="button" class="submit-button form-control" th:text="#{list.permission.adquiredpermission}"></button>
                 </div>
                 <div th:if="${authority}=='canView'">
                     <form action="#" th:action="@{/permission/request}" method="POST">
                         <input type="hidden" name="id" value="2">
-                        <input type="submit" class="submit-button form-control" value="Solicit this permission">
+                        <input type="submit" class="submit-button form-control" th:attr="value = #{list.permission.solicit}">
                     </form>
                 </div>
             </div>
 
             <div class="col-2 ">
                     <div th:unless="${authority}=='canView' or ${authority}=='canCreateCorpus'">
-                        <button type="button" class="submit-button form-control">Adquired permission</button>
+                        <button type="button" class="submit-button form-control" th:text="#{list.permission.adquiredpermission}"></button>
                     </div>
                     <div th:if="${authority}=='canView' or ${authority}=='canCreateCorpus'">
                         <form action="#" th:action="@{/permission/request}" method="POST">
                             <input type="hidden" name="id" value="3">
-                            <input type="submit" class="submit-button form-control" value="Solicit this permission">
+                            <input type="submit" class="submit-button form-control" th:attr="value = #{list.permission.solicit}">
                         </form>
                     </div>
             </div>
 
             <div class="col-2 ">
                     <div th:if="${authority}=='canAdminister'">
-                        <button type="button" class="submit-button form-control">Adquired permission</button>
+                        <button type="button" class="submit-button form-control" th:text="#{list.permission.adquiredpermission}"></button>
                     </div>
                     <div th:unless="${authority}=='canAdminister'">
                         <form action="#" th:action="@{/permission/request}" method="POST">
                             <input type="hidden" name="id" value="4">
-                            <input type="submit" class="submit-button form-control" value="Solicit this permission">
+                            <input type="submit" class="submit-button form-control" th:attr="value = #{list.permission.solicit}">
                         </form>
                     </div>
             </div>
@@ -267,12 +267,6 @@
     </div>
 </div>
     
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>

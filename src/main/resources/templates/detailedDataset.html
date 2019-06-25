@@ -25,10 +25,10 @@
                         <a class="nav-link" id="topdivhome" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="topdivpublic" href="/dataset/public">Public datasets</a>
+                        <a class="nav-link" id="topdivpublic" href="/dataset/public" th:text="#{public.title}"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="topdivregister" href="/user/register">Register</a>
+                        <a class="nav-link" id="topdivregister" href="/user/register" th:text="#{register.title}"></a>
                     </li>
                 </ul>
                 <div sec:authorize="isAnonymous()">
@@ -59,12 +59,12 @@
                             <div class="col-4">
                                 <div class="row">
                                     <div class="col-6 text-center">
-                                        <p class="title-text">Author: </p>
-                                        <p class="title-text">Name: </p>
-                                        <p class="title-text">Upload date: </p>
-                                        <p class="title-text">License: </p>
-                                        <p class="title-text">Spam percentage: </p>
-                                        <p class="title-text">Ham percentage: </p>
+                                        <p class="title-text" th:text="#{detailed.publicdataset.author}"> </p>
+                                        <p class="title-text" th:text="#{detailed.publicdataset.name}"> </p>
+                                        <p class="title-text" th:text="#{detailed.publicdataset.uploaddate}"> </p>
+                                        <p class="title-text" th:text="#{detailed.publicdataset.license}"> </p>
+                                        <p class="title-text" th:text="#{detailed.publicdataset.spampercentage}"> </p>
+                                        <p class="title-text" th:text="#{detailed.publicdataset.hampercentage}"> </p>
                                     </div>
     
                                     <div class="col-6 text-center">
@@ -79,18 +79,18 @@
                             </div>
     
                             <div class="col-4 text-center">
-                                <p class="title-text">Description: </p>
+                                <p class="title-text" th:text="#{detailed.publicdataset.description}"> </p>
                                 <p class="normal-text" th:text="${dataset.description}"></p>
                             </div>
     
                             <div class="col-4">
                                 <div class="row">
                                     <div class="col-6 text-center">
-                                        <p class="title-text">Access: </p>
-                                        <p class="title-text">Languages: </p>
-                                        <p class="title-text">Datatypes: </p>
-                                        <p class="title-text">Type: </p>
-                                        <p class="title-text">Share url: </p>
+                                        <p class="title-text" th:text="#{detailed.publicdataset.access}"> </p>
+                                        <p class="title-text" th:text="#{detailed.publicdataset.languages}"> </p>
+                                        <p class="title-text" th:text="#{detailed.publicdataset.datatypes}"> </p>
+                                        <p class="title-text" th:text="#{detailed.publicdataset.type}"> </p>
+                                        <p class="title-text" th:text="#{detailed.publicdataset.share}"> </p>
                                     </div>
     
                                     <div class="col-6 text-center">
@@ -111,7 +111,7 @@
                             
                             <div class="col-6 text-center">
                             
-                                <p class="title-text">Actions</p>
+                                <p class="title-text" th:text="#{detailed.publicdataset.actions}"></p>
                             
                             
                                 <div class="btn-group">

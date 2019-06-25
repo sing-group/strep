@@ -179,3 +179,37 @@ $('#deleteDatasetModal').on('show.bs.modal', function(event)
 $(function () {
     $('[data-toggle="popover"]').popover()
   })
+
+  function changeLocale(id)
+  {
+      var url = location.href;
+      var index = url.lastIndexOf("?");
+
+      if(index==-1)
+      {
+        url+="?lang="+id;
+      }
+      else
+      {
+          index=url.search("lang");
+          if(index==-1)
+          {
+            url+="&lang="+id; 
+          }
+          else
+          {
+            var suburl = url.substr(0,index-1);
+            index = url.lastIndexOf("?lang");
+            if(index==-1)
+            {
+                url = suburl + "&lang="+id;   
+            }
+            else
+            {
+                url = suburl + "?lang="+id;   
+            }
+          }
+      }
+
+      location.replace(url);
+  }

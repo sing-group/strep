@@ -42,7 +42,7 @@
 
                 <div class="col-10 text-center form-bg">
                     <img class="header-logo" src="/images/clipboard.svg" alt="clipboard.svg" height="64" width="64">
-                    <h4 class="main-text-header" th:text="'Preprocessing tasks: '+${dataset.name}"></h4>
+                    <h4 class="main-text-header" th:text="@{#{list.preprocessing.title}+${dataset.name}} "></h4>
 
                     <div class="row">
                         <div class="col-5">
@@ -54,8 +54,8 @@
                             <a class="btn btn-small submit-button"
                                 th:href="'/task/preprocess/create?name='+${dataset.name}">
 
-                                <i class="fas fa-plus-circle pull-left main-text">
-                                    Preprocess dataset
+                                <i class="fas fa-plus-circle pull-left main-text" th:text="#{list.preprocessing.button}">
+                                    
                                 </i>
                             </a>
 
@@ -71,22 +71,22 @@
                             <ul class="nav nav-pills">
                                 <li class="nav-item">
                                     <a class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"
-                                        th:href="'/task/preprocess?state=waiting&id='+${dataset.name}">Waiting</a>
+                                        th:href="'/task/preprocess?state=waiting&id='+${dataset.name}" th:text="#{list.preprocessing.waiting}"></a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''"
-                                        th:href="'/task/preprocess?state=executing&id='+${dataset.name}">Executing</a>
+                                        th:href="'/task/preprocess?state=executing&id='+${dataset.name}" th:text="#{list.preprocessing.executing}"></a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''"
-                                        th:href="'/task/preprocess?state=failed&id='+${dataset.name}">Failed</a>
+                                        th:href="'/task/preprocess?state=failed&id='+${dataset.name}" th:text="#{list.preprocessing.failed}"></a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link" th:classappend="${state=='success'} ? 'active' : ''"
-                                        th:href="'/task/preprocess?state=success&id='+${dataset.name}">Success</a>
+                                        th:href="'/task/preprocess?state=success&id='+${dataset.name}" th:text="#{list.preprocessing.success}"></a>
                                 </li>
 
                             </ul>
@@ -101,12 +101,12 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Message</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Pipeline</th>
+                                    <th scope="col" th:text="#{list.preprocessing.date}"></th>
+                                    <th scope="col" th:text="#{list.preprocessing.message}"></th>
+                                    <th scope="col" th:text="#{list.preprocessing.description}"></th>
+                                    <th scope="col" th:text="#{list.preprocessing.pipeline}"></th>
                                     <div th:if="${state=='success'}">
-                                        <th scope="col">Download csv</th>
+                                        <th scope="col" th:text="#{list.preprocessing.csv}"></th>
                                     </div>
 
                                 </tr>
@@ -185,17 +185,6 @@
 
         <div th:include="footer.html"></div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/js/jqueryFunctions.js"></script>
 </body>
 
 </html>

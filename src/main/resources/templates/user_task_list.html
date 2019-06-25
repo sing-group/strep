@@ -41,7 +41,7 @@
 
             <div class="col-8 form-bg">
                 <img class="header-logo" src="/images/clipboard.svg" alt="clipboard.svg" height="64" width="64">
-                <h2 class="main-text-header text-center">Combining tasks</h2>
+                <h2 class="main-text-header text-center" th:text="#{list.usertasks.title}"></h2>
 
                 <div class="row">
 
@@ -49,22 +49,22 @@
                         <ul class="nav nav-pills">
                             <li class="nav-item">
                                 <a class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"
-                                    href="/task/create?state=waiting">Waiting</a>
+                                    href="/task/create?state=waiting" th:text="#{list.usertasks.waiting}"></a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''"
-                                    href="/task/create?state=executing">Executing</a>
+                                    href="/task/create?state=executing" th:text="#{list.usertasks.executing}"></a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''"
-                                    href="/task/create?state=failed">Failed</a>
+                                    href="/task/create?state=failed" th:text="#{list.usertasks.failed}"></a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" th:classappend="${state=='success'} ? 'active' : ''"
-                                    href="/task/create?state=success">Success</a>
+                                    href="/task/create?state=success" th:text="#{list.usertasks.success}"></a>
                             </li>
 
                         </ul>
@@ -80,8 +80,8 @@
                                 <form action="/task/create" method="GET">
                                     <input type="hidden" name="state" th:attr="value = ${state}">
                                     <input type="text" class="form-control" name="searchInput"
-                                        placeholder="Search by dataset name">
-                                    <input type="submit" class="form-control submit-button" value="search">
+                                        th:attr="placeholder = #{list.usertasks.placeholder.search}">
+                                    <input type="submit" class="form-control submit-button" th:attr="value = #{list.usertasks.search}">
                                 </form>
                             </div>
                         </form>
@@ -91,10 +91,10 @@
                 <div class="table-responsive text-center">
                     <table class="table">
                         <thead>
-                            <th scope="col">Date</th>
-                            <th scope="col">Dataset</th>
-                            <th scope="col">Message</th>
-                            <th scope="col">Info</th>
+                            <th scope="col" th:text="#{list.usertasks.date}"></th>
+                            <th scope="col" th:text="#{list.usertasks.dataset}"></th>
+                            <th scope="col" th:text="#{list.usertasks.message}"></th>
+                            <th scope="col" th:text="#{list.usertasks.info}"></th>
                         </thead>
 
                         <tbody>
@@ -142,17 +142,6 @@
 
         <div th:include="footer.html"></div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/js/jqueryFunctions.js"></script>
 </body>
 
 </html>
