@@ -33,24 +33,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http.
+                http.
                 authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/user/register").permitAll()
                 .antMatchers("/user/accountconfirmation").permitAll()
                 .antMatchers("/dataset/public/**").permitAll()
-                .antMatchers("/user/editProfile","/dataset/list", "/dataset/system/**","/dataset/protected/**", "/permission","/permission/solicit").hasAuthority("canView").anyRequest()
+                .antMatchers("/user/editProfile/**","/dataset/list/**", "/dataset/system/**","/dataset/protected/**", "/permission/**","/permission/solicit/**").hasAnyAuthority("canView","canCreateCorpus","canUpload","canAdminister")
+                .antMatchers("/dataset/create/**", "/task/create/**").hasAnyAuthority("canCreateCorpus", "canUpload", "canAdminister")
+                .antMatchers("/dataset/upload/**", "/task/upload/**").hasAnyAuthority("canUpload", "canAdminister")
+                .antMatchers("/license/list/**", "/license/add/**", "/user/list/**", "/permission/listrequests/**", "/user/detailed/**", "/user/delete/**", 
+                "/license/modify/**")
+                .hasAuthority("canAdminister").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/").failureUrl("/")
                 .defaultSuccessUrl("/dataset/list")
                 .usernameParameter("username")
                 .passwordParameter("password");
-        //TODO: Complete this when the urls are final
-        http.
-                authorizeRequests()
-                .antMatchers("/dataset/list").hasAnyAuthority("canView", "canUpload", "canCreateCorpus", "canAdminister");
-}
+    }
 
 	@Override
     public void configure(WebSecurity web) throws Exception {

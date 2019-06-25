@@ -72,7 +72,6 @@ public class DatasetService
     {
 
         java.io.File datasetDirectory = new java.io.File(BASE_PATH+name+"/");
-        java.io.File datasetZip = new java.io.File(BASE_PATH+name+".zip");
 
         if(!datasetDirectory.exists())
         {
