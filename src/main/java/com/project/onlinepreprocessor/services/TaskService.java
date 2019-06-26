@@ -299,10 +299,6 @@ public class TaskService {
             if((total!=100 && total!=0) || (total==0 && inputSpamPercentage==0) || fileNumberInput==0)
             {
                 success = false;
-                System.out.println(total);
-                System.out.println(inputSpamPercentage);
-                System.out.println(fileNumberInput);
-                System.out.println("FIRST IF");
             }
             else
             {
@@ -354,9 +350,7 @@ public class TaskService {
                 if(databaseFilesMap.get(key) < necesaryFilesMap.get(key))
                 {
                     success = false;
-                    System.out.println("SECOND IF");
                 }
-                System.out.println(databaseFilesMap.get(key)+" vs "+necesaryFilesMap.get(key));
             }
 
             int necesarySpamFiles = (int) Math.ceil((double)fileNumberInput * ((double)inputSpamPercentage/100.00));
@@ -365,7 +359,6 @@ public class TaskService {
             if(availableSpamFiles<necesarySpamFiles)
             {
                 success = false;
-                System.out.println("THIRD IF");
             }
             }
 

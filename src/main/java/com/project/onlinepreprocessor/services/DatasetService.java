@@ -110,7 +110,7 @@ public class DatasetService
     public boolean getDownloadFiles(String name)
     {
 
-        java.io.File datasetDirectory = new java.io.File(BASE_PATH+name+"/");
+        java.io.File datasetDirectory = new java.io.File(BASE_PATH+name+java.io.File.separator);
 
         if(!datasetDirectory.exists())
         {
@@ -138,8 +138,8 @@ public class DatasetService
 
         if(!zipResult.exists() || datasetDirectory.lastModified()>zipResult.lastModified())
         {
-        java.io.File directoryHam = new java.io.File(datasetDirectory, "_ham_/");
-        java.io.File directorySpam = new java.io.File(datasetDirectory, "_spam_/");
+        java.io.File directoryHam = new java.io.File(datasetDirectory, "_ham_"+java.io.File.separator);
+        java.io.File directorySpam = new java.io.File(datasetDirectory, "_spam_"+java.io.File.separator);
 
         ArrayList<java.io.File> spamFiles = new ArrayList<java.io.File>();
         ArrayList<java.io.File> hamFiles = new ArrayList<java.io.File>();
@@ -173,14 +173,14 @@ public class DatasetService
 
         try{
         ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(zippedFile));
-        zip.putNextEntry(new ZipEntry("_ham_/"));
+        zip.putNextEntry(new ZipEntry("_ham_"+java.io.File.separator));
         
         for(int i = 0;i<hamFiles.size();i++)
         {
             System.out.println(hamFiles.get(i).getAbsolutePath());
             byte[] buf = new byte[1024];
             java.io.File file = hamFiles.get(i);
-            zip.putNextEntry(new ZipEntry("_ham_/"+file.getName()));
+            zip.putNextEntry(new ZipEntry("_ham_"+java.io.File.separator+file.getName()));
             FileInputStream fis = new FileInputStream(file.getAbsolutePath());
             int moreText = 0;
             while((moreText=fis.read())!=-1)
@@ -194,13 +194,13 @@ public class DatasetService
         zip.closeEntry();
 
 
-        zip.putNextEntry(new ZipEntry("_spam_/"));
+        zip.putNextEntry(new ZipEntry("_spam_"+java.io.File.separator));
 
         for(int i = 0;i<spamFiles.size();i++)
         {
             byte[] buf = new byte[1024];
             java.io.File file = spamFiles.get(i);
-            zip.putNextEntry(new ZipEntry("_spam_/"+file.getName()));
+            zip.putNextEntry(new ZipEntry("_spam_"+java.io.File.separator+file.getName()));
             FileInputStream fis = new FileInputStream(file.getAbsolutePath());
             int moreText = 0;
             while((moreText=fis.read())!=-1)
@@ -240,7 +240,7 @@ public class DatasetService
         String message = "";
 
         String name = dataset.getName().replace(" ", "").toLowerCase();
-        String url = HOST_NAME+"/dataset/public/detailed/"+name;
+        String url = HOST_NAME+java.io.File.separator+"dataset"+java.io.File.separator+"public"+java.io.File.separator+"detailed"+java.io.File.separator+name;
         Date date = new Date();
         
         dataset.setName(name);
@@ -287,7 +287,7 @@ public class DatasetService
     public Dataset addUserDataset(Dataset dataset, String username)
     {
         String name = dataset.getName().replace(" ", "").toLowerCase();
-        String url = HOST_NAME+"/dataset/detailed/"+name;
+        String url = HOST_NAME+java.io.File.separator+"dataset"+java.io.File.separator+"public"+java.io.File.separator+"detailed"+java.io.File.separator+name;
 
         Date date = new Date();
         dataset.setUploadDate(date);
