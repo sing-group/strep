@@ -2,97 +2,97 @@
 -- Insert here the default users, roles, etc.
 
 --Default values for the table datasetType
-insert into dataset_types(id, description, name) values(0, "Datasets uploaded to the platform by users with upload dataset permissions","systemdataset");
-insert into dataset_types(id, description, name) values(1, "Datasets created by users mixing system datasets","userdataset");
+insert IGNORE into dataset_types(id, description, name) values(0, "Datasets uploaded to the platform by users with upload dataset permissions","systemdataset");
+insert IGNORE into dataset_types(id, description, name) values(1, "Datasets created by users mixing system datasets","userdataset");
  
 --Admin password 12admin34
-insert into user(username, confirmed_account, email, hash, name, password, photo, surname) values ('admin',b'1','onlinepreprocessor@gmail.com','system_default','System Administrator','$2a$10$3Gfa1K4Te7xeE4s8cvOhnecyN7v.iai4GXkhlrX1JXokt1PLHrKYi',null,'');
-insert into permission(id, name, description) values (1,"canView", "Users can: view system datasets, view protected datasets and request permissions");
-insert into permission(id, name, description) values (2,"canCreateCorpus", "Users can: view system datasets, view protected datasets, view and create their own datasets by mixing system datasets and requesting permissions");
-insert into permission(id, name, description) values (3,"canUpload", "Users can: view system datasets, view protected datasets, view and create their own datasets by mixing those in the system. They can also upload system datasets and request permissions");
-insert into permission(id, name, description) values (4,"canAdminister", "grant all privileges");
-insert into user_perm(user,perm_id) values ("admin",4);
+insert IGNORE into user(username, confirmed_account, email, hash, name, password, photo, surname) values ('admin',b'1','onlinepreprocessor@gmail.com','system_default','System Administrator','$2a$10$3Gfa1K4Te7xeE4s8cvOhnecyN7v.iai4GXkhlrX1JXokt1PLHrKYi',null,'');
+insert IGNORE into permission(id, name, description) values (1,"canView", "Users can: view system datasets, view protected datasets and request permissions");
+insert IGNORE into permission(id, name, description) values (2,"canCreateCorpus", "Users can: view system datasets, view protected datasets, view and create their own datasets by mixing system datasets and requesting permissions");
+insert IGNORE into permission(id, name, description) values (3,"canUpload", "Users can: view system datasets, view protected datasets, view and create their own datasets by mixing those in the system. They can also upload system datasets and request permissions");
+insert IGNORE into permission(id, name, description) values (4,"canAdminister", "grant all privileges");
+insert IGNORE into user_perm(user,perm_id) values ("admin",4);
 
 
-insert into language(language) values("AF");
-insert into language(language) values("AN");
-insert into language(language) values("AR");
-insert into language(language) values("AST");
-insert into language(language) values("BE");
-insert into language(language) values("BR");
-insert into language(language) values("CA");
-insert into language(language) values("BG");
-insert into language(language) values("BN");
-insert into language(language) values("CS");
-insert into language(language) values("CY");
-insert into language(language) values("DA");
-insert into language(language) values("DE");
-insert into language(language) values("EL");
-insert into language(language) values("EN");
-insert into language(language) values("ES");
-insert into language(language) values("ET");
-insert into language(language) values("EU");
-insert into language(language) values("FA");
-insert into language(language) values("FI");
-insert into language(language) values("FR");
-insert into language(language) values("GA");
-insert into language(language) values("GL");
-insert into language(language) values("GU");
-insert into language(language) values("HE");
-insert into language(language) values("HI");
-insert into language(language) values("HR");
-insert into language(language) values("HT");
-insert into language(language) values("HU");
-insert into language(language) values("ID");
-insert into language(language) values("IS");
-insert into language(language) values("IT");
-insert into language(language) values("JA");
-insert into language(language) values("KM");
-insert into language(language) values("KN");
-insert into language(language) values("KO");
-insert into language(language) values("LT");
-insert into language(language) values("LV");
-insert into language(language) values("MK");
-insert into language(language) values("ML");
-insert into language(language) values("MR");
-insert into language(language) values("MS");
-insert into language(language) values("MT");
-insert into language(language) values("NE");
-insert into language(language) values("NL");
-insert into language(language) values("NO");
-insert into language(language) values("OC");
-insert into language(language) values("PA");
-insert into language(language) values("PL");
-insert into language(language) values("PT");
-insert into language(language) values("RO");
-insert into language(language) values("RU");
-insert into language(language) values("SK");
-insert into language(language) values("SL");
-insert into language(language) values("SO");
-insert into language(language) values("SQ");
-insert into language(language) values("SR");
-insert into language(language) values("SV");
-insert into language(language) values("SW");
-insert into language(language) values("TA");
-insert into language(language) values("TE");
-insert into language(language) values("TH");
-insert into language(language) values("TL");
-insert into language(language) values("TR");
-insert into language(language) values("UK");
-insert into language(language) values("UR");
-insert into language(language) values("VI");
-insert into language(language) values("WA");
-insert into language(language) values("YI");
-insert into language(language) values("ZH-CN");
-insert into language(language) values("ZH-TW");
+insert IGNORE into language(language) values("AF");
+insert IGNORE into language(language) values("AN");
+insert IGNORE into language(language) values("AR");
+insert IGNORE into language(language) values("AST");
+insert IGNORE into language(language) values("BE");
+insert IGNORE into language(language) values("BR");
+insert IGNORE into language(language) values("CA");
+insert IGNORE into language(language) values("BG");
+insert IGNORE into language(language) values("BN");
+insert IGNORE into language(language) values("CS");
+insert IGNORE into language(language) values("CY");
+insert IGNORE into language(language) values("DA");
+insert IGNORE into language(language) values("DE");
+insert IGNORE into language(language) values("EL");
+insert IGNORE into language(language) values("EN");
+insert IGNORE into language(language) values("ES");
+insert IGNORE into language(language) values("ET");
+insert IGNORE into language(language) values("EU");
+insert IGNORE into language(language) values("FA");
+insert IGNORE into language(language) values("FI");
+insert IGNORE into language(language) values("FR");
+insert IGNORE into language(language) values("GA");
+insert IGNORE into language(language) values("GL");
+insert IGNORE into language(language) values("GU");
+insert IGNORE into language(language) values("HE");
+insert IGNORE into language(language) values("HI");
+insert IGNORE into language(language) values("HR");
+insert IGNORE into language(language) values("HT");
+insert IGNORE into language(language) values("HU");
+insert IGNORE into language(language) values("ID");
+insert IGNORE into language(language) values("IS");
+insert IGNORE into language(language) values("IT");
+insert IGNORE into language(language) values("JA");
+insert IGNORE into language(language) values("KM");
+insert IGNORE into language(language) values("KN");
+insert IGNORE into language(language) values("KO");
+insert IGNORE into language(language) values("LT");
+insert IGNORE into language(language) values("LV");
+insert IGNORE into language(language) values("MK");
+insert IGNORE into language(language) values("ML");
+insert IGNORE into language(language) values("MR");
+insert IGNORE into language(language) values("MS");
+insert IGNORE into language(language) values("MT");
+insert IGNORE into language(language) values("NE");
+insert IGNORE into language(language) values("NL");
+insert IGNORE into language(language) values("NO");
+insert IGNORE into language(language) values("OC");
+insert IGNORE into language(language) values("PA");
+insert IGNORE into language(language) values("PL");
+insert IGNORE into language(language) values("PT");
+insert IGNORE into language(language) values("RO");
+insert IGNORE into language(language) values("RU");
+insert IGNORE into language(language) values("SK");
+insert IGNORE into language(language) values("SL");
+insert IGNORE into language(language) values("SO");
+insert IGNORE into language(language) values("SQ");
+insert IGNORE into language(language) values("SR");
+insert IGNORE into language(language) values("SV");
+insert IGNORE into language(language) values("SW");
+insert IGNORE into language(language) values("TA");
+insert IGNORE into language(language) values("TE");
+insert IGNORE into language(language) values("TH");
+insert IGNORE into language(language) values("TL");
+insert IGNORE into language(language) values("TR");
+insert IGNORE into language(language) values("UK");
+insert IGNORE into language(language) values("UR");
+insert IGNORE into language(language) values("VI");
+insert IGNORE into language(language) values("WA");
+insert IGNORE into language(language) values("YI");
+insert IGNORE into language(language) values("ZH-CN");
+insert IGNORE into language(language) values("ZH-TW");
 
-insert into datatype(dataType) values(".eml");
-insert into datatype(dataType) values(".tytb");
-insert into datatype(dataType) values(".tsms");
-insert into datatype(dataType) values(".twtid");
-insert into datatype(dataType) values(".warc");
+insert IGNORE into datatype(dataType) values(".eml");
+insert IGNORE into datatype(dataType) values(".tytb");
+insert IGNORE into datatype(dataType) values(".tsms");
+insert IGNORE into datatype(dataType) values(".twtid");
+insert IGNORE into datatype(dataType) values(".warc");
 
-insert into license(restriction_level, name, description, url) values(1, "Public domain", '
+insert IGNORE into license(restriction_level, name, description, url) values(1, "Public domain", '
 Public Domain Mark
 
 No Known Copyright
@@ -107,7 +107,7 @@ A work may have limited or "hybrid" public domain status for several reasons.  S
 
 CC does not recommend the Public Domain Mark for works with limited, hybrid public domain status at this time, though we will be exploring means for doing so in 2014.', "https://creativecommons.org/share-your-work/public-domain/pdm/");
 
-insert into license(restriction_level,name, description, url) values(2, "CC-0", 'Statement of Purpose
+insert IGNORE into license(restriction_level,name, description, url) values(2, "CC-0", 'Statement of Purpose
 
 The laws of most jurisdictions throughout the world automatically confer exclusive Copyright and Related Rights (defined below) upon the creator and subsequent owner(s) (each and all, an "owner") of an original work of authorship and/or a database (each, a "Work").
 
@@ -137,7 +137,7 @@ For these and/or other purposes and motivations, and without any expectation of 
     Affirmer understands and acknowledges that Creative Commons is not a party to this document and has no duty or obligation with respect to this CC0 or use of the Work.',"https://creativecommons.org/publicdomain/zero/1.0/legalcode" 
 );
 
-insert into license(restriction_level,name, description, url) values(3, 'PDDL', 'ODC Public Domain Dedication and Licence (PDDL)
+insert IGNORE into license(restriction_level,name, description, url) values(3, 'PDDL', 'ODC Public Domain Dedication and Licence (PDDL)
 Disclaimer
 
 PLEASE READ:
@@ -291,7 +291,7 @@ Part III: General provisions
 6.4 This Document takes effect in the relevant jurisdiction in which the Document terms are sought to be enforced. If the rights waived or granted under applicable law in the relevant jurisdiction includes additional rights not waived or granted under this Document, these additional rights are included in this Document in order to meet the intent of this Document.
 ', 'https://www.opendatacommons.org/licenses/pddl/1.0/');
 
-insert into license(restriction_level,name, description, url) values(4,'CC-BY', 'Creative Commons Attribution 4.0 International Public License
+insert IGNORE into license(restriction_level,name, description, url) values(4,'CC-BY', 'Creative Commons Attribution 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -388,7 +388,7 @@ Section 8 - Interpretation.
     Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.
 ', 'https://creativecommons.org/licenses/by/4.0/legalcode' );
 
-insert into license(restriction_level,name, description, url) values(5, 'CDLA-Permissive-1.0', '
+insert IGNORE into license(restriction_level,name, description, url) values(5, 'CDLA-Permissive-1.0', '
 
 Community Data License Agreement - Permissive - Version 1.0
 
@@ -477,7 +477,7 @@ Section 7.  Miscellaneous
 7.5 The Community Data License Agreement workgroup under The Linux Foundation is the steward of this Agreement ("Steward").  No one other than the Steward has the right to modify or publish new versions of this Agreement.  Each version will be given a distinguishing version number.  You may Use and Publish Data Received hereunder under the terms of the version of the Agreement under which You originally Received the Data, or under the terms of any subsequent version published by the Steward.
 ', 'https://cdla.io/permissive-1-0/');
 
-insert into license(restriction_level,name, description, url) values(6,'ODC-BY', 'ODC Attribution License (ODC-By)
+insert IGNORE into license(restriction_level,name, description, url) values(6,'ODC-BY', 'ODC Attribution License (ODC-By)
 Preamble
 
 The Open Data Commons Attribution License is a license agreement
@@ -893,7 +893,7 @@ jurisdiction includes additional rights not granted under this License,
 these additional rights are granted in this License in order to meet the
 terms of this License.', 'https://opendatacommons.org/licenses/by/1.0/index.html');
 
-insert into license(restriction_level,name, description, url) values(7, 'CC-BY-SA', "Creative Commons Attribution-ShareAlike 4.0 International Public License
+insert IGNORE into license(restriction_level,name, description, url) values(7, 'CC-BY-SA', "Creative Commons Attribution-ShareAlike 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-ShareAlike 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -998,7 +998,7 @@ Section 8 - Interpretation.
     Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.
 ", 'https://creativecommons.org/licenses/by-sa/4.0/legalcode');
 
-insert into license(restriction_level,name, description, url) values(8, 'CDLA-Sharing-1.0', '
+insert IGNORE into license(restriction_level,name, description, url) values(8, 'CDLA-Sharing-1.0', '
 
 Community Data License Agreement - Sharing - Version 1.0
 
@@ -1092,7 +1092,7 @@ Section 7.  Miscellaneous
 ', 'https://cdla.io/sharing-1-0/');
 
 
-insert into license(restriction_level,name, description, url) values(9, 'ODbL', 'ODC Open Database License (ODbL)
+insert IGNORE into license(restriction_level,name, description, url) values(9, 'ODbL', 'ODC Open Database License (ODbL)
 Preamble
 
 The Open Database License (ODbL) is a license agreement intended to
@@ -1619,7 +1619,7 @@ jurisdiction includes additional rights not granted under this License,
 these additional rights are granted in this License in order to meet the
 terms of this License.', 'https://opendatacommons.org/licenses/odbl/1.0/index.html');
 
-insert into license(restriction_level,name, description, url) values(10, 'CC BY-NC', "Creative Commons Attribution-NonCommercial 4.0 International Public License
+insert IGNORE into license(restriction_level,name, description, url) values(10, 'CC BY-NC', "Creative Commons Attribution-NonCommercial 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -1718,7 +1718,7 @@ Section 8 - Interpretation.
 ", "https://creativecommons.org/licenses/by-nc/4.0/legalcode");
 
 
-insert into license(restriction_level,name, description, url) values(11, 'CC BY-ND','Creative Commons Attribution-NoDerivatives 4.0 International Public License
+insert IGNORE into license(restriction_level,name, description, url) values(11, 'CC BY-ND','Creative Commons Attribution-NoDerivatives 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NoDerivatives 4.0 International Public License ("Public License"). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -1814,7 +1814,7 @@ Section 8 - Interpretation.
     Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.
 ', 'https://creativecommons.org/licenses/by-nd/4.0/legalcode');
 
-insert into license(restriction_level,name, description, url) values(12,'CC BY-NC-SA',"Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License
+insert IGNORE into license(restriction_level,name, description, url) values(12,'CC BY-NC-SA',"Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -1920,7 +1920,7 @@ Section 8 - Interpretation.
     Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.
 ",'https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode');
 
-insert into license(restriction_level,name, description, url) values(13, "CC BY-NC-ND", "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License
+insert IGNORE into license(restriction_level,name, description, url) values(13, "CC BY-NC-ND", "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -2018,7 +2018,7 @@ Section 8 - Interpretation.
 ","https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode" );
 
 
-insert into license(restriction_level,name, description, url) values(14, 'TREC License', 'Agreement for use of the
+insert IGNORE into license(restriction_level,name, description, url) values(14, 'TREC License', 'Agreement for use of the
 2007 TREC Public Spam Corpus
 
 By clicking "I accept this agreement" below, in consideration of the right to download and use the information designated as the 2007 TREC Public Spam Corpus,
