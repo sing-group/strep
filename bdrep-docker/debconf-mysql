@@ -1,0 +1,11 @@
+mysql-apt-config	mysql-apt-config/repo-url	string	http://repo.mysql.com/apt
+mysql-apt-config	mysql-apt-config/tools-component	string	
+mysql-apt-config	mysql-apt-config/preview-component	string	
+mysql-apt-config	mysql-apt-config/select-product	select	Ok
+mysql-apt-config	mysql-apt-config/repo-distro	select	debian
+mysql-apt-config	mysql-apt-config/select-preview	select	Disabled
+mysql-apt-config	mysql-apt-config/repo-codename	select	stretch
+mysql-apt-config	mysql-apt-config/select-server	select	mysql-8.0
+mysql-apt-config	mysql-apt-config/select-tools	select	Disabled
+mysql-apt-config	mysql-apt-config/unsupported-platform	select	abort
+mysql-apt-config	mysql-apt-config/dmr-warning	note	

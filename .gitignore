@@ -6,3 +6,4 @@ target*
 mvnw
 mvnw.cmd
 **/.vscode/**
+\.DS_Store
