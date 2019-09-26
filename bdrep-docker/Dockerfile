@@ -24,15 +24,15 @@ RUN mkdir /root/datasets && mkdir /root/pipelines && mkdir /root/csv
 #Download && configure the software
 RUN cd /root && git clone https://github.com/sing-group/bdrep.git && \
     sed -i.bak -e "s/^dataset\.storage.*/dataset.storage=\/root\/datasets\//g" /root/bdrep/src/main/resources/application.properties && \
-    sed -i.bak -e "s/^dataset\.storage.*/pipeline.storage=\/root\/pipelines\//g" /root/bdrep/src/main/resources/application.properties && \
-    sed -i.bak -e "s/^dataset\.storage.*/csv.storage=\/root\/csv\//g" /root/bdrep/src/main/resources/application.properties && \
+    sed -i.bak -e "s/^pipeline\.storage.*/pipeline.storage=\/root\/pipelines\//g" /root/bdrep/src/main/resources/application.properties && \
+    sed -i.bak -e "s/^csv\.storage.*/csv.storage=\/root\/csv\//g" /root/bdrep/src/main/resources/application.properties && \
     cd /root && git clone https://github.com/sing-group/bdrep_service.git && \
     sed -i.bak -e "s/^datasetStorage.*/datasetStorage=\/root\/datasets\//g" /root/bdrep_service/src/main/resources/service.properties && \
     sed -i.bak -e "s/^pipelineStorage.*/pipelineStorage=\/root\/pipelines\//g" /root/bdrep_service/src/main/resources/service.properties && \
     sed -i.bak -e "s/^outputStorage.*/outputStorage=\/root\/csv\//g" /root/bdrep_service/src/main/resources/service.properties
 
 #Build bdrep
-RUN mysqld_safe --bind-address=0.0.0.0 & sleep 10 && \
+RUN mysqld_safe --bind-address=0.0.0.0 & sleep 15 && \
     mysqladmin create onlinepreprocessor && \
     echo "CREATE USER 'springuser'@'%' IDENTIFIED WITH mysql_native_password BY 'springpassword'; GRANT ALL PRIVILEGES on *.* TO 'springuser'@'%' WITH GRANT OPTION; flush privileges; " | mysql && \
     cd /root/bdrep && mvn clean package && mysqladmin shutdown && cd .. 

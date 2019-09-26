@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mysqld_safe --bind-address=0.0.0.0 &
-sleep 10
+sleep 15
 cd /root/bdrep 
 java -jar target/onlinepreprocessor-0.0.1-SNAPSHOT.jar &
 cd /root/bdrep_service
