@@ -46,8 +46,8 @@ RUN cd /root/bdrep_service && \
     cd ..
 
 #Clean the maven library
-RUN rm -rf /root/.m2/*
+RUN rm -rf /root/.m2/repository/*
 
 ENTRYPOINT /root/start.sh
 
-EXPOSE 8080
+EXPOSE 8080 8443
