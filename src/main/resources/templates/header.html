@@ -39,8 +39,8 @@
         <div th:if="${authority=='canAdminister'}">
             <li class="nav-item dropdown">
                 <a class="topdiv-text dropdown-toggle nav-link" id="navbar-link" href="#" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Administer
+                    aria-haspopup="true" aria-expanded="false"  th:text="#{header.administer}">
+                    <!--Administer-->
                 </a>
                 <div class="dropdown-menu top-bg" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item topdiv-text" href="/user/list" th:text="#{header.listusers}"></a>
