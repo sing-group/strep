@@ -19,7 +19,8 @@ RUN chmod 755 /root/start.sh && cd && apt-get install -y wget lsb-release gnupg 
     apt-get update && apt-get install mysql-community-server -y
 
 #Make input/output directories
-RUN mkdir /root/datasets && mkdir /root/pipelines && mkdir /root/csv 
+RUN mkdir /root/datasets && mkdir /root/pipelines && mkdir /root/csv && \
+    chmod 777 /root/datasets && chmod 777 /root/pipelines && chmod 777 /root/csv
 
 #Download && configure the software
 RUN cd /root && git clone https://github.com/sing-group/bdrep.git && \
