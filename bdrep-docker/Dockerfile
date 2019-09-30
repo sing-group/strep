@@ -30,7 +30,12 @@ RUN cd /root && git clone https://github.com/sing-group/bdrep.git && \
     cd /root && git clone https://github.com/sing-group/bdrep_service.git && \
     sed -i.bak -e "s/^datasetStorage.*/datasetStorage=\/root\/datasets\//g" /root/bdrep_service/src/main/resources/service.properties && \
     sed -i.bak -e "s/^pipelineStorage.*/pipelineStorage=\/root\/pipelines\//g" /root/bdrep_service/src/main/resources/service.properties && \
-    sed -i.bak -e "s/^outputStorage.*/outputStorage=\/root\/csv\//g" /root/bdrep_service/src/main/resources/service.properties
+    sed -i.bak -e "s/^outputStorage.*/outputStorage=\/root\/csv\//g" /root/bdrep_service/src/main/resources/service.properties && \
+    mkdir /root/bdrep_service/resources && mkdir /root/bdrep_service/config
+
+#Add NLPA configurations and required files
+ADD resources /root/bdrep_service/resources/
+ADD config /root/bdrep_service/config/
 
 #Build bdrep
 RUN mysqld_safe --bind-address=0.0.0.0 & sleep 15 && \
@@ -43,7 +48,7 @@ RUN cd /root/bdrep_service && \
     mvn clean package && mkdir plugins && cp target/lib/nlpa* plugins/ && \
     cd plugins && jar xf nlpa-1.0.0.jar META-INF/services/org.bdp4j.pipe.Pipe && \
     sed -i -E "/^.*(NERFromStringBufferPipe|ComputePolarityFromStringBufferPipe|ComputePolarityTBWSFromStringBuffer|StoreTweetLangPipe)$/d" \
-    META-INF/services/org.bdp4j.pipe.Pipe && jar uf nlpa-1.0.0.jar META-INF/services/org.bdp4j.pipe.Pipe && cd .. && \
+    META-INF/services/org.bdp4j.pipe.Pipe && jar uf nlpa-1.0.0.jar META-INF/services/org.bdp4j.pipe.Pipe && rm -rf META-INF && cd .. && \
     cd ..
 
 #Clean the maven library

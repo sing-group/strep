@@ -7,3 +7,6 @@ mvnw
 mvnw.cmd
 **/.vscode/**
 \.DS_Store
+configurations.ini
+babelfy.var.properties
+babelnet.var.properties
