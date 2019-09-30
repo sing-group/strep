@@ -271,7 +271,7 @@ public class DatasetService
         
                 datasetRepository.save(dataset);
                 taskService.addNewSystemTask(dataset);
-                message = "Successfully uploaded: the dataset will be available after it has been processed";
+                message = "Successfully uploaded to "+BASE_PATH+"/"+dataset.getName()+".zip. The dataset will be available after it has been processed";
         }
 
         return message;
