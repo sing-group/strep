@@ -4,7 +4,7 @@ FROM debian:9
 
 #Install openjdk
 RUN apt-get update && apt-get install -y \
-      openjdk-8-jdk git maven
+      openjdk-8-jdk git maven wget lsb-release gnupg
 
 #Add the configuration for the mysql packages (debconf)
 ADD debconf-mysql /root/debconf-mysql
@@ -13,10 +13,10 @@ ADD debconf-mysql /root/debconf-mysql
 ADD start.sh /root/start.sh
 
 # Install mysql8.0
-RUN chmod 755 /root/start.sh && cd && apt-get install -y wget lsb-release gnupg && \
+RUN chmod 755 /root/start.sh && cd && \
     debconf-set-selections /root/debconf-mysql && export DEBIAN_FRONTEND=noninteractive && export DEBIAN_PRIORITY=critical && \
     wget http://repo.mysql.com/mysql-apt-config_0.8.13-1_all.deb && dpkg -i mysql-apt-config_0.8.13-1_all.deb && \
-    apt-get update && apt-get install mysql-community-server -y
+    apt-get update && apt-get install mysql-server -y
 
 #Make input/output directories
 RUN mkdir /root/datasets && mkdir /root/pipelines && mkdir /root/csv && \
