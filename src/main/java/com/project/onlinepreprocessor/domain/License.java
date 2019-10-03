@@ -1,6 +1,7 @@
 package com.project.onlinepreprocessor.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,8 @@ public class License
      */
     @Id
     @NotNull(message = "Name of the license cannot be null")
+    @Size(min=1, max=100, message="Name must have beetween 1 and 100 characters")
+    @Column(length = 100, columnDefinition="VARCHAR(100)")    
     private String name;
 
     /**

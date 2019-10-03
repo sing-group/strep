@@ -3,8 +3,11 @@ package com.project.onlinepreprocessor.domain;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * JPA Bean for the Dataset objects managed by application
@@ -17,6 +20,9 @@ public class Datatype
       * The name of the datatype
       */
     @Id
+    @NotNull
+    @Size(min=1, max=10, message="Name must have beetween 1 and 10 characters")
+    @Column(length = 10, columnDefinition="VARCHAR(10)")
     private String datatype;
 
     /**

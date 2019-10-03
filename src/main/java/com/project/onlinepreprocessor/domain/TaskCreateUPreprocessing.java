@@ -31,6 +31,7 @@ public class TaskCreateUPreprocessing extends Task
     /**
      * The name of the csv to identify in the filesystem
      */
+    @Lob
     private String csv;
 
     /**

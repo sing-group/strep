@@ -6,18 +6,25 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import javax.persistence.Column;
+
 /**
  * Embeddable key for FileDatatypeType class
  */
 @Embeddable
 public class FileDatatypeTypePK implements Serializable
 {
+    /**
+     * Serial version UID
+     */
+    private static final long serialVersionUID = 1L;
 
     /**
      * The extension of the files
      */
     @NotNull
     @Size(max = 20)
+    @Column(length = 20, columnDefinition="VARCHAR(20)")
     private String extension;
 
     /**
@@ -25,6 +32,7 @@ public class FileDatatypeTypePK implements Serializable
      */
     @NotNull
     @Size(max = 20)
+    @Column(length = 20, columnDefinition="VARCHAR(20)")
     private String type;
 
 

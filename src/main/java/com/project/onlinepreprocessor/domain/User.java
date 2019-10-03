@@ -4,6 +4,10 @@ import javax.persistence.*;
 import com.project.onlinepreprocessor.domain.Permission;
 
 import org.hibernate.annotations.NaturalId;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -21,6 +25,9 @@ public class User
      */
     @NaturalId
     @Id
+    @NotNull(message = "Name of the user cannot be null")
+    @Size(min=1, max=30, message="Username must have beetween 1 and 30 characters")
+    @Column(length = 30, columnDefinition="VARCHAR(30)")
     private String username;
 
     /**

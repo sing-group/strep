@@ -3,6 +3,10 @@ package com.project.onlinepreprocessor.domain;
 import javax.persistence.*;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.persistence.Column;
+
 /**
  * JPA Bean for the Version objects managed by application
  * @author Ismael Vázqez
@@ -14,6 +18,9 @@ public class Version
      * The name of the version
      */
     @Id
+    @NotNull(message = "Name of the license cannot be null")
+    @Size(min=1, max=50, message="The name of the license must have beetween 1 and 50 characters")
+    @Column(length = 50, columnDefinition="VARCHAR(50)")
     private String name;
 
     /**

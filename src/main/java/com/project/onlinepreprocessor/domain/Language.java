@@ -3,8 +3,11 @@ package com.project.onlinepreprocessor.domain;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * JPA Bean for the Dataset objects managed by application
@@ -18,6 +21,9 @@ public class Language
      * The name of the language
      */
     @Id
+    @NotNull
+    @Size(min=1, max=20, message="Name must have beetween 1 and 20 characters")
+    @Column(length = 20, columnDefinition="VARCHAR(20)")
     private String language;
 
     /**

@@ -30,7 +30,8 @@ public class Dataset
      */
     @Id
     @NotNull
-    @Size(min=8, max=50, message="Name must have beetween 8 and 50 characters")
+    @Size(min=1, max=80, message="Name must have beetween 1 and 80 characters")
+    @Column(length = 80, columnDefinition="VARCHAR(80)")
     private String name;
     
     /**
