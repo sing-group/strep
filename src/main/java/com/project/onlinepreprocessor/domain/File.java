@@ -38,7 +38,7 @@ public class File
     /**
      * The language of the file
      */
-    @Size(min=1, max=4, message="The dataset language cannot have more than 4 characters")
+    @Size(min=1, max=4, message="The file language cannot have more than 4 characters")
     @Column(length = 4, columnDefinition="VARCHAR(4)")
     private String language;
 

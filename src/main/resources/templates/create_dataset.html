@@ -221,7 +221,7 @@
                                                 name error</label>
                                         </div>
                                         <div class="form-group">
-                                            <textarea rows="5" class="form-control" name="description" th:attr="placeholder = #{create.dataset.placeholder.name}"
+                                            <textarea rows="5" class="form-control" name="description" th:attr="placeholder = #{create.dataset.placeholder.description}"
                                                 required="required"></textarea>
                                             <label class="error-label" th:if="${#fields.hasErrors('description')}"
                                                 th:errors="*{description}">Description
