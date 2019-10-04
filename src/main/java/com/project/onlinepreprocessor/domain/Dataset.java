@@ -17,10 +17,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
 
 /**
  * JPA Bean for the Dataset objects managed by application
  * @author Ismael Vázquez
+ * @author José Ramón Méndez Reboredo
  */
 @Entity
 public class Dataset
@@ -32,11 +34,16 @@ public class Dataset
     @NotNull
     @Size(min=1, max=80, message="The dataset name must have beetween 1 and 80 characters")
     @Column(length = 80, columnDefinition="VARCHAR(80)")
+    @Pattern(regexp = "^[A-Za-z0-9\\-_]*$", message = "The name of dataset should contain only alphanumeric characters. Additionally _ and - characters are also permitted.")
     private String name;
     
     /**
      * The author of the dataset
      */
+    @Size(min=1, max=255, message="Author must have beetween 1 and 255 characters")
+    @Column(length = 255, columnDefinition="VARCHAR(255)")
+    @Pattern(regexp = "^[A-Za-z\\.\\-äáàëéèïíìöóòüúùñç ÄÁÀËÉÈÏÍÌÖÓÒÜÚÙÑÇ]*$", 
+             message = "The author can only contains alphabetic characters. Spaces, dots and - are also permitted.")
     private String author;
 
     /**
@@ -44,6 +51,7 @@ public class Dataset
      */
     @NotNull
     @Size(min=1, max=1000, message="Description must have beetween 1 and 1000 characters")
+    @Lob
     private String description;
 
     /**
@@ -55,11 +63,20 @@ public class Dataset
     /**
      * The doi for the dataset
      */
+    @Size(max=80, message="The dataset DOI (Digital Object Identifier) must have less than 80 characters")
+    @Column(length = 80, columnDefinition="VARCHAR(80)")
     private String doi;
 
     /**
-     * The accesstype for the dataset
+     * The accesstype for the dataset. Possibble values are:
+     * <ul>
+     * <li>"public"</li>
+     * <li>"protected"</li>
+     * <li>"private"</li>
+     * </ul>
      */
+    @Column(length = 10, columnDefinition="VARCHAR(10)")
+    @Pattern(regexp = "^(public|protected|private)$", message = "The access must be public, protected or private")
     private String access;
 
     /**
@@ -72,26 +89,34 @@ public class Dataset
     private Set<Language> language;
 
     /**
-     * The data types of the dataset
+     * The data types of the dataset (file extensions). E.g. ".eml", "·txt" ...
      */
     @ManyToMany(cascade =
         {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="dataset_datatypes", joinColumns=@JoinColumn(name="dataset_name", referencedColumnName="name"),
     inverseJoinColumns = @JoinColumn(name="dataType", referencedColumnName="dataType"))
     private Set<Datatype> datatypes;
+
     /**
-     * The type of the dataset
+     * The type of the dataset. Possible types are:
+     * <ul>
+     * <li> systemdataset </li>
+     * <li> userdataset </li>
+     * </ul>
      */
+    @Column(length = 14, columnDefinition="VARCHAR(14)")
+    @Pattern(regexp = "^(systemdataset|userdataset)$", message = "The type must be systemdataset or userdataset")
     private String type;
 
     /**
-     * The date when the dataset was uploaded
+     * The date when the dataset was uploaded or created
      */
     private Date uploadDate;
 
     /**
      * The URL to access the dataset when the access is public
      */
+    @Column(length = 255, columnDefinition="VARCHAR(255)")
     private String url;
 
 
@@ -115,7 +140,7 @@ public class Dataset
     private Integer hamPercentage;
 
     /**
-     * Indicates that the dataset is available or not
+     * Indicates whether the dataset is available or not
      */
     private boolean available;
 

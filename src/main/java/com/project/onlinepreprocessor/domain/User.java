@@ -5,6 +5,7 @@ import com.project.onlinepreprocessor.domain.Permission;
 
 import org.hibernate.annotations.NaturalId;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 
@@ -34,6 +35,7 @@ public class User
      * The email of the user
      */
     @Column(unique=true)
+    @Pattern(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", message="The e-mail is not well formed")
     private String email;
 
     /**
@@ -44,11 +46,15 @@ public class User
     /**
      * The name of the user
      */
+    @Column(length = 100, columnDefinition="VARCHAR(100)")
+    @Size(max=100, message="The name of the user must have less than 100 characters")
     private String name;
 
     /**
      * The surname of the user
      */
+    @Column(length = 100, columnDefinition="VARCHAR(100)")
+    @Size(max=100, message="The surname of the user must have less than 100 characters")
     private String surname;
 
     /**

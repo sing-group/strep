@@ -1,6 +1,10 @@
 package com.project.onlinepreprocessor.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import java.util.Set;
 import java.util.Date;
 import com.project.onlinepreprocessor.domain.Dataset;
@@ -22,16 +26,20 @@ public class File
     /**
      * The path of the file
      */
+    @Column(length = 255, columnDefinition="VARCHAR(255)")
     private String path;
 
     /**
      * The type of the file: spam or ham
      */
+    @Pattern(regexp = "^(spam|ham)$", message = "The type of the file can only be spam or ham")
     private String type;
 
     /**
      * The language of the file
      */
+    @Size(min=1, max=4, message="The dataset language cannot have more than 4 characters")
+    @Column(length = 4, columnDefinition="VARCHAR(4)")
     private String language;
 
     /**
@@ -42,6 +50,7 @@ public class File
     /**
      * The extension of the file
      */
+    @NotNull(message = "The extension of the file cannot be null")
     private String extension;
 
     /**

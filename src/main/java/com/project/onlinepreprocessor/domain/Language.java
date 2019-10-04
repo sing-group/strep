@@ -16,14 +16,13 @@ import javax.validation.constraints.Size;
 @Entity
 public class Language
 {
-
     /**
-     * The name of the language
+     * The language id of the language
      */
     @Id
     @NotNull
-    @Size(min=1, max=20, message="Name must have beetween 1 and 20 characters")
-    @Column(length = 20, columnDefinition="VARCHAR(20)")
+    @Size(min=1, max=4, message="Name must have beetween 1 and 4 characters")
+    @Column(length = 4, columnDefinition="VARCHAR(4)")
     private String language;
 
     /**
@@ -31,7 +30,6 @@ public class Language
      */
     @ManyToMany(mappedBy="language")
     private Set<Dataset> datasets;
-
 
     /**
      * The default constructor

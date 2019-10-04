@@ -27,13 +27,13 @@ public class License
      * The legal code of the license
      */
     @Lob
-    @Size(message = "The description of the license must have at least 100 characters", min=100)
     private byte[] description;
 
     /**
      * The url to the original source of the license
      */
-    @NotNull(message = "License url cannot be null")
+    @NotNull(message = "License URL cannot be null")
+    @Column(length = 255, columnDefinition="VARCHAR(255)")
     private String url;
 
     /**

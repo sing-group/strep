@@ -27,6 +27,7 @@ public class Version
     /**
      * The description of the version
      */
+    @Lob
     private String description;
 
     /**

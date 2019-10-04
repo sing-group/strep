@@ -20,6 +20,7 @@ public class TaskCreateUPreprocessing extends Task
     /**
      * A description for the preprocessing task
      */
+    @Lob
     private String description;
 
     /**

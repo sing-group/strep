@@ -7,11 +7,11 @@ RUN apt-get update && apt-get install -y \
       openjdk-8-jdk git maven
 # wget lsb-release gnupg
 
-#Add the configuration for the mysql packages (debconf)
-ADD debconf-mysql /root/debconf-mysql
-
 #Add a start script for starting the container
 ADD start.sh /root/start.sh
+
+#Add the configuration for the mysql packages (debconf) only for mysql8
+#ADD debconf-mysql /root/debconf-mysql
 
 # Install mysql8.0
 #RUN cd && \

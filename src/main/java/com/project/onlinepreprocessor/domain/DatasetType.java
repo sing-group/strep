@@ -1,6 +1,7 @@
 package com.project.onlinepreprocessor.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -12,7 +13,6 @@ import javax.persistence.*;
 @Table(name="dataset_types")
 public class DatasetType
 {
-
     /**
      * The id of the dataset type
      */
@@ -22,11 +22,13 @@ public class DatasetType
     /**
      * The description of the dataset type
      */
+    @Lob
     private String description;
     
     /**
      * The name of the dataset type
      */
+    @NotNull(message = "The name of the Dataset type cannot be null")
     private String name;
 
     /**
@@ -83,7 +85,5 @@ public class DatasetType
     {
         this.name = name;
     }
-
-
 
 }
