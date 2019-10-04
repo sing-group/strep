@@ -10,6 +10,7 @@ import javax.persistence.Column;
 /**
  * JPA Bean for the Version objects managed by application
  * @author Ismael Vázqez
+ * @author José Ramón Méndez
  */
 @Entity
 public class Version
@@ -18,8 +19,8 @@ public class Version
      * The name of the version
      */
     @Id
-    @NotNull(message = "Name of the license cannot be null")
-    @Size(min=1, max=50, message="The name of the license must have beetween 1 and 50 characters")
+    @NotNull(message = "Name of the version cannot be null")
+    @Size(min=1, max=50, message="The name of the version must have beetween 1 and 50 characters")
     @Column(length = 50, columnDefinition="VARCHAR(50)")
     private String name;
 

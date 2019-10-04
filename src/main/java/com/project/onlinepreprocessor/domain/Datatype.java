@@ -21,7 +21,7 @@ public class Datatype
       */
     @Id
     @NotNull
-    @Size(min=1, max=10, message="Name must have beetween 1 and 10 characters")
+    @Size(min=1, max=10, message="The datatype name must have beetween 1 and 10 characters")
     @Column(length = 10, columnDefinition="VARCHAR(10)")
     private String datatype;
 

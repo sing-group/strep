@@ -30,7 +30,7 @@ public class Dataset
      */
     @Id
     @NotNull
-    @Size(min=1, max=80, message="Name must have beetween 1 and 80 characters")
+    @Size(min=1, max=80, message="The dataset name must have beetween 1 and 80 characters")
     @Column(length = 80, columnDefinition="VARCHAR(80)")
     private String name;
     
@@ -43,7 +43,7 @@ public class Dataset
      * The description of the dataset
      */
     @NotNull
-    @Size(min=30, max=1000, message="Description must have beetween 30 and 1000 characters")
+    @Size(min=1, max=1000, message="Description must have beetween 1 and 1000 characters")
     private String description;
 
     /**

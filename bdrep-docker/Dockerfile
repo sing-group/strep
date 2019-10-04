@@ -4,7 +4,8 @@ FROM debian:9
 
 #Install openjdk
 RUN apt-get update && apt-get install -y \
-      openjdk-8-jdk git maven wget lsb-release gnupg
+      openjdk-8-jdk git maven
+# wget lsb-release gnupg
 
 #Add the configuration for the mysql packages (debconf)
 ADD debconf-mysql /root/debconf-mysql
@@ -13,14 +14,18 @@ ADD debconf-mysql /root/debconf-mysql
 ADD start.sh /root/start.sh
 
 # Install mysql8.0
-RUN chmod 755 /root/start.sh && cd && \
-    debconf-set-selections /root/debconf-mysql && export DEBIAN_FRONTEND=noninteractive && export DEBIAN_PRIORITY=critical && \
-    wget http://repo.mysql.com/mysql-apt-config_0.8.13-1_all.deb && dpkg -i mysql-apt-config_0.8.13-1_all.deb && \
-    apt-get update && apt-get install mysql-server -y
+#RUN cd && \
+#    debconf-set-selections /root/debconf-mysql && export DEBIAN_FRONTEND=noninteractive && export DEBIAN_PRIORITY=critical && \
+#    wget http://repo.mysql.com/mysql-apt-config_0.8.13-1_all.deb && dpkg -i mysql-apt-config_0.8.13-1_all.deb && \
+#    apt-get update && apt-get install mysql-server -y
+
+#Install MariaDB
+RUN apt-get install mariadb-server mariadb-client -y
 
 #Make input/output directories
 RUN mkdir /root/datasets && mkdir /root/pipelines && mkdir /root/csv && \
-    chmod 777 /root/datasets && chmod 777 /root/pipelines && chmod 777 /root/csv
+    chmod 777 /root/datasets && chmod 777 /root/pipelines && chmod 777 /root/csv && \
+    chmod 755 /root/start.sh
 
 #Download && configure the software
 RUN cd /root && git clone https://github.com/sing-group/bdrep.git && \
@@ -40,7 +45,8 @@ ADD config /root/bdrep_service/config/
 #Build bdrep
 RUN mysqld_safe --bind-address=0.0.0.0 & sleep 15 && \
     mysqladmin create onlinepreprocessor && \
-    echo "CREATE USER 'springuser'@'%' IDENTIFIED WITH mysql_native_password BY 'springpassword'; GRANT ALL PRIVILEGES on *.* TO 'springuser'@'%' WITH GRANT OPTION; flush privileges; " | mysql && \
+    #echo "CREATE USER 'springuser'@'%' IDENTIFIED WITH mysql_native_password BY 'springpassword'; GRANT ALL PRIVILEGES on *.* TO 'springuser'@'%' WITH GRANT OPTION; flush privileges; " | mysql && \
+    echo "CREATE USER 'springuser'@'%' IDENTIFIED BY 'springpassword'; GRANT ALL PRIVILEGES on *.* TO 'springuser'@'%' WITH GRANT OPTION; flush privileges; " | mysql && \
     cd /root/bdrep && mvn clean package && mysqladmin shutdown && cd .. 
 
 #Build bdrep_service

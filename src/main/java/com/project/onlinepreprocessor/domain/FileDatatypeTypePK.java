@@ -10,6 +10,8 @@ import javax.persistence.Column;
 
 /**
  * Embeddable key for FileDatatypeType class
+ * @author Ismael Vázquez
+ * @author José Ramón Méndez
  */
 @Embeddable
 public class FileDatatypeTypePK implements Serializable
