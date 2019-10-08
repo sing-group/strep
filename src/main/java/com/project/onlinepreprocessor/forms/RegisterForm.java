@@ -4,7 +4,9 @@ import javax.validation.constraints.Size;
 
 import javax.validation.constraints.Email;
 
-/**
+//TODO: drop
+
+/** 
  * Java bean for register form validation
  * @author Ismael Vázquez
  */

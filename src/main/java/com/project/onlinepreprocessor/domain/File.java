@@ -33,6 +33,7 @@ public class File
      * The type of the file: spam or ham
      */
     @Pattern(regexp = "^(spam|ham)$", message = "The type of the file can only be spam or ham")
+    @Column(length = 5, columnDefinition="VARCHAR(5)")
     private String type;
 
     /**

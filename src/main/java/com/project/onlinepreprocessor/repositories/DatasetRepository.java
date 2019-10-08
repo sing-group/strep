@@ -98,8 +98,8 @@ public interface DatasetRepository extends CrudRepository<Dataset, String>{
      * @param datasetNames the name the datasets
      * @return the number of spam files associated to those datasets
      */
-    @Query(value = "select count(distinct(df.file_id)) from dataset d inner join dataset_files df on d.name=df.dataset_name  inner join file f on df.file_id=f.id where d.name in (?1) and f.type='spam'", nativeQuery=true)
-    public int countSpamFiles(Collection<String> datasetNames);
+    @Query(value = "select count(distinct(df.file_id)) from dataset d inner join dataset_files df on d.name=df.dataset_name  inner join file f on df.file_id=f.id where d.name in (?1) and f.type=?2", nativeQuery=true)
+    public int countFilesByType(Collection<String> datasetNames, String type);
 
     /**
      * Return the count of files by extension and type associated to the specified datasets 

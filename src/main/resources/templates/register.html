@@ -39,7 +39,7 @@
             </div>
             <div class= "login-form col-4 form-bg">
 
-                    <form action="#" th:action="@{/user/register}" th:object="${registerForm}" method="POST">
+                    <form action="#" th:action="@{/user/register}" th:object="${user}" method="POST">
                         <img class="header-logo" src="/images/signup.svg" alt="logo.png" height="64" width="64">
                         <h2 class="main-text text-center" th:text="#{register.title}"></h2>
                             <div class="form-group">

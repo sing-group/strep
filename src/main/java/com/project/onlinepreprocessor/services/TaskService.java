@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -27,6 +28,8 @@ import com.project.onlinepreprocessor.repositories.TaskRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -77,6 +80,12 @@ public class TaskService {
      */
     @Autowired
     private DatasetService datasetService;
+
+    /**
+     * The message i18n
+     */
+    @Autowired
+    private MessageSource messageSource;
 
     /**
      * The path of the stored XML pipeline files
@@ -154,7 +163,7 @@ public class TaskService {
                 } 
                 else if (!correctFilters(datasets, inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, 
                 inputSpamTsms, inputHamTsms, inputSpamTytb, inputHamTytb, inputSpamTwtid, inputHamTwtid, fileNumberInput
-                ,inputSpamPercentage)) {
+                ,inputSpamPercentage,spamMode)) {
                     message = "There are no files to satisfy datatype percentage parameters";  
                 } 
                  else {
@@ -206,6 +215,9 @@ public class TaskService {
         }
         catch(IOException ioException)
         {
+            Locale locale = LocaleContextHolder.getLocale();
+            String mailmessage = messageSource.getMessage("message.code", new String[0], locale);
+            //TODO: Insert the message here
             message = "Unable to access the pipeline";
             return message;
         }
@@ -285,10 +297,9 @@ public class TaskService {
     // Method for check if there are files with the indicated datatypes in the
     // selected datasets
     private boolean correctFilters(String[] datasetNames, int inputSpamEml, int inputHamEml, int inputSpamWarc, int inputHamWarc,
-     int inputSpamTsms, int inputHamTsms, int inputSpamTytb, int inputHamTytb, int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage) {
+     int inputSpamTsms, int inputHamTsms, int inputSpamTytb, int inputHamTytb, int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage, boolean spamMode) {
 
             boolean success = true;
-            int total = inputSpamEml+inputHamEml+inputSpamWarc+inputHamWarc+inputSpamTsms+inputHamTsms+inputSpamTytb+inputHamTytb+inputSpamTwtid+inputHamTwtid;
             ArrayList<String> datasets = new ArrayList<String>();
 
             for(String datasetName : datasetNames)
@@ -296,70 +307,74 @@ public class TaskService {
                 datasets.add(datasetName);
             }
 
-            if((total!=100 && total!=0) || (total==0 && inputSpamPercentage==0) || fileNumberInput==0)
-            {
-                success = false;
-            }
-            else
-            {
-            HashMap<String, Integer> necesaryFilesMap = new HashMap<String, Integer>();
+            if(!spamMode){
+                    int total = inputSpamEml+inputHamEml+inputSpamWarc+inputHamWarc+inputSpamTsms+inputHamTsms+inputSpamTytb+inputHamTytb+inputSpamTwtid+inputHamTwtid;
 
-            necesaryFilesMap.put(".emlspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamEml/100.00)));
-            necesaryFilesMap.put(".emlham", (int) Math.ceil((double)fileNumberInput * ((double)inputHamEml/100.00)));
+                    if((total!=100 && total!=0) || (total==0 && inputSpamPercentage==0) || fileNumberInput==0)
+                    {
+                        success = false;
+                    }
+                    else
+                    {
+                    HashMap<String, Integer> necesaryFilesMap = new HashMap<String, Integer>();
 
-            necesaryFilesMap.put(".warcspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamWarc/100.00)));
-            necesaryFilesMap.put(".warcham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamWarc/100.00)));
+                    necesaryFilesMap.put(".emlspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamEml/100.00)));
+                    necesaryFilesMap.put(".emlham", (int) Math.ceil((double)fileNumberInput * ((double)inputHamEml/100.00)));
 
-            necesaryFilesMap.put(".tsmsspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTsms/100.00)));
-            necesaryFilesMap.put(".tsmsham", (int) Math.ceil((double)fileNumberInput * ((double)inputHamTsms/100.00)));
+                    necesaryFilesMap.put(".warcspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamWarc/100.00)));
+                    necesaryFilesMap.put(".warcham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamWarc/100.00)));
 
-            necesaryFilesMap.put(".tytbspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTytb/100.00)));
-            necesaryFilesMap.put(".tytbham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamTytb/100.00)));
+                    necesaryFilesMap.put(".tsmsspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTsms/100.00)));
+                    necesaryFilesMap.put(".tsmsham", (int) Math.ceil((double)fileNumberInput * ((double)inputHamTsms/100.00)));
 
-            necesaryFilesMap.put(".twtidspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTwtid/100.00)));
-            necesaryFilesMap.put(".twtidham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamTwtid/100.00)));
+                    necesaryFilesMap.put(".tytbspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTytb/100.00)));
+                    necesaryFilesMap.put(".tytbham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamTytb/100.00)));
 
-            HashMap<String, Integer> databaseFilesMap = new HashMap<String, Integer>();
+                    necesaryFilesMap.put(".twtidspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTwtid/100.00)));
+                    necesaryFilesMap.put(".twtidham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamTwtid/100.00)));
 
-            databaseFilesMap.put(".emlspam", 0);
-            databaseFilesMap.put(".emlham", 0);
+                    HashMap<String, Integer> databaseFilesMap = new HashMap<String, Integer>();
 
-            databaseFilesMap.put(".warcspam", 0);
-            databaseFilesMap.put(".warcham", 0);
+                    databaseFilesMap.put(".emlspam", 0);
+                    databaseFilesMap.put(".emlham", 0);
 
-            databaseFilesMap.put(".tsmsspam",0);
-            databaseFilesMap.put(".tsmsham", 0);
+                    databaseFilesMap.put(".warcspam", 0);
+                    databaseFilesMap.put(".warcham", 0);
 
-            databaseFilesMap.put(".tytbspam", 0);
-            databaseFilesMap.put(".tytbham", 0);
+                    databaseFilesMap.put(".tsmsspam",0);
+                    databaseFilesMap.put(".tsmsham", 0);
 
-            databaseFilesMap.put(".twtidspam", 0);
-            databaseFilesMap.put(".twtidham", 0);
+                    databaseFilesMap.put(".tytbspam", 0);
+                    databaseFilesMap.put(".tytbham", 0);
 
-            //How many files are available of each datatype
-            ArrayList<FileDatatypeType> filesDatatypeType = fileDatatypeTypeRepository.getFilesByExtensionAndType(datasets);
-            for(FileDatatypeType fileDatatypeType : filesDatatypeType)
-            {
-                databaseFilesMap.replace(fileDatatypeType.getId().getExtension()+fileDatatypeType.getId().getType(), fileDatatypeType.getCount());
-            }
+                    databaseFilesMap.put(".twtidspam", 0);
+                    databaseFilesMap.put(".twtidham", 0);
 
-            Set<String> keys = databaseFilesMap.keySet();
+                    //How many files are available of each datatype
+                    ArrayList<FileDatatypeType> filesDatatypeType = fileDatatypeTypeRepository.getFilesByExtensionAndType(datasets);
+                    for(FileDatatypeType fileDatatypeType : filesDatatypeType)
+                    {
+                        databaseFilesMap.replace(fileDatatypeType.getId().getExtension()+fileDatatypeType.getId().getType(), fileDatatypeType.getCount());
+                    }
 
-            for(String key: keys)
-            {
-                if(databaseFilesMap.get(key) < necesaryFilesMap.get(key))
-                {
-                    success = false;
+                    Set<String> keys = databaseFilesMap.keySet();
+
+                    for(String key: keys)
+                    {
+                        if(databaseFilesMap.get(key) < necesaryFilesMap.get(key))
+                        {
+                            success = false;
+                        }
+                    }
                 }
-            }
+            }else{
+                int necesarySpamFiles = (int) Math.ceil((double)fileNumberInput * ((double)inputSpamPercentage/100.00));
+                int availableSpamFiles = datasetRepository.countFilesByType(datasets,"spam");
 
-            int necesarySpamFiles = (int) Math.ceil((double)fileNumberInput * ((double)inputSpamPercentage/100.00));
-            int availableSpamFiles = datasetRepository.countSpamFiles(datasets);
+                int necesaryHamFiles = fileNumberInput-necesarySpamFiles;
+                int availableHamFiles = datasetRepository.countFilesByType(datasets,"ham");
 
-            if(availableSpamFiles<necesarySpamFiles)
-            {
-                success = false;
-            }
+                success =!(availableSpamFiles<necesarySpamFiles || availableHamFiles<necesaryHamFiles);
             }
 
             return success;

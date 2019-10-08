@@ -16,7 +16,7 @@ import com.project.onlinepreprocessor.domain.Datatype;
 import com.project.onlinepreprocessor.domain.FileDatatypeType;
 import com.project.onlinepreprocessor.domain.Language;
 import com.project.onlinepreprocessor.domain.License;
-import com.project.onlinepreprocessor.forms.LoginForm;
+import com.project.onlinepreprocessor.domain.User;
 import com.project.onlinepreprocessor.repositories.DatasetRepository;
 import com.project.onlinepreprocessor.repositories.DatatypeRepository;
 import com.project.onlinepreprocessor.repositories.FileDatatypeTypeRepository;
@@ -84,14 +84,14 @@ public class DatasetController {
     private FileDatatypeTypeRepository fileDatatypeTypeRepository;
 
     @GetMapping("/public")
-    public String listPublicDatasets(LoginForm loginForm, Model model) {
+    public String listPublicDatasets(User user, Model model) {
         HashSet<Dataset> datasets = datasetRepository.getPublicDatasets();
         model.addAttribute("datasets", datasets);
         return "public_datasets";
     }
 
     @GetMapping("/public/detailed")
-    public String detailPublicDataset(@RequestParam("id") String name, Model model, LoginForm loginForm) {
+    public String detailPublicDataset(@RequestParam("id") String name, Model model, User user) {
         Optional<Dataset> opt = datasetRepository.findById(name);
 
         if (opt.isPresent() && opt.get().getAccess().equals("public")) {
@@ -110,7 +110,7 @@ public class DatasetController {
     }
 
     @GetMapping("/public/detailed/{name}")
-    public String shareDataset(@PathVariable String name, Model model, LoginForm loginForm) {
+    public String shareDataset(@PathVariable String name, Model model, User user) {
         Optional<Dataset> opt = datasetRepository.findById(name);
 
         if (opt.isPresent() && opt.get().getAccess().equals("public")) {
@@ -130,7 +130,7 @@ public class DatasetController {
 
     @GetMapping("/public/download")
     public ResponseEntity<InputStreamResource> downloadPublicDataset(@RequestParam("id") String name, Model model,
-            LoginForm loginForm) throws FileNotFoundException {
+            User user) throws FileNotFoundException {
         if (datasetService.getDownloadFiles(name)) {
             FileInputStream fis = new FileInputStream(new File(BASE_PATH + name + ".zip"));
             HttpHeaders httpHeaders = new HttpHeaders();
@@ -233,7 +233,7 @@ public class DatasetController {
 
     @GetMapping("/download")
     public ResponseEntity<InputStreamResource> downloadDataset(Authentication authentication,
-            @RequestParam("id") String name, Model model, LoginForm loginForm) throws FileNotFoundException {
+            @RequestParam("id") String name, Model model, User user) throws FileNotFoundException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -494,13 +494,23 @@ public class DatasetController {
         return "create_dataset::datatypes-table";
     }
 
+    /**
+     * Check spam percentage data
+     * @param model The model
+     * @param inputSpam The percentage of spam messages desired
+     * @param datasets The selected datasets
+     * @param fileNumber The number of files to be included in the dataset
+     * @return The view fragment that is going to be updated
+     */
     @GetMapping("/checkPosibleSpam")
     public String showInfoSpam(Model model, @RequestParam(name = "inputSpam", required = false) String inputSpam,
             @RequestParam(name = "datasets", required = false) String[] datasets,
             @RequestParam(name = "fileNumber", required = false) String fileNumber) {
         int inputSpamInt = -1;
-        int availableFiles = -1;
-        int necesaryFiles = -1;
+        int availableFilesSpam = -1;
+        int availableFilesHam = -1;
+        int neccesaryFilesSpam = -1;
+        int neccesaryFilesHam = -1;
         int fileNumberInt = -1;
 
         ArrayList<String> arrayListDatasets = new ArrayList<String>();
@@ -511,16 +521,19 @@ public class DatasetController {
             }
 
             try {
-                inputSpamInt = Integer.parseInt(inputSpam);
+                inputSpamInt = Integer.parseInt(inputSpam); 
                 fileNumberInt = Integer.parseInt(fileNumber);
             } catch (NumberFormatException e) {
             }
 
-            necesaryFiles = (int) Math.ceil((double) fileNumberInt * ((double) inputSpamInt / 100.00));
-            availableFiles = datasetRepository.countSpamFiles(arrayListDatasets);
+            neccesaryFilesSpam = (int) Math.ceil((double) fileNumberInt * ((double) inputSpamInt / 100.00));
+            neccesaryFilesHam = fileNumberInt - neccesaryFilesSpam;
+            availableFilesSpam = datasetRepository.countFilesByType(arrayListDatasets,"spam");
+            availableFilesHam = datasetRepository.countFilesByType(arrayListDatasets,"ham");
 
-            String message = "Necesary files:" + necesaryFiles + "\nAvailable files" + availableFiles;
-            if (availableFiles >= necesaryFiles) {
+            String message = "Necesary spam files:" + neccesaryFilesSpam + "\nAvailable spam files" + availableFilesSpam;
+            message += " / Necesary ham files:" + neccesaryFilesHam + "\nAvailable spam files" + availableFilesHam;
+            if (availableFilesSpam >= neccesaryFilesSpam && availableFilesHam >= neccesaryFilesHam) {
                 model.addAttribute("spamSuccessInfo", message);
             } else {
                 model.addAttribute("spamInsufficientInfo", message);
@@ -532,6 +545,23 @@ public class DatasetController {
         return "create_dataset::info-spam";
     }
 
+    /**
+     * Validates the input data when "Check" button is pressed
+     * @param model the model
+     * @param inputSpamEml Spam EML percentage
+     * @param inputHamEml Ham EML percentage
+     * @param inputSpamWarc Spam WARC percentage
+     * @param inputHamWarc Ham WARC percentage
+     * @param inputSpamTsms Spam SMS percentage
+     * @param inputHamTsms  Ham SMS percentage
+     * @param inputSpamTytb Spam YTB percentage
+     * @param inputHamTytb Ham YTB percentage
+     * @param inputSpamTwtid Spam TWT percentage
+     * @param inputHamTwtid Ham TWV percentage
+     * @param datasetNames The datasets
+     * @param fileNumberInput Number of files for the new dataset
+     * @return The part of the view that is going to be updated
+     */
     @GetMapping("/checkPosibleDatatypes")
     public String showInfoDatatypes(Model model, @RequestParam("inputSpamEml") int inputSpamEml,
             @RequestParam("inputHamEml") int inputHamEml, @RequestParam("inputSpamWarc") int inputSpamWarc,

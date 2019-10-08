@@ -35,12 +35,14 @@ public class User
      * The email of the user
      */
     @Column(unique=true)
-    @Pattern(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", message="The e-mail is not well formed")
+    @Pattern(regexp = "^[A-Za-z0-9\\._%+-]+@[A-Za-z0-9\\.-]+\\.[A-Za-z]{2,6}$", message="The e-mail is not well formed")
     private String email;
 
     /**
      * The password of the user
      */
+    @Size(min=8, max=30, message="Password must have beetween 8 and 30 characters")
+    @Column(length = 30, columnDefinition="VARCHAR(30)")   
     private String password;
 
     /**

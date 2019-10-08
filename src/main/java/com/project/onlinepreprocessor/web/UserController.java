@@ -15,7 +15,6 @@ import javax.validation.Valid;
 import com.project.onlinepreprocessor.domain.Dataset;
 import com.project.onlinepreprocessor.domain.Permission;
 import com.project.onlinepreprocessor.domain.User;
-import com.project.onlinepreprocessor.forms.RegisterForm;
 import com.project.onlinepreprocessor.repositories.DatasetRepository;
 import com.project.onlinepreprocessor.repositories.PermissionRepository;
 import com.project.onlinepreprocessor.repositories.UserRepository;
@@ -61,18 +60,18 @@ public class UserController {
     private PermissionRepository permissionRepository;
 
     @GetMapping("/register")
-    public String register(RegisterForm registerForm) {
+    public String register(User user) {
         return "register";
     }
 
     @PostMapping("/register")
-    public String addNewUser(@Valid RegisterForm registerForm, BindingResult bindingResult) {
+    public String addNewUser(@Valid User user, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "register";
         } else {
-            String id = registerForm.getUsername().toLowerCase();
-            String email = registerForm.getEmail().toLowerCase();
+            String id = user.getUsername().toLowerCase();
+            String email = user.getEmail().toLowerCase();
             String hash = new String(Base64.getEncoder().encode((id + email + Math.random()).getBytes()));
 
             if (userRepository.findById(id).isPresent()) {
@@ -83,7 +82,7 @@ public class UserController {
                 MimeMessageHelper helper = new MimeMessageHelper(message);
 
                 try {
-                    helper.setTo(registerForm.getEmail());
+                    helper.setTo(user.getEmail());
                     helper.setText(
                             "Welcome to OnlinePreprocessor, click in the following link to log into your account https://localhost:8443/user/accountconfirmation"
                                     + "?hash=" + hash.replaceAll("=", ""));
@@ -91,9 +90,9 @@ public class UserController {
 
                     sender.send(message);
 
-                    User user = new User(id, email, hash.replaceAll("=", ""), registerForm.getPassword(),
-                            registerForm.getName(), registerForm.getSurname());
-                    userService.saveUser(user);
+                    User user2 = new User(id, email, hash.replaceAll("=", ""), user.getPassword(),
+                            user.getName(), user.getSurname());
+                    userService.saveUser(user2);
                 } catch (MessagingException e) {
                     return "redirect:/error";
                 }

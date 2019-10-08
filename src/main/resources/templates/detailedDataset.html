@@ -32,7 +32,7 @@
                     </li>
                 </ul>
                 <div sec:authorize="isAnonymous()">
-                    <form action="#" th:action="@{/}" th:object="${loginForm}" method="post"
+                    <form action="#" th:action="@{/}" th:object="${user}" method="post"
                         class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="text" id="username" name="username"
                             placeholder="Username" aria-label="Username">

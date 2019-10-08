@@ -5,7 +5,6 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import com.project.onlinepreprocessor.domain.User;
-import com.project.onlinepreprocessor.forms.LoginForm;
 import com.project.onlinepreprocessor.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,28 +30,29 @@ public class LoginController
 
 
     @GetMapping("/")
-    public String indexPage(LoginForm loginForm)
+    public String indexPage(User user)
     {
         return "index";
     }
 
     @PostMapping("/")
-    public String login(@Valid LoginForm loginForm, BindingResult bindingResult)
+    public String login(@Valid User user, BindingResult bindingResult)
     {
         if(bindingResult.hasErrors())
         {
+            System.out.println("Binding problem");
             return "index";
         }
         else
         {
-            Optional<User> optional = userRepository.findById(loginForm.getUsername());
+            Optional<User> optional = userRepository.findById(user.getUsername());
 
             if(optional.isPresent())
             {
-                User user = optional.get();
+                User userInDB = optional.get();
                 System.out.println("Usuario presente");
 
-                if(bCryptPasswordEncoder.matches(loginForm.getPassword(), user.getPassword()))
+                if(bCryptPasswordEncoder.matches(user.getPassword(), userInDB.getPassword()))
                 {
                     System.out.println("Contraseña correcta");
                     return "redirect:/user/main";
@@ -61,9 +61,11 @@ public class LoginController
                     return "index";
             }
             else
+            {
+                System.out.println("User not found problem");
                 return "index";
-
-            }
+            }  
+        }
 
     }
 }
