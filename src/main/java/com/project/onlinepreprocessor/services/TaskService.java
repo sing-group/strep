@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import com.project.onlinepreprocessor.domain.Dataset;
 import com.project.onlinepreprocessor.domain.Datatype;
@@ -119,6 +120,7 @@ public class TaskService {
             int inputHamWarc, int inputSpamTsms, int inputHamTsms, int inputSpamTytb, int inputHamTytb,
             int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage, String username, boolean spamMode) {
 
+        Locale locale = LocaleContextHolder.getLocale();
         String message = "";
 
         ArrayList<License> licensesArray = new ArrayList<License>();
@@ -206,19 +208,18 @@ public class TaskService {
 
     public String createPreprocessingTask(Dataset dataset, TaskCreateUPreprocessing task, MultipartFile pipeline)
     {
+        Locale locale = LocaleContextHolder.getLocale();
         String message = "";
         try
         {
             TaskCreateUPreprocessing toCreateTask = new TaskCreateUPreprocessing(null, "waiting", null, task.getDescription(), pipeline.getBytes(), null, new Date(), dataset);
             taskRepository.save(toCreateTask);
-            message = "Task successfully created";
+            message = messageSource.getMessage("createpreprocessing.sucessfull.message", Stream.of().toArray(String[]::new), locale);
         }
         catch(IOException ioException)
-        {
-            Locale locale = LocaleContextHolder.getLocale();
-            String mailmessage = messageSource.getMessage("message.code", new String[0], locale);
-            //TODO: Insert the message here
-            message = "Unable to access the pipeline";
+        {            
+            message = messageSource.getMessage("createpreprocessing.pipeline.error", Stream.of(pipeline).toArray(String[]::new), locale);
+
             return message;
         }
 
