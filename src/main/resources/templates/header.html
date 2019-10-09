@@ -81,8 +81,8 @@
 
     <!--TODO: Change this for an image passed from parameters-->
     <select id="locales" name="locales">
-        <option id="en" value="en" th:text="en"  onclick="changeLocale(this.id)"></option>
-        <option id="es" value="es" th:text="es" onclick="changeLocale(this.id)" selected="true"></option>
+        <option id="en" value="en" th:text="en"  ></option>
+        <option id="es" value="es" th:text="es"  selected="true"></option>
     </select>
     <a href="/user/editprofile">
         <img class="user-photo" th:src="@{'/user/image?username='+${username}}" alt="photo" height="32" width="32">

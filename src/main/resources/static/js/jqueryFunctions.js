@@ -180,7 +180,6 @@ $(function () {
 
 function changeLocale(id)
 {
-
     var url = location.href;
     var index = url.lastIndexOf("?");
     if (index == -1)
@@ -208,10 +207,16 @@ function changeLocale(id)
     location.replace(url);
 }
 $(document).ready(function () {
+    // It's been done like this to make it work properly in Chrome
+    document.getElementById('locales').addEventListener('change', function () {
+        changeLocale($('#locales').val());
+    }, false);
+
+    //Needed to update properly the dropbox
     let params = new URLSearchParams(location.search);
     var lang = params.get('lang');
     if (lang != null) {
         $('#locales').val(lang);
-    } 
+    }
 });
 
