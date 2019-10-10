@@ -221,6 +221,10 @@ body
     text-align: center;
 }
 
+.left{
+    text-align:left;
+}
+
 .card
 {
     border-color: #203939;

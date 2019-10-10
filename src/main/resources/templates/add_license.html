@@ -26,16 +26,20 @@
                     <img class="header-logo" src="/images/key.svg" alt="key.svg" height="64" width="64">
                     <h2 class="main-text-header text-center" th:text="#{add.license.title}"></h2>
                         <div class="form-group">
+                            <label for="#{add.license.placeholder.name}" id="laddLicense" name="addLicense" class="col-md-3 control-label" th:text="#{add.license.placeholder.name}" ></label>
                             <input class="form-control" type="text" name="name" th:attr="placeholder = #{add.license.placeholder.name}" required/>
                             <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
                         </div>
 
                         <div class="form-group">
+                            <label for="#{add.license.placeholder.description}" id="laddLicense" name="addDescription" class="col-md-3 control-label" th:text="#{add.license.placeholder.description}" ></label>
                             <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label>
                             <textarea class="form-control" rows="50" cols="80" name="description" th:attr="placeholder = #{add.license.placeholder.description}" required></textarea>
                         </div>
 
                         <div class="form-group">
+                             <label for="#{add.license.placeholder.original}" id="loriginalUrl" name="originalUrl" class="col-md-3 control-label" th:text="#{add.license.placeholder.original}" ></label>
+                           
                             <input class="form-control" type="text" name="url" th:attr="placeholder = #{add.license.placeholder.original}" required/>
                             <label class="error-label" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></label>
                         </div>
