@@ -7,11 +7,10 @@ sleep 15
 
 cd /root/bdrep_service
 while /bin/true; do
-    java -jar target/datasetservice-1.0.0-SNAPSHOT.jar
+    java -jar target/strep.service-1.0.0-SNAPSHOT.jar
 done &
 
 cd /root/bdrep 
 while /bin/true; do
-    java -jar target/onlinepreprocessor-0.0.1-SNAPSHOT.jar
+    java -jar target/strep-0.0.1-SNAPSHOT.jar
 done
-
