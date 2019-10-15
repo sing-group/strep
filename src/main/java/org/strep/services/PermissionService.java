@@ -2,7 +2,9 @@ package org.strep.services;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.strep.domain.PermissionRequest;
 import org.strep.domain.PermissionRequestPK;
@@ -13,6 +15,8 @@ import org.strep.repositories.UserRepository;
 import org.strep.domain.Permission;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -40,6 +44,11 @@ public class PermissionService
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * The message i18n
+     */
+    @Autowired
+    private MessageSource messageSource;    
 
     /**
      * Method to add a permission request for the especified user and permission
@@ -49,6 +58,8 @@ public class PermissionService
      */
     public String addPermissionRequest(String username, int id)
     {
+        Locale locale = LocaleContextHolder.getLocale();
+        
         String message = "";
 
         ArrayList<BigInteger> permissions = permissionRepository.getUserPermissions(username);
@@ -57,7 +68,7 @@ public class PermissionService
         Optional<PermissionRequest> optPermRequest = permissionRequestRepository.findById(new PermissionRequestPK(new Long(id),username ));
         if(optPermRequest.isPresent())
         {
-            message = "You already have a request for this permission";
+            message = messageSource.getMessage("add.permissionrequest.fail.alreadyregistered", Stream.of().toArray(String[]::new), locale);
         }
         else{
                 for(BigInteger permissionId : permissions)
@@ -71,7 +82,7 @@ public class PermissionService
 
                 if(id<maxPerm || id>4)
                 {
-                    message = "Request error";
+                    message = messageSource.getMessage("add.permissionrequest.fail.requesterror", Stream.of().toArray(String[]::new), locale);
                 }
                 else
                 {
@@ -80,15 +91,15 @@ public class PermissionService
 
                     if(optUser.isPresent() && optPermission.isPresent())
                     {
-                    PermissionRequest permissionRequest = new PermissionRequest(optUser.get(), optPermission.get());
-                    permissionRequest.setStatus("pending");
-                    permissionRequest.setId(new PermissionRequestPK(optPermission.get().getId(), optUser.get().getUsername()));
-                    permissionRequestRepository.save(permissionRequest);
-                    message = "Request sent";
+                        PermissionRequest permissionRequest = new PermissionRequest(optUser.get(), optPermission.get());
+                        permissionRequest.setStatus("pending");
+                        permissionRequest.setId(new PermissionRequestPK(optPermission.get().getId(), optUser.get().getUsername()));
+                        permissionRequestRepository.save(permissionRequest);
+                        message = messageSource.getMessage("add.permissionrequest.sucess", Stream.of().toArray(String[]::new), locale);
                     }
                     else
                     {
-                        message = "Request error";
+                        message = messageSource.getMessage("add.permissionrequest.fail.userorpermnotfound", Stream.of().toArray(String[]::new), locale);
                     }
                 }
             }
@@ -103,28 +114,29 @@ public class PermissionService
      */ 
     public String acceptPermission(PermissionRequestPK permissionRequestPK)
     {
+        Locale locale = LocaleContextHolder.getLocale();
+
         String message = "";
 
         for(int i = 1; i<=permissionRequestPK.getPermissionId().intValue();i++)
         {
-        Optional<PermissionRequest> permissionRequestOpt = permissionRequestRepository.findById(new PermissionRequestPK(new Long(i), permissionRequestPK.getUserUsername()));
+            Optional<PermissionRequest> permissionRequestOpt = permissionRequestRepository.findById(new PermissionRequestPK(new Long(i), permissionRequestPK.getUserUsername()));
 
-        if(permissionRequestOpt.isPresent())
-        {
-            PermissionRequest permissionRequest = permissionRequestOpt.get();
-            permissionRequest.setStatus("accepted");
-            permissionRequestRepository.save(permissionRequest);
+            if(permissionRequestOpt.isPresent())
+            {
+                PermissionRequest permissionRequest = permissionRequestOpt.get();
+                permissionRequest.setStatus("accepted");
+                permissionRequestRepository.save(permissionRequest);
+            }
+
+            String username = permissionRequestPK.getUserUsername();
+            if(permissionRepository.havePermission(username, new Long(i))==0)
+            {
+                permissionRepository.addPermission(username, i);
+            }
         }
 
-        String username = permissionRequestPK.getUserUsername();
-        if(permissionRepository.havePermission(username, new Long(i))==0)
-        {
-            permissionRepository.addPermission(username, i);
-        }
-
-        }
-
-        message = "Successfully accepted";
+        message = messageSource.getMessage("accept.permissionrequest.sucess", Stream.of().toArray(String[]::new), locale);
 
         return message;
     }
@@ -136,6 +148,7 @@ public class PermissionService
      */ 
     public String rejectPermission(PermissionRequestPK permissionRequestPK)
     {
+        Locale locale = LocaleContextHolder.getLocale();
         String message = "";
 
         Optional<Permission> permissionOpt = permissionRepository.findById(permissionRequestPK.getPermissionId());
@@ -149,11 +162,11 @@ public class PermissionService
             PermissionRequest permissionRequest = new PermissionRequest(requestUser, requestPermission);
 
             permissionRequestRepository.delete(permissionRequest);
-            message = "Permission request rejected";
+            message = messageSource.getMessage("reject.permissionrequest.sucess", Stream.of().toArray(String[]::new), locale);
         }
         else
         {
-            message = "Cannot reject the permission request";
+            message = messageSource.getMessage("reject.permissionrequest.fail", Stream.of().toArray(String[]::new), locale);
         }
 
         return message; 

@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Set;
+import java.util.Set; 
 import java.util.stream.Stream;
 
 import org.strep.domain.Dataset;
@@ -151,7 +151,7 @@ public class TaskService {
             Date dateToFormatted;
 
             if (datasets == null) {
-                message = "You have to select at least one dataset";
+                message = messageSource.getMessage("task.create.dataset.fail.nodatasetselected", Stream.of().toArray(String[]::new), locale);
             } else {
                 String shortName = dataset.getName().replaceAll(" ", "");
                 dataset.setName(shortName);
@@ -159,12 +159,13 @@ public class TaskService {
                 Optional<Dataset> optDataset = datasetRepository.findById(dataset.getName());
 
                 if (optDataset.isPresent()) {
-                    message = "Already exists a dataset with this name";
+                    message = messageSource.getMessage("task.create.dataset.fail.alreadyexists", Stream.of().toArray(String[]::new), locale);
                 } 
                 else if (!correctFilters(datasets, inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, 
                 inputSpamTsms, inputHamTsms, inputSpamTytb, inputHamTytb, inputSpamTwtid, inputHamTwtid, fileNumberInput
                 ,inputSpamPercentage,spamMode)) {
-                    message = "There are no files to satisfy datatype percentage parameters";  
+
+                    message = messageSource.getMessage("task.create.dataset.fail.noenougthfiles", Stream.of().toArray(String[]::new), locale);
                 } 
                  else {
                     if (!dateFrom.equals("") && !dateTo.equals("")) {
@@ -194,11 +195,12 @@ public class TaskService {
 
                     }
 
-                    message = "Task successfully generated";
+                    message = messageSource.getMessage("task.create.dataset.sucessfull", Stream.of().toArray(String[]::new), locale);
                 }
             }
         } catch (ParseException pe) {
-            return "Error parsing date filters";
+
+            return messageSource.getMessage("task.create.dataset.fail.datefilters", Stream.of().toArray(String[]::new), locale);
         }
 
         return message;

@@ -7,6 +7,8 @@ import org.strep.domain.User;
 import org.strep.domain.Permission;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +17,9 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Service class to abstract to the controller of user tasks not related to the presentation
@@ -38,6 +42,12 @@ public class UserService
      * The password encoder object
      */
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    /**
+     * The message i18n
+     */
+    @Autowired
+    private MessageSource messageSource;    
 
     /**
      * The constructor for create instances of UserService
@@ -104,7 +114,10 @@ public class UserService
      */
     public String editPermissions(int permissionIntId, String username)
     {
-        String message = "Cannot edit permissions";
+        Locale locale = LocaleContextHolder.getLocale();
+        
+        String message = messageSource.getMessage("edit.permission.fail", Stream.of().toArray(String[]::new), locale);
+        
         Long permissionLongId = new Long(permissionIntId);
 
         Optional<Permission> permissionOpt = permissionRepository.findById(permissionLongId);
@@ -118,7 +131,7 @@ public class UserService
             {
                 permissionRepository.addPermission(username, i);
             }
-            message = "User permissions changed";
+            message = messageSource.getMessage("edit.permission.sucess", Stream.of().toArray(String[]::new), locale);
         }
 
         return message;

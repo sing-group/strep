@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -26,6 +28,8 @@ import org.strep.repositories.TaskRepository;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -92,6 +96,12 @@ public class DatasetService
     private String HOST_NAME;
 
     /**
+     * The message i18n
+     */
+    @Autowired
+    private MessageSource messageSource;  
+
+    /**
      * The constructor for instance DatasetService objects
      * @param datasetRepository the repository to access datasets data
      * @param fileRepository The repository to access files data
@@ -138,8 +148,8 @@ public class DatasetService
 
         if(!zipResult.exists() || datasetDirectory.lastModified()>zipResult.lastModified())
         {
-        java.io.File directoryHam = new java.io.File(datasetDirectory, "_ham_"+java.io.File.separator);
-        java.io.File directorySpam = new java.io.File(datasetDirectory, "_spam_"+java.io.File.separator);
+        //java.io.File directoryHam = new java.io.File(datasetDirectory, "_ham_"+java.io.File.separator);
+        //java.io.File directorySpam = new java.io.File(datasetDirectory, "_spam_"+java.io.File.separator);
 
         ArrayList<java.io.File> spamFiles = new ArrayList<>();
         ArrayList<java.io.File> hamFiles = new ArrayList<>();
@@ -169,54 +179,53 @@ public class DatasetService
         java.io.File zippedFile = new java.io.File(BASE_PATH+name+".zip");
 
         try{
-        ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(zippedFile));
-        zip.putNextEntry(new ZipEntry("_ham_"+java.io.File.separator));
-        
-        for(int i = 0;i<hamFiles.size();i++)
-        {
-            byte[] buf = new byte[1024];
-            java.io.File file = hamFiles.get(i);
-            zip.putNextEntry(new ZipEntry("_ham_"+java.io.File.separator+file.getName()));
-            FileInputStream fis = new FileInputStream(file.getAbsolutePath());
-            int moreText = 0;
-            while((moreText=fis.read())!=-1)
+            ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(zippedFile));
+            zip.putNextEntry(new ZipEntry("_ham_"+java.io.File.separator));
+            
+            for(int i = 0;i<hamFiles.size();i++)
             {
-                zip.write(buf, 0, moreText);
+                byte[] buf = new byte[1024];
+                java.io.File file = hamFiles.get(i);
+                zip.putNextEntry(new ZipEntry("_ham_"+java.io.File.separator+file.getName()));
+                FileInputStream fis = new FileInputStream(file.getAbsolutePath());
+                int moreText = 0;
+                while((moreText=fis.read())!=-1)
+                {
+                    zip.write(buf, 0, moreText);
+                }
+                fis.close();
+                zip.closeEntry();
             }
-            fis.close();
+
             zip.closeEntry();
-        }
 
-        zip.closeEntry();
+            zip.putNextEntry(new ZipEntry("_spam_"+java.io.File.separator));
 
-
-        zip.putNextEntry(new ZipEntry("_spam_"+java.io.File.separator));
-
-        for(int i = 0;i<spamFiles.size();i++)
-        {
-            byte[] buf = new byte[1024];
-            java.io.File file = spamFiles.get(i);
-            zip.putNextEntry(new ZipEntry("_spam_"+java.io.File.separator+file.getName()));
-            FileInputStream fis = new FileInputStream(file.getAbsolutePath());
-            int moreText = 0;
-            while((moreText=fis.read())!=-1)
+            for(int i = 0;i<spamFiles.size();i++)
             {
-                zip.write(buf, 0, moreText);
+                byte[] buf = new byte[1024];
+                java.io.File file = spamFiles.get(i);
+                zip.putNextEntry(new ZipEntry("_spam_"+java.io.File.separator+file.getName()));
+                FileInputStream fis = new FileInputStream(file.getAbsolutePath());
+                int moreText = 0;
+                while((moreText=fis.read())!=-1)
+                {
+                    zip.write(buf, 0, moreText);
+                }
+                fis.close();
+                zip.closeEntry();
             }
-            fis.close();
-            zip.closeEntry();
-        }
 
-        zip.closeEntry();
-        zip.close();
+            zip.closeEntry();
+            zip.close();
         }catch(FileNotFoundException e)
         {
-            System.out.println("File doesn't found");
+            //System.out.println("File doesn't found");
             return false;
         }
         catch(IOException e)
         {
-            System.out.println("IOException");
+            //System.out.println("IOException");
             return false;
         }
         }
@@ -233,6 +242,8 @@ public class DatasetService
      */
     public String uploadDataset(Dataset dataset, MultipartFile datasetFile, String username)
     {
+        Locale locale = LocaleContextHolder.getLocale();
+        
         String message = "";
 
         String name = dataset.getName().replace(" ", "").toLowerCase();
@@ -253,25 +264,24 @@ public class DatasetService
         Optional<Dataset> opt = datasetRepository.findById(dataset.getName());
         if(opt.isPresent())
         {
-            message="Already exists dataset with that name, error uploading dataset";
+            message=messageSource.getMessage("add.dataset.fail.alreadyexists", Stream.of().toArray(String[]::new), locale);
         }
         else{
-
             try{
                 this.store(datasetFile, dataset);
                 }catch(IOException e)
                 {
-                    message = "IOException error";
+                    message=messageSource.getMessage("add.dataset.fail.ioexception", Stream.of(e.getMessage()).toArray(String[]::new), locale);
                     return message;
                 }
         
                 datasetRepository.save(dataset);
                 taskService.addNewSystemTask(dataset);
-                message = "Successfully uploaded to "+BASE_PATH+"/"+dataset.getName()+".zip. The dataset will be available after it has been processed";
+               
+                message=messageSource.getMessage("add.dataset.sucess", Stream.of((BASE_PATH+"/"+dataset.getName()+".zip")).toArray(String[]::new), locale);
         }
 
         return message;
-
     }
 
     /**
@@ -306,6 +316,8 @@ public class DatasetService
         String message = "";
         String datasetName = dataset.getName();
 
+        Locale locale = LocaleContextHolder.getLocale();
+
         Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
 
         if(optDataset.isPresent())
@@ -318,16 +330,16 @@ public class DatasetService
             {
                 Dataset newDataset = updateDataset(oldDataset, dataset);
                 datasetRepository.save(newDataset);
-                message = "Successfully updated";
+                message = messageSource.getMessage("edit.dataset.sucess", Stream.of().toArray(String[]::new), locale);
             }
             else
             {
-                message = "Unable to update the dataset, you are not the propietary";
+                message = messageSource.getMessage("edit.dataset.fail.notowner", Stream.of().toArray(String[]::new), locale);
             }
         }
         else
         {
-            message = "Unable to update the dataset";
+            message = messageSource.getMessage("edit.dataset.fail.notpresent", Stream.of().toArray(String[]::new), locale);
         }
 
         return message;
