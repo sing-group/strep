@@ -6,8 +6,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.validation.Valid;
 
@@ -28,6 +30,8 @@ import org.strep.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -82,6 +86,12 @@ public class DatasetController {
 
     @Autowired
     private FileDatatypeTypeRepository fileDatatypeTypeRepository;
+
+    /**
+     * The message i18n
+     */
+    @Autowired
+    private MessageSource messageSource;  
 
     @GetMapping("/public")
     public String listPublicDatasets(User user, Model model) {
@@ -271,6 +281,7 @@ public class DatasetController {
     @GetMapping("/delete")
     public String deleteDataset(Authentication authentication, Model model, @RequestParam("id") String name, RedirectAttributes redirectAttributes) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Locale locale = LocaleContextHolder.getLocale();
 
         String username = userDetails.getUsername();
         Optional<Dataset> opt = datasetRepository.findById(name);
@@ -278,12 +289,21 @@ public class DatasetController {
         if (opt.isPresent() && opt.get().getAuthor().equals(username)) {
             Dataset dataset = opt.get();
             if (datasetService.deleteDataset(dataset)) {
-                model.addAttribute("message", "Successfully deleted");
+                model.addAttribute(
+                   "message", 
+                   messageSource.getMessage("delete.dataset.sucess", Stream.of().toArray(String[]::new), locale)
+                );
             } else {
-                model.addAttribute("message", "Error deleting dataset");
+                model.addAttribute(
+                    "message", 
+                    messageSource.getMessage("delete.dataset.fail", Stream.of().toArray(String[]::new), locale)
+                );
             }
         } else {
-            model.addAttribute("message", "Error deleting dataset");
+                model.addAttribute(
+                    "message", 
+                    messageSource.getMessage("delete.dataset.fail", Stream.of().toArray(String[]::new), locale)
+                );
         }
 
         return "redirect:/dataset/list";
@@ -292,6 +312,8 @@ public class DatasetController {
     @GetMapping("/access")
     public String changeAccess(Authentication authentication, Model model, @RequestParam("id") String name,
             @RequestParam("access") String access) {
+        
+        Locale locale = LocaleContextHolder.getLocale();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -311,12 +333,18 @@ public class DatasetController {
             if (access.equals("private") || access.equals("public") || access.equals("protected")) {
                 dataset.setAccess(access);
                 datasetRepository.save(dataset);
-                model.addAttribute("message", "Dataset successfully changed to " + access);
+                model.addAttribute("message", 
+                    messageSource.getMessage("changeacess.dataset.sucess", Stream.of(access).toArray(String[]::new), locale)
+                );
             } else {
-                model.addAttribute("message", access + " is not a valid access type");
+                model.addAttribute("message", 
+                    messageSource.getMessage("changeacess.dataset.fail.invalidaccess", Stream.of(access).toArray(String[]::new), locale)
+                );
             }
         } else {
-            model.addAttribute("message", "Cannot found specified dataset to change the access");
+            model.addAttribute("message", 
+                messageSource.getMessage("changeacess.dataset.fail.datasetnotfound", Stream.of().toArray(String[]::new), locale)
+            );
         }
 
         return "list_datasets";
@@ -401,7 +429,8 @@ public class DatasetController {
         Optional<Dataset> optDataset = datasetRepository.findById(name);
 
         if (bindingResult.hasErrors()) {
-            System.out.println("ERRORES");
+            //TODO: Revisar este mensaje de error
+            //System.out.println("ERRORES");
             if (optDataset.isPresent()) {
                 Dataset toUpdateDataset = optDataset.get();
 
@@ -493,6 +522,7 @@ public class DatasetController {
         int neccesaryFilesSpam = -1;
         int neccesaryFilesHam = -1;
         int fileNumberInt = -1;
+        Locale locale = LocaleContextHolder.getLocale();
 
         ArrayList<String> arrayListDatasets = new ArrayList<String>();
 
@@ -512,8 +542,14 @@ public class DatasetController {
             availableFilesSpam = datasetRepository.countFilesByType(arrayListDatasets, "spam");
             availableFilesHam = datasetRepository.countFilesByType(arrayListDatasets, "ham");
 
-            String message = "Necesary spam files:" + neccesaryFilesSpam + "\nAvailable spam files" + availableFilesSpam;
-            message += " / Necesary ham files:" + neccesaryFilesHam + "\nAvailable spam files" + availableFilesHam;
+            String message=messageSource.getMessage("checkposiblespam.dataset.message", Stream.of(
+                                 Integer.toString(neccesaryFilesSpam),
+                                 Integer.toString(availableFilesSpam),
+                                 Integer.toString(neccesaryFilesHam),
+                                 Integer.toString(availableFilesHam)
+                           ).toArray(String[]::new), locale);
+            //String message = "Necesary spam files:" + neccesaryFilesSpam + "\nAvailable spam files" + availableFilesSpam;
+            //message += " / Necesary ham files:" + neccesaryFilesHam + "\nAvailable spam files" + availableFilesHam;
             if (availableFilesSpam >= neccesaryFilesSpam && availableFilesHam >= neccesaryFilesHam) {
                 model.addAttribute("spamSuccessInfo", message);
             } else {
@@ -521,7 +557,8 @@ public class DatasetController {
             }
         } else {
             model.addAttribute("spamErrorInput",
-                    "Enter a valid input for the percentage of spam and for the number of files. Select at least one dataset.");
+                messageSource.getMessage("checkposiblespam.dataset.spamerrorimput", Stream.of().toArray(String[]::new), locale)
+            );
         }
         return "create_dataset::info-spam";
     }
@@ -553,6 +590,8 @@ public class DatasetController {
             @RequestParam("inputHamTwtid") int inputHamTwtid,
             @RequestParam(name = "datasets", required = false) String[] datasetNames,
             @RequestParam("inputFileNumber") int fileNumberInput) {
+        
+        Locale locale = LocaleContextHolder.getLocale();                
         ArrayList<String> datatypes = new ArrayList<String>();
         ArrayList<String> datasets = new ArrayList<String>();
 
@@ -579,7 +618,8 @@ public class DatasetController {
                 || (inputSpamEml + inputHamEml + inputSpamWarc + inputHamWarc + inputSpamTsms + inputHamTsms
                 + inputSpamTytb + inputHamTytb + inputSpamTwtid + inputHamTwtid) != 100) {
             model.addAttribute("datatypesInputError",
-                    "You have to select at least one dataset and enter a valid input in the percentages(sum of percentages must be 100)");
+                    messageSource.getMessage("checkposibledatatypes.dataset.datatypesinputerror", Stream.of().toArray(String[]::new), locale)
+                );
         } else {
             HashMap<String, Integer> necesaryFilesMap = new HashMap<String, Integer>();
 
@@ -647,7 +687,8 @@ public class DatasetController {
                 if (databaseFilesMap.get(key) < necesaryFilesMap.get(key)) {
                     success = false;
                 }
-                System.out.println(databaseFilesMap.get(key) + " vs " + necesaryFilesMap.get(key));
+
+                //System.out.println(databaseFilesMap.get(key) + " vs " + necesaryFilesMap.get(key));
             }
 
             if (success) {
@@ -681,7 +722,6 @@ public class DatasetController {
         model.addAttribute("languages", languages);
 
         return "create_dataset";
-
     }
 
     @PostMapping("/create")

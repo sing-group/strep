@@ -72,7 +72,7 @@ public class PermissionController {
         
         if(message!=null)
         {
-            model.addAttribute("message", message);
+            model.addAttribute("message", message); //TODO: This does not seem adequate
         }
         
         return "list_requests";

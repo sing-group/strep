@@ -1,6 +1,8 @@
 package org.strep.web;
 
+import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.validation.Valid;
 
@@ -10,6 +12,8 @@ import org.strep.services.LicenseService;
 import org.strep.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -37,6 +41,12 @@ public class LicenseController
 
     @Autowired
     private LicenseService licenseService;
+
+    /**
+     * The message i18n
+     */
+    @Autowired
+    private MessageSource messageSource;    
 
     @GetMapping("/list")
     public String listLicenses(Authentication authentication, Model model, @RequestParam(name="searchInput", required=false)String searchInput)
@@ -107,6 +117,8 @@ public class LicenseController
     @PostMapping("/add")
     public String addLicense(Authentication authentication, Model model, @Valid License license,BindingResult bindingResult, RedirectAttributes redirectAttributes)
     {
+        Locale locale = LocaleContextHolder.getLocale();
+        
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -123,12 +135,17 @@ public class LicenseController
             Optional<License> licenseOpt = licenseRepository.findById(license.getName());
             if(licenseOpt.isPresent())
             {
-                redirectAttributes.addFlashAttribute("message", "License already exists");
+                redirectAttributes.addFlashAttribute("message", 
+                    messageSource.getMessage("add.license.fail.licensealreadyexist", Stream.of().toArray(String[]::new), locale)
+                    //"License already exists"
+                );
             }
             else
             {
                 licenseRepository.save(license);
-                redirectAttributes.addFlashAttribute("message", "License successfully uploaded");
+                redirectAttributes.addFlashAttribute("message", 
+                    messageSource.getMessage("add.license.sucess", Stream.of().toArray(String[]::new), locale)
+                );
             }
             return "redirect:/license/list";
         }
@@ -162,6 +179,8 @@ public class LicenseController
     @PostMapping("/modify")
     public String modifyLicense(Authentication authentication, Model model, @Valid License license,BindingResult bindingResult, RedirectAttributes redirectAttributes)
     {
+        Locale locale = LocaleContextHolder.getLocale();
+
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -176,7 +195,9 @@ public class LicenseController
         else
         {
             licenseRepository.save(license);
-            redirectAttributes.addFlashAttribute("message", "License successfully modified");
+            redirectAttributes.addFlashAttribute("message", 
+                messageSource.getMessage("modify.license.sucess", Stream.of().toArray(String[]::new), locale)
+            );
             
             return "redirect:/license/list";
         }
@@ -186,6 +207,7 @@ public class LicenseController
     @GetMapping("/delete")
     public String deleteLicense(Authentication authentication, Model model, @RequestParam("name")String name, RedirectAttributes redirectAttributes)
     {
+        Locale locale = LocaleContextHolder.getLocale();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -200,12 +222,12 @@ public class LicenseController
         if(licenseOpt.isPresent())
         {
             licenseRepository.delete(licenseOpt.get());
-            message="License successfully deleted";
+            message=messageSource.getMessage("delete.license.sucess", Stream.of().toArray(String[]::new), locale);
             redirectAttributes.addFlashAttribute("message", message);
         }
         else
         {
-            message="Cannot delete license";
+            message=messageSource.getMessage("delete.license.fail", Stream.of().toArray(String[]::new), locale);
         }
 
         return "redirect:/license/list";

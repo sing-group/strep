@@ -52,9 +52,9 @@ RUN mysqld_safe --bind-address=0.0.0.0 & sleep 15 && \
 #Build bdrep_service
 RUN cd /root/bdrep_service && \
     mvn clean package && mkdir plugins && cp target/lib/nlpa* plugins/ && \
-    cd plugins && jar xf nlpa-1.0.0.jar META-INF/services/org.bdp4j.pipe.Pipe && \
+    cd plugins && jar xf nlpa-* META-INF/services/org.bdp4j.pipe.Pipe && \
     sed -i -E "/^.*(NERFromStringBufferPipe|ComputePolarityFromStringBufferPipe|ComputePolarityTBWSFromStringBuffer|StoreTweetLangPipe)$/d" \
-    META-INF/services/org.bdp4j.pipe.Pipe && jar uf nlpa-1.0.0.jar META-INF/services/org.bdp4j.pipe.Pipe && rm -rf META-INF && cd .. && \
+    META-INF/services/org.bdp4j.pipe.Pipe && jar uf nlpa-* META-INF/services/org.bdp4j.pipe.Pipe && rm -rf META-INF && cd .. && \
     cd ..
 
 #Clean the maven library

@@ -40,7 +40,7 @@ public class LoginController
     {
         if(bindingResult.hasErrors())
         {
-            System.out.println("Binding problem");
+            //System.out.println("Binding problem");
             return "index";
         }
         else
@@ -50,11 +50,11 @@ public class LoginController
             if(optional.isPresent())
             {
                 User userInDB = optional.get();
-                System.out.println("Usuario presente");
+                //System.out.println("Usuario presente");
 
                 if(bCryptPasswordEncoder.matches(user.getPassword(), userInDB.getPassword()))
                 {
-                    System.out.println("Contraseña correcta");
+                    //System.out.println("Contraseña correcta");
                     return "redirect:/user/main";
                 }
                 else
@@ -62,7 +62,7 @@ public class LoginController
             }
             else
             {
-                System.out.println("User not found problem");
+                //System.out.println("User not found problem");
                 return "index";
             }  
         }
