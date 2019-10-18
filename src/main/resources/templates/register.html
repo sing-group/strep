@@ -1,106 +1,59 @@
 <!DOCTYPE HTML>
 <html>
-<head> 
-    <title>Online Preprocessor</title> 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
-    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-<body class="main-bg">
-    <div class="container-fluid">
-
-            <nav class="navbar navbar-expand navbar-light top-bg">
-                    <img src="/images/database.svg" alt="logo" height="32" width="32">
-                    <a href="/" class="topdiv-text" id="linklogo">Online preprocessor</a>
-                  
-                    <div class="collapse navbar-collapse" >
-                      <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                          <a class="nav-link" id="topdivhome" href="/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" id="topdivpublic" href="/dataset/public" th:text="#{public.home.title}"></a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" id="topdivregister" href="/user/register" th:text="#{signup.home.title}"></a>
-                        </li>
-                      </ul>       
+    <head> 
+        <title th:text="#{app.name}"></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">    
+    </head>
+    <body class="main-bg">
+        <div class="header">
+            <div th:include="header_public.html"></div>
+        </div>
+        <div class="container">
+            <div id="bs-docs-section">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="bs-component">
+                            <form action="#" th:action="@{/user/register}" th:object="${user}" method="POST">
+                                <fieldset>
+                                    <legend><h2 th:text="#{register.title}"></h2></legend>
+                                    <div class="form-group">
+                                        <label for="#{register.placeholder.email}" id="laddEmail" name="laddEmail" class="col-md-3 control-label" th:text="#{register.placeholder.email}" ></label>
+                                        <input type="email" class="form-control" name="email" th:attr="placeholder = #{register.placeholder.email}" required="required">
+                                        <label class="error-label" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"  th:text="#{register.emailerror}"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="#{register.placeholder.name}" id="laddEmail" name="laddName" class="col-md-3 control-label" th:text="#{register.placeholder.name}" ></label>
+                                        <input class="form-control" type="text" name="name" th:attr="placeholder = #{register.placeholder.name}" required="required">
+                                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:text="#{register.nameerror}"></label> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="#{register.placeholder.surname}" id="laddEmail" name="laddSurname" class="col-md-3 control-label" th:text="#{register.placeholder.surname}" ></label>
+                                        <input class="form-control" type="text" name="surname" th:attr="placeholder = #{register.placeholder.surname}" required="required">
+                                        <label class="error-label" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}" th:text="#{register.surnameerror}"></label> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="#{register.placeholder.username}" id="laddUsername" name="laddUsername" class="col-md-3 control-label" th:text="#{register.placeholder.username}" ></label>
+                                        <input type="text" class="form-control" name="username" th:attr="placeholder = #{register.placeholder.username}" required="required">
+                                        <label class="error-label" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" th:text="#{register.usernameerror}"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="#{register.placeholder.password}" id="laddPassword" name="laddPassword" class="col-md-3 control-label" th:text="#{register.placeholder.password}" ></label>
+                                        <input type="password" class="form-control" name="password" th:attr="placeholder = #{register.placeholder.password}" required="required">
+                                        <label class="error-label" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:text="#{register.passworderror}"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-primary" th:attr="value = #{register.title}"><br>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
                     </div>
-                    <select id="locales">
-                        <option  id="en" value="en" th:text="en" onclick="changeLocale(this.id)"></option>
-                        <option  id="es" value="es" th:text="es" onclick="changeLocale(this.id)"></option>
-                    </select>
-                  </nav>
-
-        <div class="row">
-            <div class="col-4">
-
-            </div>
-            <div class= "login-form col-4 form-bg">
-
-                    <form action="#" th:action="@{/user/register}" th:object="${user}" method="POST">
-                        <img class="header-logo" src="/images/signup.svg" alt="logo.png" height="64" width="64">
-                        <h2 class="main-text text-center" th:text="#{register.title}"></h2>
-                            <div class="form-group">
-                            <input type="text" class="form-control" name="username" th:attr="placeholder = #{register.placeholder.username}" required="required">
-                            <label class="error-label" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</label>
-                            </div>
-                            <div class="form-group">
-                            <input type="password" class="form-control" name="password" th:attr="placeholder = #{register.placeholder.password}" required="required">
-                            <label class="error-label" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</label>
-                            </div>
-                            <div class="form-group">
-                            <input type="email" class="form-control" name="email" th:attr="placeholder = #{register.placeholder.email}" required="required">
-                            <label class="error-label" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</label>
-                            </div>
-                            <div class="form-group">
-                            <input class="form-control" type="text" name="name" th:attr="placeholder = #{register.placeholder.name}" required="required">
-                            <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</label> 
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" type="text" name="surname" th:attr="placeholder = #{register.placeholder.surname}" required="required">
-                                <label class="error-label" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</label> 
-                            </div>
-                            <div class="form-group">
-                            <input type="submit" class="submit-button form-control" th:attr="value = #{register.title}"><br>
-                            </div>
-                        </form>
-            </div>
-            <div class="col-4">
-
+                </div>
             </div>
         </div>
-
-        <footer class="fixed-bottom page-footer footer-bg">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-5">
-
-              </div>  
-
-              <div class="col-1">
-                  <a href="https://www.sing-group.org/"><img src="/images/singGrey.svg" alt="singGrey.svg" width="64" height="64"></a>
-              </div>
-
-              <div class="col-1">
-                  <a href="https://www.uvigo.gal/es"><img src="/images/uvigo.png" alt="uvigo.png" width="128" height="64"></a>
-              </div>
-
-              <div class="col-5">
-
-              </div>
-            </div>
-          </div>
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-
-    <script type="text/javascript" src="/js/functions.js"></script>
-    <script type="text/javascript" src="/js/jqueryFunctions.js"></script>
-        </footer>
-      </div>
-</body>
+        <div th:include="footer.html"></div>
+    </body>
 </html>

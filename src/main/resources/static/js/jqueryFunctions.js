@@ -174,9 +174,10 @@ $('#deleteDatasetModal').on('show.bs.modal', function (event)
     buttonConfirm.attr("href", href);
 });
 
+/*
 $(function () {
     $('[data-toggle="popover"]').popover()
-})
+})*/
 
 function changeLocale(id)
 {
@@ -207,6 +208,7 @@ function changeLocale(id)
     location.replace(url);
 }
 $(document).ready(function () {
+
     // It's been done like this to make it work properly in Chrome
     document.getElementById('locales').addEventListener('change', function () {
         changeLocale($('#locales').val());
@@ -218,5 +220,16 @@ $(document).ready(function () {
     if (lang != null) {
         $('#locales').val(lang);
     }
+
+    // Needed to mark active links
+    var pathname = $(location).attr('pathname').replace(/[/]/gi, "");
+    $('a.active').removeClass('active');
+
+    if (pathname === "") {
+        $("#home").addClass("active");
+    } else {
+        $("#" + pathname).addClass("active");
+    }
+    
 });
 

@@ -5,8 +5,30 @@ html {
 
 body
 {
-    margin: 0;
+    margin: 0 auto;
     margin-bottom: 40px;
+
+    /*max-width: 1200px;*/
+}
+thead{
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: normal;
+}
+h2{
+  padding-bottom: 20px;
+}
+
+.table thead th{
+  /*border-top: 1px solid FBFBFB !important;*/
+  border-top:  0px !important;
+  border-bottom:  0px !important;
+  color: #203939;
+  background-color: #FBFBFB;
+  text-align: center;
+}
+tr:nth-child(even){
+  background-color: #FBFBFB; // #f2f3f4
 }
 .page-footer
 {
@@ -58,14 +80,14 @@ body
     color: #203939;
     font-size: 1;
     font-weight: bold;
-    font-family: 'Lora', serif;
+  /*  /*font-family: 'PT Sans', sans-serif;*/;*/
 }
 
 .normal-text
 {
     color: #203939;
     font-size: 1;
-    font-family: 'PT Sans', sans-serif;
+  /*  /*font-family: 'PT Sans', sans-serif;*/*/
 }
 
 .main-text
@@ -77,7 +99,7 @@ body
 .main-text-header
 {
     color: #203939;
-    font-size: 2;
+    font-size: 26px !important;
 }
  .error-message, .author
 {
@@ -102,17 +124,21 @@ body
 .info-label
 {
     color: #9cb805;
-    font-family: "Times New Roman";
+  /*  font-family: "Times New Roman";*/
 }
 .error-label
 {
     color: #9d0e3d;
-    font-family: "Times New Roman";
+  /*  font-family: "Times New Roman";*/
 }
 
 #linklogo,#topdivhome, #topdivpublic, #topdivregister,#navbar-link
 {
-    color: #dfe6ea;
+    color: #FFFFFF;
+}
+.nav-item{
+  text-transform: uppercase;
+  font-size: 14px;
 }
 
 .login-form
@@ -127,29 +153,17 @@ body
 
 .welcome-text
 {
-    font-size: 50px;
+ text-align: center;
 }
 
 .page-content
 {
     margin-top: 50px;
-}
-
-.welcome-items
-{
-    margin-right:120px;
-}
-
-.welcome-item   
-{
-    display:block;
-    margin-left: 20px;
-    margin-right: 20px;
-    width: 100%;
+   margin-bottom: 50px;
 }
 
 .wlc-pic
-{   
+{
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -160,11 +174,11 @@ body
 
 .dataset-attr
 {
-    font-size: 30px; 
+    font-size: 30px;
 }
 
 .dataset-item
-{   
+{
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -215,6 +229,9 @@ body
     color: #203939;
     opacity: 1;
 }
+/*.form-control{
+height: 30px !important;
+}*/
 
 .aligned-input
 {
@@ -223,6 +240,12 @@ body
 
 .left{
     text-align:left;
+}
+.right{
+    text-align:right;
+}
+.row{
+padding-top:5px;
 }
 
 .card
@@ -237,7 +260,7 @@ border-bottom: 5px solid #203939
 
 .light-border-bottom
 {
-border-bottom: 2px solid #203939  
+border-bottom: 2px solid #203939
 }
 
 .thick-border-top
@@ -245,8 +268,8 @@ border-bottom: 2px solid #203939
 border-top: 5px solid #203939
 }
 
-.monospaced-text { 
-	font-family: "lucida console", monospace; 
+.monospaced-text {
+/*	font-family: "lucida console", monospace;*/
 }
 
 .card
@@ -259,7 +282,141 @@ border-top: 5px solid #203939
     background: white;
 }
 
+ul#nav-menu li.active a {
+/*	background-color:#9cb805 !important;
+  color:#203939;*/
+  color:#9cb805;
+}
+
 .table
 {
     background: white;
+    font-size: 14px;
+}
+.logo-uvigo{
+  max-width: 210px;
+  padding: 10px;
+}
+.logo-sing{
+  max-width: 120px;
+  padding: 10px;
+}
+.header{
+  /*width: 100%;
+  background-color: #203939;
+  margin-right: auto;
+  margin-left: auto;
+  position: absolute;*/
+
+/*bottom: 0;
+
+left: 0;
+
+right: 0;
+width: 100%;*/
+}
+.control-label-login{
+  color: #FFFFFF;
+  padding-left:5px;
+  padding-right:5px;
+}
+.btn{
+  background-color:#9cb805 !important;
+  border-color:#9cb805 !important;
+  color: #203939 !important;
+  /*padding-top: 0px;
+  padding-bottom: 0px;*/
+}
+
+.btn-list{
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+#locales{
+  font-size: 14px;
+  width: 45px;
+  padding: 0px;
+}
+.dlocales{
+  padding-left: 5px;
+}
+.dropdown-menu{
+  padding: 10px;
+  font-size: 14px;
+}
+.dropdown.toogle{
+  width: 20px !important;
+}
+.jumbotron{
+  background-color: #FBFBFB;
+}
+.border-info{
+border-color: #dee2e6 !important;
+}
+#username, #password {
+  /*background-color : #FFFFFF !important;
+  border-color : #e8f3f3 !important;*/
+  max-width: 120px;
+}
+
+/**** Bootswatch ****/
+.bg-primary .navbar-nav .active > .nav-link{
+  color: #9cb805 !important;
+}
+a{
+  color:#FFFFFF;
+  text-decoration:
+}
+a:hover, a:active{
+  color:#9cb805 !important;
+}
+.active{
+  color:#9cb805 !important;
+}
+
+.bg-primary {
+    background-color: #203939 !important;
+}
+.header{
+  padding-bottom: 50px;
+}
+
+.footer{
+  padding-top: 50px;
+}
+
+.list-unstyled{
+  display: flex;
+  /*flex-direction: row;*/
+  align-items: center;
+  justify-content: center;
+}
+legend{
+  font-size: 26px !important;
+}
+.nav-brand{
+  font-size: 14px;
+}
+
+/***** Responsive *****/
+#dlogin{
+  padding-right: 10px;
+   /*min-width: 550px;
+font-size: 14px;*/
+}
+#dmenu{
+   min-width: 350px;
+   position: relative;
+   width:100%;
+}
+
+@media (max-width: 1920px) {
+
+
+@media (max-width: 500px) {
+  #dlogin { width: 100%; }
+  #dmenu { width: 100%;}
+  .dlocales{ width: 100%;}
+}
 }
