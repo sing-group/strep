@@ -19,14 +19,11 @@
                 <label class="control-label-login" for="#{header.username}" id="laddLicense" name="lUsername" th:text="#{header.username}" ></label>
                 <input class="form-control mr-sm-2" type="text" id="username" name="username" th:attr="placeholder=#{header.username}">
                 <label class="error-label" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" th:text="#{header.usernameerror}"></label>
-                <!--Moncho-->
-                <label class="error-label" th:if="${param.error}">Invalid user, password, or domain</label>
-                <!-- <p th:if="${param.error}" class="error">Invalid user, password, or domain</p> -->
-                <!--Moncho-->
                 <label class="control-label-login" for="#{header.password}" id="lPassword" name="lPassword" th:text="#{header.password}" ></label>
                 <input class="form-control mr-sm-2" type="password" id="password" name="password" th:attr="placeholder=#{header.password}">
                 <label class="error-label" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:text="#{header.passworderror}"></label>
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Login">Login</button>
+                <label class="error-label" th:unless="${param.error == null}" th:text="#{header.wrongusernameorpassword}"></label>
             </form>
             </div>
              <select id="locales" class="form-control">

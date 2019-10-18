@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 "/license/modify/**")
                 .hasAuthority("canAdminister").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
-                .loginPage("/").failureUrl("/")
+                .loginPage("/").failureUrl("/?error=true")
                 .defaultSuccessUrl("/dataset/list")
                 .usernameParameter("username")
                 .passwordParameter("password");
