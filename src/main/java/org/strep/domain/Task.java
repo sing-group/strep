@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Pattern;
 
 /**
  * JPA Bean for the Dataset objects managed by application
@@ -33,6 +34,8 @@ public class Task
     /**
      * The state of the task
      */
+    @Pattern(regexp = "^(waiting|executing|sucess|failed)$", message = "The access must be waiting, executing, sucess or failed")
+    @Column(length = 10, columnDefinition="VARCHAR(10)")
     private String state;
 
     /**
