@@ -84,7 +84,7 @@ public class UserController {
                 try {
                     helper.setTo(user.getEmail());
                     helper.setText(
-                            "Welcome to OnlinePreprocessor, click in the following link to log into your account https://localhost:8443/user/accountconfirmation"
+                            "Welcome to STRep, click in the following link to log into your account https://localhost:8443/user/accountconfirmation"
                                     + "?hash=" + hash.replaceAll("=", ""));
                     helper.setSubject("Account activation");
 
