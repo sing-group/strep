@@ -46,7 +46,7 @@ ADD config /root/bdrep_service/config/
 RUN mysqld_safe --bind-address=0.0.0.0 & sleep 15 && \
     mysqladmin create strep && \
     #echo "CREATE USER 'springuser'@'%' IDENTIFIED WITH mysql_native_password BY 'springpassword'; GRANT ALL PRIVILEGES on *.* TO 'springuser'@'%' WITH GRANT OPTION; flush privileges; " | mysql && \
-    echo "CREATE USER 'springuser'@'%' IDENTIFIED BY 'springpassword'; GRANT ALL PRIVILEGES on *.* TO 'springuser'@'%' WITH GRANT OPTION; flush privileges; " | mysql && \
+    echo "CREATE USER 'springuser'@'%' IDENTIFIED BY 'springpassword'; GRANT ALL PRIVILEGES on strep.* TO 'springuser'@'%'; flush privileges; " | mysql && \
     cd /root/bdrep && mvn clean package && mysqladmin shutdown && cd .. 
 
 #Build bdrep_service
