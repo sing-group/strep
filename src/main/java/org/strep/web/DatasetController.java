@@ -155,7 +155,7 @@ public class DatasetController {
     }
 
     @GetMapping("/list")
-    public String listDatasets(@RequestParam(name = "type", required = false, defaultValue = "community") String type,
+    public String listDatasets(@RequestParam(name = "type", required = false, defaultValue = "user") String type,
             Authentication authentication, Model model) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 

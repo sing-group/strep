@@ -17,88 +17,80 @@
         <div class="header">
             <div th:include="header_public.html"></div>
         </div>
-        <div class="container-fluid">
-            <div class="row page-content pre-footer">
-                <div class="col-2"></div>
-                <div class="col-8">
-                    <div class="row">
-                        <div class="col-2"></div>
-                        <div class="col-8">
-
-                            <div class="jumbotron border border-info">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h2 class="main-text left" th:text="#{detailed.publicdataset.details}"></h2>
-                                        <hr/>
-                                    </div>
+        <div class="container">
+            <div id="bs-docs-section">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="bs-component">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2 class="main-text left" th:text="#{detailed.publicdataset.details}"></h2>
+                                    <hr/>
                                 </div>
-                                <div class="row">
-                                    <div class="col-3 left"><p class="title-text" th:text="#{detailed.publicdataset.author}"> </p></div>
-                                    <div class="col-9 left"><p class="normal-text" th:text="${dataset.author}"></p></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.name}"></p></div>
-                                    <div class="col-9 left"><p class="normal-text" th:text="${dataset.name}"></p></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.description}"> </p></div>
-                                    <div class="col-9 left"> <p class="normal-text" th:text="${dataset.description}"></p></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 left"><p class="title-text" th:text="#{detailed.publicdataset.access}"> </p></div>
-                                    <div class="col-9 left"><p class="normal-text" th:text="${dataset.access}"></p></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 left"><p class="title-text" th:text="#{detailed.publicdataset.languages}"> </p></div>
-                                    <div class="col-9 left"><p class="normal-text" th:text="${languages}"></p></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.uploaddate}"> </p></div>
-                                    <div class="col-9 left"> <p class="normal-text" th:text="${dataset.uploadDate}"></p></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.datatypes}"> </p></div>
-                                    <div class="col-9 left"><p class="normal-text" th:text="${datatypes}"></p></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.license}"> </p></div>
-                                    <div class="col-9 left"> <p class="normal-text" th:text="${dataset.license.name}"></p></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.type}"> </p></div>
-                                    <div class="col-9 left"> <p class="normal-text" th:text="${dataset.type}"></p></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 left">  <p class="title-text" th:text="#{detailed.publicdataset.spampercentage}"> </p></div>
-                                    <div class="col-9 left">  <p class="normal-text" th:text="${dataset.spamPercentage}"></p></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.share}"> </p></div>
-                                    <div class="col-9 left"> <p class="normal-text" th:text="${dataset.url}"></p></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.hampercentage}"> </p></div>
-                                    <div class="col-9 left">   <p class="normal-text" th:text="${dataset.hamPercentage}"></p></div>
-                                </div>
-                                <hr/>
-                                <div class="row">
-                                    <div class="col-9"></div>
-                                    <div class="col-3 right">
-                                        <div class="btn-group">
-                                            <a class="btn btn-small btn-success" th:href="@{'/dataset/public/download?id=' + ${dataset.name}}" th:text="#{register.downloaddataset}">
-                                            </a>
-                                        </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 left"><p class="title-text" th:text="#{detailed.publicdataset.author}"> </p></div>
+                                <div class="col-9 left"><p class="normal-text" th:text="${dataset.author}"></p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.name}"></p></div>
+                                <div class="col-9 left"><p class="normal-text" th:text="${dataset.name}"></p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.description}"> </p></div>
+                                <div class="col-9 left"> <p class="normal-text" th:text="${dataset.description}"></p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 left"><p class="title-text" th:text="#{detailed.publicdataset.access}"> </p></div>
+                                <div class="col-9 left"><p class="normal-text" th:text="${dataset.access}"></p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 left"><p class="title-text" th:text="#{detailed.publicdataset.languages}"> </p></div>
+                                <div class="col-9 left"><p class="normal-text" th:text="${languages}"></p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.uploaddate}"> </p></div>
+                                <div class="col-9 left"> <p class="normal-text" th:text="${dataset.uploadDate}"></p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.datatypes}"> </p></div>
+                                <div class="col-9 left"><p class="normal-text" th:text="${datatypes}"></p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.license}"> </p></div>
+                                <div class="col-9 left"> <p class="normal-text" th:text="${dataset.license.name}"></p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.type}"> </p></div>
+                                <div class="col-9 left"> <p class="normal-text" th:text="${dataset.type}"></p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 left">  <p class="title-text" th:text="#{detailed.publicdataset.spampercentage}"> </p></div>
+                                <div class="col-9 left">  <p class="normal-text" th:text="${dataset.spamPercentage}"></p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.share}"> </p></div>
+                                <div class="col-9 left"> <p class="normal-text" th:text="${dataset.url}"></p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.hampercentage}"> </p></div>
+                                <div class="col-9 left">   <p class="normal-text" th:text="${dataset.hamPercentage}"></p></div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-9"></div>
+                                <div class="col-3 right">
+                                    <div class="btn-group">
+                                        <a class="btn btn-small btn-success" th:href="@{'/dataset/public/download?id=' + ${dataset.name}}" th:text="#{register.downloaddataset}">
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-2"></div>
                     </div>
                 </div>
             </div>
-            <div class="col-2"></div>
         </div>
         <div th:include="footer.html"></div>
     </body>
-
 </html>

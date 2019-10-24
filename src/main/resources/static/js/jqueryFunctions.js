@@ -224,6 +224,7 @@ $(document).ready(function () {
     // Needed to mark active links
     var pathname = $(location).attr('pathname').replace(/[/]/gi, "");
     $('a.active').removeClass('active');
+    $('#navbarColor01 a.active').removeClass('active');
 
     if (pathname === "") {
         $("#home").addClass("active");
@@ -232,4 +233,3 @@ $(document).ready(function () {
     }
     
 });
-

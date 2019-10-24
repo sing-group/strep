@@ -1,193 +1,109 @@
 <!DOCTYPE HTML>
 <html>
 
-<head>
-    <title th:text="#{app.name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+    <head>
+        <title th:text="#{app.name}"></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">   
+    </head>
 
-<body class="main-bg">
-    <div class="container-fluid">
-        <div th:include="header.html">
-
+    <body class="main-bg">
+        <div class="header">
+            <div th:include="header.html"></div>
         </div>
-
-        <div th:if="${message}">
-            <div class="row page-content">
-                <div class="col-4">
-
+        <div class="container" >
+            <div class="alert alert-dismissible alert-warning" th:if="${message}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p class=" main-text" th:text="${message}"></p>
+            </div>
+            <div id="banner" class="page-header">
+                <div class="row">
+                    <div class="col-12">
+                        <h2><span th:text="#{list.preprocessing.title} "/>&nbsp;<span th:text="@{${dataset.name}} "/> </h2>
+                    </div>
                 </div>
-
-                <div class="col-4 message">
-                    <p class="main-text text-center" th:text="${message}"></p>
+            </div>
+            <div id="bs-docs-section">
+                <div class="row">
+                    <div class="col-10"></div>
+                    <div class="col-2">
+                        <a class="btn btn-primary" th:href="'/task/preprocess/create?name='+${dataset.name}" th:text=" #{list.preprocessing.button}">                         
+                        </a>
+                    </div>
                 </div>
+            </div>
+            <div id="bs-docs-section">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"
+                           th:href="'/task/preprocess?state=waiting&id='+${dataset.name}" th:text="#{list.preprocessing.waiting}"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''"
+                           th:href="'/task/preprocess?state=executing&id='+${dataset.name}" th:text="#{list.preprocessing.executing}"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''"
+                           th:href="'/task/preprocess?state=failed&id='+${dataset.name}" th:text="#{list.preprocessing.failed}"></a>
+                    </li>
 
-                <div class="col-4">
+                    <li class="nav-item">
+                        <a class="nav-link" th:classappend="${state=='success'} ? 'active' : ''"
+                           th:href="'/task/preprocess?state=success&id='+${dataset.name}" th:text="#{list.preprocessing.success}"></a>
+                    </li>
+                </ul>
+                <div class="tab-pane fade active show" >
+                    <div class="alert alert-light" th:if="${tasks.size()==0}" th:text="#{list.preprocessing.notasks}"></div>
+                    <table class="table table-hover margin20" th:if="${tasks.size()!=0}">
+                        <thead>
+                            <tr>
+                                <th scope="col" th:text="#{list.preprocessing.date}"></th>
+                                <th scope="col" th:text="#{list.preprocessing.message}"></th>
+                                <th scope="col" th:text="#{list.preprocessing.description}"></th>
+                                <th scope="col" th:text="#{list.preprocessing.pipeline}"></th>
+                                <th scope="col" th:text="#{list.preprocessing.csv}" th:if="${state=='success'}"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="task : ${tasks}">
+                                <td th:text="${task.date}"></td>
+                                <td th:text="${task.message}">
+                                    <!--p th:text="${task.message}"></p>
+                                    <button type="button" class="btn btn-list"th:if="${task.message}==null" data-container="body" data-toggle="popover" data-placement="right" data-original-title="Popover Title" th:attr="data-content = #{list.usertasks.nomessageprovided}">
+                                        <i class="fas fa-envelope"></i>
+                                    </button>
 
+                                    <button type="button" class="btn btn-list" data-toggle="popover" title="Message" th:attr="data-content = ${task.message}" th:if="${task.message}!=null">
+                                        <i class="fas fa-envelope"></i>
+                                    </button-->
+                                </td>
+                                <td th:text="${task.description}">
+                                    <!--button type="button" th:if="${task.description}==null" class="btn btn-list" data-toggle="popover" title="Description" data-content="Not description provided">
+                                        <i class="fas fa-comment"></i>
+                                    </button>
+                                    <button type="button" th:if="${task.description}!=null" class="btn btn-list" data-toggle="popover" title="Description" th:attr="data-content = ${task.description}">
+                                        <i class="fas fa-comment"></i>
+                                    </button-->
+                                </td>
+                                <td>
+                                    <a class="btn btn-list" th:href="'/task/preprocess/downloadpipeline?id='+ ${task.id}">
+                                        <i class="fas fa-file-download"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-list" th:if="${state=='success'}" th:href="'/task/preprocess/downloadcsv?id='+ ${task.id}">
+                                        <i class="fas fa-file-csv"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-
-        <main class="page-content pre-footer">
-            <div class="row">
-                <div class="col-1">
-
-                </div>
-
-                <div class="col-10 text-center form-bg">
-                    <img class="header-logo" src="/images/clipboard.svg" alt="clipboard.svg" height="64" width="64">
-                    <h4 class="main-text-header" th:text="@{#{list.preprocessing.title}+${dataset.name}} "></h4>
-
-                    <div class="row">
-                        <div class="col-5">
-
-                        </div>
-
-                        <div class="col-2">
-
-                            <a class="btn btn-small submit-button"
-                                th:href="'/task/preprocess/create?name='+${dataset.name}">
-
-                                <i class="fas fa-plus-circle pull-left main-text" th:text="#{list.preprocessing.button}">
-                                    
-                                </i>
-                            </a>
-
-                        </div>
-
-                        <div class="col-5">
-
-                        </div>
-                    </div>
-
-                    <div class="row page-content">
-                        <div class="col-6">
-                            <ul class="nav nav-pills">
-                                <li class="nav-item">
-                                    <a class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"
-                                        th:href="'/task/preprocess?state=waiting&id='+${dataset.name}" th:text="#{list.preprocessing.waiting}"></a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''"
-                                        th:href="'/task/preprocess?state=executing&id='+${dataset.name}" th:text="#{list.preprocessing.executing}"></a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''"
-                                        th:href="'/task/preprocess?state=failed&id='+${dataset.name}" th:text="#{list.preprocessing.failed}"></a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" th:classappend="${state=='success'} ? 'active' : ''"
-                                        th:href="'/task/preprocess?state=success&id='+${dataset.name}" th:text="#{list.preprocessing.success}"></a>
-                                </li>
-
-                            </ul>
-                        </div>
-
-                        <div class="col-6">
-
-                        </div>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col" th:text="#{list.preprocessing.date}"></th>
-                                    <th scope="col" th:text="#{list.preprocessing.message}"></th>
-                                    <th scope="col" th:text="#{list.preprocessing.description}"></th>
-                                    <th scope="col" th:text="#{list.preprocessing.pipeline}"></th>
-                                    <div th:if="${state=='success'}">
-                                        <th scope="col" th:text="#{list.preprocessing.csv}"></th>
-                                    </div>
-
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <div th:each="task : ${tasks}">
-                                    <tr>
-                                        <td th:text="${task.date}"></td>
-                                        <td>
-                                            <div th:if="${task.message}==null">
-                                                <!--Moncho
-                                                    <button type="button" class="btn btn-small btn-danger"
-                                                    data-toggle="popover" title="Message"
-                                                    data-content="Not message provided">-->
-                                                    <button type="button" class="btn btn-small btn-danger" data-toggle="popover"
-                                                    title="Message" th:attr="data-content = #{list.usertasks.nomessageprovided}">
-                                                    <i class="fas fa-envelope"></i>
-                                                </button>
-                                            </div>
-
-                                            <div th:if="${task.message}!=null">
-                                                <button type="button" class="btn btn-small btn-danger"
-                                                    data-toggle="popover" title="Message"
-                                                    th:attr="data-content = ${task.message}">
-                                                    <i class="fas fa-envelope"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div th:if="${task.description}==null">
-                                                <button type="button" class="btn btn-small btn-info"
-                                                    data-toggle="popover" title="Description"
-                                                    data-content="Not description provided">
-                                                    <i class="fas fa-comment"></i>
-                                                </button>
-                                            </div>
-                                            <div th:if="${task.description}!=null">
-                                                <button type="button" class="btn btn-small btn-info"
-                                                    data-toggle="popover" title="Description"
-                                                    th:attr="data-content = ${task.description}">
-                                                    <i class="fas fa-comment"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <a class="btn btn-small btn-secondary"
-                                                th:href="'/task/preprocess/downloadpipeline?id='+ ${task.id}">
-                                                <i class="fas fa-file-download"></i>
-                                            </a>
-                                        </td>
-
-                                        <td>
-                                            <div th:if="${state=='success'}">
-                                                <a class="btn btn-small btn-success"
-                                                    th:href="'/task/preprocess/downloadcsv?id='+ ${task.id}">
-                                                    <i class="fas fa-file-csv"></i>
-                                                </a>
-                                            </div>
-
-                                        </td>
-                                    </tr>
-                                </div>
-
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-
-                <div class="col-1">
-
-                </div>
-            </div>
-
-        </main>
-
         <div th:include="footer.html"></div>
-    </div>
-</body>
-
+    </body>
 </html>
