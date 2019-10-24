@@ -14,11 +14,12 @@
         <div class="header">
             <div th:include="header.html"></div>
         </div>
-        <div class="alert alert-dismissible alert-warning" th:if="${message}">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <p class="mb-0 message" th:text="${message}"></p>
-        </div>
         <div class="container">
+            <div class="alert alert-dismissible alert-info" th:if="${message}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <i class="fas fa-info-circle"></i>&nbsp;
+                <span th:text="${message}"/>
+            </div>
             <div id="banner" class="page-header">
                 <div class="row">
                     <div class="col-12">
@@ -26,7 +27,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="bs-docs-section">
                 <div class="row" th:if="${authority=='canUpload' or authority=='canAdminister'}">
                     <div class="col-10 right">

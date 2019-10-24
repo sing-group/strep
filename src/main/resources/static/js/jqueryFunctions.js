@@ -209,6 +209,9 @@ function changeLocale(id)
 }
 $(document).ready(function () {
 
+    $("#back").click(function() {
+      window.location= document.referrer;
+    });
     // It's been done like this to make it work properly in Chrome
     document.getElementById('locales').addEventListener('change', function () {
         changeLocale($('#locales').val());
@@ -223,7 +226,6 @@ $(document).ready(function () {
 
     // Needed to mark active links
     var pathname = $(location).attr('pathname').replace(/[/]/gi, "");
-    $('a.active').removeClass('active');
     $('#navbarColor01 a.active').removeClass('active');
 
     if (pathname === "") {
@@ -231,5 +233,5 @@ $(document).ready(function () {
     } else {
         $("#" + pathname).addClass("active");
     }
-    
+
 });

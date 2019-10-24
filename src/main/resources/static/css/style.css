@@ -279,8 +279,6 @@ border-top: 5px solid #203939
 }
 
 ul#nav-menu li.active a {
-/*	background-color:#9cb805 !important;
-  color:#203939;*/
   color:#9cb805;
 }
 
@@ -371,43 +369,19 @@ border-color: #dee2e6 !important;
 .nav-item .nav-link{
   color: #203939;
 }
-/*.bg-primary .navbar-nav .active > .nav-link{
-  color: #9cb805 !important;
-}*/
+
 .navbar-nav>li a, .nav-brand{
   color:#FFFFFF;
   text-decoration:none;
 }
-.nav-item .nav-link.active, .nav-item .nav-link:hover {
+.nav-item .nav-link.active, .nav-item .nav-link:hover, .nav-brand.nav-link.active {
     color:#9CB805 !important;
     text-decoration: none;
 }
-/*
-.nav-tabs .nav-link{
-  background-color: #FFF;
-  color: #203939;
-}
-.active{
-  border-color: grey;
-  color:#9cb805;
-}*/
-
  .navbar-nav>li a:hover, .navbar-nav>li a:active, .nav-brand:hover, .nav-brand:active{
   color:#9cb805 !important;
   background-color: #203939 !important;
 }
-/*
-btn-outline-success:hover{
-  background-color: #9cb805 !important;
-}*/
-/*
-a:hover, a:active{
-  color:#9cb805 !important;
-}*/
-/*
-.active{
-  color:#9cb805 !important;
-}*/
 
 .bg-primary {
     background-color: #203939 !important;
@@ -415,14 +389,13 @@ a:hover, a:active{
 .header{
   padding-bottom: 50px;
 }
-
+/*
 .footer{
   padding-top: 50px;
 }
-
+*/
 .list-unstyled{
   display: flex;
-  /*flex-direction: row;*/
   align-items: center;
   justify-content: center;
 }
@@ -448,35 +421,11 @@ legend{
   margin-bottom: 30px;
   text-align: center;
 }
-/*.nav-tabs>li a{*/
-/*  .nav-tabs.nav-item.nav-link.active{
-    color: #9cb805 !important;
-    background-color: #fff !important;
-    border-color: #dee2e6 #dee2e6 #fff !important;
-}*/
-/*
-.nav-tabs>ul a.active, .nav-tabs>ul a.active:focus, .nav-tabs>ul a.active:hover, .nav-tabs .nav-item.open .nav-link, .nav-tabs .nav-item.open .nav-link:focus, .nav-tabs .nav-item.open .nav-link:hover {
-    color: #2C3E50;
+.alert-info {
+    background-color: #f7f7e7;
+    color: #203939;
 }
-.nav-tabs>ul a.active, .nav-tabs .nav-item.show .nav-link {
-    color: #7b8a8b;
-    background-color: #fff;
-    border-color: #dee2e6 #dee2e6 #fff;
-}
-.nav-tabs>ul a {
-    border: 1px solid transparent;
-        border-top-color: transparent;
-        border-right-color: transparent;
-        border-bottom-color: transparent;
-        border-left-color: transparent;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-}
-.nav-link {
-    display: block;
-    padding: 0.5rem 2rem;
-}
-*/
+
 /***** Responsive *****/
 #dlogin{
   padding-right: 10px;

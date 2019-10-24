@@ -1,92 +1,86 @@
 <!DOCTYPE html>
 <html>
-    <head>
+    <head> 
         <title th:text="#{app.name}"></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-              crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">  
     </head>
     <body class="main-bg">
-        <div class="container-fluid">
+        <div class="header">
             <div th:include="header.html"></div>
-            <div class="row page-content">
-                <div class="col-2"></div>
-                <div class="col-8 form-bg">
-                    <form action="#" th:action="@{/dataset/upload}" th:object="${dataset}" enctype="multipart/form-data" method="POST">
-                        <img class="header-logo" src="/images/databaseblue.svg" alt="databaseblue.svg" height="64" width="64">
-                        <h2 class="main-text-header text-center" th:text="#{add.dataset.title}"></h2>
-                        <div class="form-group">
-                            <label for="#{add.dataset.placeholder.name}" id="lname" name="lname" class="col-md-3 control-label" th:text="#{add.dataset.placeholder.name}" ></label>                            
-                            <input type="text" class="form-control" name="name" th:attr="placeholder = #{add.dataset.placeholder.name}" required="required" onchange="dynamicUrl(this.value)">
-                            <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:attr="placeholder =#{add.dataset.nameerror}"></label>
+        </div>
+        <div class="container">
+            <div id="bs-docs-section">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="bs-component">
+                            <form action="#" th:action="@{/dataset/upload}" th:object="${dataset}" enctype="multipart/form-data" method="POST">
+                                <fieldset>
+                                    <legend><h2 th:text="#{add.dataset.title}"></h2><hr/></legend>
+                                    <div class="form-group right">
+                                        <a class="btn btn-list" id="back">
+                                            <i class="fas fa-arrow-circle-left"></i>
+                                            <span th:text="#{back}"/>
+                                        </a>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="#{add.dataset.placeholder.name}" id="lname" name="lname" class="col-md-3 control-label" th:text="#{add.dataset.placeholder.name}" ></label>                            
+                                        <input type="text" class="form-control col-md-6" name="name" th:attr="placeholder = #{add.dataset.placeholder.name}" required="required" onchange="dynamicUrl(this.value)">
+                                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:attr="placeholder =#{add.dataset.nameerror}"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="#{add.dataset.placeholder.description}" id="ldescription" name="ldescription" class="col-md-3 control-label" th:text="#{add.dataset.placeholder.description}" ></label>
+                                        <textarea rows="5" class="form-control col-md-6" name="description" th:attr="placeholder = #{add.dataset.placeholder.description}" required="required"></textarea>
+                                        <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:attr="placeholder = #{add.dataset.placeholder.descriptionerror}"></label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="DOI" id="ldoi" name="ldoi" class="col-md-12 control-label left" th:text="DOI" ></label>                            
+                                        <input type="text" class="form-control col-md-6" name="doi" placeholder="DOI">
+                                        <label class="error-label" th:if="${#fields.hasErrors('doi')}" th:errors="*{doi}" th:attr="placeholder = #{add.dataset.placeholder.doierror}"></label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="#{add.dataset.license}" id="llicense" name="llicense" class="col-md-12 control-label left" th:text="#{add.dataset.license}" ></label>         
+                                        <select class="form-control col-md-6" id="selectLicense" name="license" required>
+                                            <option value="" disabled selected th:text="#{add.dataset.placeholder.license}"></option>
+                                            <div th:each="license : ${licenses}">
+                                                <option th:value="${license.name}" th:text="${license.name}"></option>
+                                            </div>
+                                        </select>
+                                        <label class="error-label" th:if="${#fields.hasErrors('license')}" th:errors="*{license}" th:attr="placeholder = #{add.dataset.placeholder.licenseerror}"></label>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <label th:text="#{add.dataset.visibility}" class="col-md-12 control-label left"></label>
+                                        <label class="radio-inline main-text"><input type="radio" name="access" value="private" required="required" checked th:text="#{add.dataset.private}"></label>&nbsp;
+                                        <label class="radio-inline main-text"><input type="radio" name="access" value="protected" required="required" th:text="#{add.dataset.protected}"></label>&nbsp;
+                                        <label class="radio-inline main-text"><input type="radio" name="access" value="public" required="required" th:text="#{add.dataset.public}"></label>&nbsp;
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label th:text="#{add.dataset.url}" class="col-md-12 control-label left"></label>
+                                        <input type="text" class="form-control col-md-6" id="url" name="url" th:attr="value = ${host}" readonly="readonly">
+                                    </div>
+                                    <div class="form-group">
+                                        <!--label for="#{add.dataset.zipfile}" id="ldataset-file" name="llicense" class="col-md-12 control-label left" th:text="#{add.dataset.zipfile}" ></label-->         
+
+                                        <label for="dataset-file" class="main-text" th:attr="placeholder = #{add.dataset.zipfile}"></label>
+                                        <input type="file" class="form-control-file col-md-6" name="dataset-file" id="dataset-file" required="required">
+                                    </div>
+                                    <hr/>
+                                    <div class="form-group right">
+                                        <input type="submit" class="btn btn-primary" th:attr="value= #{add.dataset.title}"><br>
+                                    </div>
+                                </fieldset>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="#{add.dataset.placeholder.description}" id="ldescription" name="ldescription" class="col-md-3 control-label" th:text="#{add.dataset.placeholder.description}" ></label>
-                            <textarea rows="5" class="form-control" name="description" th:attr="placeholder = #{add.dataset.placeholder.description}" required="required"></textarea>
-                            <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:attr="placeholder = #{add.dataset.placeholder.descriptionerror}"></label>
-                        </div>
-                        <div class="row text-center">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="DOI" id="ldoi" name="ldoi" class="col-md-12 control-label left" th:text="DOI" ></label>                            
-                                    <input type="text" class="form-control" name="doi" placeholder="DOI">
-                                    <label class="error-label" th:if="${#fields.hasErrors('doi')}" th:errors="*{doi}" th:attr="placeholder = #{add.dataset.placeholder.doierror}"></label>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="#{add.dataset.license}" id="llicense" name="llicense" class="col-md-12 control-label left" th:text="#{add.dataset.license}" ></label>         
-                                    <select class="form-control" id="selectLicense" name="license" required>
-                                        <option value="" disabled selected th:text="#{add.dataset.placeholder.license}"></option>
-                                        <div th:each="license : ${licenses}">
-                                            <option th:value="${license.name}" th:text="${license.name}"></option>
-                                        </div>
-                                    </select>
-                                    <label class="error-label" th:if="${#fields.hasErrors('license')}" th:errors="*{license}" th:attr="placeholder = #{add.dataset.placeholder.licenseerror}"></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row text-center">
-                            <div class="col-4"> 
-                                <label th:text="#{add.dataset.visibility}" class="col-md-12 control-label left"></label>
-                            </div>
-                            <div class="col-8">
-                                <label th:text="#{add.dataset.url}" class="col-md-12 control-label left"></label>
-                            </div>
-                        </div>
-                        <div class="row text-center">
-                            <div class="col-4">
-                                <label class="radio-inline main-text"><input type="radio" name="access" value="private" required="required" checked th:text="#{add.dataset.private}"></label>
-                                <label class="radio-inline main-text"><input type="radio" name="access" value="protected" required="required" th:text="#{add.dataset.protected}"></label>
-                                <label class="radio-inline main-text"><input type="radio" name="access" value="public" required="required" th:text="#{add.dataset.public}"></label>
-                            </div>
-                            <div class="col-8">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="url" name="url" th:attr="value = ${host}" readonly="readonly">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row files">
-                            <div class="col-3"></div>
-                            <div class="col-6 text-center">
-                                <div class="form-group">
-                                    <label for="dataset-file" class="main-text" th:attr="placeholder = #{add.dataset.zipfile}"></label>
-                                    <input type="file" class="form-control-file" name="dataset-file" id="dataset-file" required="required">
-                                </div>
-                            </div>
-                            <div class="col-3"> </div>
-                        </div>
-                        <div class="form-group submit-dataset">
-                            <input type="submit" class="submit-button form-control" th:attr="value= #{add.dataset.title}"><br>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-2">
+                    </div>
                 </div>
             </div>
-            <div th:include="footer.html"></div>
         </div>
+        <div th:include="footer.html"></div>
     </body>
-
 </html>

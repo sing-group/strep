@@ -31,235 +31,103 @@
                             <div class="row">
                                 <div class="col-6"></div>
                                 <div class="col-6 right">
-                                    
-                                        <div class="btn-group" th:if="${dataset.author == username and dataset.type != 'userdataset'}">
-                                            <a class="btn btn-list" th:href="@{'/dataset/download?id=' + ${dataset.name}}">
-                                                <i class="fas fa-file-download"></i>
-                                            </a>
-                                            <a class="btn btn-list" th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
-                                                <i class="fas fa-pen-square"></i>
-                                            </a>
-                                            <a class="btn btn-list" th:href="@{'/dataset/delete?id=' + ${dataset.name}}">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
-                                        </div>
-                                    
-                                        <div class="btn-group" th:if="${dataset.author == username and dataset.type == 'userdataset'}">
-                                            <a class="btn btn-list" th:title="#{detailed.dataset.download}" data-toggle="tooltip" th:href="@{'/dataset/download?id=' + ${dataset.name}}">
-                                                <i class="fas fa-file-download"></i>
-                                            </a>
-                                            <a class="btn btn-list" th:title="#{detailed.dataset.edit}" data-toggle="tooltip" th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
-                                                <i class="fas fa-pen-square"></i>
-                                            </a>
-                                            <a class="btn btn-list" th:title="#{detailed.dataset.delete}" data-toggle="tooltip" th:href="@{'/dataset/delete?id=' + ${dataset.name}}">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
-                                            <a class="btn btn-list" th:title="#{detailed.dataset.viewpreprocess}" data-toggle="tooltip" th:href="@{'/task/preprocess?id=' + ${dataset.name}}">
-                                                <i class="fas fa-tasks"></i>
-                                            </a>
-                                            <a class="btn btn-list" th:title="#{detailed.dataset.detail}" data-toggle="tooltip" th:href="@{'/task/detailed?task=' + ${dataset.task.id}}">
-                                                <i class="fas fa-info-circle"></i>
-                                            </a>
-                                        </div>
-                                    
-                                        <a class="btn btn-list" th:title="#{detailed.dataset.download}" data-toggle="tooltip" th:href="@{'/dataset/download?id=' + ${dataset.name}}"  th:if="${dataset.author!=username}">
-                                            <i class="fas fa-file-download"></i>
+                                    <div class="btn-group">
+                                        <a class="btn btn-list" id="back">
+                                            <i class="fas fa-arrow-circle-left"></i>
+                                            <span th:text="#{back}"/>
                                         </a>
                                     </div>
+                                    <div class="btn-group" th:if="${dataset.author == username and dataset.type != 'userdataset'}">
+                                        <a class="btn btn-list" th:href="@{'/dataset/download?id=' + ${dataset.name}}">
+                                            <i class="fas fa-file-download"></i>
+                                        </a>
+                                        <a class="btn btn-list" th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
+                                            <i class="fas fa-pen-square"></i>
+                                        </a>
+                                        <a class="btn btn-list" th:href="@{'/dataset/delete?id=' + ${dataset.name}}">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="btn-group" th:if="${dataset.author == username and dataset.type == 'userdataset'}">
+                                        <a class="btn btn-list" th:title="#{detailed.dataset.download}" data-toggle="tooltip" th:href="@{'/dataset/download?id=' + ${dataset.name}}">
+                                            <i class="fas fa-file-download"></i>
+                                        </a>
+                                        <a class="btn btn-list" th:title="#{detailed.dataset.edit}" data-toggle="tooltip" th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
+                                            <i class="fas fa-pen-square"></i>
+                                        </a>
+                                        <a class="btn btn-list" th:title="#{detailed.dataset.delete}" data-toggle="tooltip" th:href="@{'/dataset/delete?id=' + ${dataset.name}}">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                        <a class="btn btn-list" th:title="#{detailed.dataset.viewpreprocess}" data-toggle="tooltip" th:href="@{'/task/preprocess?id=' + ${dataset.name}}">
+                                            <i class="fas fa-tasks"></i>
+                                        </a>
+                                        <a class="btn btn-list" th:title="#{detailed.dataset.detail}" data-toggle="tooltip" th:href="@{'/task/detailed?task=' + ${dataset.task.id}}">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                    </div>
+
+                                    <a class="btn btn-list" th:title="#{detailed.dataset.download}" data-toggle="tooltip" th:href="@{'/dataset/download?id=' + ${dataset.name}}"  th:if="${dataset.author!=username}">
+                                        <i class="fas fa-file-download"></i>
+                                    </a>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-3 left"><p class="title-text" th:text="#{detailed.dataset.author}"> </p></div>
-                                <div class="col-9 left"><p class="normal-text" th:text="${dataset.author}"></p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.name}"></p></div>
-                                <div class="col-9 left"><p class="normal-text" th:text="${dataset.name}"></p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.description}"> </p></div>
-                                <div class="col-9 left"> <p class="normal-text" th:text="${dataset.description}"></p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.uploaddate}"> </p></div>
-                                <div class="col-9 left"> <p class="normal-text" th:text="${dataset.uploadDate}"></p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.license}"> </p></div>
-                                <div class="col-9 left"> <p class="normal-text" th:text="${dataset.license.name}"></p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 left">  <p class="title-text" th:text="#{detailed.dataset.spampercentage}"> </p></div>
-                                <div class="col-9 left">  <p class="normal-text" th:text="${dataset.spamPercentage}"></p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.hampercentage}"> </p></div>
-                                <div class="col-9 left">   <p class="normal-text" th:text="${dataset.hamPercentage}"></p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 left"><p class="title-text" th:text="#{detailed.dataset.access}"> </p></div>
-                                <div class="col-9 left"><p class="normal-text" th:text="${dataset.access}"></p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 left"><p class="title-text" th:text="#{detailed.dataset.languages}"> </p></div>
-                                <div class="col-9 left"><p class="normal-text" th:text="${languages}"></p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.datatypes}"> </p></div>
-                                <div class="col-9 left"><p class="normal-text" th:text="${datatypes}"></p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.type}"> </p></div>
-                                <div class="col-9 left"> <p class="normal-text" th:text="${dataset.type}"></p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.share}"> </p></div>
-                                <div class="col-9 left"> <p class="normal-text" th:text="${dataset.url}"></p></div>
-                            </div>
-
                         </div>
+                        <div class="row">
+                            <div class="col-3 left"><p class="title-text" th:text="#{detailed.dataset.author}"> </p></div>
+                            <div class="col-9 left"><p class="normal-text" th:text="${dataset.author}"></p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.name}"></p></div>
+                            <div class="col-9 left"><p class="normal-text" th:text="${dataset.name}"></p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.description}"> </p></div>
+                            <div class="col-9 left"> <p class="normal-text" th:text="${dataset.description}"></p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.uploaddate}"> </p></div>
+                            <div class="col-9 left"> <p class="normal-text" th:text="${dataset.uploadDate}"></p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.license}"> </p></div>
+                            <div class="col-9 left"> <p class="normal-text" th:text="${dataset.license.name}"></p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 left">  <p class="title-text" th:text="#{detailed.dataset.spampercentage}"> </p></div>
+                            <div class="col-9 left">  <p class="normal-text" th:text="${dataset.spamPercentage}"></p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.hampercentage}"> </p></div>
+                            <div class="col-9 left">   <p class="normal-text" th:text="${dataset.hamPercentage}"></p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 left"><p class="title-text" th:text="#{detailed.dataset.access}"> </p></div>
+                            <div class="col-9 left"><p class="normal-text" th:text="${dataset.access}"></p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 left"><p class="title-text" th:text="#{detailed.dataset.languages}"> </p></div>
+                            <div class="col-9 left"><p class="normal-text" th:text="${languages}"></p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.datatypes}"> </p></div>
+                            <div class="col-9 left"><p class="normal-text" th:text="${datatypes}"></p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.type}"> </p></div>
+                            <div class="col-9 left"> <p class="normal-text" th:text="${dataset.type}"></p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.share}"> </p></div>
+                            <div class="col-9 left"> <p class="normal-text" th:text="${dataset.url}"></p></div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-        <!--
-            <div class="col-1">
-
-            </div>
-
-            <div class="col-10">
-
-                <div class="jumbotron border border-info">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-6 text-center">
-                                    <p class="title-text" th:text="#{detailed.dataset.author}"> </p>
-                                    <p class="title-text" th:text="#{detailed.dataset.name}"> </p>
-                                    <p class="title-text" th:text="#{detailed.dataset.uploaddate}"> </p>
-                                    <p class="title-text" th:text="#{detailed.dataset.license}"> </p>
-                                    <p class="title-text" th:text="#{detailed.dataset.spampercentage}"> </p>
-                                    <p class="title-text" th:text="#{detailed.dataset.hampercentage}"> </p>
-                                </div>
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${dataset.author}"></p>
-                                    <p class="normal-text" th:text="${dataset.name}"></p>
-                                    <p class="normal-text" th:text="${dataset.uploadDate}"></p>
-                                    <p class="normal-text" th:text="${dataset.license.name}"></p>
-                                    <p class="normal-text" th:text="${dataset.spamPercentage}"></p>
-                                    <p class="normal-text" th:text="${dataset.hamPercentage}"></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-4 text-center">
-                            <p class="title-text" th:text="#{detailed.dataset.description}"> </p>
-                            <p class="normal-text" th:text="${dataset.description}"></p>
-                        </div>
-
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-6 text-center">
-                                    <p class="title-text" th:text="#{detailed.dataset.access}"> </p>
-                                    <p class="title-text" th:text="#{detailed.dataset.languages}"> </p>
-                                    <p class="title-text" th:text="#{detailed.dataset.datatypes}"> </p>
-                                    <p class="title-text" th:text="#{detailed.dataset.type}"> </p>
-                                    <p class="title-text" th:text="#{detailed.dataset.share}"> </p>
-                                </div>
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${dataset.access}"></p>
-                                    <p class="normal-text" th:text="${languages}"></p>
-                                    <p class="normal-text" th:text="${datatypes}"></p>
-                                    <p class="normal-text" th:text="${dataset.type}"></p>
-                                    <p class="normal-text" th:text="${dataset.url}"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-3">
-
-                        </div>
-
-                        <div class="col-6 text-center">
-
-                            <p class="title-text" th:text="#{detailed.dataset.actions}"></p>
-
-                            <div th:if="${dataset.author == username and dataset.type != 'userdataset'}">
-                                <div class="btn-group">
-                                    <a class="btn btn-small btn-success"
-                                        th:href="@{'/dataset/download?id=' + ${dataset.name}}">
-                                        <i class="fas fa-file-download"></i>
-                                    </a>
-                                    <a class="btn btn-small btn-secondary"
-                                        th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
-                                        <i class="fas fa-pen-square"></i>
-                                    </a>
-                                    <a class="btn btn-small btn-danger"
-                                        th:href="@{'/dataset/delete?id=' + ${dataset.name}}">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-
-                                </div>
-                            </div>
-
-                            <div th:if="${dataset.author == username and dataset.type == 'userdataset'}">
-                                <div class="btn-group">
-                                    <a class="btn btn-small btn-success"
-                                        th:href="@{'/dataset/download?id=' + ${dataset.name}}">
-                                        <i class="fas fa-file-download"></i>
-                                    </a>
-                                    <a class="btn btn-small btn-secondary"
-                                        th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
-                                        <i class="fas fa-pen-square"></i>
-                                    </a>
-                                    <a class="btn btn-small btn-danger"
-                                        th:href="@{'/dataset/delete?id=' + ${dataset.name}}">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                    <a class="btn btn-small btn-info"
-                                        th:href="@{'/task/preprocess?id=' + ${dataset.name}}">
-                                        <i class="fas fa-tasks"></i>
-                                    </a>
-                                    <a class="btn btn-small btn-info"
-                                        th:href="@{'/task/detailed?task=' + ${dataset.task.id}}">
-                                        <i class="fas fa-info-circle"></i>
-                                    </a>
-
-                                </div>
-                            </div>
-
-                            <div th:if="${dataset.author!=username}">
-                                <a class="btn btn-small btn-success"
-                                    th:href="@{'/dataset/download?id=' + ${dataset.name}}">
-                                    <i class="fas fa-file-download"></i>
-                                </a>
-                            </div>
-
-
-                        </div>
-
-                        <div class="col-3">
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="col-1">
-
-            </div>
-        </div>
-
-        <div th:include="footer.html">
-
-        </div-->
-
-        <div th:include="footer.html">
-    </body>
+    </div>
+    <div th:include="footer.html">
+</body>
 
 </html>
