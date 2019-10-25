@@ -207,11 +207,18 @@ function changeLocale(id)
     }
     location.replace(url);
 }
+
 $(document).ready(function () {
 
     $("#back").click(function() {
       window.location= document.referrer;
     });
+
+  /*  document.getElementById('back').addEventListener('click', function () {
+      alert(document.referrer);
+      window.location= document.referrer;
+    }, false);
+*/
     // It's been done like this to make it work properly in Chrome
     document.getElementById('locales').addEventListener('change', function () {
         changeLocale($('#locales').val());

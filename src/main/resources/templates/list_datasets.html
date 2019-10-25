@@ -136,7 +136,7 @@
                                         </ul>
                                     </td>
                                     <td>
-                                        <a class="btn btn-list btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
                                             <i class="fas fa-file-signature"></i>
                                             <span class="icon-caret-down"></span>
                                         </a>
@@ -145,16 +145,16 @@
                                         </ul>
                                     </td>
                                     <td>
-                                        <a class="btn btn-list btn-info" th:href="@{'/dataset/detailed?id=' + ${dataset.name}}">
+                                        <a class="btn btn-list " th:href="@{'/dataset/detailed?id=' + ${dataset.name}}">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-list btn-success" th:href="@{'/dataset/download?id=' + ${dataset.name}}">
+                                        <a class="btn btn-list" th:href="@{'/dataset/download?id=' + ${dataset.name}}">
                                             <i class="fas fa-file-download"></i>
                                         </a>
-                                        <a class="btn btn-list btn-secondary" th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
+                                        <a class="btn btn-list" th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
                                             <i class="fas fa-pen-square"></i>
                                         </a>
-                                        <a class="btn btn-list btn-danger" th:href="@{'/dataset/delete?id=' + ${dataset.name}}">
+                                        <a class="btn btn-list" th:href="@{'/dataset/delete?id=' + ${dataset.name}}" onclick="return confirm('[[#{list.datasets.table.suredelete}]]');">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
@@ -221,8 +221,7 @@
                                             <i class="fas fa-pen-square"></i>
                                         </a>
 
-                                        <a class="btn btn-list"
-                                           th:href="@{'/dataset/delete?id=' + ${dataset.name}}">
+                                        <a class="btn btn-list" th:href="@{'/dataset/delete?id=' + ${dataset.name}}" onclick="return confirm('[[#{list.datasets.table.suredelete}]]');">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>

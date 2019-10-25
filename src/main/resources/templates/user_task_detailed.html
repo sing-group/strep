@@ -2,325 +2,445 @@
 
 <html>
 
-<head>
+    <head>
+        <title th:text="#{app.name}"></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">   
+    </head>
 
-    <title th:text="#{app.name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-
-</head>
-
-<body>
-
-    <div class="container-fluid">
-
-        <div th:include="header.html">
-
+    <body class="main-bg">
+        <div class="header">
+            <div th:include="header.html"></div>
         </div>
-
-        <div class="row page-content">
-            <div class="col-1">
-
-            </div>
-
-            <div class="col-10 text-center">
-                <div class="jumbotron border border-info">
-                    <div class="row">
-
-                        <div class="col-4">
-                            <p class="title-text" th:text="#{creationtask.details}"> </p>
+        <div class="container">
+            <div id="bs-docs-section">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="bs-component">
                             <div class="row">
-
-                                <div class="col-6 text-center">
-                                    <p class="title-text" th:text="#{creationtask.name}"> </p>
-                                </div>
-
-
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${dataset.name}"></p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-6 text-center">
-                                    <p class="title-text" th:text="#{creationtask.spampercentage}"> </p>
-                                </div>
-
-
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${dataset.spamPercentage}"></p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-6 text-center">
-                                    <p class="title-text" th:text="#{creationtask.hampercentage}"> </p>
-                                </div>
-
-
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${dataset.hamPercentage}"></p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-6 text-center">
-                                    <p class="title-text" th:text="#{creationtask.datasets}"> </p>
-                                </div>
-
-
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${systemdatasets}"></p>
+                                <div class="col-12">
+                                    <h2 class="main-text left" th:text="#{detailed.task}"></h2>
+                                    <hr/>
                                 </div>
                             </div>
                         </div>
-
-
-                        <div class="col-4">
-                            <p class="title-text" th:text="#{creationtask.filters}"></p>
-
-                            <div class="row">
-
-                                <div class="col-6 text-center">
-                                    <p class="title-text" th:text="#{creationtask.licenses}"> </p>
-                                </div>
-
-
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${licenses}"></p>
-                                </div>
+                        <div class="row">
+                            <div class="col-12 right">
+                                <a class="btn btn-list" id="back">
+                                    <i class="fas fa-arrow-circle-left"></i>
+                                    <span th:text="#{back}"/>
+                                </a>
                             </div>
-
-                            <div class="row">
-
-                                <div class="col-6 text-center">
-                                    <p class="title-text" th:text="#{creationtask.languages}"> </p>
-                                </div>
-
-
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${languages}"></p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-6 text-center">
-                                    <p class="title-text" th:text="#{creationtask.datatypes}"> </p>
-                                </div>
-
-
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${datatypes}"></p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-6 text-center">
-                                    <p class="title-text" th:text="#{creationtask.messagesdate}"> </p>
-                                </div>
-
-
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${dates}"></p>
-                                </div>
-                            </div>
-
                         </div>
-
-                        <div class="col-4">
-                            <p class="title-text" th:text="#{creationtask.parameters}"></p>
-                            <div th:if="${task.spamMode}">
+                        <div class="card border-primary mb3">
+                            <div class="card-header" th:text="#{creationtask.details}"></div>
+                            <div class="card-body">
                                 <div class="row">
-                                    <div class="col-6">
-                                        <p class="title-text" th:text="#{creationtask.creationmode}"> </p>
-                                    </div>
-
-                                    <div class="col-6">
-                                        <p class="normal-text">Spam</p>
-                                    </div>
+                                    <div class="col-3 left"><p class="title-text" th:text="#{creationtask.name}"> </p></div>
+                                    <div class="col-9 left"><p class="normal-text" th:text="${dataset.name}"></p></div>
                                 </div>
-
                                 <div class="row">
-                                    <div class="col-6">
-                                        <p class="title-text" th:text="#{creationtask.filenumber}"> </p>
-                                    </div>
-
-                                    <div class="col-6">
-                                        <p class="normal-text" th:text="${task.limitNumberOfFiles}"></p>
-                                    </div>
+                                    <div class="col-3 left"><p class="title-text" th:text="#{creationtask.spampercentage}"> </p></div>
+                                    <div class="col-9 left"><p class="normal-text" th:text="${dataset.spamPercentage}"></p></div>
                                 </div>
-
                                 <div class="row">
-                                    <div class="col-6">
-                                        <p class="title-text" th:text="#{creationtask.spamlimit}"> </p>
-                                    </div>
-
-                                    <div class="col-6">
-                                        <p class="normal-text" th:text="${task.limitPercentageSpam}"></p>
-                                    </div>
+                                    <div class="col-3 left"><p class="title-text" th:text="#{creationtask.hampercentage}"> </p></div>
+                                    <div class="col-9 left"><p class="normal-text" th:text="${dataset.hamPercentage}"></p></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 left"><p class="title-text" th:text="#{creationtask.datasets}"> </p></div>
+                                    <div class="col-9 left"><p class="normal-text" th:text="${systemdatasets}"></p></div>
                                 </div>
                             </div>
 
-                            <div th:unless="${task.spamMode}">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <p class="title-text" th:text="#{creationtask.creationmode}"> </p>
-                                    </div>
-
-                                    <div class="col-6">
-                                        <p class="normal-text" th:text="#{creationtask.datatypes}"></p>
-                                    </div>
-                                </div>
-                                <div th:if="${task.limitSpamPercentageEml}!=0">
+                            <div class="card border-primary mb3">
+                                <div class="card-header" th:text="#{creationtask.filters}"></div>
+                                <div class="card-body">
                                     <div class="row">
-                                        <div class="col-6">
-                                            <p class="title-text" th:text="#{creationtask.spameml}"> </p>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <p class="normal-text" th:text="${task.limitSpamPercentageEml}"></p>
-                                        </div>
+                                        <div class="col-3 left"><p class="title-text" th:text="#{creationtask.licenses}"> </p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="${licenses}"></p></div>
                                     </div>
-                                </div>
-                                <div th:if="${task.limitHamPercentageEml}!=0">
                                     <div class="row">
-                                        <div class="col-6">
-                                            <p class="title-text" th:text="#{creationtask.hameml}"> </p>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <p class="normal-text" th:text="${task.limitHamPercentageEml}"></p>
-                                        </div>
+                                        <div class="col-3 left"><p class="title-text" th:text="#{creationtask.languages}"> </p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="${languages}"></p></div>
                                     </div>
-                                </div>
-
-                                <div th:if="${task.limitSpamPercentageTwtid}!=0">
                                     <div class="row">
-                                        <div class="col-6">
-                                            <p class="title-text" th:text="#{creationtask.spamtwtid}"> </p>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <p class="normal-text" th:text="${task.limitSpamPercentageTwtid}"></p>
-                                        </div>
+                                        <div class="col-3 left"><p class="title-text" th:text="#{creationtask.datatypes}"> </p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="${datatypes}"></p></div>
                                     </div>
-                                </div>
-
-                                <div th:if="${task.limitHamPercentageTwtid}!=0">
                                     <div class="row">
-                                        <div class="col-6">
-                                            <p class="title-text" th:text="#{creationtask.hamtwtid}"> </p>
+                                        <div class="col-3 left"><p class="title-text" th:text="#{creationtask.messagesdate}"> </p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="${dates}"></p></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card border-primary mb3">
+                                <div class="card-header" th:text="#{creationtask.parameters}"></div>
+                                <div class="card-body">
+                                    <div class="row" th:if="${task.spamMode}">
+                                        <div class="col-3 left"><p class="title-text" th:text="#{creationtask.creationmode}"> </p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="Spam"></p></div>
+                                    </div>
+                                    <div class="row" th:if="${task.spamMode}">
+                                        <div class="col-3 left"><p class="title-text" th:text="#{creationtask.filenumber}"> </p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="${task.limitNumberOfFiles}"></p></div>
+                                    </div>
+                                    <div class="row" th:if="${task.spamMode}">
+                                        <div class="col-3 left"><p class="title-text" th:text="#{creationtask.spamlimit}"> </p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="${task.limitPercentageSpam}"></p></div>
+                                    </div>
+                                    <div th:unless="${task.spamMode}">
+                                        <div class="row">
+                                            <div class="col-3 left"><p class="title-text" th:text="#{creationtask.creationmode}"> </p></div>
+                                            <div class="col-9 left"><p class="normal-text" th:text="${creationtask.datatypes}"></p></div>
                                         </div>
-
-                                        <div class="col-6">
-                                            <p class="normal-text" th:text="${task.limitHamPercentageTwtid}"></p>
+                                        <div class="row" th:if="${task.limitSpamPercentageEml}!=0">
+                                            <div class="col-3 left"><p class="title-text" th:text="#{creationtask.spameml}"> </p></div>
+                                            <div class="col-9 left"><p class="normal-text" th:text="${task.limitSpamPercentageEml}"></p></div>
+                                        </div>
+                                        <div class="row" th:if="${task.limitHamPercentageEml}!=0">
+                                            <div class="col-3 left"><p class="title-text" th:text="#{creationtask.hameml}"> </p></div>
+                                            <div class="col-9 left"><p class="normal-text" th:text="${task.limitHamPercentageEml}"></p></div>
+                                        </div>
+                                        <div class="row" th:if="${task.limitSpamPercentageTwtid}!=0">
+                                            <div class="col-3 left"><p class="title-text" th:text="#{creationtask.spamtwtid}"> </p></div>
+                                            <div class="col-9 left"><p class="normal-text" th:text="${task.limitSpamPercentageTwtid}"></p></div>
+                                        </div>
+                                        <div class="row" th:if="${task.limitHamPercentageTwtid}!=0">
+                                            <div class="col-3 left"><p class="title-text" th:text="#{creationtask.hamtwtid}"> </p></div>
+                                            <div class="col-9 left"><p class="normal-text" th:text="${task.limitHamPercentageTwtid}"></p></div>
+                                        </div>
+                                        <div class="row" th:if="${task.limitSpamPercentageTytb}!=0">
+                                            <div class="col-3 left"><p class="title-text" th:text="#{creationtask.spamtytb}"> </p></div>
+                                            <div class="col-9 left"><p class="normal-text" th:text="${task.limitSpamPercentageTytb}"></p></div>
+                                        </div>
+                                        <div class="row" th:if="${task.limitHamPercentageTytb}!=0">
+                                            <div class="col-3 left"><p class="title-text" th:text="#{creationtask.hamtytb}"> </p></div>
+                                            <div class="col-9 left"><p class="normal-text" th:text="${task.limitHamPercentageTytb}"></p></div>
+                                        </div>
+                                        <div class="row" th:if="${task.limitSpamPercentageTsms}!=0">
+                                            <div class="col-3 left"><p class="title-text" th:text="#{creationtask.spamtsms}"> </p></div>
+                                            <div class="col-9 left"><p class="normal-text" th:text="${task.limitSpamPercentageTsms}"></p></div>
+                                        </div>
+                                        <div class="row" th:if="${task.limitHamPercentageTsms}!=0">
+                                            <div class="col-3 left"><p class="title-text" th:text="#{creationtask.hamtsms}"> </p></div>
+                                            <div class="col-9 left"><p class="normal-text" th:text="${task.limitHamPercentageTsms}"></p></div>
+                                        </div>
+                                        <div class="row" th:if="${task.limitSpamPercentageWarc}!=0">
+                                            <div class="col-3 left"><p class="title-text" th:text="#{creationtask.spamwarc}"> </p></div>
+                                            <div class="col-9 left"><p class="normal-text" th:text="${task.limitSpamPercentageWarc}"></p></div>
+                                        </div>
+                                        <div class="row" th:if="${task.limitHamPercentageWarc}!=0">
+                                            <div class="col-3 left"><p class="title-text" th:text="#{creationtask.hamwarc}"> </p></div>
+                                            <div class="col-9 left"><p class="normal-text" th:text="${task.limitHamPercentageWarc}"></p></div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div th:if="${task.limitSpamPercentageTytb}!=0">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p class="title-text" th:text="#{creationtask.spamtytb}"> </p>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <p class="normal-text" th:text="${task.limitSpamPercentageTytb}"></p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div th:if="${task.limitHamPercentageTytb}!=0">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p class="title-text" th:text="#{creationtask.hamtytb}"> </p>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <p class="normal-text" th:text="${task.limitHamPercentageTytb}"></p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div th:if="${task.limitSpamPercentageTsms}!=0">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p class="title-text" th:text="#{creationtask.spamtsms}"> </p>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <p class="normal-text" th:text="${task.limitSpamPercentageTsms}"></p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div th:if="${task.limitHamPercentageTsms}!=0">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p class="title-text" th:text="#{creationtask.hamtsms}"> </p>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <p class="normal-text" th:text="${task.limitHamPercentageTsms}"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div th:if="${task.limitSpamPercentageWarc}!=0">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p class="title-text" th:text="#{creationtask.spamwarc}"> </p>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <p class="normal-text" th:text="${task.limitSpamPercentageWarc}"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div th:if="${task.limitHamPercentageWarc}!=0">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p class="title-text" th:text="#{creationtask.hamwarc}"> </p>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <p class="normal-text" th:text="${task.limitHamPercentageWarc}"></p>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div th:include="footer.html"></div>
+    </body>
+</html>
+<!--div class="jumbotron border border-info">
+    <div class="row">
 
-        <div class="col-1">
+        <div class="col-4">
+            <p class="title-text" th:text="#{creationtask.details}"> </p>
+            <div class="row">
+
+                <div class="col-6 text-center">
+                    <p class="title-text" th:text="#{creationtask.name}"> </p>
+                </div>
+
+
+
+                <div class="col-6 text-center">
+                    <p class="normal-text" th:text="${dataset.name}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-6 text-center">
+                    <p class="title-text" th:text="#{creationtask.spampercentage}"> </p>
+                </div>
+
+
+
+                <div class="col-6 text-center">
+                    <p class="normal-text" th:text="${dataset.spamPercentage}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-6 text-center">
+                    <p class="title-text" th:text="#{creationtask.hampercentage}"> </p>
+                </div>
+
+
+
+                <div class="col-6 text-center">
+                    <p class="normal-text" th:text="${dataset.hamPercentage}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-6 text-center">
+                    <p class="title-text" th:text="#{creationtask.datasets}"> </p>
+                </div>
+
+
+
+                <div class="col-6 text-center">
+                    <p class="normal-text" th:text="${systemdatasets}"></p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-4">
+            <p class="title-text" th:text="#{creationtask.filters}"></p>
+
+            <div class="row">
+
+                <div class="col-6 text-center">
+                    <p class="title-text" th:text="#{creationtask.licenses}"> </p>
+                </div>
+
+
+
+                <div class="col-6 text-center">
+                    <p class="normal-text" th:text="${licenses}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-6 text-center">
+                    <p class="title-text" th:text="#{creationtask.languages}"> </p>
+                </div>
+
+
+
+                <div class="col-6 text-center">
+                    <p class="normal-text" th:text="${languages}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-6 text-center">
+                    <p class="title-text" th:text="#{creationtask.datatypes}"> </p>
+                </div>
+
+
+
+                <div class="col-6 text-center">
+                    <p class="normal-text" th:text="${datatypes}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-6 text-center">
+                    <p class="title-text" th:text="#{creationtask.messagesdate}"> </p>
+                </div>
+
+
+
+                <div class="col-6 text-center">
+                    <p class="normal-text" th:text="${dates}"></p>
+                </div>
+            </div>
 
         </div>
-    </div>
 
-    <div th:include="footer.html">
+        <div class="col-4">
+            <p class="title-text" th:text="#{creationtask.parameters}"></p>
+            <div th:if="${task.spamMode}">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="title-text" th:text="#{creationtask.creationmode}"> </p>
+                    </div>
 
+                    <div class="col-6">
+                        <p class="normal-text">Spam</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <p class="title-text" th:text="#{creationtask.filenumber}"> </p>
+                    </div>
+
+                    <div class="col-6">
+                        <p class="normal-text" th:text="${task.limitNumberOfFiles}"></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <p class="title-text" th:text="#{creationtask.spamlimit}"> </p>
+                    </div>
+
+                    <div class="col-6">
+                        <p class="normal-text" th:text="${task.limitPercentageSpam}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div th:unless="${task.spamMode}">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="title-text" th:text="#{creationtask.creationmode}"> </p>
+                    </div>
+
+                    <div class="col-6">
+                        <p class="normal-text" th:text="#{creationtask.datatypes}"></p>
+                    </div>
+                </div>
+                <div th:if="${task.limitSpamPercentageEml}!=0">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="title-text" th:text="#{creationtask.spameml}"> </p>
+                        </div>
+
+                        <div class="col-6">
+                            <p class="normal-text" th:text="${task.limitSpamPercentageEml}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${task.limitHamPercentageEml}!=0">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="title-text" th:text="#{creationtask.hameml}"> </p>
+                        </div>
+
+                        <div class="col-6">
+                            <p class="normal-text" th:text="${task.limitHamPercentageEml}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${task.limitSpamPercentageTwtid}!=0">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="title-text" th:text="#{creationtask.spamtwtid}"> </p>
+                        </div>
+
+                        <div class="col-6">
+                            <p class="normal-text" th:text="${task.limitSpamPercentageTwtid}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${task.limitHamPercentageTwtid}!=0">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="title-text" th:text="#{creationtask.hamtwtid}"> </p>
+                        </div>
+
+                        <div class="col-6">
+                            <p class="normal-text" th:text="${task.limitHamPercentageTwtid}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${task.limitSpamPercentageTytb}!=0">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="title-text" th:text="#{creationtask.spamtytb}"> </p>
+                        </div>
+
+                        <div class="col-6">
+                            <p class="normal-text" th:text="${task.limitSpamPercentageTytb}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${task.limitHamPercentageTytb}!=0">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="title-text" th:text="#{creationtask.hamtytb}"> </p>
+                        </div>
+
+                        <div class="col-6">
+                            <p class="normal-text" th:text="${task.limitHamPercentageTytb}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${task.limitSpamPercentageTsms}!=0">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="title-text" th:text="#{creationtask.spamtsms}"> </p>
+                        </div>
+
+                        <div class="col-6">
+                            <p class="normal-text" th:text="${task.limitSpamPercentageTsms}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${task.limitHamPercentageTsms}!=0">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="title-text" th:text="#{creationtask.hamtsms}"> </p>
+                        </div>
+
+                        <div class="col-6">
+                            <p class="normal-text" th:text="${task.limitHamPercentageTsms}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${task.limitSpamPercentageWarc}!=0">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="title-text" th:text="#{creationtask.spamwarc}"> </p>
+                        </div>
+
+                        <div class="col-6">
+                            <p class="normal-text" th:text="${task.limitSpamPercentageWarc}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${task.limitHamPercentageWarc}!=0">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="title-text" th:text="#{creationtask.hamwarc}"> </p>
+                        </div>
+
+                        <div class="col-6">
+                            <p class="normal-text" th:text="${task.limitHamPercentageWarc}"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
+</div>
+</div>
+</div>
+
+<div class="col-1">
+
+</div>
+</div>
+
+<div th:include="footer.html">
+
+</div>
 
 </body>
 
-</html>
+</html>-->

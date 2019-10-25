@@ -30,14 +30,14 @@ h2{
 tr:nth-child(even){
   background-color: #FBFBFB; // #f2f3f4
 }
-.page-footer
+/*.page-footer
 {
     position: absolute;
     bottom:0;
     left:0;
     right:0;
     width: 100%;
-}
+}*/
 
 .form-bg,.main-div-bg
 {
@@ -47,9 +47,10 @@ tr:nth-child(even){
 	background-color: #ffffff;
 }
 
-.top-bg, .footer-bg
+.footer-bg
 {
-    background-color: #203939;
+    background-color: #203939 !important;
+    margin-top:5em;
 }
 
 .submit-button
@@ -426,6 +427,12 @@ legend{
     color: #203939;
 }
 
+.card-header{
+  background-color: #FFF;
+}
+.card{
+  border-color: #F0EEEE !important;
+}
 /***** Responsive *****/
 #dlogin{
   padding-right: 10px;
