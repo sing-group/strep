@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -147,9 +148,8 @@ public class Dataset
     /**
      * The task associated to this dataset
      */
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name="task_id", referencedColumnName="id")
-    private Task task;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Task> tasks;
 
     /**
      * The license of the dataset
@@ -173,8 +173,8 @@ public class Dataset
     /**
      * The preprocessing tasks of this dataset
      */
-    @OneToMany(mappedBy = "preprocessDataset", cascade = CascadeType.ALL)
-    private List<TaskCreateUPreprocessing> preprocessingTasks;
+    //@OneToMany(mappedBy = "preprocessDataset", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //private List<TaskCreateUPreprocessing> preprocessingTasks;
 
     /**
      * The default constructor
@@ -452,18 +452,18 @@ public class Dataset
      * Returns the task associated to this dataset
      * @return the task associated to this dataset
      */
-    public Task getTask()
+    public List<Task> getTasks()
     {
-        return task;
+        return tasks;
     }
 
     /**
      * Stablish the task associated to this dataset
      * @param task the task of the dataset
      */
-    public void setTask(Task task)
+    public void setTasks(List<Task> tasks)
     {
-        this.task = task;
+        this.tasks = tasks;
     }
 
     /**
@@ -519,22 +519,37 @@ public class Dataset
     {
         this.lastFileDate = lastFileDate;
     }
+    
+    /**
+     * Retrieve the creation task
+     * @return the creation task
+     */
+    public Task getCreationTask(){
+        Task toRet=null;
+        for (Task t:tasks){
+            if ( t instanceof TaskCreateSdataset || t instanceof TaskCreateUdataset){
+                toRet=t;
+                break;
+            }
+        }
+        return toRet;
+    }
 
     /**
      * Return the preprocessing tasks asociated to this dataset
      * @return the preprocessing tasks asociated to this dataset
      */
-    public List<TaskCreateUPreprocessing> getPreprocessingTasks()
-    {
-        return this.preprocessingTasks;
-    }
+    //public List<TaskCreateUPreprocessing> getPreprocessingTasks()
+    //{
+    //    return this.preprocessingTasks;
+    //}
 
     /**
      * Stablish the preprocessing tasks of this dataset
      * @param preprocessingTasks the preprocessing tasks of this dataset
      */
-    public void setPreprocessingTasks(List<TaskCreateUPreprocessing> preprocessingTasks)
-    {
-        this.preprocessingTasks = preprocessingTasks;
-    }
+    //public void setPreprocessingTasks(List<TaskCreateUPreprocessing> preprocessingTasks)
+    //{
+    //    this.preprocessingTasks = preprocessingTasks;
+    //}
 }

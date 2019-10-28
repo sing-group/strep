@@ -4,81 +4,71 @@
     <head>
         <title th:text="#{app.name}"></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-              integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-              integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">   
     </head>
 
     <body class="main-bg">
-        <div class="container-fluid">
-            <div th:include="header.html"> </div>
-            <div th:if="${message}">
-                <div class="row page-content">
-                    <div class="col-4"></div>
-                    <div class="col-4 message">
-                        <p class="main-text text-center" th:text="${message}"></p>
-                    </div>
-                    <div class="col-4"></div>
-                </div>
-            </div>
-
-            <main class="page-content pre-footer">
+        <div class="header">
+            <div th:include="header.html"></div>
+        </div>
+        <div class="container">
+            <div id="bs-docs-section">
                 <div class="row">
-                    <div class="col-2"></div>
-                    <div class="col-8 text-center form-bg">
-                        <div class="row">
-                            <div class="col-2"></div>
-                            <div class="col-8">
-                                <div class="row"></div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <p class="title-text left" th:text="#{createpreprocessing.title}"></p>
+                    <div class="col-12">
+                        <div id="bs-component">
+                            <form action="#" th:action="@{/task/preprocess/create}" th:object="${task}" enctype="multipart/form-data" method="POST">
+                                <fieldset>
+                                    <legend><h2 th:text="#{createpreprocessing.title}"></h2><hr/></legend>
+                                    <div class="form-group right">
+                                        <a class="btn btn-list" id="back">
+                                            <i class="fas fa-arrow-circle-left"></i>
+                                            <span th:text="#{back}"/>
+                                        </a>
                                     </div>
-                                    <div class="col-9">
-                                        <p class="normal-text left" th:text="${dataset.name}"></p>
-                                    </div>
-                                </div> 
-                                <form action="#" th:action="@{/task/preprocess/create}" th:object="${task}" 
-                                      enctype="multipart/form-data" method="POST">
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-12"></div>                                
-                                            <div class="col-12 left">
-                                                <input type="hidden" name="preprocessDataset" th:attr="value = ${dataset.name}">
-                                                <p class="title-text" th:text="#{createpreprocessing.description}"></p>
-                                                <textarea class="form-control" rows="10"
-                                                          th:attr="placeholder = #{createpreprocessing.placeholder.description}"
-                                                          name="description" required></textarea>
+                                            <div class="col-md-3">
+                                                <label class="title-text left" th:text="#{createpreprocessing.title}"></label>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-3 left">
-                                                <p class="title-text" th:text="#{createpreprocessing.pipeline}"></p>
-                                            </div>
-                                            <div class="col-9 left">
-                                                <input type="file" name="multipart" required>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-10"></div>
-                                            <div class="col-2 right" >
-                                                <input class="form-control submit-button center" type="submit" th:attr="value = #{createpreprocessing.submit.button}">
+                                            <div class="col-md-9">
+                                                <label class="normal-text left" th:text="${dataset.name}"></label>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="col-2"></div>
+                                    <div class="form-group">
+                                        <input type="hidden" name="preprocessDataset" th:attr="value = ${dataset.name}">
+                                        <label for="#{createpreprocessing.placeholder.description}" id="lname" name="lname" class="col-md-3 control-label" th:text="#{createpreprocessing.description}" ></label>  
+                                        <textarea class="form-control" rows="10" th:attr="placeholder = #{createpreprocessing.placeholder.description}" name="description" required></textarea>
+                                    </div>
+                                    <!--div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="custom-file">
+                                                <label th:text="#{createpreprocessing.pipeline}" class="col-md-12 control-label left"></label>
+                                                <input type="file" class="custom-file-input" name="multipart" id="inputGroupFile02">
+                                                <label class="custom-file-label" for="inputGroupFile02" th:text="#{createpreprocessing.choosefile}"></label>
+                                            </div>
+                                        </div>
+                                    </div-->
+                                    <div class="form-group">
+                                        <label for="dataset-file" class="main-text" th:text="#{createpreprocessing.pipeline}" ></label>
+                                        <input type="file" class="form-control-file col-md-6" name="multipart" id="dataset-file" required="required">
+                                    </div>
+                                    <hr/>
+                                    <div class="form-group right">
+                                        <input class="btn btn-primary" type="submit" th:attr="value = #{createpreprocessing.submit.button}">
+                                    </div>
+                                </fieldset>
+                            </form>
                         </div>
                     </div>
-                    <div class="col-2"></div>
                 </div>
-            </main>
-            <div th:include="footer.html"></div>
+            </div>
         </div>
+        <div th:include="footer.html"></div>
     </body>
-
 </html>

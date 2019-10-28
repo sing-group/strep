@@ -3,6 +3,7 @@ package org.strep.web;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 import org.strep.domain.Dataset;
@@ -57,7 +58,7 @@ public class TaskController {
 
     @GetMapping("/upload")
     public String listSystemTasks(Authentication authentication, Model model,
-            @RequestParam(name = "searchInput", required = false) String inputSearch, @RequestParam(name="state", required=false, defaultValue="waiting")String state) {
+            @RequestParam(name = "searchInput", required = false) String inputSearch, @RequestParam(name = "state", required = false, defaultValue = "waiting") String state) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -78,7 +79,7 @@ public class TaskController {
 
     @GetMapping("/create")
     public String listUserTasks(Authentication authentication, Model model,
-            @RequestParam(name = "searchInput", required = false) String inputSearch, @RequestParam(name="state", required=false, defaultValue="waiting")String state) {
+            @RequestParam(name = "searchInput", required = false) String inputSearch, @RequestParam(name = "state", required = false, defaultValue = "waiting") String state) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -87,7 +88,7 @@ public class TaskController {
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
         model.addAttribute("state", state);
-        
+
         if (inputSearch != null) {
             model.addAttribute("tasks", taskRepository.getUserTasksFiltered(username, inputSearch, state));
         } else {
@@ -139,28 +140,48 @@ public class TaskController {
 
     @GetMapping("/preprocess")
     public String listPreprocess(Authentication authentication, Model model,
-            @RequestParam(name = "id") String datasetName,
+            @RequestParam(name = "id", required = false) String datasetName,
             @RequestParam(name = "state", required = false, defaultValue = "waiting") String state) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
 
-        ArrayList<TaskCreateUPreprocessing> tasks = new ArrayList<TaskCreateUPreprocessing>();
-
+        ArrayList<TaskCreateUPreprocessing> tasks = new ArrayList<>();
+        ArrayList<Dataset> datasets=new ArrayList<>();
+        
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
 
-        Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
-
-        if (optDataset.isPresent() && optDataset.get().getAuthor().equals(username)) {
-            Dataset dataset = optDataset.get();
-            tasks = taskRepository.getPreprocessingTasks(dataset, state);
+        //Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
+        
+        if (datasetName!=null && !datasetName.equals("")) {
+            Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
+            
+            if (optDataset.isPresent() && optDataset.get().getAuthor().equals(username)) {
+                Dataset dataset = optDataset.get();
+                model.addAttribute("dataset",dataset);
+                tasks = taskRepository.getPreprocessingTasks(dataset, state);
+                model.addAttribute("state", state);
+                model.addAttribute("tasks", tasks);
+                //for (int i=0;i<tasks.size();i++) datasets.add(dataset);
+                //model.addAttribute("datasets", datasets);
+            } else {
+                return "redirect:/error";
+            }                    
+        } else {    
+            for (Dataset optDataset:datasetRepository.findAll())
+            {
+                Collection<TaskCreateUPreprocessing> newTasks=taskRepository.getPreprocessingTasks(optDataset, state);
+                tasks.addAll(newTasks);
+                for (int i=0;i<newTasks.size();i++)
+                {
+                    datasets.add(optDataset);
+                }
+            }
             model.addAttribute("state", state);
             model.addAttribute("tasks", tasks);
-            model.addAttribute("dataset", dataset);
-        } else {
-            return "redirect:/error";
+            model.addAttribute("datasets", datasets);
         }
 
         return "list_preprocessing_tasks";
@@ -245,18 +266,15 @@ public class TaskController {
     }
 
     @GetMapping("/preprocess/downloadcsv")
-    public ResponseEntity<InputStreamResource> downloadCsv(Authentication authentication, @RequestParam("id") Long taskId)
-    {
+    public ResponseEntity<InputStreamResource> downloadCsv(Authentication authentication, @RequestParam("id") Long taskId) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
         String fileName = taskService.downloadCsv(taskId, username);
 
-        if(fileName!=null)
-        {
+        if (fileName != null) {
             System.out.println(fileName);
-            try
-            {
+            try {
                 FileInputStream fis = new FileInputStream(new java.io.File(OUTPUT_PATH + fileName));
                 HttpHeaders httpHeaders = new HttpHeaders();
                 httpHeaders.set("content-type", "text/csv");
@@ -264,14 +282,10 @@ public class TaskController {
                 ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
                         new InputStreamResource(fis), httpHeaders, HttpStatus.CREATED);
                 return response;
-            }
-            catch(FileNotFoundException fnfException)
-            {
+            } catch (FileNotFoundException fnfException) {
                 return null;
             }
-        }
-        else
-        {
+        } else {
             return null;
         }
     }

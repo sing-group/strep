@@ -63,12 +63,10 @@
                                 </ul>
                             </td>
                             <td class="aligned-input">
-                                <a class="btn btn-list"
-                                   th:href="@{'/dataset/public/detailed?id=' + ${dataset.name}}">
+                                <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{public.table.details}" th:href="@{'/dataset/public/detailed?id=' + ${dataset.name}}">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a class="btn btn-list"
-                                   th:href="@{'/dataset/public/download?id=' + ${dataset.name}}">
+                                <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{public.table.download}" th:href="@{'/dataset/public/download?id=' + ${dataset.name}}">
                                     <i class="fas fa-file-download"></i>
                                 </a>
                             </td>

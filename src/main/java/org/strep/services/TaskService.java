@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set; 
@@ -33,6 +34,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.strep.domain.Task;
 
 /*
 * Service class to abstract to the controller of tasks jobs not related to the presentation
@@ -106,7 +108,9 @@ public class TaskService {
      */
     public void addNewSystemTask(Dataset dataset) {
         TaskCreateSdataset taskCreateSdataset = new TaskCreateSdataset(dataset, "waiting", null);
-        dataset.setTask(taskCreateSdataset);
+        //dataset.setTask(taskCreateSdataset);
+        if(dataset.getTasks()==null) dataset.setTasks(new ArrayList<Task>());
+        dataset.getTasks().add(taskCreateSdataset);
         taskRepository.save(taskCreateSdataset);
         datasetRepository.save(dataset);
     }
@@ -177,7 +181,9 @@ public class TaskService {
                         ,inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTytb, inputHamTytb, inputSpamTsms, inputHamTsms,
                         inputSpamTwtid,inputHamTwtid, spamMode);
                         Dataset toSaveDataset = datasetService.addUserDataset(dataset, username);
-                        toSaveDataset.setTask(taskCreateUdataset);
+                        //toSaveDataset.setTask(taskCreateUdataset);
+                        if (toSaveDataset.getTasks()==null) toSaveDataset.setTasks(new ArrayList<>());
+                        toSaveDataset.getTasks().add(taskCreateUdataset);
                         taskRepository.save(taskCreateUdataset);
                         datasetRepository.save(toSaveDataset);
 
@@ -189,7 +195,9 @@ public class TaskService {
                         ,inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTytb, inputHamTytb, inputSpamTsms, inputHamTsms,
                         inputSpamTwtid,inputHamTwtid, spamMode);
                         Dataset toSaveDataset = datasetService.addUserDataset(dataset, username);
-                        toSaveDataset.setTask(taskCreateUdataset);
+                        //toSaveDataset.setTask(taskCreateUdataset);
+                        if (toSaveDataset.getTasks()==null) toSaveDataset.setTasks(new ArrayList<>());
+                        toSaveDataset.getTasks().add(taskCreateUdataset);
                         taskRepository.save(taskCreateUdataset);
                         datasetRepository.save(toSaveDataset);
 
@@ -212,7 +220,7 @@ public class TaskService {
         String message = "";
         try
         {
-            TaskCreateUPreprocessing toCreateTask = new TaskCreateUPreprocessing(null, "waiting", null, task.getDescription(), pipeline.getBytes(), null, new Date(), dataset);
+            TaskCreateUPreprocessing toCreateTask = new TaskCreateUPreprocessing(dataset, "waiting", null, task.getDescription(), pipeline.getBytes(), null, new Date(), dataset);
             taskRepository.save(toCreateTask);
             message = messageSource.getMessage("createpreprocessing.sucessfull.message", Stream.of().toArray(String[]::new), locale);
         }

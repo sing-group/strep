@@ -2,11 +2,15 @@ package org.strep.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Pattern;
 
@@ -28,7 +32,8 @@ public class Task
     /**
      * The dataset associated to this task
      */
-    @OneToOne(mappedBy = "task")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name="dataset_name")
     private Dataset dataset;
 
     /**
@@ -43,6 +48,7 @@ public class Task
      * 
      */
     @Column(nullable = true)
+    @Lob
     private String message;
 
     /**
