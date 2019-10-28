@@ -10,3 +10,11 @@ mvnw.cmd
 configurations.ini
 babelfy.var.properties
 babelnet.var.properties
+
+config/
+
+exec.sh
+
+resources/jlt/
+
+resources/wnplusplus/
