@@ -40,8 +40,8 @@ public class User {
     /**
      * The password of the user
      */
-    @Size(min = 8, max = 30, message = "Password must have beetween 8 and 30 characters")
-    @Column(length = 100, columnDefinition = "VARCHAR(100)")
+    @Size(min = 8, max = 255, message = "Password must have beetween 8 and 255 characters")
+    @Column(length = 255, columnDefinition = "VARCHAR(255)")
     private String password;
 
     /**
