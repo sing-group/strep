@@ -120,7 +120,6 @@ public class Dataset
     @Column(length = 255, columnDefinition="VARCHAR(255)")
     private String url;
 
-
     /**
      * The files of the dataset
      */
@@ -169,12 +168,6 @@ public class Dataset
      */
     @Column(nullable = true)
     private Date lastFileDate;
-
-    /**
-     * The preprocessing tasks of this dataset
-     */
-    //@OneToMany(mappedBy = "preprocessDataset", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //private List<TaskCreateUPreprocessing> preprocessingTasks;
 
     /**
      * The default constructor

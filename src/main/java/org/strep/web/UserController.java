@@ -92,6 +92,7 @@ public class UserController {
 
                     User user2 = new User(id, email, hash.replaceAll("=", ""), user.getPassword(),
                             user.getName(), user.getSurname());
+                    
                     userService.saveUser(user2);
                 } catch (MessagingException e) {
                     return "redirect:/error";

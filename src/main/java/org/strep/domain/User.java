@@ -38,11 +38,19 @@ public class User {
     private String email;
 
     /**
-     * The password of the user
+     * The password of the user (decripted)
      */
-    @Size(min = 8, max = 255, message = "Password must have beetween 8 and 255 characters")
-    @Column(length = 255, columnDefinition = "VARCHAR(255)")
+    @Size(min = 8, max = 30, message = "Password must have beetween 8 and 30 characters")
+    @Transient 
     private String password;
+
+
+    
+    /**
+     * The encripted password (Will be saved in BBDD)
+     */
+    @Column(name="encrypted_password", length = 255, columnDefinition = "VARCHAR(255)")
+    private String encryptedPassword;
 
     /**
      * The name of the user
@@ -306,5 +314,21 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(username);
+    }
+
+    /**
+     * Returns the encripted password for the user
+     * @return the encripted password for the user 
+     */
+    public String getEncryptedPassword() {
+        return encryptedPassword;
+    }
+
+    /**
+     * Stablish the encripted password for the user
+     * @param encryptedPassword The encripted password for the user
+     */
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
     }
 }

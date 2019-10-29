@@ -52,7 +52,7 @@ public class LoginController
                 User userInDB = optional.get();
                 //System.out.println("Usuario presente");
 
-                if(bCryptPasswordEncoder.matches(user.getPassword(), userInDB.getPassword()))
+                if(bCryptPasswordEncoder.matches(user.getPassword(), userInDB.getEncryptedPassword()))
                 {
                     //System.out.println("Contraseña correcta");
                     return "redirect:/user/main";

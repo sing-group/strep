@@ -69,7 +69,7 @@ public class UserService
      */
     public void saveUser(User user)
     {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setConfirmedAccount(false);
 
         Optional<Permission> opt = permissionRepository.findById(new Long(1));

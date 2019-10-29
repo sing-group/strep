@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	protected void configure(AuthenticationManagerBuilder auth)throws Exception
 	{
 		auth.jdbcAuthentication()
-		.usersByUsernameQuery("select username, password, confirmed_account from user where username=?")
+		.usersByUsernameQuery("select username, encrypted_password, confirmed_account from user where username=?")
 		.authoritiesByUsernameQuery("select u.username, p.name from user u inner join user_perm ur on(u.username=ur.user) inner join permission p on(ur.perm_id=p.id) where username=?")
 		.dataSource(dataSource)
 		.passwordEncoder(bCryptPasswordEncoder);
@@ -71,5 +71,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
         web
                 .ignoring()
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
-}
+    }
 }
