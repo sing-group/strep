@@ -37,7 +37,8 @@
                                                                     <p class="main-text" th:text="${license.name}"></p>
                                                                 </div>
                                                                 <div class="col-2 form-group">
-                                                                    <input type="checkbox" class="form-control" name="license" th:attr="value = ${license.name}">
+                                                                    <!--Moncho: <input type="checkbox" class="form-control" name="license" th:attr="value = ${license.name}">-->
+                                                                    <input type="checkbox" class="form-control" name="licenses" th:attr="value = ${license.name}">
                                                                 </div>
                                                             </div>
                                                         </li>
@@ -190,6 +191,18 @@
                                                 <label class="error-label" th:if="${#fields.hasErrors('description')}"
                                                        th:errors="*{description}" th:attr="placeholder = #{add.dataset.placeholder.descriptionerror}"></label>
                                             </div>
+                                            <!--Moncho-->
+                                            <div class="form-group">
+                                                <label for="#{add.dataset.license}" id="llicense" name="llicense" class="col-md-12 control-label left" th:text="#{add.dataset.license}" ></label>
+                                                <select class="form-control col-md-6" id="selectLicense" name="license" required>
+                                                    <option value="" disabled selected th:text="#{add.dataset.placeholder.license}"></option>
+                                                    <div th:each="license : ${licenses}">
+                                                        <option th:value="${license.name}" th:text="${license.name}"></option>
+                                                    </div>
+                                                </select>
+                                                <label class="error-label" th:if="${#fields.hasErrors('license')}" th:errors="*{license}" th:attr="placeholder = #{add.dataset.placeholder.licenseerror}"></label>
+                                            </div>
+                                            <!--/Moncho-->
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="doi" placeholder="DOI">
                                                 <label class="error-label" th:if="${#fields.hasErrors('doi')}" th:errors="*{doi}" th:attr="placeholder = #{add.dataset.placeholder.doierror}"></label>

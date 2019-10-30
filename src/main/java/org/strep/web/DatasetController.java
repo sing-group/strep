@@ -728,7 +728,7 @@ public class DatasetController {
     public String setCreateDataset(Authentication authentication, Model model, @Valid Dataset dataset,
             BindingResult bindingResult, RedirectAttributes redirectAttributes,
             @RequestParam(name = "datasets", required = false) String[] datasets,
-            @RequestParam(name = "license", required = false) String[] licenses,
+            @RequestParam(name = "licenses", required = false) String[] licenses,
             @RequestParam(name = "language", required = false) String[] languages,
             @RequestParam(name = "datatype", required = false) String[] datatypes,
             @RequestParam(name = "inputSpamPercentage", required = false, defaultValue = "0") int inputSpamPercentage,
