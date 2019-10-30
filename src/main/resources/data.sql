@@ -1,98 +1,98 @@
--- Use this file to include the sentences to init the database (default values)
--- Insert here the default users, roles, etc.
+-- Use this file to include the sentences to init the database (default VALUES)
+-- INSERT here the default users, roles, etc.
 
---Default values for the table datasetType
-insert IGNORE into dataset_types(id, description, name) values(0, "Datasets uploaded to the platform by users with upload dataset permissions","systemdataset");
-insert IGNORE into dataset_types(id, description, name) values(1, "Datasets created by users mixing system datasets","userdataset");
+--Default VALUES for the table datasetType
+INSERT IGNORE INTO dataset_types(id, description, name) VALUES(0, "Datasets uploaded to the platform by users with upload dataset permissions","systemdataset");
+INSERT IGNORE INTO dataset_types(id, description, name) VALUES(1, "Datasets created by users mixing system datasets","userdataset");
  
 --Admin password 12admin34
-insert IGNORE into user(username, confirmed_account, email, hash, name, encrypted_password, photo, surname) values ('admin',b'1','onlinepreprocessor@gmail.com','system_default','System Administrator','$2a$10$3Gfa1K4Te7xeE4s8cvOhnecyN7v.iai4GXkhlrX1JXokt1PLHrKYi',null,'');
-insert IGNORE into permission(id, name, description) values (1,"canView", "Users can: view system datasets, view protected datasets and request permissions");
-insert IGNORE into permission(id, name, description) values (2,"canCreateCorpus", "Users can: view system datasets, view protected datasets, view and create their own datasets by mixing system datasets and requesting permissions");
-insert IGNORE into permission(id, name, description) values (3,"canUpload", "Users can: view system datasets, view protected datasets, view and create their own datasets by mixing those in the system. They can also upload system datasets and request permissions");
-insert IGNORE into permission(id, name, description) values (4,"canAdminister", "grant all privileges");
-insert IGNORE into user_perm(user,perm_id) values ("admin",4);
+INSERT IGNORE INTO user(username, confirmed_account, email, hash, name, encrypted_password, photo, surname, permission_id) VALUES ('admin',b'1','onlinepreprocessor@gmail.com','system_default','System Administrator','$2a$10$3Gfa1K4Te7xeE4s8cvOhnecyN7v.iai4GXkhlrX1JXokt1PLHrKYi',null,'',4);
+INSERT IGNORE INTO permission(id, name, description) VALUES (1,"canView", "Users can: view system datasets, view protected datasets and request permissions");
+INSERT IGNORE INTO permission(id, name, description) VALUES (2,"canCreateCorpus", "Users can: view system datasets, view protected datasets, view and create their own datasets by mixing system datasets and requesting permissions");
+INSERT IGNORE INTO permission(id, name, description) VALUES (3,"canUpload", "Users can: view system datasets, view protected datasets, view and create their own datasets by mixing those in the system. They can also upload system datasets and request permissions");
+INSERT IGNORE INTO permission(id, name, description) VALUES (4,"canAdminister", "grant all privileges");
+--INSERT IGNORE INTO user_perm(user,perm_id) VALUES ("admin",4);
 
 
-insert IGNORE into language(language) values("AF");
-insert IGNORE into language(language) values("AN");
-insert IGNORE into language(language) values("AR");
-insert IGNORE into language(language) values("AST");
-insert IGNORE into language(language) values("BE");
-insert IGNORE into language(language) values("BR");
-insert IGNORE into language(language) values("CA");
-insert IGNORE into language(language) values("BG");
-insert IGNORE into language(language) values("BN");
-insert IGNORE into language(language) values("CS");
-insert IGNORE into language(language) values("CY");
-insert IGNORE into language(language) values("DA");
-insert IGNORE into language(language) values("DE");
-insert IGNORE into language(language) values("EL");
-insert IGNORE into language(language) values("EN");
-insert IGNORE into language(language) values("ES");
-insert IGNORE into language(language) values("ET");
-insert IGNORE into language(language) values("EU");
-insert IGNORE into language(language) values("FA");
-insert IGNORE into language(language) values("FI");
-insert IGNORE into language(language) values("FR");
-insert IGNORE into language(language) values("GA");
-insert IGNORE into language(language) values("GL");
-insert IGNORE into language(language) values("GU");
-insert IGNORE into language(language) values("HE");
-insert IGNORE into language(language) values("HI");
-insert IGNORE into language(language) values("HR");
-insert IGNORE into language(language) values("HT");
-insert IGNORE into language(language) values("HU");
-insert IGNORE into language(language) values("ID");
-insert IGNORE into language(language) values("IS");
-insert IGNORE into language(language) values("IT");
-insert IGNORE into language(language) values("JA");
-insert IGNORE into language(language) values("KM");
-insert IGNORE into language(language) values("KN");
-insert IGNORE into language(language) values("KO");
-insert IGNORE into language(language) values("LT");
-insert IGNORE into language(language) values("LV");
-insert IGNORE into language(language) values("MK");
-insert IGNORE into language(language) values("ML");
-insert IGNORE into language(language) values("MR");
-insert IGNORE into language(language) values("MS");
-insert IGNORE into language(language) values("MT");
-insert IGNORE into language(language) values("NE");
-insert IGNORE into language(language) values("NL");
-insert IGNORE into language(language) values("NO");
-insert IGNORE into language(language) values("OC");
-insert IGNORE into language(language) values("PA");
-insert IGNORE into language(language) values("PL");
-insert IGNORE into language(language) values("PT");
-insert IGNORE into language(language) values("RO");
-insert IGNORE into language(language) values("RU");
-insert IGNORE into language(language) values("SK");
-insert IGNORE into language(language) values("SL");
-insert IGNORE into language(language) values("SO");
-insert IGNORE into language(language) values("SQ");
-insert IGNORE into language(language) values("SR");
-insert IGNORE into language(language) values("SV");
-insert IGNORE into language(language) values("SW");
-insert IGNORE into language(language) values("TA");
-insert IGNORE into language(language) values("TE");
-insert IGNORE into language(language) values("TH");
-insert IGNORE into language(language) values("TL");
-insert IGNORE into language(language) values("TR");
-insert IGNORE into language(language) values("UK");
-insert IGNORE into language(language) values("UR");
-insert IGNORE into language(language) values("VI");
-insert IGNORE into language(language) values("WA");
-insert IGNORE into language(language) values("YI");
-insert IGNORE into language(language) values("ZH-CN");
-insert IGNORE into language(language) values("ZH-TW");
+INSERT IGNORE INTO language(language) VALUES("AF");
+INSERT IGNORE INTO language(language) VALUES("AN");
+INSERT IGNORE INTO language(language) VALUES("AR");
+INSERT IGNORE INTO language(language) VALUES("AST");
+INSERT IGNORE INTO language(language) VALUES("BE");
+INSERT IGNORE INTO language(language) VALUES("BR");
+INSERT IGNORE INTO language(language) VALUES("CA");
+INSERT IGNORE INTO language(language) VALUES("BG");
+INSERT IGNORE INTO language(language) VALUES("BN");
+INSERT IGNORE INTO language(language) VALUES("CS");
+INSERT IGNORE INTO language(language) VALUES("CY");
+INSERT IGNORE INTO language(language) VALUES("DA");
+INSERT IGNORE INTO language(language) VALUES("DE");
+INSERT IGNORE INTO language(language) VALUES("EL");
+INSERT IGNORE INTO language(language) VALUES("EN");
+INSERT IGNORE INTO language(language) VALUES("ES");
+INSERT IGNORE INTO language(language) VALUES("ET");
+INSERT IGNORE INTO language(language) VALUES("EU");
+INSERT IGNORE INTO language(language) VALUES("FA");
+INSERT IGNORE INTO language(language) VALUES("FI");
+INSERT IGNORE INTO language(language) VALUES("FR");
+INSERT IGNORE INTO language(language) VALUES("GA");
+INSERT IGNORE INTO language(language) VALUES("GL");
+INSERT IGNORE INTO language(language) VALUES("GU");
+INSERT IGNORE INTO language(language) VALUES("HE");
+INSERT IGNORE INTO language(language) VALUES("HI");
+INSERT IGNORE INTO language(language) VALUES("HR");
+INSERT IGNORE INTO language(language) VALUES("HT");
+INSERT IGNORE INTO language(language) VALUES("HU");
+INSERT IGNORE INTO language(language) VALUES("ID");
+INSERT IGNORE INTO language(language) VALUES("IS");
+INSERT IGNORE INTO language(language) VALUES("IT");
+INSERT IGNORE INTO language(language) VALUES("JA");
+INSERT IGNORE INTO language(language) VALUES("KM");
+INSERT IGNORE INTO language(language) VALUES("KN");
+INSERT IGNORE INTO language(language) VALUES("KO");
+INSERT IGNORE INTO language(language) VALUES("LT");
+INSERT IGNORE INTO language(language) VALUES("LV");
+INSERT IGNORE INTO language(language) VALUES("MK");
+INSERT IGNORE INTO language(language) VALUES("ML");
+INSERT IGNORE INTO language(language) VALUES("MR");
+INSERT IGNORE INTO language(language) VALUES("MS");
+INSERT IGNORE INTO language(language) VALUES("MT");
+INSERT IGNORE INTO language(language) VALUES("NE");
+INSERT IGNORE INTO language(language) VALUES("NL");
+INSERT IGNORE INTO language(language) VALUES("NO");
+INSERT IGNORE INTO language(language) VALUES("OC");
+INSERT IGNORE INTO language(language) VALUES("PA");
+INSERT IGNORE INTO language(language) VALUES("PL");
+INSERT IGNORE INTO language(language) VALUES("PT");
+INSERT IGNORE INTO language(language) VALUES("RO");
+INSERT IGNORE INTO language(language) VALUES("RU");
+INSERT IGNORE INTO language(language) VALUES("SK");
+INSERT IGNORE INTO language(language) VALUES("SL");
+INSERT IGNORE INTO language(language) VALUES("SO");
+INSERT IGNORE INTO language(language) VALUES("SQ");
+INSERT IGNORE INTO language(language) VALUES("SR");
+INSERT IGNORE INTO language(language) VALUES("SV");
+INSERT IGNORE INTO language(language) VALUES("SW");
+INSERT IGNORE INTO language(language) VALUES("TA");
+INSERT IGNORE INTO language(language) VALUES("TE");
+INSERT IGNORE INTO language(language) VALUES("TH");
+INSERT IGNORE INTO language(language) VALUES("TL");
+INSERT IGNORE INTO language(language) VALUES("TR");
+INSERT IGNORE INTO language(language) VALUES("UK");
+INSERT IGNORE INTO language(language) VALUES("UR");
+INSERT IGNORE INTO language(language) VALUES("VI");
+INSERT IGNORE INTO language(language) VALUES("WA");
+INSERT IGNORE INTO language(language) VALUES("YI");
+INSERT IGNORE INTO language(language) VALUES("ZH-CN");
+INSERT IGNORE INTO language(language) VALUES("ZH-TW");
 
-insert IGNORE into datatype(dataType) values(".eml");
-insert IGNORE into datatype(dataType) values(".tytb");
-insert IGNORE into datatype(dataType) values(".tsms");
-insert IGNORE into datatype(dataType) values(".twtid");
-insert IGNORE into datatype(dataType) values(".warc");
+INSERT IGNORE INTO datatype(dataType) VALUES(".eml");
+INSERT IGNORE INTO datatype(dataType) VALUES(".tytb");
+INSERT IGNORE INTO datatype(dataType) VALUES(".tsms");
+INSERT IGNORE INTO datatype(dataType) VALUES(".twtid");
+INSERT IGNORE INTO datatype(dataType) VALUES(".warc");
 
-insert IGNORE into license(restriction_level, name, description, url) values(1, "Public domain", '
+INSERT IGNORE INTO license(restriction_level, name, description, url) VALUES(1, "Public domain", '
 Public Domain Mark
 
 No Known Copyright
@@ -107,7 +107,7 @@ A work may have limited or "hybrid" public domain status for several reasons.  S
 
 CC does not recommend the Public Domain Mark for works with limited, hybrid public domain status at this time, though we will be exploring means for doing so in 2014.', "https://creativecommons.org/share-your-work/public-domain/pdm/");
 
-insert IGNORE into license(restriction_level,name, description, url) values(2, "CC-0", 'Statement of Purpose
+INSERT IGNORE INTO license(restriction_level,name, description, url) VALUES(2, "CC-0", 'Statement of Purpose
 
 The laws of most jurisdictions throughout the world automatically confer exclusive Copyright and Related Rights (defined below) upon the creator and subsequent owner(s) (each and all, an "owner") of an original work of authorship and/or a database (each, a "Work").
 
@@ -127,7 +127,7 @@ For these and/or other purposes and motivations, and without any expectation of 
 
 2. Waiver. To the greatest extent permitted by, but not in contravention of, applicable law, Affirmer hereby overtly, fully, permanently, irrevocably and unconditionally waives, abandons, and surrenders all of Affirmer`s Copyright and Related Rights and associated claims and causes of action, whether now known or unknown (including existing as well as future claims and causes of action), in the Work (i) in all territories worldwide, (ii) for the maximum duration provided by applicable law or treaty (including future time extensions), (iii) in any current or future medium and for any number of copies, and (iv) for any purpose whatsoever, including without limitation commercial, advertising or promotional purposes (the "Waiver"). Affirmer makes the Waiver for the benefit of each member of the public at large and to the detriment of Affirmer`s heirs and successors, fully intending that such Waiver shall not be subject to revocation, rescission, cancellation, termination, or any other legal or equitable action to disrupt the quiet enjoyment of the Work by the public as contemplated by Affirmer`s express Statement of Purpose.
 
-3. Public License Fallback. Should any part of the Waiver for any reason be judged legally invalid or ineffective under applicable law, then the Waiver shall be preserved to the maximum extent permitted taking into account Affirmer`s express Statement of Purpose. In addition, to the extent the Waiver is so judged Affirmer hereby grants to each affected person a royalty-free, non transferable, non sublicensable, non exclusive, irrevocable and unconditional license to exercise Affirmer`s Copyright and Related Rights in the Work (i) in all territories worldwide, (ii) for the maximum duration provided by applicable law or treaty (including future time extensions), (iii) in any current or future medium and for any number of copies, and (iv) for any purpose whatsoever, including without limitation commercial, advertising or promotional purposes (the "License"). The License shall be deemed effective as of the date CC0 was applied by Affirmer to the Work. Should any part of the License for any reason be judged legally invalid or ineffective under applicable law, such partial invalidity or ineffectiveness shall not invalidate the remainder of the License, and in such case Affirmer hereby affirms that he or she will not (i) exercise any of his or her remaining Copyright and Related Rights in the Work or (ii) assert any associated claims and causes of action with respect to the Work, in either case contrary to Affirmer`s express Statement of Purpose.
+3. Public License Fallback. Should any part of the Waiver for any reason be judged legally invalid or ineffective under applicable law, then the Waiver shall be preserved to the maximum extent permitted taking INTO account Affirmer`s express Statement of Purpose. In addition, to the extent the Waiver is so judged Affirmer hereby grants to each affected person a royalty-free, non transferable, non sublicensable, non exclusive, irrevocable and unconditional license to exercise Affirmer`s Copyright and Related Rights in the Work (i) in all territories worldwide, (ii) for the maximum duration provided by applicable law or treaty (including future time extensions), (iii) in any current or future medium and for any number of copies, and (iv) for any purpose whatsoever, including without limitation commercial, advertising or promotional purposes (the "License"). The License shall be deemed effective as of the date CC0 was applied by Affirmer to the Work. Should any part of the License for any reason be judged legally invalid or ineffective under applicable law, such partial invalidity or ineffectiveness shall not invalidate the remainder of the License, and in such case Affirmer hereby affirms that he or she will not (i) exercise any of his or her remaining Copyright and Related Rights in the Work or (ii) assert any associated claims and causes of action with respect to the Work, in either case contrary to Affirmer`s express Statement of Purpose.
 
 4. Limitations and Disclaimers.
 
@@ -137,7 +137,7 @@ For these and/or other purposes and motivations, and without any expectation of 
     Affirmer understands and acknowledges that Creative Commons is not a party to this document and has no duty or obligation with respect to this CC0 or use of the Work.',"https://creativecommons.org/publicdomain/zero/1.0/legalcode" 
 );
 
-insert IGNORE into license(restriction_level,name, description, url) values(3, 'PDDL', 'ODC Public Domain Dedication and Licence (PDDL)
+INSERT IGNORE INTO license(restriction_level,name, description, url) VALUES(3, 'PDDL', 'ODC Public Domain Dedication and Licence (PDDL)
 Disclaimer
 
 PLEASE READ:
@@ -166,7 +166,7 @@ The position of the dedicator of the work
 
 Copyright law, as with most other law under the banner of "intellectual property", is inherently national law. This means that there exists several differences in how copyright and other IP rights can be relinquished, waived or licensed in the many legal jurisdictions of the world. This is despite much harmonisation of minimum levels of protection. The internet and other communication technologies span these many disparate legal jurisdictions and thus pose special difficulties for a document relinquishing and waiving intellectual property rights, including copyright and database rights, for use by the global community. Because of this feature of intellectual property law, this document first relinquishes the rights and waives the relevant rights and claims. It then goes on to license these same rights for jurisdictions or areas of law that may make it difficult to relinquish or waive rights or claims.
 
-The purpose of this document is to enable rightsholders to place their work into the public domain. Unlike licences for free and open source software, free cultural works, or open content licences, rightsholders will not be able to "dual license" their work by releasing the same work under different licences. This is because they have allowed anyone to use the work in whatever way they choose. Rightsholders therefore can’t re-license it under copyright or database rights on different terms because they have nothing left to license. Doing so creates truly accessible data to build rich applications and advance the progress of science and the arts.
+The purpose of this document is to enable rightsholders to place their work INTO the public domain. Unlike licences for free and open source software, free cultural works, or open content licences, rightsholders will not be able to "dual license" their work by releasing the same work under different licences. This is because they have allowed anyone to use the work in whatever way they choose. Rightsholders therefore can’t re-license it under copyright or database rights on different terms because they have nothing left to license. Doing so creates truly accessible data to build rich applications and advance the progress of science and the arts.
 
 This document can cover either or both of the database and its contents (the data). Because databases can have a wide variety of content - not just factual data - rightsholders should use the Open Data Commons - Public Domain Dedication & Licence for an entire database and its contents only if everything can be placed under the terms of this document. Because even factual data can sometimes have intellectual property rights, rightsholders should use this licence to cover both the database and its factual data when making material available under this document; even if it is likely that the data would not be covered by copyright or database rights.
 
@@ -184,7 +184,7 @@ The Rightsholder (the Person holding rights or claims over the Work) agrees as f
 
 "Copyright" - Includes rights under copyright and under neighbouring rights and similarly related sets of rights under the law of the relevant jurisdiction under Section 6.4.
 
-"Data" - The contents of the Database, which includes the information, independent works, or other material collected into the Database offered under the terms of this Document.
+"Data" - The contents of the Database, which includes the information, independent works, or other material collected INTO the Database offered under the terms of this Document.
 
 "Database" - A collection of Data arranged in a systematic or methodical way and individually accessible by electronic or other means offered under the terms of this Document.
 
@@ -291,7 +291,7 @@ Part III: General provisions
 6.4 This Document takes effect in the relevant jurisdiction in which the Document terms are sought to be enforced. If the rights waived or granted under applicable law in the relevant jurisdiction includes additional rights not waived or granted under this Document, these additional rights are included in this Document in order to meet the intent of this Document.
 ', 'https://www.opendatacommons.org/licenses/pddl/1.0/');
 
-insert IGNORE into license(restriction_level,name, description, url) values(4,'CC-BY', 'Creative Commons Attribution 4.0 International Public License
+INSERT IGNORE INTO license(restriction_level,name, description, url) VALUES(4,'CC-BY', 'Creative Commons Attribution 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -388,7 +388,7 @@ Section 8 - Interpretation.
     Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.
 ', 'https://creativecommons.org/licenses/by/4.0/legalcode' );
 
-insert IGNORE into license(restriction_level,name, description, url) values(5, 'CDLA-Permissive-1.0', '
+INSERT IGNORE INTO license(restriction_level,name, description, url) VALUES(5, 'CDLA-Permissive-1.0', '
 
 Community Data License Agreement - Permissive - Version 1.0
 
@@ -477,7 +477,7 @@ Section 7.  Miscellaneous
 7.5 The Community Data License Agreement workgroup under The Linux Foundation is the steward of this Agreement ("Steward").  No one other than the Steward has the right to modify or publish new versions of this Agreement.  Each version will be given a distinguishing version number.  You may Use and Publish Data Received hereunder under the terms of the version of the Agreement under which You originally Received the Data, or under the terms of any subsequent version published by the Steward.
 ', 'https://cdla.io/permissive-1-0/');
 
-insert IGNORE into license(restriction_level,name, description, url) values(6,'ODC-BY', 'ODC Attribution License (ODC-By)
+INSERT IGNORE INTO license(restriction_level,name, description, url) VALUES(6,'ODC-BY', 'ODC Attribution License (ODC-By)
 Preamble
 
 The Open Data Commons Attribution License is a license agreement
@@ -508,7 +508,7 @@ agree as follows:
 
 "Collective Database" - Means this Database in unmodified form as part
 of a collection of independent databases in themselves that together are
-assembled into a collective whole. A work that constitutes a Collective
+assembled INTO a collective whole. A work that constitutes a Collective
 Database will not be considered a Derivative Database.
 
 "Convey" - As a verb, means Using the Database, a Derivative Database,
@@ -519,7 +519,7 @@ computer network, or creating and Using a Produced Work, where no
 transfer of a copy of the Database or a Derivative Database occurs.
 
 "Contents" - The contents of this Database, which includes the
-information, independent works, or other material collected into the
+information, independent works, or other material collected INTO the
 Database. For example, the contents of the Database could be factual
 data or works such as images, audiovisual material, text, or sounds.
 
@@ -893,7 +893,7 @@ jurisdiction includes additional rights not granted under this License,
 these additional rights are granted in this License in order to meet the
 terms of this License.', 'https://opendatacommons.org/licenses/by/1.0/index.html');
 
-insert IGNORE into license(restriction_level,name, description, url) values(7, 'CC-BY-SA', "Creative Commons Attribution-ShareAlike 4.0 International Public License
+INSERT IGNORE INTO license(restriction_level,name, description, url) VALUES(7, 'CC-BY-SA', "Creative Commons Attribution-ShareAlike 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-ShareAlike 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -998,7 +998,7 @@ Section 8 - Interpretation.
     Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.
 ", 'https://creativecommons.org/licenses/by-sa/4.0/legalcode');
 
-insert IGNORE into license(restriction_level,name, description, url) values(8, 'CDLA-Sharing-1.0', '
+INSERT IGNORE INTO license(restriction_level,name, description, url) VALUES(8, 'CDLA-Sharing-1.0', '
 
 Community Data License Agreement - Sharing - Version 1.0
 
@@ -1092,7 +1092,7 @@ Section 7.  Miscellaneous
 ', 'https://cdla.io/sharing-1-0/');
 
 
-insert IGNORE into license(restriction_level,name, description, url) values(9, 'ODbL', 'ODC Open Database License (ODbL)
+INSERT IGNORE INTO license(restriction_level,name, description, url) VALUES(9, 'ODbL', 'ODC Open Database License (ODbL)
 Preamble
 
 The Open Database License (ODbL) is a license agreement intended to
@@ -1132,7 +1132,7 @@ agree as follows:
 
 "Collective Database" - Means this Database in unmodified form as part
 of a collection of independent databases in themselves that together are
-assembled into a collective whole. A work that constitutes a Collective
+assembled INTO a collective whole. A work that constitutes a Collective
 Database will not be considered a Derivative Database.
 
 "Convey" - As a verb, means Using the Database, a Derivative Database,
@@ -1142,7 +1142,7 @@ Database. Conveying does not include interaction with a user through a
 computer network, or creating and Using a Produced Work, where no
 transfer of a copy of the Database or a Derivative Database occurs.
 "Contents" - The contents of this Database, which includes the
-information, independent works, or other material collected into the
+information, independent works, or other material collected INTO the
 Database. For example, the contents of the Database could be factual
 data or works such as images, audiovisual material, text, or sounds.
 
@@ -1383,7 +1383,7 @@ If You license the Derivative Database under one of the licenses
 mentioned in (iii), You must comply with the terms of that license.
 
       b. For the avoidance of doubt, Extraction or Re-utilisation of the
-whole or a Substantial part of the Contents into a new database is a
+whole or a Substantial part of the Contents INTO a new database is a
 Derivative Database and must comply with Section 4.4.
 
       c. Derivative Databases and Produced Works. A Derivative Database is
@@ -1619,7 +1619,7 @@ jurisdiction includes additional rights not granted under this License,
 these additional rights are granted in this License in order to meet the
 terms of this License.', 'https://opendatacommons.org/licenses/odbl/1.0/index.html');
 
-insert IGNORE into license(restriction_level,name, description, url) values(10, 'CC BY-NC', "Creative Commons Attribution-NonCommercial 4.0 International Public License
+INSERT IGNORE INTO license(restriction_level,name, description, url) VALUES(10, 'CC BY-NC', "Creative Commons Attribution-NonCommercial 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -1718,7 +1718,7 @@ Section 8 - Interpretation.
 ", "https://creativecommons.org/licenses/by-nc/4.0/legalcode");
 
 
-insert IGNORE into license(restriction_level,name, description, url) values(11, 'CC BY-ND','Creative Commons Attribution-NoDerivatives 4.0 International Public License
+INSERT IGNORE INTO license(restriction_level,name, description, url) VALUES(11, 'CC BY-ND','Creative Commons Attribution-NoDerivatives 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NoDerivatives 4.0 International Public License ("Public License"). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -1814,7 +1814,7 @@ Section 8 - Interpretation.
     Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.
 ', 'https://creativecommons.org/licenses/by-nd/4.0/legalcode');
 
-insert IGNORE into license(restriction_level,name, description, url) values(12,'CC BY-NC-SA',"Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License
+INSERT IGNORE INTO license(restriction_level,name, description, url) VALUES(12,'CC BY-NC-SA',"Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -1920,7 +1920,7 @@ Section 8 - Interpretation.
     Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.
 ",'https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode');
 
-insert IGNORE into license(restriction_level,name, description, url) values(13, "CC BY-NC-ND", "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License
+INSERT IGNORE INTO license(restriction_level,name, description, url) VALUES(13, "CC BY-NC-ND", "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License
 
 By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License (Public License). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
 
@@ -2018,7 +2018,7 @@ Section 8 - Interpretation.
 ","https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode" );
 
 
-insert IGNORE into license(restriction_level,name, description, url) values(14, 'TREC License', 'Agreement for use of the
+INSERT IGNORE INTO license(restriction_level,name, description, url) VALUES(14, 'TREC License', 'Agreement for use of the
 2007 TREC Public Spam Corpus
 
 By clicking "I accept this agreement" below, in consideration of the right to download and use the information designated as the 2007 TREC Public Spam Corpus,

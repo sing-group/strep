@@ -13,11 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -76,9 +73,9 @@ public class UserService
 
         if(opt.isPresent())
         {
-        Permission permission = opt.get();
-        user.setPermissions(new HashSet<Permission>(Arrays.asList(permission)));
-        userRepository.save(user);
+            Permission permission = opt.get();
+            user.setPermission(permission);
+            userRepository.save(user);
         }
     }
 
@@ -89,21 +86,11 @@ public class UserService
      */
     public String getPermissionsByUsername(String username)
     {
-        ArrayList<BigInteger> permissions = permissionRepository.getUserPermissions(username);
-
-        Long maxId = new Long(Long.MIN_VALUE);
-
-        for(int i = 0; i<permissions.size(); i++)
-        {
-            if(maxId<permissions.get(i).longValue())
-            {
-                maxId = permissions.get(i).longValue();
-            }
+        try{
+            return convertPermIdToString(userRepository.findById(username).get().getPermission().getId());
+        }catch(NoSuchElementException e){
+            return convertPermIdToString(1L);
         }
-
-        String authority = convertPermIdToString(maxId);
-
-        return authority;
     }
 
     /**
@@ -121,17 +108,20 @@ public class UserService
         Long permissionLongId = new Long(permissionIntId);
 
         Optional<Permission> permissionOpt = permissionRepository.findById(permissionLongId);
-
-        if(permissionOpt.isPresent())
+        Optional<User> userOpt = userRepository.findById(username);
+        if(permissionOpt.isPresent() && userOpt.isPresent())
         {
             Permission permission = permissionOpt.get();
+            userOpt.get().setPermission(permission);
 
-            permissionRepository.deletePermissions(username);
-            for(int i = 1; i<=permission.getId().intValue();i++)
-            {
-                permissionRepository.addPermission(username, i);
-            }
+            //permissionRepository.deletePermissions(username);
+            //for(int i = 1; i<=permission.getId().intValue();i++)
+            //{
+            //    permissionRepository.addPermission(username, i);
+            //}
             message = messageSource.getMessage("edit.permission.sucess", Stream.of().toArray(String[]::new), locale);
+        }else{
+            message = messageSource.getMessage("edit.permission.fail", Stream.of().toArray(String[]::new), locale);
         }
 
         return message;
@@ -164,12 +154,12 @@ public class UserService
 
     /**
      * Auxiliar method to convert perm id to String
-     * @param maxId the id of the max permission of the user
+     * @param id the id of the max permission of the user
      * @return perm id converted to String
      */
-    private String convertPermIdToString(Long maxId)
+    private String convertPermIdToString(Long id)
     {
-        switch(maxId.intValue())
+        switch(id.intValue())
         {
             case 1:
             return "canView";

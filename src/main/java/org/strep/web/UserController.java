@@ -181,7 +181,7 @@ public class UserController {
         Optional<User> optUser = userRepository.findById(deleteUsername);
 
         if (optUser.isPresent()) {
-            permissionRepository.deletePermissions(optUser.get().getUsername());
+            //permissionRepository.deletePermissions(optUser.get().getUsername());
             userRepository.delete(optUser.get());
             message = "User deleted successfully";
         } else {

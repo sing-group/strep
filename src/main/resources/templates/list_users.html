@@ -69,22 +69,24 @@
                         </thead>
 
                         <tbody>
-                            <div th:each="user : ${users}">
+                            <tr th:each="user : ${users}">
                                 <td><img class="user-photo" th:src="@{'/user/image?username='+${user.username}}" alt="photo" height="32" width="32">
                                 </td>
+
                                 <td th:text="${user.username}"></td>
+                                <td th:text="${user.permission.name}"></td>
+                                <!--
                                 <td>
                                         <a class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"
                                                     href="#">
                                                     <i class="fas fa-key"></i>
                                                     <span class="icon-caret-down"></span>
                                                 </a>
-                                                <ul class="dropdown-menu">
                                                     <div th:each="permission : ${user.permissions}">
                                                         <li th:text="${permission.name}"></li>
                                                     </div>
                                                 </ul>
-                                </td>
+                                </td>-->
                                 <td>
                                     <a class="btn btn-small btn-info"
                                     th:href="@{/user/detailed(username = ${user.username},type=user)}">
@@ -97,7 +99,7 @@
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
-                            </div>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

@@ -33,8 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	protected void configure(AuthenticationManagerBuilder auth)throws Exception
 	{
 		auth.jdbcAuthentication()
-		.usersByUsernameQuery("select username, encrypted_password, confirmed_account from user where username=?")
-		.authoritiesByUsernameQuery("select u.username, p.name from user u inner join user_perm ur on(u.username=ur.user) inner join permission p on(ur.perm_id=p.id) where username=?")
+        .usersByUsernameQuery("SELECT username, encrypted_password, confirmed_account FROM user WHERE username=?")
+        .authoritiesByUsernameQuery("SELECT user.username,permission.name FROM user, permission WHERE permission.id <= user.permission_id AND user.username=?")
+		//.authoritiesByUsernameQuery("select u.username, p.name from user u inner join user_perm ur on(u.username=ur.user) inner join permission p on(ur.perm_id=p.id) where username=?")
 		.dataSource(dataSource)
 		.passwordEncoder(bCryptPasswordEncoder);
 	}

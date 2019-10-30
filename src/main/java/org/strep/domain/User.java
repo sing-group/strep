@@ -44,8 +44,6 @@ public class User {
     @Transient 
     private String password;
 
-
-    
     /**
      * The encripted password (Will be saved in BBDD)
      */
@@ -85,19 +83,19 @@ public class User {
     /**
      * The permissions of the user
      */
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_perm", joinColumns = @JoinColumn(name = "user", referencedColumnName = "username"),
-            inverseJoinColumns = @JoinColumn(name = "perm_id", referencedColumnName = "id"))
-    private Set<Permission> permissions;
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Permission permission;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    /**
+     * The permission requests
+     */
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<PermissionRequest> permissionRequests = new HashSet<PermissionRequest>();
 
     /**
      * The default constructor
      */
     protected User() {
-
     }
 
     /**
@@ -232,8 +230,8 @@ public class User {
      *
      * @return the permissions of the user
      */
-    public Set<Permission> getPermissions() {
-        return permissions;
+    public Permission getPermission() {
+        return permission;
     }
 
     /**
@@ -241,8 +239,8 @@ public class User {
      *
      * @param permissions the permissions of the user
      */
-    public void setPermissions(Set<Permission> permissions) {
-        this.permissions = permissions;
+    public void setPermission(Permission permission) {
+        this.permission = permission;
     }
 
     /**

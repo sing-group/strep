@@ -37,13 +37,13 @@ public class Permission
     /**
      * The users wich have the permission
      */
-    @ManyToMany(mappedBy="permissions")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<User> users;
 
     /**
      * The permission requests associated to this permission
      */
-    @OneToMany(mappedBy="permission", cascade=CascadeType.ALL,orphanRemoval = true)
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<PermissionRequest> permissionRequests = new HashSet<PermissionRequest>();
 
     /**

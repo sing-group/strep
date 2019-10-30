@@ -52,7 +52,6 @@ public class PermissionRequest implements Serializable
      */
     protected PermissionRequest()
     {
-
     }
 
     /**
