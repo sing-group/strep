@@ -1,114 +1,64 @@
 <!DOCTYPE HTML>
 <html>
-
-<head>
-    <title th:text="#{app.name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-
-<body class="main-bg">
-    <div class="container-fluid">
-        <div th:include="header.html">
-
+    <head>
+        <title th:text="#{app.name}"></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">   
+    </head>
+    <body class="main-bg">
+        <div class="header">
+            <div th:include="header.html"></div>
         </div>
-
-        <div th:if="${message}">
-            <div class="row page-content">
-                <div class="col-4">
-
-                </div>
-
-                <div class="col-4 message">
-                    <p class="main-text text-center" th:text="${message}"></p>
-                </div>
-
-                <div class="col-4">
-
-                </div>
+        <div class="container" >
+            <div class="alert alert-dismissible alert-info" th:if="${message}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p class=" main-text" th:text="${message}"></p>
             </div>
-        </div>
-
-        <div class="row page-content pre-footer">
-
-            <div class="col-2">
-
-            </div>
-
-            <div class="col-8 form-bg">
-                <img class="header-logo" src="/images/permissions.svg" alt="permissions.svg" height="64" width="64">
-                <h2 class="main-text-header text-center" th:text="#{list.permissionrequests.title}"></h2>
-
+            <div id="banner" class="page-header">
                 <div class="row">
-                    <div class="col-8">
-
+                    <div class="col-12">
+                        <h2><span th:text="#{list.permissionrequests.title}"/></h2>
                     </div>
-
-                    <div class="col-4">
-                        <form class="form-inline">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="searchInput"
-                                    th:attr="placeholder = #{list.permissionrequests.placeholder.search}">
-                                <input type="submit" class="form-control submit-button" th:attr="value = #{list.permissionrequests.search}">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="table-responsive text-center">
-                    <table class="table">
-                        <thead>
-                            <th scope="col" th:text="#{list.permissionrequests.username}"></th>
-                            <th scope="col" th:text="#{list.permissionrequests.permission}"></th>
-                            <th scope="col" th:text="#{list.permissionrequests.actions}"></th>
-                        </thead>
-
-                        <tbody>
-                            <div th:each="permissionRequest : ${permissionRequests}">
-                                <tr>
-                                <th scope="row" th:text="${permissionRequest.user.username}"></th>
-                                <td th:text="${permissionRequest.permission.name}"></td>
-                                <td>
-                                    <div class="btn-group">
-
-                                        <form action="/permission/accept" method="POST">
-                                            <input type="hidden" name="username" th:attr="value = ${permissionRequest.user.username}">
-                                            <input type="hidden" name="permission" th:attr="value = ${permissionRequest.permission.id}">
-                                            <button type="submit" class="btn btn-small btn-success">
-                                                <i class="fas fa-check"></i>
-                                            </button>
-                                        </form>
-
-                                        <form action="/permission/reject" method="POST"> 
-                                            <input type="hidden" name="username" th:attr="value = ${permissionRequest.user.username}">
-                                            <input type="hidden" name="permission" th:attr="value = ${permissionRequest.permission.id}">
-                                            <button type="submit" class="btn btn-small btn-danger">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </form>
-
-                                    </div>
-                                </td>
-                                </tr>
-                            </div>
-                        </tbody>
-                    </table>
                 </div>
             </div>
+            <form class="form-inline form-group">
+                <input type="text" class="form-control mr-sm-2" name="search" th:attr="placeholder = #{list.permissionrequests.placeholder.search}">
+                <input type="submit" class="source-button btn btn-primary btn-xs" th:attr="value = #{list.permissionrequests.search}">
+            </form>
+            <div class="tab-pane fade active show" >
+                <div class="alert alert-light" th:if="${permissionRequests.size()==0}" th:text="#{list.permissionrequests.norequests}"></div>
+                <table class="table table-hover margin20" th:if="${permissionRequests.size()!=0}">
+                    <thead>
+                    <th scope="col" th:text="#{list.permissionrequests.username}"></th>
+                    <th scope="col" th:text="#{list.permissionrequests.name}"></th>
+                    <th scope="col" th:text="#{list.permissionrequests.permission}"></th>
+                    <th scope="col" th:text="#{list.permissionrequests.actions}"></th>
+                    </thead>
+                    <tbody>
+                        <tr th:each="permissionRequest : ${permissionRequests}">
+                            <th scope="row" th:text="${permissionRequest.user.username}"></th>
+                            <th scope="row" th:text="${permissionRequest.user.name}"></th>
+                            <td th:text="${permissionRequest.permission.name}"></td>
+                            <td>
+                                <form action="/permission/accept" method="POST" id="permissionForm"> 
+                                    <input type="hidden" name="username" th:attr="value = ${permissionRequest.user.username}">
+                                    <input type="hidden" name="permission" th:attr="value = ${permissionRequest.permission.id}">
+                                    <button type="submit" class="btn btn-list" th:title="#{list.permissionrequests.accepted}">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button type="button" onclick="deniedRequest();" class="btn btn-list"  th:title="#{list.permissionrequests.denied}">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-        <div class="col-2">
-
-        </div>
-    </div>
-
-    <div th:include="footer.html"></div>
-    </div>
-
-</body>
-
+        <div th:include="footer.html"></div>
+    </body>
 </html>

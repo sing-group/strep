@@ -1,90 +1,66 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <title th:text="#{app.name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-
-<body class="main-bg">
-    <div class="container-fluid">
-
-        <div th:include="header.html">
-
+    <head>
+        <title th:text="#{app.name}"></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">   
+    </head>
+    <body class="main-bg">
+        <div class="header">
+            <div th:include="header.html"></div>
         </div>
-
-        <div class="row page-content pre-footer">
-            <div class="col-2">
-
-            </div>
-
-            <div class="col-8 form-bg">
-                <form action="#" th:action="@{/license/modify}" th:object="${license}" method="POST">
-                    <img class="header-logo" src="/images/key.svg" alt="key.svg" height="64" width="64">
-                    <h2 class="main-text-header text-center">Modify license</h2>
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="name" th:attr="value = ${licenseToModify.name}"
-                            required readonly />
-                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label>
-                        <textarea class="form-control" rows="50" cols="80" name="description" th:text="${description}"
-                            required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="url" th:attr="value = ${licenseToModify.url}"
-                            required />
-                        <label class="error-label" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></label>
-                    </div>
-                    <div class="row">
-                        <div class="col-2">
-
-                        </div>
-
-                        <div class="col-4">
-
-                            <div class="form-group">
-                                <input type="submit" class="submit-button form-control" value="Modify license"><br>
+        <div class="container">
+            <div id="bs-docs-section">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="bs-component">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2 class="main-text left" th:text="#{modify.license.title}"></h2>
+                                    <hr/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 right">
+                                    <a class="btn btn-list" id="back">
+                                        <i class="fas fa-arrow-circle-left"></i>
+                                        <span th:text="#{back}"/>
+                                    </a>
+                                </div>
                             </div>
 
-                        </div>
-                </form>
+                            <div class="card border-primary mb3">
+                                <div class="card-header" th:text="${license.name}"></div>
+                                <div class="card-body">
+                                    <form action="#" th:action="@{/license/modify}" th:object="${license}" method="POST">
+                                        <div class="form-group">
+                                            <input type="hidden" name="name" th:attr="value = ${licenseToModify.name}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label>
+                                            <textarea class="form-control" rows="50" cols="80" name="description" th:text="${description}" required></textarea>
+                                        </div>
 
-                <div class="col-4">
-                    <div th:if="${authority}==canAdminister">
-                        <div class="form-group">
-                            <form action="#" th:action="@{/license/delete}" method="POST">
-                                <input type="hidden" name="name" th:attr="value=${license.name}">
-                                <input type="submit" class="form-control reject-button" value="Delete license">
-                            </form>
+                                        <div class="form-group">
+                                            <input class="form-control" type="text" name="url" th:attr="value = ${licenseToModify.url}" required />
+                                            <label class="error-label" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></label>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 right">
+                                                <input type="submit" class="btn btn-primary" value="Modify license">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                </div>
-
-                <div class="col-2">
-
                 </div>
             </div>
         </div>
-
-        <div class="col-2">
-
-        </div>
-    </div>
-
-    <div th:include="footer.html">
-
-    </div>
-
-
-    </div>
-</body>
-
+        <div th:include="footer.html"></div>
+    </body>
 </html>

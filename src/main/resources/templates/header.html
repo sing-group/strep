@@ -23,7 +23,6 @@
                     <input class="form-control mr-sm-2" type="password" id="password" name="password" th:attr="placeholder=#{header.password}">
                     <label class="error-label" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:text="#{header.passworderror}"></label>
                     <button class="btn btn-success my-2 my-sm-0" type="submit" value="Login">Login</button>
-
                 </form>
             </div>
             <select id="locales" class="form-control">

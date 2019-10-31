@@ -22,12 +22,12 @@
             <div id="banner" class="page-header">
                 <div class="row">
                     <div class="col-12">
-                        <h2><span th:text="#{list.preprocessing.title} "/>&nbsp;<span th:if="${dataset!=null}" th:text="@{${dataset.name}} "/></h2>
+                        <h2><span th:text="#{list.preprocessing.title} "/><span th:if="${dataset!=null}">&#58;<span/>&nbsp;<span th:if="${dataset!=null}" th:text="@{${dataset.name}} "/></h2>
                     </div>
                 </div>
             </div>
             <div id="bs-docs-section">
-                <div class="row">
+                <div class="row" th:if="${dataset!=null}">
                     <div class="col-10">
                         <div class="form-group right">
                             <a class="btn btn-list" id="back">
@@ -37,12 +37,20 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <a th:if="${dataset!=null}" class="btn btn-primary" th:href="'/task/preprocess/create?name='+${dataset.name}" th:text=" #{list.preprocessing.button}">                         
+                        <a class="btn btn-primary" th:href="'/task/preprocess/create?name='+${dataset.name}" th:text=" #{list.preprocessing.button}">                         
                         </a>
                     </div>
                 </div>
-            </div>
-            <div id="bs-docs-section">
+                <div class="row" th:if="${dataset==null}">
+                    <div class="col-12">
+                        <div class="form-group right">
+                            <a class="btn btn-list" id="back">
+                                <i class="fas fa-arrow-circle-left"></i>
+                                <span th:text="#{back}"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a th:if="${dataset!=null}" class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"

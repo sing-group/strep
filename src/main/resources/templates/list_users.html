@@ -1,118 +1,78 @@
 <!DOCTYPE HTML>
 <html>
 
-<head>
-    <title th:text="#{app.name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-
-<body class="main-bg">
-    <div class="container-fluid">
-        <div th:include="header.html">
-
+    <head>
+        <title th:text="#{app.name}"></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">   
+    </head>
+    <body class="main-bg">
+        <div class="header">
+            <div th:include="header.html"></div>
         </div>
-
-        <div th:if="${message}">
-            <div class="row page-content">
-                <div class="col-4">
-
-                </div>
-
-                <div class="col-4 message">
-                    <p class="main-text text-center" th:text="${message}"></p>
-                </div>
-
-                <div class="col-4">
-
-                </div>
+        <div class="container" >
+            <div class="alert alert-dismissible alert-info" th:if="${message}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p class=" main-text" th:text="${message}"></p>
             </div>
-        </div>
-
-        <div class="row page-content pre-footer">
-
-            <div class="col-2">
-
-            </div>
-
-            <div class="col-8 form-bg">
-                <img class="header-logo" src="/images/public.svg" alt="public.svg" height="64" width="64">
-                <h2 class="main-text-header text-center" th:text="#{list.users.title}"></h2>
-
+            <div id="banner" class="page-header">
                 <div class="row">
-                    <div class="col-8">
-
+                    <div class="col-12">
+                        <h2><span th:text="#{list.users.title}"/></h2>
                     </div>
-
-                    <div class="col-4">
-                        <form class="form-inline">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="search"
-                                    th:attr="placeholder = #{list.users.placeholder.search}">
-                                <input type="submit" class="form-control submit-button" th:attr="value = #{list.users.search}">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="table-responsive text-center">
-                    <table class="table">
-                        <thead>
-                            <th scope="col" th:text="#{list.users.photo}"></th>
-                            <th scope="col" th:text="#{list.users.username}"></th>
-                            <th scope="col" th:text="#{list.users.permissions}"></th>
-                            <th scope="col" th:text="#{list.users.details}"></th>
-                            <th scope="col" th:text="#{list.users.delete}"></th>
-                        </thead>
-
-                        <tbody>
-                            <tr th:each="user : ${users}">
-                                <td><img class="user-photo" th:src="@{'/user/image?username='+${user.username}}" alt="photo" height="32" width="32">
-                                </td>
-
-                                <td th:text="${user.username}"></td>
-                                <td th:text="${user.permission.name}"></td>
-                                <!--
-                                <td>
-                                        <a class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"
-                                                    href="#">
-                                                    <i class="fas fa-key"></i>
-                                                    <span class="icon-caret-down"></span>
-                                                </a>
-                                                    <div th:each="permission : ${user.permissions}">
-                                                        <li th:text="${permission.name}"></li>
-                                                    </div>
-                                                </ul>
-                                </td>-->
-                                <td>
-                                    <a class="btn btn-small btn-info"
-                                    th:href="@{/user/detailed(username = ${user.username},type=user)}">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-small btn-danger"
-                                        th:href="@{/user/delete(username = ${user.username}, type=user)}">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
+            <form class="form-inline form-group">
+                <input type="text" class="form-control mr-sm-2" name="search" th:attr="placeholder = #{list.users.placeholder.search}">
+                <input type="submit" class="source-button btn btn-primary btn-xs" th:attr="value = #{list.users.search}">
+            </form>
+            <div class="tab-pane fade active show" >
+                <div class="alert alert-light" th:if="${users.size()==0}" th:text="#{list.users.nousers}"></div>
+                <table class="table table-hover margin20" th:if="${users.size()!=0}">
+                    <thead>
+                    <th scope="col" th:text="#{list.users.photo}"></th>
+                    <th scope="col" th:text="#{list.users.name}"></th>
+                    <th scope="col" th:text="#{list.users.username}"></th>
+                    <th scope="col" th:text="#{list.users.permissions}"></th>
+                    <th scope="col" th:text="#{list.users.details}"></th>
+                    <th scope="col" th:text="#{list.users.actions}"></th>
+                    <th scope="col" ></th>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="user : ${users}">
+                            <td><img class="user-photo" th:src="@{'/user/image?username='+${user.username}}" alt="photo" height="32" width="32"></td>
+                            <td th:text="${user.username}"></td>
+                            <td th:text="${user.name}"></td>
+                            <td>
+                                <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fas fa-key"></i>
+                                    <span class="icon-caret-down"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li th:text="${permission.name}" th:each="permission : ${user.permissions}"></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <a class="btn btn-list" th:href="@{/user/detailed(username = ${user.username},type=user)}" th:title="#{list.users.details}">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <img src="/images/tick.svg" th:if="${user.confirmedAccount}" th:title="#{detailed.user.confirmed}" th:attr="alt = #{detailed.user.confirmed}" height="16" width="16">
+                                <img src="/images/warning.svg" th:unless="${user.confirmedAccount}" th:title="#{detailed.user.notconfirmed}" th:attr="alt = #{detailed.user.notconfirmed}" height="16" width="16">
+                            </td>
+                            <td>
+                                <a class="btn btn-list" th:href="@{/user/delete(username = ${user.username}, type=user)}" onclick="return confirm('[[#{list.users.suredelete}]]');" th:title="#{list.users.delete}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-        <div class="col-2">
-
-        </div>
-    </div>
-
-    <div th:include="footer.html"></div>
-    </div>
-</body>
-
+        <div th:include="footer.html"></div>
+    </body>
 </html>

@@ -1,149 +1,39 @@
 <!DOCTYPE HTML>
 <html>
-
-<head>
-    <title th:text="#{app.name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-
-<body class="main-bg">
-    <div class="container-fluid">
-        <div th:include="header.html">
-
+    <head>
+        <title th:text="#{app.name}"></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">   
+    </head>
+    <body class="main-bg">
+        <div class="header">
+            <div th:include="header.html"></div>
         </div>
-        <div th:if="${message != null}">
-            <div class="row page-content">
-                <div class="col-4">
-
-                </div>
-
-                <div class="col-4 message">
-                    <p class="main-text text-center" th:text="${message}"></p>
-                </div>
-
-                <div class="col-4">
-
-                </div>
+        <div class="container" >
+            <div class="alert alert-dismissible alert-info" th:if="${message}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p class=" main-text" th:text="${message}"></p>
             </div>
-        </div>
-
-        <div class="row page-content pre-footer">
-            <div class="col-3">
-
-            </div>
-
-            <div class="col-6 form-bg">
-                <img class="header-logo" src="/images/request.svg" alt="logo.png" height="64" width="64">
-                <h2 class="main-text text-center">Permission requests</h1>
-                <div class="row page-content">
-                    <div class="col-4">
-
-                        <div class="row">
-                            <div class="col-2">
-                                <img src="/images/tick.svg" alt="aprobed.svg" width="32" height="32">
-                            </div>
-
-                            <div class="col-10">
-                                <p class="main-text text-center">This icon means that the request have been aprobed.</p>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="col-4">
-                        <div class="row">
-                            <div class="col-2">
-                                <img src="/images/clock.svg" alt="pending.svg" width="32" height="32">
-                            </div>
-
-                            <div class="col-10">
-                                <p class="main-text text-center">This icon means that the request is still not
-                                    resolved.</p>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="col-4">
-                        <div class="row">
-                            <div class="col-2">
-                                <img src="/images/warning.svg" alt="pending.svg" width="32" height="32">
-                            </div>
-                            <div class="col-10">
-                                <p class="main-text text-center">If a request does not appear here, it means that it
-                                    has been rejected.</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="page-content">
-                    <div class="row">
-                        <div class="col-1">
-
-                        </div>
-
-                        <div class="col-10">
-                                <h4 class="top-bg topdiv-text text-center">Requests status</h4>
-                        </div>
-
-                        <div class="col-1">
-
-                        </div>
-
-                    </div>
-                
-                <div th:each="request:${permissionRequests}">
-                    <div class="row" style="margin-top: 10px;">
-                        <div class="col-1">
-
-                        </div>
-
-                        <div class="col-3">
-                            <div th:if="${request.status}=='pending'">
-                                <img src="/images/clock.svg" alt="pending" width="32" height="32">
-                            </div>
-                            <div th:if="${request.status}=='accepted'">
-                                <img src="/images/tick.svg" alt="accepted" width="32" height="32">
-                            </div>
-                        </div>
-
-                        <div class="col-8">
-                            <div th:if="${request.permission.id}=='2'">
-                                <p class="main-text"><em>Can upload</em> permission request <em th:text="${request.status}"></em></p>
-                            </div>
-
-                            <div th:if="${request.permission.id}=='3'">
-                                <p class="main-text"><em>Can create corpus</em> permission request <em th:text="${request.status}"></em></p>
-                            </div>
-
-                            <div th:if="${request.permission.id}=='4'">
-                                <p class="main-text"><em>Can administer</em> permission request <em th:text="${request.status}"></em></p>
-                            </div>
-                        </div>
+            <div id="banner" class="page-header">
+                <div class="row">
+                    <div class="col-12">
+                        <h2><span th:text="#{list.requests.permissionrequests}"/></h2>
                     </div>
                 </div>
             </div>
-            </div>
-            </div>
-
-            <div class="col-3">
-
+            <form class="form-inline form-group">
+                <input type="text" class="form-control mr-sm-2" name="search" th:attr="placeholder = #{list.requests.search}">
+                <input type="submit" class="source-button btn btn-primary btn-xs" th:attr="value = #{list.requests.search}">
+            </form>
+            <div class="tab-pane fade active show" >
+                <div class="alert alert-light" th:if="${permissionRequests.size()==0}" th:text="#{list.requests.norequests}"></div>
+                <table class="table table-hover margin20" th:if="${permissionRequests.size()!=0}">
+                </table>
             </div>
         </div>
-
-        <div th:include="footer.html">
-
-        </div>
-
-
-    </div>
-    
-</body>
-
+    </body>
 </html>
+      

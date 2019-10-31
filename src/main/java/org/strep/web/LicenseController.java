@@ -155,6 +155,7 @@ public class LicenseController
     @GetMapping("/modify")
     public String modifyLicense(Authentication authentication, Model model, License license, @RequestParam("name")String name)
     {
+        System.out.println("license data 1");
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -170,6 +171,7 @@ public class LicenseController
             String description = new String(licenseToModify.getDescription());
             model.addAttribute("licenseToModify", licenseToModify);
             model.addAttribute("description", description);
+            System.out.println("license data: " + licenseToModify);
         }
 
         return "modify_license";
@@ -179,6 +181,7 @@ public class LicenseController
     @PostMapping("/modify")
     public String modifyLicense(Authentication authentication, Model model, @Valid License license,BindingResult bindingResult, RedirectAttributes redirectAttributes)
     {
+        System.out.println("license data 2 ");
         Locale locale = LocaleContextHolder.getLocale();
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();

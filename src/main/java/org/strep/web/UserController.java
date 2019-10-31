@@ -66,7 +66,6 @@ public class UserController {
 
     @PostMapping("/register")
     public String addNewUser(@Valid User user, BindingResult bindingResult) {
-
         if (bindingResult.hasErrors()) {
             return "register";
         } else {
@@ -77,7 +76,6 @@ public class UserController {
             if (userRepository.findById(id).isPresent()) {
                 return "register";
             } else {
-
                 MimeMessage message = sender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(message);
 
@@ -85,10 +83,9 @@ public class UserController {
                     helper.setTo(user.getEmail());
                     helper.setText(
                             "Welcome to STRep, click in the following link to log into your account https://localhost:8443/user/accountconfirmation"
-                                    + "?hash=" + hash.replaceAll("=", ""));
+                            + "?hash=" + hash.replaceAll("=", ""));
                     helper.setSubject("Account activation");
-
-                    sender.send(message);
+                    //  sender.send(message);
 
                     User user2 = new User(id, email, hash.replaceAll("=", ""), user.getPassword(),
                             user.getName(), user.getSurname());
@@ -97,7 +94,6 @@ public class UserController {
                 } catch (MessagingException e) {
                     return "redirect:/error";
                 }
-
                 return "redirect:/";
             }
         }
@@ -112,8 +108,9 @@ public class UserController {
             userRepository.save(user);
 
             return "redirect:/";
-        } else
+        } else {
             return "redirect:/user/register";
+        }
     }
 
     @GetMapping("list")
@@ -196,10 +193,11 @@ public class UserController {
     public String editUserPermissions(@RequestParam("permission") int permission,
             @RequestParam("username") String username, Authentication authentication, Model model,
             RedirectAttributes redirectAttributes) {
+        System.out.println("permission: " + permission);
         String message = userService.editPermissions(permission, username);
+        
         redirectAttributes.addAttribute("username", username);
         redirectAttributes.addAttribute("message", message);
-
         return "redirect:/user/detailed";
     }
 

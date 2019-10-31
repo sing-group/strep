@@ -208,6 +208,13 @@ function changeLocale(id)
     location.replace(url);
 }
 
+function deniedRequest(){
+
+  document.getElementById('permissionForm').action='/permission/reject';
+  alert(document.getElementById('permissionForm').action)
+  document.getElementById('permissionForm').submit();
+}
+
 $(document).ready(function () {
 
     $("#back").click(function() {

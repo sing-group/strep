@@ -27,8 +27,3 @@ function enableInput(id)
         input.setAttribute("disabled", "disabled");
     }
 }
-
-
-
- 
- 

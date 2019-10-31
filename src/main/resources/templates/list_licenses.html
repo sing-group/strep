@@ -1,107 +1,66 @@
 <!DOCTYPE HTML>
 <html>
 
-<head>
-    <title th:text="#{app.name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-
-<body class="main-bg">
-    <div class="container-fluid">
-        <div th:include="header.html">
-
+    <head>
+        <title th:text="#{app.name}"></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">   
+    </head>
+    <body class="main-bg">
+        <div class="header">
+            <div th:include="header.html"></div>
         </div>
-
-        <div th:if="${message}">
-            <div class="row page-content">
-                <div class="col-4">
-
-                </div>
-
-                <div class="col-4 message">
-                    <p class="main-text text-center" th:text="${message}"></p>
-                </div>
-
-                <div class="col-4">
-
-                </div>
+        <div class="container" >
+            <div class="alert alert-dismissible alert-info" th:if="${message}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p class=" main-text" th:text="${message}"></p>
             </div>
-        </div>
-
-        <div class="row page-content pre-footer">
-
-            <div class="col-2">
-
-            </div>
-
-            <div class="col-8 form-bg">
-                <img class="header-logo" src="/images/key.svg" alt="key.svg" height="64" width="64">
-                <h2 class="main-text-header text-center" th:text="#{list.licenses.title}"></h2>
-
+            <div id="banner" class="page-header">
                 <div class="row">
-                    <div class="col-8">
-
+                    <div class="col-12">
+                        <h2><span th:text="#{list.licenses.title}"/></h2>
                     </div>
-
-                    <div class="col-4">
-                        <form class="form-inline">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="searchInput"
-                                    th:attr="placeholder = #{list.licenses.placeholder.search}">
-                                <input th:attr=" value = #{list.licenses.search}" type="submit" class="form-control submit-button" value="search">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="table-responsive text-center">
-                    <table class="table">
-                        <thead>
-                            <th scope="col" th:text="#{list.licenses.name}"></th>
-                            <th scope="col" th:text="#{list.licenses.URL}"></th>
-                            <th scope="col" th:text="#{list.licenses.actions}"></th>
-                        </thead>
-
-                        <tbody>
-                            <div th:each="license : ${licenses}">
-                                <tr>
-                                    <th scope="row" th:text="${license.name}"></th>
-                                    <td>
-                                        <a th:href="${license.url}" th:text="${license.url}"></a>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a class="btn btn-small btn-info" th:href="@{/license/detailed(name = ${license.name})}">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <a class="btn btn-small btn-secondary" th:href="@{/license/modify(name = ${license.name})}">
-                                                <i class="fas fa-pen-square"></i>
-                                            </a>
-                                            <a class="btn btn-small btn-danger" th:href="@{/license/delete(name = ${license.name})}">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                            </div>
-                        </tbody>
-
-                    </table>
-                </div>
-
-                <div class="col-2">
-
                 </div>
             </div>
-
-            <div th:include="footer.html"></div>
+            <form class="form-inline form-group">
+                <input type="text" class="form-control mr-sm-2" name="search" th:attr="placeholder = #{list.licenses.search}">
+                <input type="submit" class="source-button btn btn-primary btn-xs" th:attr="value = #{list.licenses.search}">
+            </form>
+            <div class="tab-pane fade active show" >
+                <div class="alert alert-light" th:if="${licenses.size()==0}" th:text="#{list.licenses.nolicenses}"></div>
+                <table class="table table-hover margin20" th:if="${licenses.size()!=0}">
+                    <thead>
+                    <th scope="col" th:text="#{list.licenses.name}"></th>
+                    <th scope="col" th:text="#{list.licenses.URL}"></th>
+                    <th scope="col" th:text="#{list.licenses.actions}"></th>
+                    </thead>
+                    <tbody>
+                        <tr th:each="license : ${licenses}">
+                            <th scope="row" th:text="${license.name}"></th>
+                            <td>
+                                <a class="license" th:href="${license.url}" th:text="${license.url}" target="_blank" ></a>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-list" th:href="@{/license/detailed(name = ${license.name})}" th:title="#{list.licenses.view}">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a class="btn btn-list" th:href="@{/license/modify(name = ${license.name})}" th:title="#{list.licenses.edit}">
+                                        <i class="fas fa-pen-square"></i>
+                                    </a>
+                                    <a class="btn btn-list" th:href="@{/license/delete(name = ${license.name})}" th:title="#{list.licenses.delete}" onclick="return confirm('[[#{list.licenses.suredelete}]]');">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-</body>
-
+        <div th:include="footer.html"></div>
+    </body>
 </html>

@@ -67,7 +67,6 @@ public class TaskController {
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
         model.addAttribute("state", state);
-
         if (inputSearch != null) {
             model.addAttribute("tasks", taskRepository.getSystemTasksFiltered(username, inputSearch, state));
         } else {
@@ -243,7 +242,7 @@ public class TaskController {
         String username = userDetails.getUsername();
 
         String fileName = taskService.downloadPipeline(taskId, username);
-        System.out.println(fileName);
+       // System.out.println(fileName);
 
         if (fileName != null) {
             try {
@@ -273,7 +272,7 @@ public class TaskController {
         String fileName = taskService.downloadCsv(taskId, username);
 
         if (fileName != null) {
-            System.out.println(fileName);
+            //System.out.println(fileName);
             try {
                 FileInputStream fis = new FileInputStream(new java.io.File(OUTPUT_PATH + fileName));
                 HttpHeaders httpHeaders = new HttpHeaders();

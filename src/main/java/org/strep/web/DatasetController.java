@@ -598,7 +598,7 @@ public class DatasetController {
         if (datasetNames != null) {
             for (String datasetName : datasetNames) {
                 datasets.add(datasetName);
-                System.out.println(datasetName);
+               // System.out.println(datasetName);
             }
             datatypes = datasetRepository.getDatasetsDatatypes(datasets);
         }
@@ -669,8 +669,8 @@ public class DatasetController {
             ArrayList<FileDatatypeType> filesDatatypeType = fileDatatypeTypeRepository
                     .getFilesByExtensionAndType(datasets);
             for (FileDatatypeType fileDatatypeType : filesDatatypeType) {
-                System.out.println(fileDatatypeType.getId().getExtension() + fileDatatypeType.getId().getType() + "\t"
-                        + fileDatatypeType.getCount());
+//                System.out.println(fileDatatypeType.getId().getExtension() + fileDatatypeType.getId().getType() + "\t"
+//                        + fileDatatypeType.getCount());
                 databaseFilesMap.replace(fileDatatypeType.getId().getExtension() + fileDatatypeType.getId().getType(),
                         fileDatatypeType.getCount());
             }
@@ -760,7 +760,7 @@ public class DatasetController {
             model.addAttribute("datasets", datasetRepository.getSystemDatasets());
             return "create_dataset";
         } else {
-            System.out.println(mode);
+            //System.out.println(mode);
             boolean modeSpam = false;
 
             if (mode.equals("spam")) {

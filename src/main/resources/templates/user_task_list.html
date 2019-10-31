@@ -1,147 +1,91 @@
 <!DOCTYPE HTML>
 <html>
-
-<head>
-    <title th:text="#{app.name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-
-<body class="main-bg">
-    <div class="container-fluid">
-        <div th:include="header.html">
-
+    <head>
+        <title th:text="#{app.name}"></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">   
+    </head>
+    <body class="main-bg">
+        <div class="header">
+            <div th:include="header.html"></div>
         </div>
-
-        <div th:if="${message}">
-            <div class="row page-content">
-                <div class="col-4">
-
-                </div>
-
-                <div class="col-4 message">
-                    <p class="main-text text-center" th:text="${message}"></p>
-                </div>
-
-                <div class="col-4">
-
-                </div>
+        <div class="container" >
+            <div class="alert alert-dismissible alert-info" th:if="${message}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p class=" main-text" th:text="${message}"></p>
             </div>
-        </div>
-
-        <div class="row page-content pre-footer">
-
-            <div class="col-2">
-
-            </div>
-
-            <div class="col-8 form-bg">
-                <img class="header-logo" src="/images/clipboard.svg" alt="clipboard.svg" height="64" width="64">
-                <h2 class="main-text-header text-center" th:text="#{list.usertasks.title}"></h2>
-
+            <div id="banner" class="page-header">
                 <div class="row">
-
-                    <div class="col-6">
-                        <ul class="nav nav-pills">
-                            <li class="nav-item">
-                                <a class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"
-                                    href="/task/create?state=waiting" th:text="#{list.usertasks.waiting}"></a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''"
-                                    href="/task/create?state=executing" th:text="#{list.usertasks.executing}"></a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''"
-                                    href="/task/create?state=failed" th:text="#{list.usertasks.failed}"></a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" th:classappend="${state=='success'} ? 'active' : ''"
-                                    href="/task/create?state=success" th:text="#{list.usertasks.success}"></a>
-                            </li>
-
-                        </ul>
-                    </div>
-
-                    <div class="col-2">
-
-                    </div>
-
-                    <div class="col-4">
-                        <form class="form-inline">
-                            <div class="form-group">
-                                <form action="/task/create" method="GET">
-                                    <input type="hidden" name="state" th:attr="value = ${state}">
-                                    <input type="text" class="form-control" name="searchInput"
-                                        th:attr="placeholder = #{list.usertasks.placeholder.search}">
-                                    <input type="submit" class="form-control submit-button" th:attr="value = #{list.usertasks.search}">
-                                </form>
-                            </div>
-                        </form>
+                    <div class="col-12">
+                        <h2><span th:text="#{list.usertasks.title}"/></h2>
                     </div>
                 </div>
+            </div>
+            <div id="bs-docs-section">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group right">
+                            <a class="btn btn-list" id="back">
+                                <i class="fas fa-arrow-circle-left"></i>
+                                <span th:text="#{back}"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <form class="form-inline form-group" action="/task/create" method="GET">
+                    <input type="hidden" name="state" th:attr="value = ${state}">
+                    <input type="text" class="form-control mr-sm-2" name="searchInput" th:attr="placeholder = #{list.usertasks.placeholder.search}">
+                    <input type="submit" class="source-button btn btn-primary btn-xs" th:attr="value = #{list.usertasks.search}">
+                </form>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''" href="/task/create?state=waiting" th:text="#{list.usertasks.waiting}"></a>
+                    </li>
 
-                <div class="table-responsive text-center">
-                    <table class="table">
+                    <li class="nav-item">
+                        <a class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''" href="/task/create?state=executing" th:text="#{list.usertasks.executing}"></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''" href="/task/create?state=failed" th:text="#{list.usertasks.failed}"></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:classappend="${state=='success'} ? 'active' : ''" href="/task/create?state=success" th:text="#{list.usertasks.success}"></a>
+                    </li>
+                </ul>
+                <div class="tab-pane fade active show" >
+                    <div class="alert alert-light" th:if="${tasks.size()==0}" th:text="#{systemtasks.notasks}"></div>
+                    <table class="table table-hover margin20" th:if="${tasks.size()!=0}">
                         <thead>
                             <th scope="col" th:text="#{list.usertasks.date}"></th>
                             <th scope="col" th:text="#{list.usertasks.dataset}"></th>
                             <th scope="col" th:text="#{list.usertasks.message}"></th>
                             <th scope="col" th:text="#{list.usertasks.info}"></th>
                         </thead>
-
                         <tbody>
-                            <div th:each="task : ${tasks}">
-                                <tr>
-                                    <td th:text="${task.dataset.uploadDate}">
-
-                                    </td>
-
-                                    <td th:text="${task.dataset.name}">
-
-                                    </td>
-                                    <td>
-                                        <div th:if="${task.message}==null">
-                                                <button type="button" class="btn btn-small btn-danger" data-toggle="popover"
-                                                title="Message" th:attr="data-content = #{list.usertasks.nomessageprovided}">
-                                                <i class="fas fa-envelope"></i>
-                                            </button>
-                                        </div>
-
-                                        <div th:if="${task.message}!=null">
-                                            <button type="button" class="btn btn-small btn-danger" data-toggle="popover"
-                                                title="Message" th:attr="data-content = ${task.message}">
-                                                <i class="fas fa-envelope"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <a class="btn btn-small btn-info"
-                                            th:href="@{'/task/detailed?task=' + ${task.id}}">
-                                            <i class="fas fa-info-circle"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </div>
+                            <tr th:each="task : ${tasks}">
+                                <td th:text="${task.dataset.uploadDate}"></td>
+                                <td th:text="${task.dataset.name}"></td>
+                                <td th:if="${task.message}!=null" th:text="${task.message}"></td>
+                                <td th:if="${task.message}==null" th:text="#{list.usertasks.nomessageprovided}"></td>
+                                <td>
+                                    <a class="btn btn-list" th:href="@{'/task/detailed?task=' + ${task.id}}" data-toggle="tooltip" data-placement="right" th:title="#{list.usertasks.details}">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="col-2">
-
-            </div>
         </div>
-
         <div th:include="footer.html"></div>
-    </div>
-</body>
-
+    </body>
 </html>

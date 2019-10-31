@@ -1,191 +1,128 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title th:text="#{app.name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Lora&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
-</head>
+    <head>
+        <title th:text="#{app.name}"></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+              integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+              integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Lora&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
+    </head>
 
-<body>
-    <div class="container-fluid">
-        <div th:include="header.html">
-
+    <body class="main-bg">
+        <div class="header">
+            <div th:include="header.html"></div>
         </div>
-
-        <div class="row page-content pre-footer">
-            <div class="col-1">
-
+        <div class="container">
+            <div class="alert alert-dismissible alert-info" th:if="${param.message}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p class=" main-text" th:text="${param.message}"></p>
             </div>
-
-            <div class="col-10">
-                <div class="jumbotron border border-info">
-                    <div class="row">
-                        <div class="col-2 text-center">
-                            <img class="user-photo" th:src="@{'/user/image?username='+${username}}" alt="photo" height="64" width="64">
-                        </div>
-
-                        <div class="col-4 text-center">
-
-                            <p class="title-text" th:text="#{detailed.user.details}"></p>
+            <div id="bs-docs-section">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="bs-component">
                             <div class="row">
-                                <div class="col-6 text-center">
-                                    <p class="title-text" th:text="#{detailed.user.username}"></p>
-                                </div>
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${user.username}"></p>
+                                <div class="col-12">
+                                    <h2 class="main-text left" th:text="#{detailed.publicdataset.details}"></h2>
+                                    <hr/>
                                 </div>
                             </div>
-
                             <div class="row">
-                                <div class="col-6 text-center">
-                                    <p class="title-text"  th:text="#{detailed.user.email}"></p>
-                                </div>
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${user.email}"></p>
+                                <div class="col-12 right">
+                                    <a class="btn btn-list" id="back">
+                                        <i class="fas fa-arrow-circle-left"></i>
+                                        <span th:text="#{back}"/>
+                                    </a>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-6 text-center">
-                                    <p class="title-text"  th:text="#{detailed.user.confirmed}"></p>
-                                </div>
-
-                                <div class="col-6 text-center">
-                                    <div th:if="${user.confirmedAccount}">
-                                        <img src="/images/tick.svg" alt="Confirmed" height="16" width="16">
+                            <div class="card border-primary mb3">
+                                <div class="card-header" th:text="#{detailed.user.details}"></div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 right">
+                                            <img class="user-photo" th:src="@{'/user/image?username='+${username}}" th:title="${user.username}" width="64">
+                                        </div>
                                     </div>
-
-                                    <div th:unless="${user.confirmedAccount}">
-                                        <img src="/images/warning.svg" alt="Not confirmed" height="16" width="16">
+                                    <div class="row">
+                                        <div class="col-3 left"><p class="title-text" th:text="#{detailed.user.username}"> </p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="${user.username}"></p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 left"><p class="title-text" th:text="#{detailed.user.email}"> </p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="${user.email}"></p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 left"><p class="title-text" th:text="#{detailed.user.name}"> </p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="${user.name}"></p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 left"><p class="title-text" th:text="#{detailed.user.surname}"> </p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="${user.surname}"></p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 left"><p class="title-text" th:text="#{detailed.user.confirmed}"> </p></div>
+                                        <div class="col-9 left">
+                                            <img src="/images/tick.svg" th:if="${user.confirmedAccount}" th:attr="alt = #{detailed.user.confirmed}" height="16" width="16">
+                                            <img src="/images/warning.svg" th:unless="${user.confirmedAccount}" th:attr="alt = #{detailed.user.notconfirmed}" height="16" width="16">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-6 text-center">
-                                    <p class="title-text"  th:text="#{detailed.user.name}"></p>
-                                </div>
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${user.name}"></p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-6 text-center">
-                                    <p class="title-text"  th:text="#{detailed.user.surname}"></p>
-                                </div>
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${user.surname}"></p>
-                                </div>
-                            </div>
-
-                        </div>
-
-
-                        <div class="col-3 text-center">
-                            <p class="title-text"  th:text="#{detailed.user.statistics}"></p>
-
-                            <div class="row">
-                                <div class="col-6 text-center">
-                                    <p class="title-text"  th:text="#{detailed.user.uploaded}"></p>
-                                </div>
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${systemdatasetsnum}"></p>
+                            <div class="row"><div class="col-12"></div></div>
+                            <div class="card border-primary mb3">
+                                <div class="card-header" th:text="#{detailed.user.statistics}"></div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-3 left"><p class="title-text" th:text="#{detailed.user.uploaded}"> </p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="${systemdatasetsnum}"></p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 left"><p class="title-text" th:text="#{detailed.user.created}"> </p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="${userdatasetsnum}"></p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 left"><p class="title-text" th:text="#{detailed.user.created}"> </p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="${userdatasetsnum}"></p></div>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-6 text-center">
-                                    <p class="title-text"  th:text="#{detailed.user.created}"></p>
-                                </div>
-
-                                <div class="col-6 text-center">
-                                    <p class="normal-text" th:text="${userdatasetsnum}"></p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-3 text-center">
-
-                            <p class="title-text"  th:text="#{detailed.user.permissions}"></p>
-                            <form action="#" th:action="@{/user/editpermissions}" method="POST">
-                                <input type="hidden" name="username" th:attr="value = ${user.username}">
-                                <ul class="list-group">
-                                    <div th:each="permission : ${permissions}">
-                                        <li class="list-group-item text-center">
-                                            <div class="row">
-                                                <div class="col-8 ">
-                                                    <p class="title-text" th:text="${permission.name}"></p>
+                            <div class="row"><div class="col-12"></div></div>
+                            <div class="card border-primary mb3">
+                                <div class="card-header" th:text="#{detailed.user.permissions}"></div>
+                                <div class="card-body">
+                                    <fieldset class="form-group">
+                                        <div class="form-check">
+                                            <form action="#" th:action="@{/user/editpermissions}" method="POST">
+                                                <input type="hidden" name="username" th:attr="value = ${user.username}">
+                                                <div class="form-group">
+                                                    <ul class="list-group">
+                                                        <li th:each="permission : ${permissions}">
+                                                            <input type="radio" name="permission" th:if="${permission.name} == ${maxUserPermission}" th:attr="value = ${permission.id}" checked>
+                                                            <input type="radio" name="permission" th:unless="${permission.name} == ${maxUserPermission}" th:attr="value = ${permission.id}">
+                                                            <span th:text="${permission.name}" />
+                                                        </li>
+                                                    </ul>
                                                 </div>
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <div th:if="${permission.name} == ${maxUserPermission}">
-                                                            <input type="radio" name="permission"
-                                                                th:attr="value = ${permission.id}" checked>
-                                                        </div>
-
-                                                        <div th:unless="${permission.name} == ${maxUserPermission}">
-                                                            <input type="radio" name="permission"
-                                                                th:attr="value = ${permission.id}">
-                                                        </div>
-
+                                                <div class="row">
+                                                    <div class="col-12 right">
+                                                        <button type="submit" class="btn btn-primary" th:text="#{detailed.user.edit}"></button>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </li>
-                                    </div>
-                                </ul>
-                                <p class="title-text"  th:text="#{detailed.user.edit}"></p>
-                                <button type="submit" class="btn btn-small btn-warning">
-                                    <i class="fas fa-key"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-5">
-
-                        </div>
-
-                        <div class="col-2 text-center">
-                            <p class="title-text"  th:text="#{detailed.user.delete}"></p>
-                            <form action="#" th:action="@{/user/delete}" method="GET">
-                                <input type="hidden" name="username" th:attr="value = ${user.username}">
-                                <button type="submit" class="btn btn-small btn-danger">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-
-                            </form>
-                        </div>
-
-                        <div class="col-5">
-
+                                            </form>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-1">
-
-            </div>
-
         </div>
-
-        <div th:include="footer.html">
-
-        </div>
-</body>
-
+        <div th:include="footer.html"></div>
+    </body>
 </html>

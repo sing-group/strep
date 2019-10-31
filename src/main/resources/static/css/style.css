@@ -336,6 +336,9 @@ width: 100%;*/
 }
 .dropdown-menu{
   font-size: 14px;
+}
+
+ul li .dropdown-menu{
   background-color: #203939;
 }
 /*.dropdown.toogle{
@@ -425,6 +428,7 @@ legend{
 }
 .alert-info {
     background-color: #f7f7e7;
+    border-color: #ececdd;
     color: #203939;
 }
 
@@ -433,6 +437,23 @@ legend{
 }
 .card{
   border-color: #F0EEEE !important;
+}
+
+
+.list-group{
+  list-style: none;
+}
+.wlc-pic{
+  max-width: 128px;
+}
+.license{
+  color: #203939;
+}
+.license:hover, .license:active{
+  color: #9cb805;
+}
+.justify{
+  text-align: justify;
 }
 /***** Responsive *****/
 #dlogin{
