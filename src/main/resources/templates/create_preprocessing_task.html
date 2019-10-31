@@ -41,8 +41,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <input type="hidden" name="preprocessDataset" th:attr="value = ${dataset.name}">
-                                        <label for="#{createpreprocessing.placeholder.description}" id="lname" name="lname" class="col-md-3 control-label" th:text="#{createpreprocessing.description}" ></label>  
+                                        <input type="hidden" name="preprocessDataset" th:attr="value = ${dataset.name}"></input>
+                                        <input type="hidden" name="name" th:attr="value = ${createpreprocessing.name}"></input>
+                                        <label for="#{createpreprocessing.placeholder.description}" id="lname" name="lname" class="col-md-3 control-label" th:text="#{createpreprocessing.description}" ></label>
                                         <textarea class="form-control" rows="10" th:attr="placeholder = #{createpreprocessing.placeholder.description}" name="description" required></textarea>
                                     </div>
                                     <!--div class="form-group">

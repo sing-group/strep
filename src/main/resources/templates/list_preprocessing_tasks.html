@@ -87,6 +87,7 @@
                                 <th scope="col" th:text="#{list.preprocessing.date}"></th>
                                 <th scope="col" th:text="#{list.preprocessing.message}"></th>
                                 <th scope="col" th:text="#{list.preprocessing.description}"></th>
+                                <th scope="col" th:text="#{list.preprocessing.description}"></th>
                                 <th scope="col" th:text="#{list.preprocessing.pipeline}"></th>
                                 <th scope="col" th:text="#{list.preprocessing.csv}" th:if="${state=='success'}"></th>
                             </tr>
@@ -104,6 +105,14 @@
                                     <button type="button" class="btn btn-list" data-toggle="popover" title="Message" th:attr="data-content = ${task.message}" th:if="${task.message}!=null">
                                         <i class="fas fa-envelope"></i>
                                     </button-->
+                                </td>
+                                <td th:text="${task.name}">
+                                        <!--button type="button" th:if="${task.description}==null" class="btn btn-list" data-toggle="popover" title="Description" data-content="Not description provided">
+                                            <i class="fas fa-comment"></i>
+                                        </button>
+                                        <button type="button" th:if="${task.description}!=null" class="btn btn-list" data-toggle="popover" title="Description" th:attr="data-content = ${task.description}">
+                                            <i class="fas fa-comment"></i>
+                                        </button-->
                                 </td>
                                 <td th:text="${task.description}">
                                     <!--button type="button" th:if="${task.description}==null" class="btn btn-list" data-toggle="popover" title="Description" data-content="Not description provided">

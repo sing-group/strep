@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 
 /**
  * JPA Bean for the Dataset objects managed by application
@@ -37,7 +38,7 @@ public class PermissionRequest implements Serializable
     /**
      * The permission id
      */
-    @ManyToOne(fetch= FetchType.LAZY)
+    @OneToOne(fetch= FetchType.LAZY)
     @MapsId("permission_id")
     private Permission permission;
 

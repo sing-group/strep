@@ -43,8 +43,8 @@ public class Permission
     /**
      * The permission requests associated to this permission
      */
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<PermissionRequest> permissionRequests = new HashSet<PermissionRequest>();
+    //@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    //private Set<PermissionRequest> permissionRequests = new HashSet<PermissionRequest>();
 
     /**
      * The default constructor
@@ -141,19 +141,19 @@ public class Permission
      * Return the users wich have the permission
      * @return the users wich have the permission
      */
-    public Set<PermissionRequest> getPermissionRequests()
-    {
-        return permissionRequests;
-    }
+    //public Set<PermissionRequest> getPermissionRequests()
+    //{
+    //    return permissionRequests;
+    //}
 
     /**
      * Stablish the users wich have the permission
      * @param users the users wich have the permission
      */
-    public void setPermissionRequests(Set<PermissionRequest> permissionRequests)
-    {
-        this.permissionRequests = permissionRequests;
-    }
+    //public void setPermissionRequests(Set<PermissionRequest> permissionRequests)
+    //{
+    //    this.permissionRequests = permissionRequests;
+    //}
 
     @Override
     public boolean equals(Object o) {

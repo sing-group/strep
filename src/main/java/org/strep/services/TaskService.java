@@ -219,7 +219,7 @@ public class TaskService {
         String message = "";
         try
         {
-            TaskCreateUPreprocessing toCreateTask = new TaskCreateUPreprocessing(dataset, "waiting", null, task.getDescription(), pipeline.getBytes(), null, new Date(), dataset);
+            TaskCreateUPreprocessing toCreateTask = new TaskCreateUPreprocessing(dataset, task.getName(), "waiting", null, task.getDescription(), pipeline.getBytes(), null, new Date(), dataset);
             taskRepository.save(toCreateTask);
             message = messageSource.getMessage("createpreprocessing.sucessfull.message", Stream.of().toArray(String[]::new), locale);
         }
