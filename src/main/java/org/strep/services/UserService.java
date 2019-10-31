@@ -113,7 +113,7 @@ public class UserService {
         if (permissionOpt.isPresent() && userOpt.isPresent()) {
             Permission permission = permissionOpt.get();
             userOpt.get().setPermission(permission);
-
+            System.out.println("get permission: " + userOpt.get().getPermission().getId());
             //permissionRepository.deletePermissions(username);
             //for(int i = 1; i<=permission.getId().intValue();i++)
             //{

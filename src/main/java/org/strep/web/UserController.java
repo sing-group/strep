@@ -156,6 +156,7 @@ public class UserController {
             model.addAttribute("userdatasetsnum", userDatasets.size());
             model.addAttribute("systemdatasetsnum", systemDatasets.size());
             model.addAttribute("permissions", permissions);
+            System.out.println("permissions detail: " + user.getPermission().getId());
         }
 
         return "detailed_user";

@@ -435,10 +435,16 @@ legend{
 .card-header{
   background-color: #FFF;
 }
+.permission{
+  background-color: #FBFBFB;
+}
+
 .card{
   border-color: #F0EEEE !important;
 }
-
+.italic{
+  font-style: italic;
+}
 
 .list-group{
   list-style: none;
@@ -455,6 +461,7 @@ legend{
 .justify{
   text-align: justify;
 }
+
 /***** Responsive *****/
 #dlogin{
   padding-right: 10px;

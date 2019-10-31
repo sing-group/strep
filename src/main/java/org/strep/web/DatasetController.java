@@ -158,7 +158,7 @@ public class DatasetController {
     public String listDatasets(@RequestParam(name = "type", required = false, defaultValue = "user") String type,
             Authentication authentication, Model model) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
+        
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
         ArrayList<Dataset> datasets = new ArrayList<Dataset>();
@@ -195,11 +195,12 @@ public class DatasetController {
                 datasets = datasetRepository.getProtectedDatasets();
                 type = "community";
         }
+        System.out.println("username: " + username + " - type: " + type + " - authority: " + authority);
+        System.out.println("size datasets " + datasets.size());
         model.addAttribute("type", type);
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
         model.addAttribute("datasets", datasets);
-
         return "list_datasets";
     }
 
@@ -353,6 +354,7 @@ public class DatasetController {
 
     @GetMapping("/upload")
     public String uploadDataset(Authentication authentication, Model model, Dataset dataset) {
+        System.out.println("AQUI 0");
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -362,7 +364,7 @@ public class DatasetController {
         model.addAttribute("username", username);
         model.addAttribute("host", HOST_NAME);
         model.addAttribute("licenses", licenseRepository.findAll());
-
+        System.out.println("AQUI");
         return "add_dataset";
     }
 
@@ -370,18 +372,21 @@ public class DatasetController {
     public String uploadDataset(Authentication authentication, @Valid Dataset dataset, BindingResult bindingResult,
             @RequestParam(name = "dataset-file", required = true) MultipartFile datasetFile,
             RedirectAttributes redirectAttributes, Model model) {
+        System.out.println("AQUI ---");
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
+System.out.println("AQUI 2");
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
 
         if (bindingResult.hasErrors()) {
+            System.out.println("AQUI 3");
             model.addAttribute("authority", authority);
             model.addAttribute("username", username);
             model.addAttribute("host", HOST_NAME);
             model.addAttribute("licenses", licenseRepository.findAll());
             return "add_dataset";
         } else {
+            System.out.println("AQUI 4");
             String message = datasetService.uploadDataset(dataset, datasetFile, username);
             redirectAttributes.addFlashAttribute("message", message);
             model.addAttribute("authority", authority);

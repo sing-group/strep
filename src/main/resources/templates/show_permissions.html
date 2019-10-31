@@ -1,6 +1,100 @@
 <!DOCTYPE HTML>
 <html>
+    <html>
 
+        <head>
+            <title th:text="#{app.name}"></title>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+                  integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+            <link rel="stylesheet" type="text/css" href="/css/style.css">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+                  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+            <link href="https://fonts.googleapis.com/css?family=Lora&display=swap" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
+        </head>
+
+        <body class="main-bg">
+            <div class="header">
+                <div th:include="header.html"></div>
+            </div>
+            <div class="container">
+                <div class="alert alert-dismissible alert-info" th:if="${param.message}">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <p class=" main-text" th:text="${param.message}"></p>
+                </div>
+                <div id="bs-docs-section">
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="bs-component">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2 class="main-text left" th:text="#{list.permission.title}"></h2>
+                                    </div>
+                                </div>
+                                <div class="card border-primary mb3">
+                                    <div class="card-header permission">Can view</div>
+                                    <div class="card-body">
+                                        <p class="justify" th:text="#{list.permission.canviewdescription}"></p>
+                                    </div>
+                                </div>
+                                <div class="row"><div class="col-12"></div></div>
+                                <div class="card border-primary mb3">
+                                    <div class="card-header permission">Can create corpus</div>
+                                    <div class="card-body">
+                                        <p class="justify" th:text="#{list.permission.cancreatenewcorpus}"></p>
+                                        <p class="justify" th:text="#{list.permission.same}"></p>
+                                        <div class="row">
+                                            <div class="col-12 right">
+                                                <form action="#" th:action="@{/permission/request}" method="POST" th:if="${authority}=='canView'">
+                                                    <input type="hidden" name="id" value="2">
+                                                    <input type="submit" class="btn btn-primary" th:attr="value = #{list.permission.solicit}">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row"><div class="col-12"></div></div>
+                                <div class="card border-primary mb3">
+                                    <div class="card-header permission">Can upload</div>
+                                    <div class="card-body">
+                                        <p class="justify" th:text="#{list.permission.canupload}"></p>
+                                        <p class="justify" th:text="#{list.permission.same}"></p>
+                                        <div class="row">
+                                            <div class="col-12 right">
+                                                <form action="#" th:action="@{/permission/request}" method="POST" th:if="${authority}=='canView' or ${authority}=='canCreateCorpus'">
+                                                    <input type="hidden" name="id" value="3">
+                                                    <input type="submit" class="btn btn-primary" th:attr="value = #{list.permission.solicit}">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row"><div class="col-12"></div></div>
+                                <div class="card border-primary mb3">
+                                    <div class="card-header permission">Can administer</div>
+                                    <div class="card-body">
+                                        <p class="justify" th:text="#{list.permission.canadminister}"></p>
+                                        <p class="justify" th:text="#{list.permission.same}"></p>
+                                        <div class="row">
+                                            <div class="col-12 right">
+                                                <form action="#" th:action="@{/permission/request}" method="POST" th:unless="${authority}=='canAdminister'">
+                                                    <input type="hidden" name="id" value="4">
+                                                    <input type="submit" class="btn btn-primary" th:attr="value = #{list.permission.solicit}">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:include="footer.html"></div>
+        </body>
+    </html>
+    <!--
 <head>
     <title th:text="#{app.name}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -60,7 +154,7 @@
             </div>
 
             <div class="col-2 ">
-                <h4 class="main-text text-center">Can view</h4>
+                <h4 class="main-text text-center">Can view222</h4>
             </div>
 
             <div class="col-2 ">
@@ -269,4 +363,4 @@
     
 </body>
 
-</html>
+</html>-->

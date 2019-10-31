@@ -37,8 +37,8 @@
                     </div>
                 </div>
                 <div class="row" th:if="${authority=='canCreateCorpus'}">
-                    <div class="col-12">
-                        <button type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/upload'" th:text=" #{list.datasets.uploadbutton}"></button>
+                    <div class="col-12 right">
+                        <button type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/create'" th:text=" #{list.datasets.createbutton}"></button>
                     </div>
                 </div>
 
