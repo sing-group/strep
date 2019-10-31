@@ -91,7 +91,7 @@ public class DatasetController {
      * The message i18n
      */
     @Autowired
-    private MessageSource messageSource;  
+    private MessageSource messageSource;
 
     @GetMapping("/public")
     public String listPublicDatasets(User user, Model model) {
@@ -158,7 +158,7 @@ public class DatasetController {
     public String listDatasets(@RequestParam(name = "type", required = false, defaultValue = "user") String type,
             Authentication authentication, Model model) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        
+
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
         ArrayList<Dataset> datasets = new ArrayList<Dataset>();
@@ -291,20 +291,20 @@ public class DatasetController {
             Dataset dataset = opt.get();
             if (datasetService.deleteDataset(dataset)) {
                 model.addAttribute(
-                   "message", 
-                   messageSource.getMessage("delete.dataset.sucess", Stream.of().toArray(String[]::new), locale)
+                        "message",
+                        messageSource.getMessage("delete.dataset.sucess", Stream.of().toArray(String[]::new), locale)
                 );
             } else {
                 model.addAttribute(
-                    "message", 
-                    messageSource.getMessage("delete.dataset.fail", Stream.of().toArray(String[]::new), locale)
+                        "message",
+                        messageSource.getMessage("delete.dataset.fail", Stream.of().toArray(String[]::new), locale)
                 );
             }
         } else {
-                model.addAttribute(
-                    "message", 
+            model.addAttribute(
+                    "message",
                     messageSource.getMessage("delete.dataset.fail", Stream.of().toArray(String[]::new), locale)
-                );
+            );
         }
 
         return "redirect:/dataset/list";
@@ -313,7 +313,7 @@ public class DatasetController {
     @GetMapping("/access")
     public String changeAccess(Authentication authentication, Model model, @RequestParam("id") String name,
             @RequestParam("access") String access) {
-        
+
         Locale locale = LocaleContextHolder.getLocale();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
@@ -334,17 +334,17 @@ public class DatasetController {
             if (access.equals("private") || access.equals("public") || access.equals("protected")) {
                 dataset.setAccess(access);
                 datasetRepository.save(dataset);
-                model.addAttribute("message", 
-                    messageSource.getMessage("changeacess.dataset.sucess", Stream.of(access).toArray(String[]::new), locale)
+                model.addAttribute("message",
+                        messageSource.getMessage("changeacess.dataset.sucess", Stream.of(access).toArray(String[]::new), locale)
                 );
             } else {
-                model.addAttribute("message", 
-                    messageSource.getMessage("changeacess.dataset.fail.invalidaccess", Stream.of(access).toArray(String[]::new), locale)
+                model.addAttribute("message",
+                        messageSource.getMessage("changeacess.dataset.fail.invalidaccess", Stream.of(access).toArray(String[]::new), locale)
                 );
             }
         } else {
-            model.addAttribute("message", 
-                messageSource.getMessage("changeacess.dataset.fail.datasetnotfound", Stream.of().toArray(String[]::new), locale)
+            model.addAttribute("message",
+                    messageSource.getMessage("changeacess.dataset.fail.datasetnotfound", Stream.of().toArray(String[]::new), locale)
             );
         }
 
@@ -354,9 +354,8 @@ public class DatasetController {
 
     @GetMapping("/upload")
     public String uploadDataset(Authentication authentication, Model model, Dataset dataset) {
-        System.out.println("AQUI 0");
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
 
@@ -364,7 +363,7 @@ public class DatasetController {
         model.addAttribute("username", username);
         model.addAttribute("host", HOST_NAME);
         model.addAttribute("licenses", licenseRepository.findAll());
-        System.out.println("AQUI");
+
         return "add_dataset";
     }
 
@@ -372,21 +371,17 @@ public class DatasetController {
     public String uploadDataset(Authentication authentication, @Valid Dataset dataset, BindingResult bindingResult,
             @RequestParam(name = "dataset-file", required = true) MultipartFile datasetFile,
             RedirectAttributes redirectAttributes, Model model) {
-        System.out.println("AQUI ---");
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-System.out.println("AQUI 2");
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
 
         if (bindingResult.hasErrors()) {
-            System.out.println("AQUI 3");
             model.addAttribute("authority", authority);
             model.addAttribute("username", username);
             model.addAttribute("host", HOST_NAME);
             model.addAttribute("licenses", licenseRepository.findAll());
             return "add_dataset";
         } else {
-            System.out.println("AQUI 4");
             String message = datasetService.uploadDataset(dataset, datasetFile, username);
             redirectAttributes.addFlashAttribute("message", message);
             model.addAttribute("authority", authority);
@@ -547,12 +542,12 @@ System.out.println("AQUI 2");
             availableFilesSpam = datasetRepository.countFilesByType(arrayListDatasets, "spam");
             availableFilesHam = datasetRepository.countFilesByType(arrayListDatasets, "ham");
 
-            String message=messageSource.getMessage("checkposiblespam.dataset.message", Stream.of(
-                                 Integer.toString(neccesaryFilesSpam),
-                                 Integer.toString(availableFilesSpam),
-                                 Integer.toString(neccesaryFilesHam),
-                                 Integer.toString(availableFilesHam)
-                           ).toArray(String[]::new), locale);
+            String message = messageSource.getMessage("checkposiblespam.dataset.message", Stream.of(
+                    Integer.toString(neccesaryFilesSpam),
+                    Integer.toString(availableFilesSpam),
+                    Integer.toString(neccesaryFilesHam),
+                    Integer.toString(availableFilesHam)
+            ).toArray(String[]::new), locale);
             //String message = "Necesary spam files:" + neccesaryFilesSpam + "\nAvailable spam files" + availableFilesSpam;
             //message += " / Necesary ham files:" + neccesaryFilesHam + "\nAvailable spam files" + availableFilesHam;
             if (availableFilesSpam >= neccesaryFilesSpam && availableFilesHam >= neccesaryFilesHam) {
@@ -562,7 +557,7 @@ System.out.println("AQUI 2");
             }
         } else {
             model.addAttribute("spamErrorInput",
-                messageSource.getMessage("checkposiblespam.dataset.spamerrorimput", Stream.of().toArray(String[]::new), locale)
+                    messageSource.getMessage("checkposiblespam.dataset.spamerrorimput", Stream.of().toArray(String[]::new), locale)
             );
         }
         return "create_dataset::info-spam";
@@ -595,15 +590,15 @@ System.out.println("AQUI 2");
             @RequestParam("inputHamTwtid") int inputHamTwtid,
             @RequestParam(name = "datasets", required = false) String[] datasetNames,
             @RequestParam("inputFileNumber") int fileNumberInput) {
-        
-        Locale locale = LocaleContextHolder.getLocale();                
+
+        Locale locale = LocaleContextHolder.getLocale();
         ArrayList<String> datatypes = new ArrayList<String>();
         ArrayList<String> datasets = new ArrayList<String>();
 
         if (datasetNames != null) {
             for (String datasetName : datasetNames) {
                 datasets.add(datasetName);
-               // System.out.println(datasetName);
+                // System.out.println(datasetName);
             }
             datatypes = datasetRepository.getDatasetsDatatypes(datasets);
         }
@@ -624,7 +619,7 @@ System.out.println("AQUI 2");
                 + inputSpamTytb + inputHamTytb + inputSpamTwtid + inputHamTwtid) != 100) {
             model.addAttribute("datatypesInputError",
                     messageSource.getMessage("checkposibledatatypes.dataset.datatypesinputerror", Stream.of().toArray(String[]::new), locale)
-                );
+            );
         } else {
             HashMap<String, Integer> necesaryFilesMap = new HashMap<String, Integer>();
 
