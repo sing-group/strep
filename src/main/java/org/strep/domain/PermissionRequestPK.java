@@ -28,8 +28,7 @@ public class PermissionRequestPK implements Serializable
     /**
      * The user who request the permission
      */
-    @Size(max = 20)
-    @Column(name="user_username", length = 20, columnDefinition="VARCHAR(20)")
+    @Column(name="user_username")
     private String user_username;
 
     /**

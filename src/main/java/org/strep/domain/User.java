@@ -1,7 +1,7 @@
 package org.strep.domain;
 
+import java.io.Serializable;
 import javax.persistence.*;
-import org.strep.domain.Permission;
 
 import org.hibernate.annotations.NaturalId;
 import javax.validation.constraints.NotNull;
@@ -18,7 +18,7 @@ import java.util.Set;
  * @author Ismael Vázquez
  */
 @Entity
-public class User {
+public class User implements Serializable {
 
     /**
      * The username of the user
@@ -89,7 +89,7 @@ public class User {
     /**
      * The permission requests
      */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="user")
     private Set<PermissionRequest> permissionRequests = new HashSet<PermissionRequest>();
 
     /**

@@ -31,7 +31,7 @@ public class Task
     /**
      * The dataset associated to this task
      */
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = true, fetch = FetchType.EAGER)
     @JoinColumn(name="dataset_name")
     private Dataset dataset;
 

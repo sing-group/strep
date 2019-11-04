@@ -2,10 +2,13 @@ package org.strep.domain;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
@@ -32,6 +35,7 @@ public class PermissionRequest implements Serializable
      * The user who request the permission
      */
     @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "user_username", referencedColumnName="username")
     @MapsId("user_username")
     private User user;
 
