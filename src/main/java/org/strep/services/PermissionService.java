@@ -63,7 +63,14 @@ public class PermissionService
         //ArrayList<BigInteger> permissions = permissionRepository.getUserPermissions(username);
         Long maxPerm = 1L;
         
-        Optional<PermissionRequest> optPermRequest = permissionRequestRepository.findById(new PermissionRequestPK(new Long(id),username ));
+        Optional<User> userOpt=userRepository.findById(username);
+        Optional<Permission> permissionOpt=permissionRepository.findById(new Long(id));
+        if (!userOpt.isPresent() || !permissionOpt.isPresent()) {
+            message = messageSource.getMessage("add.permissionrequest.fail.requesterror", Stream.of().toArray(String[]::new), locale);
+            return message;
+        }
+
+        Optional<PermissionRequest> optPermRequest = permissionRequestRepository.findById(new PermissionRequestPK(userOpt.get(),permissionOpt.get()));
         if(optPermRequest.isPresent())
         {
             message = messageSource.getMessage("add.permissionrequest.fail.alreadyregistered", Stream.of().toArray(String[]::new), locale);
@@ -93,7 +100,6 @@ public class PermissionService
                     {
                         PermissionRequest permissionRequest = new PermissionRequest(optUser.get(), optPermission.get());
                         permissionRequest.setStatus("pending");
-                        permissionRequest.setId(new PermissionRequestPK(optPermission.get().getId(), optUser.get().getUsername()));
                         permissionRequestRepository.save(permissionRequest);
                         message = messageSource.getMessage("add.permissionrequest.sucess", Stream.of().toArray(String[]::new), locale);
                     }
@@ -118,9 +124,9 @@ public class PermissionService
 
         String message = "";
 
-        Optional<PermissionRequest> permissionRequestOpt = permissionRequestRepository.findById(new PermissionRequestPK(permissionRequestPK.getPermissionId(), permissionRequestPK.getUserUsername()));
-        Optional<User> userOpt = userRepository.findById(permissionRequestPK.getUserUsername());
-        Optional<Permission> permOpt = permissionRepository.findById(permissionRequestPK.getPermissionId());
+        Optional<PermissionRequest> permissionRequestOpt = permissionRequestRepository.findById(new PermissionRequestPK( permissionRequestPK.getUser(),permissionRequestPK.getPermission()));
+        Optional<User> userOpt = userRepository.findById(permissionRequestPK.getUser().getUsername());
+        Optional<Permission> permOpt = permissionRepository.findById(permissionRequestPK.getPermission().getId());
         if(permissionRequestOpt.isPresent() && userOpt.isPresent() && permOpt.isPresent() )
         {
             //Authorize request
@@ -150,8 +156,8 @@ public class PermissionService
         Locale locale = LocaleContextHolder.getLocale();
         String message = "";
 
-        Optional<Permission> permissionOpt = permissionRepository.findById(permissionRequestPK.getPermissionId());
-        Optional<User> userOpt = userRepository.findById(permissionRequestPK.getUserUsername());
+        Optional<Permission> permissionOpt = permissionRepository.findById(permissionRequestPK.getPermission().getId());
+        Optional<User> userOpt = userRepository.findById(permissionRequestPK.getUser().getUsername());
 
         if(userOpt.isPresent() && permissionOpt.isPresent())
         {

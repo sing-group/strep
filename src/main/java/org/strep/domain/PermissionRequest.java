@@ -1,16 +1,10 @@
 package org.strep.domain;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -31,22 +25,6 @@ public class PermissionRequest implements Serializable
      */
     @EmbeddedId
     private PermissionRequestPK id;
-
-    /**
-     * The user who request the permission
-     */
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "user_username", referencedColumnName="username")
-    @MapsId("user_username")
-    private User user;
-
-    /**
-     * The permission id
-     */
-    @OneToOne(fetch= FetchType.LAZY)
-    @MapsId("permission_id")
-    private Permission permission;
-
 
     /**
      * The state of the request
@@ -70,9 +48,7 @@ public class PermissionRequest implements Serializable
      */
     public PermissionRequest(User user, Permission permission)
     {
-        this.user = user;
-        this.permission = permission;
-        this.id = new PermissionRequestPK(permission.getId(), user.getUsername());
+        this.id = new PermissionRequestPK(user, permission);
     }
 
 
@@ -81,15 +57,7 @@ public class PermissionRequest implements Serializable
      * @return the user who request the permission
      */
     public User getUser() {
-        return this.user;
-    }
-
-    /**
-     * Stablish the user who request the permission
-     * @param user the user who request the permission
-     */
-    public void setUser(User user) {
-        this.user = user;
+        return this.id.getUser();
     }
 
     /**
@@ -97,15 +65,7 @@ public class PermissionRequest implements Serializable
      * @return
      */
     public Permission getPermission() {
-        return this.permission;
-    }
-
-    /**
-     * Stablish the permission requested
-     * @param permission the permission requested
-     */
-    public void setPermission(Permission permission) {
-        this.permission = permission;
+        return this.id.getPermission();
     }
 
     /**
@@ -143,20 +103,35 @@ public class PermissionRequest implements Serializable
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
- 
-        if (o == null || getClass() != o.getClass())
-            return false;
- 
-        PermissionRequest that = (PermissionRequest) o;
-        return Objects.equals(user, that.user) &&
-               Objects.equals(permission, that.permission);
-    }
- 
-    @Override
     public int hashCode() {
-        return Objects.hash(user, permission);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((status == null) ? 0 : status.hashCode());
+        return result;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PermissionRequest other = (PermissionRequest) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (status == null) {
+            if (other.status != null)
+                return false;
+        } else if (!status.equals(other.status))
+            return false;
+        return true;
+    }
+
 
 }

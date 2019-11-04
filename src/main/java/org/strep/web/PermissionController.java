@@ -1,10 +1,15 @@
 package org.strep.web;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
+import org.strep.domain.Permission;
 import org.strep.domain.PermissionRequest;
 import org.strep.domain.PermissionRequestPK;
+import org.strep.domain.User;
+import org.strep.repositories.PermissionRepository;
 import org.strep.repositories.PermissionRequestRepository;
+import org.strep.repositories.UserRepository;
 import org.strep.services.PermissionService;
 import org.strep.services.UserService;
 
@@ -33,6 +38,12 @@ public class PermissionController {
 
     @Autowired
     private PermissionRequestRepository permissionRequestRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PermissionRepository permissionRepository;
 
     @GetMapping("/list")
     public String listPermissions(Authentication authentication, Model model) {
@@ -113,7 +124,14 @@ public class PermissionController {
     @PostMapping("accept")
     public String acceptPermissionRequest(Authentication authentication, Model model, @RequestParam("username")String username, @RequestParam("permission")int permission)
     {
-        PermissionRequestPK permissionRequestPK = new PermissionRequestPK(new Long(permission), username);
+        Optional<User> userOpt=userRepository.findById(username);
+        Optional<Permission> permissionOpt=permissionRepository.findById(new Long(permission));
+
+        if (!userOpt.isPresent() || !permissionOpt.isPresent())
+             //TODO: revise this message
+             return "redirect:/permission/listrequests?message=Invalid";
+
+        PermissionRequestPK permissionRequestPK = new PermissionRequestPK(userOpt.get(), permissionOpt.get());
 
         String message = permissionService.acceptPermission(permissionRequestPK);
 
@@ -123,7 +141,14 @@ public class PermissionController {
     @PostMapping("reject")
     public String rejectPermissionRequest(Authentication authentication, Model model, @RequestParam("username") String username, @RequestParam("permission") int permission)
     {
-        PermissionRequestPK permissionRequestPK = new PermissionRequestPK(new Long(permission), username);
+        Optional<User> userOpt=userRepository.findById(username);
+        Optional<Permission> permissionOpt=permissionRepository.findById(new Long(permission));
+
+        if (!userOpt.isPresent() || !permissionOpt.isPresent())
+             //TODO: revise this message
+             return "redirect:/permission/listrequests?message=Invalid";
+
+        PermissionRequestPK permissionRequestPK = new PermissionRequestPK(userOpt.get(), permissionOpt.get());
 
         String message = permissionService.rejectPermission(permissionRequestPK);
 

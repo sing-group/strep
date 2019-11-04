@@ -5,7 +5,11 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
 
 /**
@@ -23,14 +27,17 @@ public class PermissionRequestPK implements Serializable
     /**
      * The permission id
      */
-    @Column(name="permission_id")
-    private Long permission_id;
+    @OneToOne(fetch= FetchType.LAZY)
+    @MapsId("permission_id")
+    private Permission permission;
 
     /**
      * The user who request the permission
      */
-    @Column(length = 30, columnDefinition = "VARCHAR(30)", name="user_username")
-    private String user_username;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "user_username", referencedColumnName="username")
+    @MapsId("user_username")
+    private User user;
 
     /**
      * The default constructor
@@ -45,46 +52,10 @@ public class PermissionRequestPK implements Serializable
      * @param permission_id the permission id
      * @param user_username the user who request the permission
      */
-    public PermissionRequestPK(Long permission_id, String user_username)
+    public PermissionRequestPK(User user, Permission permission)
     {
-        this.permission_id = permission_id;
-        this.user_username = user_username;
-    }
-
-    /**
-     * Returns the permission id
-     * @return the permission id
-     */
-    public Long getPermissionId()
-    {
-        return permission_id;
-    }
-
-    /**
-     * Stablis the id of the permission
-     * @param permission_id the id of the permission
-     */
-    public void setId(Long permission_id)
-    {
-        this.permission_id = permission_id;
-    }
-
-    /**
-     * Return the user who request the permission
-     * @return the user who request the permission
-     */
-    public String getUserUsername()
-    {
-        return user_username;
-    }
-
-    /**
-     * Stablish the user who request the permission
-     * @param user_username the user who request the permission
-     */
-    public void setUserUsername(String user_username)
-    {
-        this.user_username = user_username;
+        this.user=user;
+        this.permission=permission;
     }
 
     @Override
@@ -95,13 +66,45 @@ public class PermissionRequestPK implements Serializable
             return false;
  
         PermissionRequestPK that = (PermissionRequestPK) o;
-        return Objects.equals(permission_id, that.permission_id) &&
-               Objects.equals(user_username, that.user_username);
+        return Objects.equals(getUser(), ((PermissionRequestPK)o).getUser()) &&
+               Objects.equals(getPermission(), ((PermissionRequestPK)o).getPermission());
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(permission_id, user_username);
+        return Objects.hash(getUser(), getPermission());
+    }
+
+    /**
+     * Get the permission requested
+     * @return The permission requested
+     */
+    public Permission getPermission() {
+        return permission;
+    }
+
+    /**
+     * Stablish the permission
+     * @param permission The permission requested
+     */
+    public void setPermission(Permission permission) {
+        this.permission = permission;
+    }
+
+    /**
+     * Gets the user
+     * @return The user that requested the permissions
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Sets the user
+     * @param user The user that requested the permission
+     */
+    public void setUser(User user) {
+        this.user = user;
     }
 }

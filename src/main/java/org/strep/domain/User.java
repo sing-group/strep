@@ -8,9 +8,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import java.util.HashSet;
+//import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
+//import java.util.Set;
 
 /**
  * JPA Bean for the User objects managed by application
@@ -94,8 +94,8 @@ public class User implements Serializable {
     /**
      * The permission requests
      */
-    @OneToMany(fetch=FetchType.EAGER, mappedBy="user")
-    private Set<PermissionRequest> permissionRequests = new HashSet<PermissionRequest>();
+    //@OneToMany(fetch=FetchType.EAGER, mappedBy="user")
+    //private Set<PermissionRequest> permissionRequests = new HashSet<PermissionRequest>();
 
     /**
      * The default constructor
@@ -289,18 +289,18 @@ public class User implements Serializable {
      *
      * @return the users wich have the permission
      */
-    public Set<PermissionRequest> getPermissionRequests() {
-        return permissionRequests;
-    }
+    //public Set<PermissionRequest> getPermissionRequests() {
+    //    return permissionRequests;
+    //}
 
     /**
      * Stablish the users wich have the permission
      *
      * @param users the users wich have the permission
      */
-    public void setPermissionRequests(Set<PermissionRequest> permissionRequests) {
-        this.permissionRequests = permissionRequests;
-    }
+    //public void setPermissionRequests(Set<PermissionRequest> permissionRequests) {
+    //    this.permissionRequests = permissionRequests;
+    //}
 
     @Override
     public boolean equals(Object o) {
