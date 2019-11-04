@@ -220,12 +220,10 @@ public class DatasetService
             zip.close();
         }catch(FileNotFoundException e)
         {
-            //System.out.println("File doesn't found");
             return false;
         }
         catch(IOException e)
         {
-            //System.out.println("IOException");
             return false;
         }
         }
@@ -323,7 +321,7 @@ public class DatasetService
         if(optDataset.isPresent())
         {
             Dataset oldDataset = optDataset.get();
-            //System.out.println(oldDataset.getName());
+
             String author = oldDataset.getAuthor();
 
             if(username.equals(author))

@@ -21,6 +21,11 @@ import javax.persistence.JoinColumn;
 public class TaskCreateUdataset extends Task
 {
     /**
+     * Serial Version UID
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * The spam percentage limit for eml files
      */
     private int limitSpamPercentageEml;

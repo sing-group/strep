@@ -15,8 +15,6 @@ import javax.validation.constraints.Pattern;
 
 import java.io.Serializable;
 
-import org.hibernate.engine.jdbc.SerializableBlobProxy;
-
 /**
  * JPA Bean for the Dataset objects managed by application
  * @author Ismael Vázquez

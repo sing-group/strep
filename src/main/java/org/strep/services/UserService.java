@@ -104,21 +104,16 @@ public class UserService {
     public String editPermissions(int permissionIntId, String username) {
         Locale locale = LocaleContextHolder.getLocale();
 
-        String message = messageSource.getMessage("edit.permission.fail", Stream.of().toArray(String[]::new), locale);
+        String message = null;
 
-        Long permissionLongId = new Long(permissionIntId);
-
-        Optional<Permission> permissionOpt = permissionRepository.findById(permissionLongId);
+        Optional<Permission> permissionOpt = permissionRepository.findById(new Long(permissionIntId));
         Optional<User> userOpt = userRepository.findById(username);
         if (permissionOpt.isPresent() && userOpt.isPresent()) {
             Permission permission = permissionOpt.get();
-            userOpt.get().setPermission(permission);
-            System.out.println("get permission: " + userOpt.get().getPermission().getId());
-            //permissionRepository.deletePermissions(username);
-            //for(int i = 1; i<=permission.getId().intValue();i++)
-            //{
-            //    permissionRepository.addPermission(username, i);
-            //}
+            User user=userOpt.get();
+            user.setPermission(permission);
+            userRepository.save(user);
+
             message = messageSource.getMessage("edit.permission.sucess", Stream.of().toArray(String[]::new), locale);
         } else {
             message = messageSource.getMessage("edit.permission.fail", Stream.of().toArray(String[]::new), locale);
