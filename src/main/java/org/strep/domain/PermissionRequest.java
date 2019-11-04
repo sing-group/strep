@@ -2,9 +2,8 @@ package org.strep.domain;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * JPA Bean for the Dataset objects managed by application
@@ -50,6 +51,9 @@ public class PermissionRequest implements Serializable
     /**
      * The state of the request
      */
+    @NotNull
+    @Column(length = 9, columnDefinition="VARCHAR(9)")
+    @Pattern(regexp = "^(pending|accepted)$", message = "The status can be pending or accepted")
     private String status;
 
     /**

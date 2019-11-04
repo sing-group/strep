@@ -1,5 +1,6 @@
 package org.strep.domain;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -14,8 +15,13 @@ import javax.validation.constraints.Size;
  * @author Ismael Vázquez
  */
 @Entity
-public class Language
+public class Language implements Serializable
 {
+    /**
+     * Serial Version UID
+     */
+    private static final long serialVersionUID = 1L;
+
     /**
      * The language id of the language
      */

@@ -1,5 +1,7 @@
 package org.strep.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 /**
@@ -7,8 +9,13 @@ import javax.persistence.Entity;
  * @author Ismael Vázquez
  */
 @Entity
-public class FileDatatypeType
+public class FileDatatypeType implements Serializable
 {
+    /**
+     * Serial Version UID
+     */
+    private static final long serialVersionUID = 1L;
+
     /**
      * Number of files with the specified extension an type
      */

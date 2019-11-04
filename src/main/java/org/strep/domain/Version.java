@@ -1,6 +1,8 @@
 package org.strep.domain;
 
 import javax.persistence.*;
+
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
@@ -13,8 +15,13 @@ import javax.persistence.Column;
  * @author José Ramón Méndez
  */
 @Entity
-public class Version
+public class Version implements Serializable
 {
+    /**
+     * The serialVersionUID
+     */
+    private static final long serialVersionUID = 1L;
+
     /**
      * The name of the version
      */

@@ -13,14 +13,23 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Pattern;
 
+import java.io.Serializable;
+
+import org.hibernate.engine.jdbc.SerializableBlobProxy;
+
 /**
  * JPA Bean for the Dataset objects managed by application
  * @author Ismael Vázquez
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Task
+public class Task implements Serializable
 {
+    /**
+     * Serial Version UID
+     */
+    private static final long serialVersionUID = 1L;
+
     /**
      * The id of the task
      */

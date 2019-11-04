@@ -1,5 +1,6 @@
 package org.strep.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -25,8 +26,13 @@ import javax.validation.constraints.Pattern;
  * @author José Ramón Méndez Reboredo
  */
 @Entity
-public class Dataset
+public class Dataset implements Serializable
 {
+    /**
+     * Serial Version UID
+     */
+    private static final long serialVersionUID = 1L;
+
     /**
      * The name of the dataset
      */

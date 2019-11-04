@@ -1,6 +1,7 @@
 
 package org.strep.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -21,8 +22,13 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @PrimaryKeyJoinColumn(referencedColumnName="id")
-public class TaskCreateUPreprocessing extends Task
+public class TaskCreateUPreprocessing extends Task implements Serializable
 {
+    /**
+     * Serial Version UID
+     */
+    private static final long serialVersionUID = 1L;
+
     /**
      * The name of the preprocesssing (for reutilization purposes)
      */

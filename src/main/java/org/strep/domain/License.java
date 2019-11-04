@@ -1,6 +1,9 @@
 package org.strep.domain;
 
 import javax.persistence.Entity;
+
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -12,8 +15,13 @@ import javax.validation.constraints.Size;
  * @author Ismael Vázquez
  */
 @Entity
-public class License
+public class License implements Serializable
 {
+    /**
+     * Serial Version UID
+     */
+    private static final long serialVersionUID = 1L;
+
     /**
      * The name of the license
      */

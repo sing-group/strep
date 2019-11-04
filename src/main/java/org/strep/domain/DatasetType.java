@@ -1,5 +1,7 @@
 package org.strep.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -11,8 +13,13 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="dataset_types")
-public class DatasetType
+public class DatasetType implements Serializable
 {
+    /**
+     * Serial Version UID
+     */
+    private static final long serialVersionUID = 1L;
+
     /**
      * The id of the dataset type
      */

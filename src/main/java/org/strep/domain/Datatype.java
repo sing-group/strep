@@ -1,5 +1,6 @@
 package org.strep.domain;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -14,11 +15,16 @@ import javax.validation.constraints.Size;
  * @author Ismael Vázquez
  */
 @Entity
-public class Datatype
+public class Datatype implements Serializable
 {
-     /**
-      * The name of the datatype
-      */
+    /**
+    * Serial Version UID
+    */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * The name of the datatype
+     */
     @Id
     @NotNull
     @Size(min=1, max=10, message="The datatype name must have beetween 1 and 10 characters")

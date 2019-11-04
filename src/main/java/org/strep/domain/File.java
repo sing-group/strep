@@ -6,6 +6,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import java.util.Set;
+import java.io.Serializable;
 import java.util.Date;
 import org.strep.domain.Dataset;
 
@@ -14,8 +15,13 @@ import org.strep.domain.Dataset;
  * @author Ismael Vázquez
  */
 @Entity
-public class File
+public class File implements Serializable
 {
+    /**
+     * Serial Version UID
+     */
+    private static final long serialVersionUID = 1L;
+
     /**
      * The id of the file
      */

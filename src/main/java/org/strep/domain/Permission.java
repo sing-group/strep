@@ -5,7 +5,7 @@ import org.strep.domain.User;
 
 import org.hibernate.annotations.NaturalId;
 
-import java.util.HashSet;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,8 +14,13 @@ import java.util.Set;
  * @author Ismael Vázquez
  */
 @Entity
-public class Permission
+public class Permission implements Serializable
 {
+    /**
+     * Serial Version UID
+     */
+    private static final long serialVersionUID = 1L;
+
     /**
      * The id of the permission
      */
@@ -39,12 +44,6 @@ public class Permission
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<User> users;
-
-    /**
-     * The permission requests associated to this permission
-     */
-    //@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-    //private Set<PermissionRequest> permissionRequests = new HashSet<PermissionRequest>();
 
     /**
      * The default constructor
@@ -136,24 +135,6 @@ public class Permission
     {
         this.users = users;
     }
-
-    /**
-     * Return the users wich have the permission
-     * @return the users wich have the permission
-     */
-    //public Set<PermissionRequest> getPermissionRequests()
-    //{
-    //    return permissionRequests;
-    //}
-
-    /**
-     * Stablish the users wich have the permission
-     * @param users the users wich have the permission
-     */
-    //public void setPermissionRequests(Set<PermissionRequest> permissionRequests)
-    //{
-    //    this.permissionRequests = permissionRequests;
-    //}
 
     @Override
     public boolean equals(Object o) {

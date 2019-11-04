@@ -5,7 +5,6 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.Size;
 
 /**
  * JPA Bean for the Dataset objects managed by application
