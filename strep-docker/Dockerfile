@@ -1,23 +1,11 @@
 FROM debian:9
 
-#username = admin y password = 12admin34.
-
 #Install openjdk
 RUN apt-get update && apt-get install -y \
       openjdk-8-jdk git maven
-# wget lsb-release gnupg
 
 #Add a start script for starting the container
 ADD start.sh /root/start.sh
-
-#Add the configuration for the mysql packages (debconf) only for mysql8
-#ADD debconf-mysql /root/debconf-mysql
-
-# Install mysql8.0
-#RUN cd && \
-#    debconf-set-selections /root/debconf-mysql && export DEBIAN_FRONTEND=noninteractive && export DEBIAN_PRIORITY=critical && \
-#    wget http://repo.mysql.com/mysql-apt-config_0.8.13-1_all.deb && dpkg -i mysql-apt-config_0.8.13-1_all.deb && \
-#    apt-get update && apt-get install mysql-server -y
 
 #Install MariaDB
 RUN apt-get install mariadb-server mariadb-client -y

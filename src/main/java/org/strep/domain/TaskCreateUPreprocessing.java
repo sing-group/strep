@@ -64,7 +64,7 @@ public class TaskCreateUPreprocessing extends Task implements Serializable
      * The dataset to preprocess
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="dataset_name", referencedColumnName="name")
+    @JoinColumn(name="preprocess_dataset_name", referencedColumnName="name")
     private Dataset preprocessDataset;
 
     /**
