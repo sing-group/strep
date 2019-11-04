@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * JPA Bean for the Dataset objects managed by application
@@ -27,7 +29,7 @@ public class PermissionRequestPK implements Serializable
     /**
      * The user who request the permission
      */
-    @Column(name="user_username")
+    @Column(length = 30, columnDefinition = "VARCHAR(30)", name="user_username")
     private String user_username;
 
     /**
