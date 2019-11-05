@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Optional;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -21,9 +19,10 @@ import org.strep.repositories.UserRepository;
 import org.strep.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -50,8 +49,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Value("${host.name}")
+    private String hostname;
+
     @Autowired
-    private JavaMailSender sender;
+    private JavaMailSender mailSender;
 
     @Autowired
     private DatasetRepository datasetRepository;
@@ -76,24 +78,19 @@ public class UserController {
             if (userRepository.findById(id).isPresent()) {
                 return "register";
             } else {
-                MimeMessage message = sender.createMimeMessage();
-                MimeMessageHelper helper = new MimeMessageHelper(message);
 
-                try {
-                    helper.setTo(user.getEmail());
-                    helper.setText(
-                            "Welcome to STRep, click in the following link to log into your account https://localhost:8443/user/accountconfirmation"
-                            + "?hash=" + hash.replaceAll("=", ""));
-                    helper.setSubject("Account activation");
-                    //  sender.send(message);
+                SimpleMailMessage message = new SimpleMailMessage();
+                message.setTo(user.getEmail());
+                message.setSubject("Account activation");
+                message.setText("Welcome to STRep.\n\n Click in the following link to log into your account \n"+hostname+"/user/accountconfirmation?hash=" 
+                    + hash.replaceAll("=", "") + "\n\n Best regards.");
+                mailSender.send(message);
 
-                    User user2 = new User(id, email, hash.replaceAll("=", ""), user.getPassword(),
-                            user.getName(), user.getSurname());
-                    
-                    userService.saveUser(user2);
-                } catch (MessagingException e) {
-                    return "redirect:/error";
-                }
+                User user2 = new User(id, email, hash.replaceAll("=", ""), user.getPassword(),
+                        user.getName(), user.getSurname());
+                
+                userService.saveUser(user2);
+
                 return "redirect:/";
             }
         }
