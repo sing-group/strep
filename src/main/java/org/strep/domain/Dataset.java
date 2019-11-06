@@ -153,7 +153,7 @@ public class Dataset implements Serializable {
     /**
      * The task associated to this dataset
      */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "dataset")
     private List<Task> tasks;
 
     /**
@@ -557,23 +557,4 @@ public class Dataset implements Serializable {
         }
         return toRet;
     }
-
-    /**
-     * Return the preprocessing tasks asociated to this dataset
-     *
-     * @return the preprocessing tasks asociated to this dataset
-     */
-    //public List<TaskCreateUPreprocessing> getPreprocessingTasks()
-    //{
-    //    return this.preprocessingTasks;
-    //}
-    /**
-     * Stablish the preprocessing tasks of this dataset
-     *
-     * @param preprocessingTasks the preprocessing tasks of this dataset
-     */
-    //public void setPreprocessingTasks(List<TaskCreateUPreprocessing> preprocessingTasks)
-    //{
-    //    this.preprocessingTasks = preprocessingTasks;
-    //}
 }

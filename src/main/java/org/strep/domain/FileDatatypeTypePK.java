@@ -121,4 +121,41 @@ public class FileDatatypeTypePK implements Serializable
         this.dataset = dataset;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((dataset == null) ? 0 : dataset.hashCode());
+        result = prime * result + ((extension == null) ? 0 : extension.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        FileDatatypeTypePK other = (FileDatatypeTypePK) obj;
+        if (dataset == null) {
+            if (other.dataset != null)
+                return false;
+        } else if (!dataset.equals(other.dataset))
+            return false;
+        if (extension == null) {
+            if (other.extension != null)
+                return false;
+        } else if (!extension.equals(other.extension))
+            return false;
+        if (type == null) {
+            if (other.type != null)
+                return false;
+        } else if (!type.equals(other.type))
+            return false;
+        return true;
+    }
+
 }
