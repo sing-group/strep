@@ -38,6 +38,7 @@ import org.strep.domain.Task;
 /*
 * Service class to abstract to the controller of tasks jobs not related to the presentation
 * @author Ismael Vázquez
+* @author José Ramón Méndez
 */
 @Service
 public class TaskService {
@@ -358,11 +359,14 @@ public class TaskService {
                     databaseFilesMap.put(".twtidspam", 0);
                     databaseFilesMap.put(".twtidham", 0);
 
-                    //How many files are available of each datatype
-                    ArrayList<FileDatatypeType> filesDatatypeType = fileDatatypeTypeRepository.getFilesByExtensionAndType(datasets);
-                    for(FileDatatypeType fileDatatypeType : filesDatatypeType)
+                    for (FileDatatypeType i: fileDatatypeTypeRepository.findAll())
                     {
-                        databaseFilesMap.replace(fileDatatypeType.getId().getExtension()+fileDatatypeType.getId().getType(), fileDatatypeType.getCount());
+                        if(datasets.contains(i.getId().getDataset()))
+                        {
+                           Integer previous=databaseFilesMap.get(i.getId().getExtension()+i.getId().getType());
+                           databaseFilesMap.replace(i.getId().getExtension()+i.getId().getType(),
+                              i.getCount()+(previous==null?0:previous));
+                        }
                     }
 
                     Set<String> keys = databaseFilesMap.keySet();

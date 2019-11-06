@@ -665,12 +665,14 @@ public class DatasetController {
             databaseFilesMap.put(".twtidspam", 0);
             databaseFilesMap.put(".twtidham", 0);
 
-            // How many files are available of each datatype
-            ArrayList<FileDatatypeType> filesDatatypeType = fileDatatypeTypeRepository
-                    .getFilesByExtensionAndType(datasets);
-            for (FileDatatypeType fileDatatypeType : filesDatatypeType) {
-                databaseFilesMap.replace(fileDatatypeType.getId().getExtension() + fileDatatypeType.getId().getType(),
-                        fileDatatypeType.getCount());
+            for (FileDatatypeType i: fileDatatypeTypeRepository.findAll())
+            {
+                if(datasets.contains(i.getId().getDataset()))
+                {
+                   Integer previous=databaseFilesMap.get(i.getId().getExtension()+i.getId().getType());
+                   databaseFilesMap.replace(i.getId().getExtension()+i.getId().getType(),
+                      i.getCount()+(previous==null?0:previous));
+                }
             }
 
             Set<String> keys = databaseFilesMap.keySet();

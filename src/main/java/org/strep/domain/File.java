@@ -58,6 +58,8 @@ public class File implements Serializable
      * The extension of the file
      */
     @NotNull(message = "The extension of the file cannot be null")
+    @Size(min=1, max=10, message="The datatype name must have beetween 1 and 10 characters")
+    @Column(length = 10, columnDefinition="VARCHAR(10)")
     private String extension;
 
     /**

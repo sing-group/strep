@@ -4,11 +4,33 @@ import java.io.Serializable;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Subselect;
+import org.springframework.data.annotation.Immutable;
+
 /**
- * JPA bean artificial entity to project queries, this table doesn't save objects
+ * Determine the number of files included in system datasets classified by the
+ * following criteria: dataset, extension and type (spam|ham)
+ * 
+ * This Entity queries to this view: CREATE OR REPLACE VIEW file_datatype_type
+ * AS SELECT dataset.name as dataset, file.extension as extension, file.type as
+ * type, count(file.id) as count FROM file,dataset, dataset_files WHERE
+ * file.id=dataset_files.file_id and dataset_files.dataset_name=dataset.name and
+ * dataset.type='systemdataset' group by file.extension,dataset.name,file.type;
+ * 
  * @author Ismael Vázquez
+ * @author José Ramón Méndez
  */
 @Entity
+@Table(name = "file_datatype_type")
+@Immutable
+@Subselect(
+    "SELECT dataset.name as dataset, file.extension as extension, file.type as "
+    +"type, count(file.id) as count FROM file,dataset, dataset_files WHERE "
+    +"file.id=dataset_files.file_id and dataset_files.dataset_name=dataset.name and "
+    +"dataset.type='systemdataset' group by file.extension,dataset.name,file.type"
+)
 public class FileDatatypeType implements Serializable
 {
     /**
@@ -56,29 +78,11 @@ public class FileDatatypeType implements Serializable
     }
 
     /**
-     * Stablish the count of the object
-     * @param count the count of the object
-     */
-    public void setCount(int count)
-    {
-        this.count = count;
-    }
-
-    /**
      * Return the id of the object
      * @return the id of the object
      */
     public FileDatatypeTypePK getId()
     {
         return this.id;
-    }
-
-    /**
-     * Stablish the id of the object
-     * @param id the id of the object
-     */
-    public void setId(FileDatatypeTypePK id)
-    {
-        this.id = id;
     }
 }
