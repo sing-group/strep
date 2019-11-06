@@ -62,7 +62,7 @@
                                         <a class="btn btn-list" th:title="#{detailed.dataset.viewpreprocess}" data-toggle="tooltip" th:href="@{'/task/preprocess?id=' + ${dataset.name}}">
                                             <i class="fas fa-tasks"></i>
                                         </a>
-                                        <a class="btn btn-list" th:title="#{detailed.dataset.detail}" data-toggle="tooltip" th:href="@{'/task/detailed?task=' + ${dataset.task.id}}">
+                                        <a class="btn btn-list" th:title="#{detailed.dataset.detail}" data-toggle="tooltip" th:href="@{'/task/detailed?task=' + ${dataset.getCreationTask()}}">
                                             <i class="fas fa-info-circle"></i>
                                         </a>
                                     </div>
