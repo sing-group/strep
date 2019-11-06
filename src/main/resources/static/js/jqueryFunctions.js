@@ -12,41 +12,41 @@ function retrieveDatasetInfo(id) {
 
 function updateDatasetsList()
 {
-    var licenses = document.getElementsByName("license");
-    var languages = document.getElementsByName("language");
-    var datatypes = document.getElementsByName("datatype");
-
+    var licenses = $('#license').find("option:selected");//document.getElementsByName("licenses");
+    var languages = $('#language').find("option:selected");//$('input[name="language"]:checked');//document.getElementsByName("language");
+    var datatypes = $('#datatype').find("option:selected");//$('input[name="datatype"]:checked');//document.getElementsByName("datatype");
     var dateValue1 = document.getElementById("date1").value;
     var dateValue2 = document.getElementById("date2").value;
 
     var url = "/dataset/createlist?date1=" + dateValue1 + "&date2=" + dateValue2;
+    //var url = "/dataset/createlist?";
 
-    for (var i = 0; i < licenses.length; i++)
-    {
-        if (licenses[i].checked)
-        {
-            url += encodeURI("&" + licenses[i].name + "=" + licenses[i].value);
-        }
+    for (var i = 0; i < licenses.length; i++){
+      /*if (url.includes("=")){
+        url +="&";
+      }*/
+      if (licenses[i].value!=""){
+        url += encodeURI("license=" + licenses[i].value);
+      }
     }
-
-    for (var i = 0; i < languages.length; i++)
-    {
-        if (languages[i].checked)
-        {
-            url += encodeURI("&" + languages[i].name + "=" + languages[i].value);
-        }
+    for (var i = 0; i < languages.length; i++){
+      /*if (url.includes("=")){
+        url +="&";
+      }*/
+      if (languages[i].value!=""){
+        url += encodeURI("language=" + languages[i].value);
+      }
     }
-
-    for (var i = 0; i < datatypes.length; i++)
-    {
-        if (datatypes[i].checked)
-        {
-            url += encodeURI("&" + datatypes[i].name + "=" + datatypes[i].value);
-        }
+    for (var i = 0; i < datatypes.length; i++){
+      /*if (url.includes("=")){
+        url +="&";
+      }*/
+      if (datatypes[i].value!=""){
+        url += encodeURI("datatype=" + datatypes[i].value);
+      }
     }
 
     console.log(url);
-
     $("#datasets-list").load(url, function (response, status, xhr) {
         if (response.substr(0, 2) == "<!")
         {
@@ -57,6 +57,7 @@ function updateDatasetsList()
 
 function updateTable(id)
 {
+
     var datasetNames = document.getElementsByName("datasets");
 
     if (id == "buttonCheckDatatypes")
@@ -75,7 +76,6 @@ function updateTable(id)
         var inputHamTwtid = document.getElementById("inputHam.twtid");
         var inputSpamWarc = document.getElementById("inputSpam.warc");
         var inputHamWarc = document.getElementById("inputHam.warc");
-
         var inputSpamEmlValue = checkNullValues(inputSpamEml);
         var inputHamEmlValue = checkNullValues(inputHamEml);
         var inputSpamTsmsValue = checkNullValues(inputSpamTsms);
@@ -221,11 +221,20 @@ $(document).ready(function () {
       window.location= document.referrer;
     });
 
-  /*  document.getElementById('back').addEventListener('click', function () {
-      alert(document.referrer);
-      window.location= document.referrer;
-    }, false);
-*/
+    // Tune dataset: Needed to hold disabled inputs in not selected option
+    $("input[name=mode]").change(function() {
+      var checkedOptionValue = $("input[name=mode]:checked").val();
+      if (checkedOptionValue=="spam"){
+          $("#datatypespercentage input").attr("disabled", true);
+          $("#spampercentage input").attr("disabled", false);
+          //$(this).attr("disabled", false);
+      } else {
+          $("#spampercentage input").attr("disabled", true);
+          $("#datatypespercentage input").attr("disabled", false);
+          //$(this).attr("disabled", false);
+      }
+    });
+
     // It's been done like this to make it work properly in Chrome
     document.getElementById('locales').addEventListener('change', function () {
         changeLocale($('#locales').val());

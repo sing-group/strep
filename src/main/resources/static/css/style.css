@@ -96,6 +96,18 @@ tr:nth-child(even){
     color: #203939;
     font-size: 1;
 }
+.bold{
+  font-weight: bold;
+}
+.padding{
+  padding-right:38px;
+}
+input[type="date"]{
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;border-radius: 0.25em;
+  height: calc(1.5em + 0.75rem + 2px);
+  border: 1px solid #ced4da;
+  text-align: right;
+}
 
 .main-text-header
 {
@@ -412,6 +424,7 @@ legend{
 }
 .alert-danger{
   background-color: #fadbd8;
+  color: #E74C3C;
 }
 .odd{
   background-color: #FBFBFB;
@@ -458,10 +471,20 @@ legend{
 .license:hover, .license:active{
   color: #9cb805;
 }
+#inputSpamPercentage{
+  max-width: 90px;
+}
+.alert-danger{
+  border-color: #E74C3C;
+  color: #FFF;
+}
 .justify{
   text-align: justify;
 }
 
+.create{
+  border-bottom: 1px solid #203939 !important;
+}
 /***** Responsive *****/
 #dlogin{
   padding-right: 10px;

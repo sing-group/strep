@@ -478,10 +478,13 @@ public class DatasetController {
             @RequestParam(name = "license", required = false) String[] licenses,
             @RequestParam(name = "date1", required = false) String date1,
             @RequestParam(name = "date2", required = false) String date2) {
+        
         ArrayList<Dataset> datasets = datasetService.getFilteredDatasets(languages, datatypes, licenses, date1, date2);
         model.addAttribute("datasets", datasets);
-
-        return "create_dataset::datasets";
+        model.addAttribute("message","aaa");
+        System.err.println("datasets: " + datasets.size() +": "+ (datasets.isEmpty()?"":(datasets.get(0).getName())));
+        
+        return "create_dataset::datasets-list";
     }
 
     @GetMapping("/updateDatatypesTable")

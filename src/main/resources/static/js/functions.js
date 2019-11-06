@@ -12,12 +12,13 @@ function dynamicUrl(val)
 
 function enableInput(id)
 {
+
     var length = id.length;
-    var idInput = id.substring(0, length-8);
+    //var idInput = id.substring(0, length-8);
+    var idInput = id;
+
     var checkbox = document.getElementById(id);
-
     var input = document.getElementById(idInput);
-
     if(checkbox.checked)
     {
         input.removeAttribute("disabled");
