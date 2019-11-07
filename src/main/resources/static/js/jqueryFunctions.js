@@ -19,28 +19,18 @@ function updateDatasetsList()
     var dateValue2 = document.getElementById("date2").value;
 
     var url = "/dataset/createlist?date1=" + dateValue1 + "&date2=" + dateValue2;
-    //var url = "/dataset/createlist?";
 
     for (var i = 0; i < licenses.length; i++){
-      /*if (url.includes("=")){
-        url +="&";
-      }*/
       if (licenses[i].value!=""){
         url += encodeURI("license=" + licenses[i].value);
       }
     }
     for (var i = 0; i < languages.length; i++){
-      /*if (url.includes("=")){
-        url +="&";
-      }*/
       if (languages[i].value!=""){
         url += encodeURI("language=" + languages[i].value);
       }
     }
     for (var i = 0; i < datatypes.length; i++){
-      /*if (url.includes("=")){
-        url +="&";
-      }*/
       if (datatypes[i].value!=""){
         url += encodeURI("datatype=" + datatypes[i].value);
       }
@@ -57,10 +47,9 @@ function updateDatasetsList()
 
 function updateTable(id)
 {
-
-    var datasetNames = document.getElementsByName("datasets");
-
-    if (id == "buttonCheckDatatypes")
+   checkSelectedDatasets();
+   var datasetNames = document.getElementsByName("datasets");
+   if (id == "buttonCheckDatatypes")
     {
         var inputFileNumber = document.getElementById("fileNumber");
         var datasets = document.getElementsByName("datasets");
@@ -215,24 +204,33 @@ function deniedRequest(){
   document.getElementById('permissionForm').submit();
 }
 
-$(document).ready(function () {
-
-    $("#back").click(function() {
-      window.location= document.referrer;
-    });
-
-    // Tune dataset: Needed to hold disabled inputs in not selected option
-    $("input[name=mode]").change(function() {
-      var checkedOptionValue = $("input[name=mode]:checked").val();
-      if (checkedOptionValue=="spam"){
-          $("#datatypespercentage input").attr("disabled", true);
-          $("#spampercentage input").attr("disabled", false);
-          //$(this).attr("disabled", false);
+// Tune dataset: Needed to hold disabled inputs in not selected option
+$('#datasetSelectedError').hide();
+function checkSelectedDatasets(){
+  var checkedOptionValue = $("input[name=mode]:checked").val();
+  if (checkedOptionValue=="spam"){
+      $('#datasetSelectedError').hide();
+      $("#datatypespercentage input").attr("disabled", true);
+      $("#buttonCheckDatatypes").attr("disabled", true);
+      $("#spampercentage input").attr("disabled", false);
+  } else {
+      if ($('#checkboxUpdateTable:checked').length ==0){
+          $('#datasetSelectedError').show();
       } else {
+          $('#datasetSelectedError').hide();
           $("#spampercentage input").attr("disabled", true);
           $("#datatypespercentage input").attr("disabled", false);
-          //$(this).attr("disabled", false);
+          $("#buttonCheckDatatypes").attr("disabled", false);
       }
+  }
+}
+
+
+$(document).ready(function () {
+
+$('#datasetSelectedError').hide();
+    $("#back").click(function() {
+      window.location= document.referrer;
     });
 
     // It's been done like this to make it work properly in Chrome

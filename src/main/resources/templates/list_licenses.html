@@ -51,7 +51,7 @@
                                     <a class="btn btn-list" th:href="@{/license/modify(name = ${license.name})}" th:title="#{list.licenses.edit}">
                                         <i class="fas fa-pen-square"></i>
                                     </a>
-                                    <a class="btn btn-list" th:href="@{/license/delete(name = ${license.name})}" th:title="#{list.licenses.delete}" onclick="return confirm('[[#{list.licenses.suredelete}]]');">
+                                    <a class="btn btn-list" th:href="@{/license/delete(name = ${license.name})}" th:title="#{list.licenses.delete}" th:onclick="'javascript:return confirm(\'' + #{list.licenses.suredelete} + '\');'">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </div>

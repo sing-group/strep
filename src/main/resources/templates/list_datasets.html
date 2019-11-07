@@ -78,7 +78,7 @@
                                 <tr th:each="dataset : ${datasets}">
                                     <th scope="row" th:text="${dataset.name}"></th>
                                     <td th:text="${dataset.author}"></td>
-                                    <td th:text="${dataset.uploadDate}"></td>
+                                    <td th:text="${#dates.format(dataset.uploadDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${dataset.license.name}"></td>
                                     <td>
                                         <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
@@ -124,7 +124,7 @@
                                 <tr th:each="dataset : ${datasets}">
                                     <th scope="row" th:text="${dataset.name}"></th>
                                     <td th:text="${dataset.author}"></td>
-                                    <td th:text="${dataset.uploadDate}"></td>
+                                    <td th:text="${#dates.format(dataset.uploadDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${dataset.license.name}"></td>
                                     <td>
                                         <a class="btn btn-list btn-info dropdown-toggle" data-toggle="dropdown" href="#">
@@ -154,7 +154,7 @@
                                         <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.edit}" th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
                                             <i class="fas fa-pen-square"></i>
                                         </a>
-                                        <a class="btn btn-list" th:href="@{'/dataset/delete?id=' + ${dataset.name}}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.delete}" onclick="return confirm('[[#{list.datasets.table.suredelete}]]');">
+                                        <a class="btn btn-list" th:href="@{'/dataset/delete?id=' + ${dataset.name}}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.delete}" th:onclick="'javascript:return confirm(\'' + #{list.datasets.table.suredelete} + '\');'" >
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
@@ -176,7 +176,7 @@
                                 <tr th:each="dataset : ${datasets}">
                                     <th scope="row" th:text="${dataset.name}"></th>
                                     <td th:text="${dataset.author}"></td>
-                                    <td th:text="${dataset.uploadDate}"></td>
+                                     <td th:text="${#dates.format(dataset.uploadDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${dataset.license.name}"></td>
                                     <td>
                                         <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
@@ -216,7 +216,7 @@
                                             <i class="fas fa-pen-square"></i>
                                         </a>
 
-                                        <a class="btn btn-list" th:href="@{'/dataset/delete?id=' + ${dataset.name}}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.delete}"  onclick="return confirm('[[#{list.datasets.table.suredelete}]]');">
+                                        <a class="btn btn-list" th:href="@{'/dataset/delete?id=' + ${dataset.name}}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.delete}" th:onclick="'javascript:return confirm(\'' + #{list.datasets.table.suredelete} + '\');'" >
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>

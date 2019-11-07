@@ -64,7 +64,7 @@
                                 <img src="/images/warning.svg" th:unless="${user.confirmedAccount}" th:title="#{detailed.user.notconfirmed}" th:attr="alt = #{detailed.user.notconfirmed}" height="16" width="16">
                             </td>
                             <td>
-                                <a class="btn btn-list" th:href="@{/user/delete(username = ${user.username}, type=user)}" onclick="return confirm('[[#{list.users.suredelete}]]');" th:title="#{list.users.delete}">
+                                <a class="btn btn-list" th:href="@{/user/delete(username = ${user.username}, type=user)}" th:onclick="'javascript:return confirm(\'' + #{list.users.suredelete} + '\');'" th:title="#{list.users.delete}">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </td>

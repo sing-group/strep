@@ -141,8 +141,8 @@ input[type="date"]{
 }
 .error-label
 {
-    color: #9d0e3d;
-  /*  font-family: "Times New Roman";*/
+    color: #E74C3C;
+
 }
 
 #linklogo,#topdivhome, #topdivpublic, #topdivregister,#navbar-link
@@ -424,7 +424,7 @@ legend{
 }
 .alert-danger{
   background-color: #fadbd8;
-  color: #E74C3C;
+  color: #E74C3C !important;
 }
 .odd{
   background-color: #FBFBFB;
@@ -474,10 +474,7 @@ legend{
 #inputSpamPercentage{
   max-width: 90px;
 }
-.alert-danger{
-  border-color: #E74C3C;
-  color: #FFF;
-}
+
 .justify{
   text-align: justify;
 }

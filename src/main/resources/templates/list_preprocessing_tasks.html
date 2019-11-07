@@ -83,10 +83,10 @@
                     <table class="table table-hover margin20" th:if="${tasks.size()!=0}">
                         <thead>
                             <tr>
-                                <th scope="col" th:text="#{list.preprocessing.date}"></th>
+                                <th scope="col">Dataset</th>
                                 <th scope="col" th:text="#{list.preprocessing.date}"></th>
                                 <th scope="col" th:text="#{list.preprocessing.message}"></th>
-                                <th scope="col" th:text="#{list.preprocessing.description}"></th>
+                                <th scope="col" th:text="#{list.preprocessing.name}"></th>
                                 <th scope="col" th:text="#{list.preprocessing.description}"></th>
                                 <th scope="col" th:text="#{list.preprocessing.pipeline}"></th>
                                 <th scope="col" th:text="#{list.preprocessing.csv}" th:if="${state=='success'}"></th>
@@ -95,7 +95,7 @@
                         <tbody>
                             <tr th:each="task : ${tasks}">
                                 <td th:text="${task.dataset.name}"></td>
-                                <td th:text="${task.date}"></td>
+                                <td th:text="${#dates.format(task.date, 'yyyy-MM-dd')}"></td>
                                 <td th:text="${task.message}">
                                     <!--p th:text="${task.message}"></p>
                                     <button type="button" class="btn btn-list"th:if="${task.message}==null" data-container="body" data-toggle="popover" data-placement="right" data-original-title="Popover Title" th:attr="data-content = #{list.usertasks.nomessageprovided}">

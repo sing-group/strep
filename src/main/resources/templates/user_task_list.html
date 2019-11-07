@@ -71,7 +71,8 @@
                         </thead>
                         <tbody>
                             <tr th:each="task : ${tasks}">
-                                <td th:text="${task.dataset.uploadDate}"></td>
+                                <!--<td th:text="${task.dataset.uploadDate}"></td>-->
+                                <td th:text="${#dates.format(task.dataset.uploadDate, 'yyyy-MM-dd')}"></td>
                                 <td th:text="${task.dataset.name}"></td>
                                 <td th:if="${task.message}!=null" th:text="${task.message}"></td>
                                 <td th:if="${task.message}==null" th:text="#{list.usertasks.nomessageprovided}"></td>
