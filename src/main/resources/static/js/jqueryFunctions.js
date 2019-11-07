@@ -18,7 +18,9 @@ function updateDatasetsList()
     var dateValue1 = document.getElementById("date1").value;
     var dateValue2 = document.getElementById("date2").value;
 
-    var url = "/dataset/createlist?date1=" + dateValue1 + "&date2=" + dateValue2;
+    var url="/dataset/createlist?";
+    if (dateValue1 && dateValue2)
+       url += ("date1=" + dateValue1 + "&date2=" + dateValue2);
 
     for (var i = 0; i < licenses.length; i++){
       if (licenses[i].value!=""){

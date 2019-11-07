@@ -6,10 +6,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -394,42 +398,40 @@ public class DatasetService {
      */
     public ArrayList<Dataset> getFilteredDatasets(String[] selectedLanguages, String[] selectedDatatypes, String[] selectedLicenses, String date1, String date2) {
 
-        ArrayList<String> selectedLanguagesList = new ArrayList<>();
-        ArrayList<String> selectedDatatypesList = new ArrayList<>();
-        ArrayList<String> selectedLicensesList = new ArrayList<>();
+        List<String> selectedLanguagesList;
+        List<String> selectedDatatypesList;
+        List<String> selectedLicensesList;
         
         if (selectedLanguages == null) {
             Iterable<Language> languages = languageRepository.findAll();
-            selectedLanguagesList = fillLanguagesList(languages);
+            selectedLanguagesList = StreamSupport.stream(languages.spliterator(), false)
+            .map(Language::getLanguage)
+            .collect(Collectors.toList());
         } else {
-            for (int i = 0; i < selectedLanguages.length; i++) {
-                selectedLanguagesList.add(selectedLanguages[i]);
-            }
+            selectedLanguagesList=Arrays.asList(selectedLanguages);
         }
 
         if (selectedLicenses == null) {
             Iterable<License> licenses = licenseRepository.findAll();
-            selectedLicensesList = fillLicensesList(licenses);
+            selectedLicensesList = StreamSupport.stream(licenses.spliterator(), false)
+            .map(License::getName)
+            .collect(Collectors.toList());
         } else {
-            for (int i = 0; i < selectedLicenses.length; i++) {
-                selectedLicensesList.add(selectedLicenses[i]);
-            }
+            selectedLicensesList=Arrays.asList(selectedLicenses);
         }
 
         if (selectedDatatypes == null) {
             Iterable<Datatype> datatypes = datatypeRepository.findAll();
-          
-            selectedDatatypesList = fillDatatypesList(datatypes);
+            selectedDatatypesList = StreamSupport.stream(datatypes.spliterator(), false)
+            .map(Datatype::getDatatype)
+            .collect(Collectors.toList());
         } else {
-              
-            for (int i = 0; i < selectedDatatypes.length; i++) {
-                selectedDatatypesList.add(selectedDatatypes[i]);
-            }
+            selectedDatatypesList=Arrays.asList(selectedDatatypes);
         }
 
         ArrayList<String> datasetNames = new ArrayList<>();
 
-        if (date1.equals("") || date2.equals("")){
+        if (date1==null || date1.equals("") || date2==null || date2.equals("")){
             datasetNames = datasetRepository.getFilteredDatasets(selectedLanguagesList, selectedDatatypesList, selectedLicensesList);
         } else {
             datasetNames = datasetRepository.getFilteredDatasetsByDate(selectedLanguagesList, selectedDatatypesList, selectedLicensesList, date1, date2);
@@ -446,54 +448,6 @@ public class DatasetService {
         }
 
         return datasets;
-    }
-
-    /**
-     * Private method to fill an arraylist with the specified languages
-     *
-     * @param languages the specified languages
-     * @return An arraylist with the languages
-     */
-    private ArrayList<String> fillLanguagesList(Iterable<Language> languages) {
-        ArrayList<String> languagesList = new ArrayList<>();
-
-        for (Language language : languages) {
-            languagesList.add(language.getLanguage());
-        }
-
-        return languagesList;
-    }
-
-    /**
-     * Private method to fill an arraylist with the specified licenses
-     *
-     * @param licenses the specified licenses
-     * @return An arraylist with the licenses
-     */
-    private ArrayList<String> fillLicensesList(Iterable<License> licenses) {
-        ArrayList<String> licensesList = new ArrayList<>();
-
-        for (License license : licenses) {
-            licensesList.add(license.getName());
-        }
-
-        return licensesList;
-    }
-
-    /**
-     * Private method to fill an arraylist with the specified datatypes
-     *
-     * @param datatypes the specified datatypes
-     * @return An arraylist with the datatypes
-     */
-    private ArrayList<String> fillDatatypesList(Iterable<Datatype> datatypes) {
-        ArrayList<String> datatypesList = new ArrayList<>();
-
-        for (Datatype datatype : datatypes) {
-            datatypesList.add(datatype.getDatatype());
-        }
-
-        return datatypesList;
     }
 
     /**
