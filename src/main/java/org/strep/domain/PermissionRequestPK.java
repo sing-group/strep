@@ -63,7 +63,6 @@ public class PermissionRequestPK implements Serializable
         if (o == null || getClass() != o.getClass())
             return false;
  
-        PermissionRequestPK that = (PermissionRequestPK) o;
         return Objects.equals(getUser(), ((PermissionRequestPK)o).getUser()) &&
                Objects.equals(getPermission(), ((PermissionRequestPK)o).getPermission());
     }
