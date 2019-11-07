@@ -18,24 +18,48 @@ function updateDatasetsList()
     var dateValue1 = document.getElementById("date1").value;
     var dateValue2 = document.getElementById("date2").value;
 
-    var url="/dataset/createlist?";
-    if (dateValue1 && dateValue2)
-       url += ("date1=" + dateValue1 + "&date2=" + dateValue2);
+    var fistParam=true;
 
+    var url="/dataset/createlist?";
+    if (dateValue1 && dateValue2){
+       url += ("date1=" + dateValue1 + "&date2=" + dateValue2);
+       fistParam=false;
+    }
+
+    var vlic = [];
     for (var i = 0; i < licenses.length; i++){
       if (licenses[i].value!=""){
-        url += encodeURI("license=" + licenses[i].value);
+          vlic.push(licenses[i].value)
+        //url += encodeURI("license=" + licenses[i].value);
       }
     }
+    if (vlic.length>0) {
+        url += encodeURI((fistParam?"license=":"&license=") + vlic);
+        fistParam=false;
+    }
+
+    var vlang=[];
     for (var i = 0; i < languages.length; i++){
       if (languages[i].value!=""){
-        url += encodeURI("language=" + languages[i].value);
+        vlang.push(languages[i].value);
+        //url += encodeURI("language=" + languages[i].value);
       }
     }
+    if(vlang.length>0){
+         url += encodeURI((fistParam?"language=":"&language=") + vlang);
+         fistParam=false;
+    }
+
+    var vdatat=[];
     for (var i = 0; i < datatypes.length; i++){
       if (datatypes[i].value!=""){
-        url += encodeURI("datatype=" + datatypes[i].value);
+          vdatat.push(datatypes[i].value);
+        //url += encodeURI("datatype=" + datatypes[i].value);
       }
+    }
+    if (vdatat.length>0){ 
+        url += encodeURI((fistParam?"datatype=":"&datatype=") + vdatat);
+        fistParam=false;
     }
 
     console.log(url);
