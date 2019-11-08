@@ -24,6 +24,27 @@ import java.io.Serializable;
 public class Task implements Serializable
 {
     /**
+     * Waiting state (BBDD representation)
+     */
+    public static final String STATE_WAITING="waiting";
+
+    /**
+     * Executing state (BBDD representation)
+     */
+    public static final String STATE_EXECUTING="executing";
+
+    /**
+     * Sucess state (BBDD representation)
+     */
+    public static final String STATE_SUCESS="sucess";
+
+    /**
+     * Sucess state (BBDD representation)
+     */
+    public static final String STATE_FAILED="failed";
+
+
+    /**
      * Serial Version UID
      */
     private static final long serialVersionUID = 1L;

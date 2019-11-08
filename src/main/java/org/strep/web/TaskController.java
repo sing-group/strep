@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import org.strep.domain.Dataset;
+import org.strep.domain.Task;
 import org.strep.domain.TaskCreateUPreprocessing;
 import org.strep.domain.TaskCreateUdataset;
 import org.strep.repositories.DatasetRepository;
@@ -58,7 +59,7 @@ public class TaskController {
 
     @GetMapping("/upload")
     public String listSystemTasks(Authentication authentication, Model model,
-            @RequestParam(name = "searchInput", required = false) String inputSearch, @RequestParam(name = "state", required = false, defaultValue = "waiting") String state) {
+            @RequestParam(name = "searchInput", required = false) String inputSearch, @RequestParam(name = "state", required = false, defaultValue = Task.STATE_WAITING) String state) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -78,7 +79,7 @@ public class TaskController {
 
     @GetMapping("/create")
     public String listUserTasks(Authentication authentication, Model model,
-            @RequestParam(name = "searchInput", required = false) String inputSearch, @RequestParam(name = "state", required = false, defaultValue = "waiting") String state) {
+            @RequestParam(name = "searchInput", required = false) String inputSearch, @RequestParam(name = "state", required = false, defaultValue = Task.STATE_WAITING) String state) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -140,7 +141,7 @@ public class TaskController {
     @GetMapping("/preprocess")
     public String listPreprocess(Authentication authentication, Model model,
             @RequestParam(name = "id", required = false) String datasetName,
-            @RequestParam(name = "state", required = false, defaultValue = "waiting") String state) {
+            @RequestParam(name = "state", required = false, defaultValue = Task.STATE_WAITING) String state) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();

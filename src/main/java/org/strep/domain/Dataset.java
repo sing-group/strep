@@ -30,6 +30,31 @@ import javax.validation.constraints.Pattern;
 public class Dataset implements Serializable {
 
     /**
+     * System dataset type (BBDD representation)
+     */
+    public static final String TYPE_SYSTEM="systemdataset";
+
+    /**
+     * System dataset type (BBDD representation)
+     */
+    public static final String TYPE_USER="userdataset";
+
+    /**
+     * public access (BBDD representation)
+     */
+    public static final String ACCESS_PUBLIC="public";
+
+    /**
+     * protected access (BBDD representation)
+     */
+    public static final String ACCESS_PROTECTED="protected";
+
+    /**
+     * private access (BBDD representation)
+     */
+    public static final String ACCESS_PRIVATE="private";
+
+    /**
      * Serial Version UID
      */
     private static final long serialVersionUID = 1L;

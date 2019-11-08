@@ -143,8 +143,8 @@ public class UserController {
         model.addAttribute("username", sessionUsername);
 
         Optional<User> optUser = userRepository.findById(username);
-        ArrayList<Dataset> systemDatasets = datasetRepository.getUserDatasets(username, "systemdataset");
-        ArrayList<Dataset> userDatasets = datasetRepository.getUserDatasets(username, "userdataset");
+        ArrayList<Dataset> systemDatasets = datasetRepository.getUserDatasets(username, Dataset.TYPE_SYSTEM);
+        ArrayList<Dataset> userDatasets = datasetRepository.getUserDatasets(username, Dataset.TYPE_USER);
         Iterable<Permission> permissions = permissionRepository.findAll();
 
         if (optUser.isPresent()) {

@@ -62,9 +62,9 @@
                                     </div>
                                     <div class="form-group form-check" th:if="${toUpdateDataset.type}=='userdataset'">
                                         <label th:text="#{edit.dataset.visibility}" class="col-md-12 control-label left"></label>
-                                        <label class="radio-inline main-text"><input type="radio" name="access" value="private" required="required" th:checked="${toUpdateDataset.access}=='private'" th:text="#{add.dataset.private}"></label>&nbsp;
-                                        <label class="radio-inline main-text"><input type="radio" name="access" value="protected" required="required" th:checked="${toUpdateDataset.access}=='protected'" th:text="#{add.dataset.protected}"></label>&nbsp;
-                                        <label class="radio-inline main-text"><input type="radio" name="access" value="public" required="required" th:checked="${toUpdateDataset.access}=='public'" th:text="#{add.dataset.public}"></label>&nbsp;
+                                        <label class="radio-inline main-text"><input type="radio" name="access" th:value="${T(org.strep.domain.Dataset).ACCESS_PRIVATE}" required="required" th:checked="${toUpdateDataset.access}=='private'" th:text="#{add.dataset.private}"></label>&nbsp;
+                                        <label class="radio-inline main-text"><input type="radio" name="access" th:value="${T(org.strep.domain.Dataset).ACCESS_PROTECTED}" required="required" th:checked="${toUpdateDataset.access}=='protected'" th:text="#{add.dataset.protected}"></label>&nbsp;
+                                        <label class="radio-inline main-text"><input type="radio" name="access" th:value="${T(org.strep.domain.Dataset).ACCESS_PUBLIC}" required="required" th:checked="${toUpdateDataset.access}=='public'" th:text="#{add.dataset.public}"></label>&nbsp;
                                     </div>
                                     <input type="hidden" name="access" th:attr="value = ${toUpdateDataset.access}" th:if="${toUpdateDataset.type}!='userdataset'">
                                     <div class="form-group">

@@ -107,7 +107,7 @@ public class TaskService {
      * @param dataset the dataset
      */
     public void addNewSystemTask(Dataset dataset) {
-        TaskCreateSdataset taskCreateSdataset = new TaskCreateSdataset(dataset, "waiting", null);
+        TaskCreateSdataset taskCreateSdataset = new TaskCreateSdataset(dataset, Task.STATE_WAITING, null);
         //dataset.setTask(taskCreateSdataset);
         if(dataset.getTasks()==null) dataset.setTasks(new ArrayList<Task>());
         dataset.getTasks().add(taskCreateSdataset);
@@ -176,7 +176,7 @@ public class TaskService {
                         datasetRepository.save(dataset);
                         dateFromFormatted = simpleDateFormat.parse(dateFrom);
                         dateToFormatted = simpleDateFormat.parse(dateTo);
-                        TaskCreateUdataset taskCreateUdataset = new TaskCreateUdataset(dataset, "waiting", null, inputSpamPercentage,
+                        TaskCreateUdataset taskCreateUdataset = new TaskCreateUdataset(dataset, Task.STATE_WAITING, null, inputSpamPercentage,
                         fileNumberInput, dateFromFormatted, dateToFormatted, languagesArray, datatypesArray, licensesArray, datasetsArray
                         ,inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTytb, inputHamTytb, inputSpamTsms, inputHamTsms,
                         inputSpamTwtid,inputHamTwtid, spamMode);
@@ -190,7 +190,7 @@ public class TaskService {
                     } else {
 
                         datasetRepository.save(dataset);
-                        TaskCreateUdataset taskCreateUdataset = new TaskCreateUdataset(dataset, "waiting", null, inputSpamPercentage,
+                        TaskCreateUdataset taskCreateUdataset = new TaskCreateUdataset(dataset, Task.STATE_WAITING, null, inputSpamPercentage,
                         fileNumberInput, null, null, languagesArray, datatypesArray, licensesArray, datasetsArray
                         ,inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTytb, inputHamTytb, inputSpamTsms, inputHamTsms,
                         inputSpamTwtid,inputHamTwtid, spamMode);
@@ -220,7 +220,7 @@ public class TaskService {
         String message = "";
         try
         {
-            TaskCreateUPreprocessing toCreateTask = new TaskCreateUPreprocessing(dataset, task.getName(), "waiting", null, task.getDescription(), pipeline.getBytes(), null, new Date(), dataset);
+            TaskCreateUPreprocessing toCreateTask = new TaskCreateUPreprocessing(dataset, task.getName(), Task.STATE_WAITING, null, task.getDescription(), pipeline.getBytes(), null, new Date(), dataset);
             taskRepository.save(toCreateTask);
             message = messageSource.getMessage("createpreprocessing.sucessfull.message", Stream.of().toArray(String[]::new), locale);
         }

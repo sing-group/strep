@@ -104,7 +104,7 @@ public class DatasetController {
     public String detailPublicDataset(@RequestParam("id") String name, Model model, User user) {
         Optional<Dataset> opt = datasetRepository.findById(name);
 
-        if (opt.isPresent() && opt.get().getAccess().equals("public")) {
+        if (opt.isPresent() && opt.get().getAccess().equals(Dataset.ACCESS_PUBLIC)) {
             Dataset dataset = opt.get();
             String languages = datasetService.getLanguagesString(dataset);
             String datatypes = datasetService.getDatatypesString(dataset);
@@ -123,7 +123,7 @@ public class DatasetController {
     public String shareDataset(@PathVariable String name, Model model, User user) {
         Optional<Dataset> opt = datasetRepository.findById(name);
 
-        if (opt.isPresent() && opt.get().getAccess().equals("public")) {
+        if (opt.isPresent() && opt.get().getAccess().equals(Dataset.ACCESS_PUBLIC)) {
             Dataset dataset = opt.get();
             String languages = datasetService.getLanguagesString(dataset);
             String datatypes = datasetService.getDatatypesString(dataset);
@@ -177,13 +177,13 @@ public class DatasetController {
                     datasets = datasetRepository.getProtectedDatasets();
                     type = "community";
                 } else {
-                    datasets = datasetRepository.getUserDatasets(username, "userdataset");
+                    datasets = datasetRepository.getUserDatasets(username, Dataset.TYPE_USER);
                 }
                 break;
 
             case "usersystem":
                 if (authority == "canUpload" || authority == "canAdminister") {
-                    datasets = datasetRepository.getUserDatasets(username, "systemdataset");
+                    datasets = datasetRepository.getUserDatasets(username, Dataset.TYPE_SYSTEM);
                 } else {
                     datasets = datasetRepository.getProtectedDatasets();
                     type = "community";
@@ -219,7 +219,7 @@ public class DatasetController {
             String languages = datasetService.getLanguagesString(dataset);
             String datatypes = datasetService.getDatatypesString(dataset);
 
-            if (dataset.getAccess().equals("private")) {
+            if (dataset.getAccess().equals(Dataset.ACCESS_PRIVATE)) {
                 if (dataset.getAuthor().equals(username)) {
                     model.addAttribute("dataset", dataset);
                     model.addAttribute("languages", languages);
@@ -254,7 +254,7 @@ public class DatasetController {
             Dataset dataset = opt.get();
             String owner = dataset.getAuthor();
 
-            if (dataset.getAccess().equals("public") || dataset.getAccess().equals("protected")
+            if (dataset.getAccess().equals(Dataset.ACCESS_PUBLIC) || dataset.getAccess().equals(Dataset.ACCESS_PROTECTED)
                     || owner.equals(username)) {
 
                 if (datasetService.getDownloadFiles(name)) {
@@ -329,7 +329,7 @@ public class DatasetController {
         if (opt.isPresent()) {
             Dataset dataset = opt.get();
 
-            if (access.equals("private") || access.equals("public") || access.equals("protected")) {
+            if (access.equals(Dataset.ACCESS_PRIVATE) || access.equals(Dataset.ACCESS_PUBLIC) || access.equals(Dataset.ACCESS_PROTECTED)) {
                 dataset.setAccess(access);
                 datasetRepository.save(dataset);
                 model.addAttribute("message",
@@ -463,7 +463,7 @@ public class DatasetController {
 
         if (opt.isPresent()) {
             Dataset dataset = opt.get();
-            if (dataset.getType().equals("systemdataset")) {
+            if (dataset.getType().equals(Dataset.TYPE_SYSTEM)) {
                 model.addAttribute("dataset", dataset);
             }
         }

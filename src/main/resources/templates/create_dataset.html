@@ -147,9 +147,9 @@
                                     </div>
                                     <div class="form-group">
                                         <label th:text="#{create.dataset.label.visibility}" class="col-md-12 control-label left" ></label>&nbsp;&nbsp;
-                                        <label class="radio-inline main-text"><input type="radio" name="access" value="private" required="required" checked th:text="#{add.dataset.private}"></label>&nbsp;
-                                        <label class="radio-inline main-text"><input type="radio" name="access" value="protected" required="required" th:text="#{add.dataset.protected}"></label>&nbsp;
-                                        <label class="radio-inline main-text"><input type="radio" name="access" value="public" required="required" th:text="#{add.dataset.public}"></label>&nbsp;
+                                        <label class="radio-inline main-text"><input type="radio" name="access" th:value="${T(org.strep.domain.Dataset).ACCESS_PRIVATE}" required="required" checked th:text="#{add.dataset.private}"></label>&nbsp;
+                                        <label class="radio-inline main-text"><input type="radio" name="access" th:value="${T(org.strep.domain.Dataset).ACCESS_PROTECTED}" required="required" th:text="#{add.dataset.protected}"></label>&nbsp;
+                                        <label class="radio-inline main-text"><input type="radio" name="access" th:value="${T(org.strep.domain.Dataset).ACCESS_PUBLIC}" required="required" th:text="#{add.dataset.public}"></label>&nbsp;
                                     </div>
                                     <div class="form-group">
                                         <label for="#{add.dataset.license}" id="llicense" name="llicense" class="col-md-12 control-label left" th:text="#{add.dataset.license}" ></label>

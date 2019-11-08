@@ -233,14 +233,14 @@ public class DatasetService {
         String message = "";
 
         String name = dataset.getName().replace(" ", "").toLowerCase();
-        String url = HOST_NAME + java.io.File.separator + "dataset" + java.io.File.separator + "public" + java.io.File.separator + "detailed" + java.io.File.separator + name;
+        String url = HOST_NAME + java.io.File.separator + "dataset" + java.io.File.separator + Dataset.ACCESS_PUBLIC + java.io.File.separator + "detailed" + java.io.File.separator + name;
         Date date = new Date();
 
         dataset.setName(name);
         dataset.setUrl(url);
         dataset.setUploadDate(date);
         dataset.setAuthor(username);
-        dataset.setType("systemdataset");
+        dataset.setType(Dataset.TYPE_SYSTEM);
         dataset.setAvailable(false);
 
         //Added default value because Spam and ham percentage cannot be null
@@ -276,12 +276,12 @@ public class DatasetService {
      */
     public Dataset addUserDataset(Dataset dataset, String username) {
         String name = dataset.getName().replace(" ", "").toLowerCase();
-        String url = HOST_NAME + java.io.File.separator + "dataset" + java.io.File.separator + "public" + java.io.File.separator + "detailed" + java.io.File.separator + name;
+        String url = HOST_NAME + java.io.File.separator + "dataset" + java.io.File.separator + Dataset.ACCESS_PUBLIC + java.io.File.separator + "detailed" + java.io.File.separator + name;
 
         Date date = new Date();
         dataset.setUploadDate(date);
         dataset.setAuthor(username);
-        dataset.setType("userdataset");
+        dataset.setType(Dataset.TYPE_USER);
         dataset.setAvailable(false);
         dataset.setUrl(url);
 
@@ -376,7 +376,7 @@ public class DatasetService {
             }
         }
         zipDirectory.delete();
-        if (dataset.getType().equals("systemdataset")) {
+        if (dataset.getType().equals(Dataset.TYPE_SYSTEM)) {
             taskRepository.deleteUserTasks(datasetName);
         }
 
