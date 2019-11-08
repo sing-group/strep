@@ -124,4 +124,12 @@ public interface TaskRepository extends CrudRepository<Task, Long>
      */
     @Query(value="select t from TaskCreateUPreprocessing t where t.preprocessDataset=?1 and t.state=?2")
     public ArrayList<TaskCreateUPreprocessing> getPreprocessingTasks(Dataset dataset, String state);
+
+    /**
+     * Return a list with the preprocessing tasks of the dataset filtered by state
+     * @param state the specified state
+     * @return a list with the preprocessing tasks of the dataset filtered by state
+     */
+    @Query(value="select t from TaskCreateUPreprocessing t where t.state=?1 sort by t.preprocessDataset")
+    public ArrayList<TaskCreateUPreprocessing> getPreprocessingTasks(String state);    
 }
