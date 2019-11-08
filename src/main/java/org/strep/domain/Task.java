@@ -36,7 +36,7 @@ public class Task implements Serializable
     /**
      * Sucess state (BBDD representation)
      */
-    public static final String STATE_SUCESS="sucess";
+    public static final String STATE_SUCESS="success";
 
     /**
      * Sucess state (BBDD representation)
