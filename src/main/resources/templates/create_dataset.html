@@ -51,7 +51,7 @@
                             <label for="language" th:text="#{create.dataset.languages}"></label>
                             <select multiple="" class="form-control" id="language">
                                 <option value="" th:text="#{create.dataset.nooptionselected}">
-                                <option th:each="language : ${languages}" th:attr="value = ${language.language}" th:text="${language.language}"></option>
+                                <option th:each="language : ${languages}" th:attr="value = ${language.language}" th:text="${language.description}"></option>
                             </select>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                                         <span class="icon-caret-down"></span>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li th:text="${language.language}" th:each="language : ${dataset.language}"></li>
+                                        <li th:text="${language.description}" th:each="language : ${dataset.language}"></li>
                                     </ul>
                                 </td>
                                 <td>

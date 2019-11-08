@@ -462,8 +462,8 @@ public class DatasetService {
         ArrayList<Language> languagesArray = new ArrayList<>(dataset.getLanguage());
 
         for (int i = 0; i < languagesArray.size(); i++) {
-            languages += languagesArray.get(i).getLanguage();
-            languages += " ";
+            if (!languages.equals("")) languages += ", ";
+            languages += languagesArray.get(i).getDescription();
         }
 
         return languages;
