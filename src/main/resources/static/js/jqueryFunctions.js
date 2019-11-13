@@ -1,6 +1,6 @@
 function retrieveDatasetInfo(id) {
     var url = "/dataset/modal?id=" + id;
-    console.log(url);
+
     $("#dataset-info").load(url, function (response, status, xhr) {
         if (response.substr(0, 2) == "<!")
         {
@@ -57,12 +57,11 @@ function updateDatasetsList()
         //url += encodeURI("datatype=" + datatypes[i].value);
       }
     }
-    if (vdatat.length>0){ 
+    if (vdatat.length>0){
         url += encodeURI((fistParam?"datatype=":"&datatype=") + vdatat);
         fistParam=false;
     }
 
-    console.log(url);
     $("#datasets-list").load(url, function (response, status, xhr) {
         if (response.substr(0, 2) == "<!")
         {
@@ -73,7 +72,6 @@ function updateDatasetsList()
 
 function updateTable(id)
 {
-   checkSelectedDatasets();
    var datasetNames = document.getElementsByName("datasets");
    if (id == "buttonCheckDatatypes")
     {
@@ -115,15 +113,14 @@ function updateTable(id)
         url += "&inputSpamEml=" + inputSpamEmlValue + "&inputHamEml=" + inputHamEmlValue + "&inputSpamTsms=" + inputSpamTsmsValue + "&inputHamTsms=" + inputHamTsmsValue +
                 "&inputSpamTytb=" + inputSpamTytbValue + "&inputHamTytb=" + inputHamTytbValue + "&inputSpamTwtid=" + inputSpamTwtidValue + "&inputHamTwtid=" + inputHamTwtidValue +
                 "&inputSpamWarc=" + inputSpamWarcValue + "&inputHamWarc=" + inputHamWarcValue;
-
+        checkSelectedDatasets();
         $("#datatypes-table").load(url, function (response, status, xhr) {
             if (response.substr(0, 2) == "<!")
             {
                 location.reload();
             }
         });
-    } else
-    {
+    } else {
         var url = "/dataset/updateDatatypesTable";
         for (var i = 0; i < datasetNames.length; i++)
         {
@@ -135,7 +132,8 @@ function updateTable(id)
                     url += encodeURI("&" + datasetNames[i].name + "=" + datasetNames[i].value);
             }
         }
-        console.log(url);
+
+        checkSelectedDatasets();
         $("#datatypes-table").load(url, function (response, status, xhr) {
             if (response.substr(0, 2) == "<!")
             {
@@ -143,6 +141,7 @@ function updateTable(id)
             }
         });
     }
+
 }
 
 function checkIfPosibleSpam()
@@ -161,7 +160,7 @@ function checkIfPosibleSpam()
             url += encodeURI("&" + datasets[i].name + "=" + datasets[i].value);
         }
     }
-    console.log(url);
+
     $("#info-spam").load(url, function (response, status, xhr) {
         if (response.substr(0, 2) == "<!")
         {
@@ -189,10 +188,6 @@ $('#deleteDatasetModal').on('show.bs.modal', function (event)
     buttonConfirm.attr("href", href);
 });
 
-/*
-$(function () {
-    $('[data-toggle="popover"]').popover()
-})*/
 
 function changeLocale(id)
 {
@@ -232,6 +227,7 @@ function deniedRequest(){
 
 // Tune dataset: Needed to hold disabled inputs in not selected option
 $('#datasetSelectedError').hide();
+
 function checkSelectedDatasets(){
   var checkedOptionValue = $("input[name=mode]:checked").val();
   if (checkedOptionValue=="spam"){
@@ -251,13 +247,21 @@ function checkSelectedDatasets(){
   }
 }
 
+function back(url){
+  
+  if (url===""){
+     window.location= document.referrer;
+  } else {
+     window.location= url;
+  }
+}
 
 $(document).ready(function () {
 
 $('#datasetSelectedError').hide();
-    $("#back").click(function() {
-      window.location= document.referrer;
-    });
+    /*$("#back").click(function() {
+       window.location= document.referer;
+    });*/
 
     // It's been done like this to make it work properly in Chrome
     document.getElementById('locales').addEventListener('change', function () {

@@ -227,15 +227,15 @@
                                                         </div>
                                                         <div class="col-3">
                                                             <label>% Spam</label>&nbsp;
-                                                            <input th:if="${__${'inputspam'+ #strings.replace(datatype,'.','')}__}!=null" type="number" th:id="'inputSpam'+${datatype}" th:name="'inputSpam'+${datatype}" th:attr="value = ${__${'inputspam'+ #strings.replace(datatype,'.','')}__}" required disabled>
-                                                            <input th:unless="${__${'inputspam'+ #strings.replace(datatype,'.','')}__}!=null" type="number" th:id="'inputSpam'+${datatype}" th:name="'inputSpam'+${datatype}" value="0" required disabled>
+                                                            <input th:if="${__${'inputspam'+ #strings.replace(datatype,'.','')}__}!=null" type="number" th:id="'inputSpam'+${datatype}" th:name="'inputSpam'+${datatype}" th:attr="value = ${__${'inputspam'+ #strings.replace(datatype,'.','')}__}" required >
+                                                            <input th:unless="${__${'inputspam'+ #strings.replace(datatype,'.','')}__}!=null" type="number" th:id="'inputSpam'+${datatype}" th:name="'inputSpam'+${datatype}" value="0" required >
                                                             <span th:class="${class}" th:if="${__${'necesary'+ #strings.replace(datatype,'.','') + 'spam'}__}!=null" th:text="'Necesary: ' + ${__${'necesary'+ #strings.replace(datatype,'.','')+'spam'}__}"></span>&nbsp;
                                                             <span th:class="${class}" th:if="${__${'available'+ #strings.replace(datatype,'.','')+'spam'}__}!=null" th:text="'Available: ' + ${__${'available'+ #strings.replace(datatype,'.','')+'spam'}__}"></span>
                                                         </div>
                                                         <div class="col-3">
                                                             <label>% Ham</label>&nbsp;
-                                                            <input th:if="${__${'inputham'+ #strings.replace(datatype,'.','')}__}!=null" type="number" th:id="'inputHam'+${datatype}" th:name="'inputHam'+${datatype}" th:attr="value = ${__${'inputham'+ #strings.replace(datatype,'.','')}__}" required disabled>
-                                                            <input th:unless="${__${'inputham'+ #strings.replace(datatype,'.','')}__}!=null" type="number" th:id="'inputHam'+${datatype}" th:name="'inputHam'+${datatype}" value="0" required disabled>
+                                                            <input th:if="${__${'inputham'+ #strings.replace(datatype,'.','')}__}!=null" type="number" th:id="'inputHam'+${datatype}" th:name="'inputHam'+${datatype}" th:attr="value = ${__${'inputham'+ #strings.replace(datatype,'.','')}__}" required>
+                                                            <input th:unless="${__${'inputham'+ #strings.replace(datatype,'.','')}__}!=null" type="number" th:id="'inputHam'+${datatype}" th:name="'inputHam'+${datatype}" value="0" required>
                                                             <span  th:class="${class}" th:if="${__${'necesary'+ #strings.replace(datatype,'.','') + 'ham'}__}!=null" th:text="'Necesary: ' + ${__${'necesary'+ #strings.replace(datatype,'.','')+'ham'}__}"></span>&nbsp;
                                                             <span  th:class="${class}" th:if="${__${'available'+ #strings.replace(datatype,'.','')+'ham'}__}!=null" th:text="'Available: ' + ${__${'available'+ #strings.replace(datatype,'.','')+'ham'}__}"></span>
                                                         </div>
@@ -244,7 +244,7 @@
                                                 </div>
                                                 <div class="row" th:if="${tableDatatypes!=null}">
                                                     <div class="col-7 right padding">
-                                                        <input id="buttonCheckDatatypes" type="button" class="btn btn-primary col-md-3" onclick="updateTable(this.id)" th:attr="value = #{create.dataset.button.check}" disabled>
+                                                        <input id="buttonCheckDatatypes" type="button" class="btn btn-primary col-md-3" onclick="updateTable(this.id)" th:attr="value = #{create.dataset.button.check}">
                                                     </div>
                                                     <div class="col-5"></div>
                                                 </div>

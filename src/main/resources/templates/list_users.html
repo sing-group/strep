@@ -41,7 +41,6 @@
                     <th scope="col" th:text="#{list.users.actions}"></th>
                     <th scope="col" ></th>
                     </thead>
-
                     <tbody>
                         <tr th:each="user : ${users}">
                             <td><img class="user-photo" th:src="@{'/user/image?username='+${user.username}}" alt="photo" height="32" width="32"></td>

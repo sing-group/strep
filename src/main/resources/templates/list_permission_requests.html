@@ -40,7 +40,7 @@
                     <tbody>
                         <tr th:each="permissionRequest : ${permissionRequests}">
                             <th scope="row" th:text="${permissionRequest.user.username}"></th>
-                            <th scope="row" th:text="${permissionRequest.user.name}"></th>
+                            <th scope="row" th:text="${permissionRequest.user.name + ' ' + permissionRequest.user.surname }"></th>
                             <td th:text="${permissionRequest.permission.name}"></td>
                             <td>
                                 <form action="/permission/accept" method="POST" id="permissionForm"> 

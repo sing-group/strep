@@ -4,7 +4,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Optional;
+import javax.validation.Valid;
+import jdk.nashorn.internal.objects.NativeArray;
 
 import org.strep.domain.Dataset;
 import org.strep.domain.Task;
@@ -25,7 +28,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -148,34 +153,29 @@ public class TaskController {
         String authority = userService.getPermissionsByUsername(username);
 
         ArrayList<TaskCreateUPreprocessing> tasks = new ArrayList<>();
-        ArrayList<Dataset> datasets=new ArrayList<>();
-        
+        ArrayList<Dataset> datasets = new ArrayList<>();
+
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
 
         //Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
-        
-        if (datasetName!=null && !datasetName.equals("")) {
+        if (datasetName != null && !datasetName.equals("")) {
             Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
-            
+
             if (optDataset.isPresent() && optDataset.get().getAuthor().equals(username)) {
                 Dataset dataset = optDataset.get();
-                model.addAttribute("dataset",dataset);
+                model.addAttribute("dataset", dataset);
                 tasks = taskRepository.getPreprocessingTasks(dataset, state);
                 model.addAttribute("state", state);
                 model.addAttribute("tasks", tasks);
-                //for (int i=0;i<tasks.size();i++) datasets.add(dataset);
-                //model.addAttribute("datasets", datasets);
             } else {
                 return "redirect:/error";
-            }                    
-        } else {    
-            for (Dataset optDataset:datasetRepository.findAll())
-            {
-                Collection<TaskCreateUPreprocessing> newTasks=taskRepository.getPreprocessingTasks(optDataset, state);
+            }
+        } else {
+            for (Dataset optDataset : datasetRepository.findAll()) {
+                Collection<TaskCreateUPreprocessing> newTasks = taskRepository.getPreprocessingTasks(optDataset, state);
                 tasks.addAll(newTasks);
-                for (int i=0;i<newTasks.size();i++)
-                {
+                for (int i = 0; i < newTasks.size(); i++) {
                     datasets.add(optDataset);
                 }
             }
@@ -187,8 +187,39 @@ public class TaskController {
         return "list_preprocessing_tasks";
     }
 
+    @GetMapping("/preprocess/detailed")
+    public String listDetailedPreprocesss(Authentication authentication, Model model,
+            @RequestParam(name = "state", required = false, defaultValue = Task.STATE_SUCESS) String state) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String username = userDetails.getUsername();
+        String authority = userService.getPermissionsByUsername(username);
+
+        model.addAttribute("authority", authority);
+        model.addAttribute("username", username);
+        model.addAttribute("state", state);
+
+        HashMap<String, ArrayList<TaskCreateUPreprocessing>> taskCreateUPreprocessingHM = new HashMap<>();
+        ArrayList<TaskCreateUPreprocessing> tasks = taskRepository.getPreprocessingTasks(Task.STATE_SUCESS);
+        String currentDataset = "";
+        ArrayList<TaskCreateUPreprocessing> currentDatasetTasks = null;
+        for (TaskCreateUPreprocessing task : tasks) {
+            if (!currentDataset.equals(task.getDataset().getName())) {
+                currentDataset = task.getDataset().getName();
+                currentDatasetTasks = new ArrayList<>();
+                taskCreateUPreprocessingHM.put(currentDataset, currentDatasetTasks);
+            }
+            currentDatasetTasks.add(task);
+        }
+
+        model.addAttribute("datasets", taskCreateUPreprocessingHM);
+
+        return "list_preprocess_detailed";
+    }
+
     @GetMapping("/preprocess/create")
-    public String createPreprocessingTask(Authentication authentication, Model model,
+    public String createPreprocessingTask(Authentication authentication, Model model, 
+            TaskCreateUPreprocessing task,
             @RequestParam(name = "name") String datasetName) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
@@ -213,12 +244,11 @@ public class TaskController {
     @PostMapping("/preprocess/create")
     public String createPreprocessingTask(Authentication authentication, Model model,
             @RequestParam(name = "preprocessDataset") String datasetName, RedirectAttributes redirectAttributes,
-            TaskCreateUPreprocessing task, @RequestParam(name = "multipart") MultipartFile pipeline) {
+            @Valid @ModelAttribute("task") TaskCreateUPreprocessing task, BindingResult bindingResult, @RequestParam(name = "multipart") MultipartFile pipeline) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
-
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
 
@@ -226,6 +256,14 @@ public class TaskController {
 
         if (optDataset.isPresent() && optDataset.get().getAuthor().equals(username)) {
             Dataset dataset = optDataset.get();
+            if (bindingResult.hasErrors()) {
+                if (optDataset.isPresent()) {
+                    model.addAttribute("dataset", optDataset.get());
+                }
+                model.addAttribute("task", task);
+                return "create_preprocessing_task";
+            }
+
             String message = taskService.createPreprocessingTask(dataset, task, pipeline);
             redirectAttributes.addAttribute("message", message);
             return "redirect:/task/preprocess?id=" + datasetName;

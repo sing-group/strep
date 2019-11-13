@@ -142,8 +142,8 @@ input[type="date"]{
 .error-label
 {
     color: #E74C3C;
-
 }
+
 
 #linklogo,#topdivhome, #topdivpublic, #topdivregister,#navbar-link
 {
@@ -158,7 +158,9 @@ input[type="date"]{
 {
     margin-top:50px;
 }
-
+input[type="checkbox"]{
+  max-width:14px;
+}
 .files, .submit-dataset
 {
     margin-top:30px;
@@ -426,6 +428,11 @@ legend{
   background-color: #fadbd8;
   color: #E74C3C !important;
 }
+.alert-primary{
+  background-color: #e5f1f1;
+  /*background-color: #FFF;*/
+  color: #203939;
+}
 .odd{
   background-color: #FBFBFB;
 }
@@ -482,11 +489,15 @@ legend{
 .create{
   border-bottom: 1px solid #203939 !important;
 }
+.minw_110{
+  min-width: 110px;
+}
+.modal-content{
+  margin-bottom: 10px;
+}
 /***** Responsive *****/
 #dlogin{
   padding-right: 10px;
-   /*min-width: 550px;
-font-size: 14px;*/
 }
 #dmenu{
    min-width: 350px;

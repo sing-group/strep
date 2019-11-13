@@ -135,7 +135,6 @@ public class DatasetController {
         } else {
             return "redirect:/error";
         }
-
     }
 
     @GetMapping("/public/download")
@@ -161,38 +160,33 @@ public class DatasetController {
 
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
-        ArrayList<Dataset> datasets = new ArrayList<Dataset>();
-
+        ArrayList<Dataset> datasets = new ArrayList<>();
+        
         switch (type) {
             case "community":
-                datasets = datasetRepository.getProtectedDatasets();
-                break;
-
-            case "system":
-                datasets = datasetRepository.getSystemDatasets();
+                datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
                 break;
 
             case "user":
-                if (authority == "canView") {
-                    datasets = datasetRepository.getProtectedDatasets();
-                    type = "community";
+                // You have to do this because in case of canView permission, default view is communityDatasets but, default type is always user
+                if (authority.equals("canView")) {
+                    datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
                 } else {
-                    datasets = datasetRepository.getUserDatasets(username, Dataset.TYPE_USER);
+                    datasets = datasetRepository.getOwnDatasets(username, Dataset.TYPE_USER);
                 }
                 break;
 
             case "usersystem":
-                if (authority == "canUpload" || authority == "canAdminister") {
-                    datasets = datasetRepository.getUserDatasets(username, Dataset.TYPE_SYSTEM);
-                } else {
-                    datasets = datasetRepository.getProtectedDatasets();
-                    type = "community";
-                }
 
+                if (authority.equals("canAdminister")) {
+                    datasets = datasetRepository.getSystemDatasets();
+                } else {
+                    datasets = datasetRepository.getSystemDatasets(username, Dataset.TYPE_SYSTEM);
+                }
                 break;
 
             default:
-                datasets = datasetRepository.getProtectedDatasets();
+                datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
                 type = "community";
         }
         model.addAttribute("type", type);
@@ -478,12 +472,10 @@ public class DatasetController {
             @RequestParam(name = "license", required = false) String[] licenses,
             @RequestParam(name = "date1", required = false) String date1,
             @RequestParam(name = "date2", required = false) String date2) {
-        
+
         ArrayList<Dataset> datasets = datasetService.getFilteredDatasets(languages, datatypes, licenses, date1, date2);
         model.addAttribute("datasets", datasets);
-        model.addAttribute("message","aaa");
-        System.err.println("datasets: " + datasets.size() +": "+ (datasets.isEmpty()?"":(datasets.get(0).getName())));
-        
+
         return "create_dataset::datasets-list";
     }
 
@@ -665,13 +657,11 @@ public class DatasetController {
             databaseFilesMap.put(".twtidspam", 0);
             databaseFilesMap.put(".twtidham", 0);
 
-            for (FileDatatypeType i: fileDatatypeTypeRepository.findAll())
-            {
-                if(datasets.contains(i.getId().getDataset()))
-                {
-                   Integer previous=databaseFilesMap.get(i.getId().getExtension()+i.getId().getType());
-                   databaseFilesMap.replace(i.getId().getExtension()+i.getId().getType(),
-                      i.getCount()+(previous==null?0:previous));
+            for (FileDatatypeType i : fileDatatypeTypeRepository.findAll()) {
+                if (datasets.contains(i.getId().getDataset())) {
+                    Integer previous = databaseFilesMap.get(i.getId().getExtension() + i.getId().getType());
+                    databaseFilesMap.replace(i.getId().getExtension() + i.getId().getType(),
+                            i.getCount() + (previous == null ? 0 : previous));
                 }
             }
 

@@ -31,9 +31,10 @@ public class TaskCreateUPreprocessing extends Task implements Serializable
     /**
      * The name of the preprocesssing (for reutilization purposes)
      */
+    
     @NotNull
-    @Size(min=1, max=100, message="The preprocessing name must have beetween 1 and 100 characters")
-    @Column(length = 100, columnDefinition="VARCHAR(100)")
+    @Size(min=1, max=80, message="The preprocessing name must have beetween 1 and 80 characters")
+    @Column(length = 80, columnDefinition="VARCHAR(80)")
     @Pattern(regexp = "^[A-Za-z0-9\\-_]*$", message = "The name of preprocessing should contain only alphanumeric characters. Additionally _ and - characters are also permitted.")
     private String name;
 

@@ -38,13 +38,13 @@
                                         </a>
                                     </div>
                                     <div class="btn-group" th:if="${dataset.author == username and dataset.type != 'userdataset'}">
-                                        <a class="btn btn-list" th:href="@{'/dataset/download?id=' + ${dataset.name}}">
+                                        <a class="btn btn-list" th:title="#{detailed.dataset.download}" data-toggle="tooltip" th:href="@{'/dataset/download?id=' + ${dataset.name}}">
                                             <i class="fas fa-file-download"></i>
                                         </a>
-                                        <a class="btn btn-list" th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
+                                        <a class="btn btn-list" th:title="#{detailed.dataset.edit}" data-toggle="tooltip" th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
                                             <i class="fas fa-pen-square"></i>
                                         </a>
-                                        <a class="btn btn-list" th:href="@{'/dataset/delete?id=' + ${dataset.name}}" id="back">
+                                        <a class="btn btn-list" th:title="#{detailed.dataset.delete}" data-toggle="tooltip" th:href="@{'/dataset/delete?id=' + ${dataset.name}}">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </div>
