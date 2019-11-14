@@ -23,7 +23,7 @@
                                 <fieldset>
                                     <legend><h2 th:text="#{createpreprocessing.title}"></h2><hr/></legend>
                                     <div class="form-group right">
-                                        <a class="btn btn-list" id="back">
+                                        <a class="btn btn-list"  th:href="@{'/task/preprocess?id=' + ${dataset.name}}" > 
                                             <i class="fas fa-arrow-circle-left"></i>
                                             <span th:text="#{back}"/>
                                         </a>
@@ -43,30 +43,21 @@
                                     <div class="form-group">
                                         <input type="hidden" name="preprocessDataset" th:attr="value = ${dataset.name}"></input>
                                         <label for="#{createpreprocessing.placeholder.name}" id="lname" name="lname" class="col-md-12 control-label" th:text="#{createpreprocessing.name}" ></label>
-                                        <small th:text="#{createpreprocessing.format}"/>
-                                        <input class="form-control" type="text" name="name" id="name"  required></input>
-                                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
+                                        <small th:text="#{createpreprocessing.format}"></small>
+                                        <input class="form-control" type="text" name="name" id="name" required th:value="${task.name}"></input>
+                                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:text="#{taskcreateupreprocessing.msg.name}"></label>
                                     </div>
                                     <div class="form-group">
                                         <label for="#{createpreprocessing.placeholder.description}" id="ldescription" name="ldescription" class="col-md-12 control-label" th:text="#{createpreprocessing.description}" ></label>
                                         <textarea class="form-control" rows="10" th:attr="placeholder = #{createpreprocessing.placeholder.description}" name="description" required th:text="${task.description}"></textarea>
                                     </div>
-                                    <!--div class="form-group">
-                                        <div class="input-group mb-3">
-                                            <div class="custom-file">
-                                                <label th:text="#{createpreprocessing.pipeline}" class="col-md-12 control-label left"></label>
-                                                <input type="file" class="custom-file-input" name="multipart" id="inputGroupFile02">
-                                                <label class="custom-file-label" for="inputGroupFile02" th:text="#{createpreprocessing.choosefile}"></label>
-                                            </div>
-                                        </div>
-                                    </div-->
                                     <div class="form-group">
                                         <label for="dataset-file" class="main-text" th:text="#{createpreprocessing.pipeline}" ></label>
-                                        <input type="file" class="form-control-file col-md-6" name="multipart" id="dataset-file" required="required">
+                                        <input type="file" class="form-control-file col-md-6" name="multipart" id="dataset-file" required="required" />
                                     </div>
                                     <hr/>
                                     <div class="form-group right">
-                                        <input class="btn btn-primary" type="submit" th:attr="value = #{createpreprocessing.submit.button}">
+                                        <input class="btn btn-primary" type="submit" th:attr="value = #{createpreprocessing.submit.button}" />
                                     </div>
                                 </fieldset>
                             </form>

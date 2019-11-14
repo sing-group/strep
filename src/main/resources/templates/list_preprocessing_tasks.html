@@ -22,7 +22,7 @@
             <div id="banner" class="page-header">
                 <div class="row">
                     <div class="col-12">
-                        <h2><span th:text="#{list.preprocessing.title} "/><span th:if="${dataset!=null}">&#58;<span/>&nbsp;<span th:if="${dataset!=null}" th:text="@{${dataset.name}} "/></h2>
+                        <h2><span th:text="#{list.preprocessingtask.title} "/><span th:if="${dataset!=null}">&#58;<span/>&nbsp;<span th:if="${dataset!=null}" th:text="@{${dataset.name}} "/></h2>
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 <div class="row" th:if="${dataset!=null}">
                     <div class="col-10">
                         <div class="form-group right">
-                            <a class="btn btn-list" id="back">
+                            <a class="btn btn-list" th:href="@{'/dataset/list'}">
                                 <i class="fas fa-arrow-circle-left"></i>
                                 <span th:text="#{back}"/>
                             </a>
@@ -108,7 +108,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-list" th:if="${state=='success'}" th:href="'/task/preprocess/downloadcsv?id='+ ${task.id}">
+                                    <a class="btn btn-list" th:if="${state=='success'}"  data-toggle="tooltip" data-placement="right" th:title="#{createtasks.downloadcsv}" th:href="'/task/preprocess/downloadcsv?id='+ ${task.id}">
                                         <i class="fas fa-file-csv"></i>
                                     </a>
                                 </td>

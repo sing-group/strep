@@ -29,20 +29,20 @@
                                         </a>
                                     </div>
                                     <div class="form-group">
-                                        <label for="#{add.dataset.placeholder.name}" id="lname" name="lname" class="col-md-3 control-label" th:text="#{add.dataset.placeholder.name}" ></label>                            
+                                        <label for="#{add.dataset.placeholder.name}" id="lname" name="lname" class="col-md-3 control-label" th:text="#{add.dataset.placeholder.name}"></label>                            
                                         <input th:attr="value = ${toUpdateDataset.name},placeholder = #{edit.dataset.placeholder.name} " type="text" class="form-control" name="name" required="required" onchange="dynamicUrl(this.value)" readonly>
-                                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:text="#{edit.dataset.nameerror}"></label>
+                                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:text="#{dataset.msg.name}"></label>
                                     </div>
                                     <div class="form-group">
                                         <label for="#{add.dataset.placeholder.description}" id="ldescription" name="ldescription" class="col-md-3 control-label" th:text="#{add.dataset.placeholder.description}" ></label>
                                         <textarea th:text="${toUpdateDataset.description}" rows="5" class="form-control" name="description" th:attr="placeholder = #{edit.dataset.placeholder.description}" required="required"></textarea>
-                                        <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:text="#{edit.dataset.descriptionerror}"></label>
+                                         <label class="error-label" th:if="${#fields.hasErrors('description')}" th:text="#{dataset.msg.description}"></label>
                                     </div>
                                     <div th:if="${toUpdateDataset.type}=='systemdataset'">
                                         <div class="form-group">
                                             <label for="DOI" id="ldoi" name="ldoi" class="col-md-12 control-label left" th:text="DOI" ></label>                            
                                             <input th:attr="value = ${toUpdateDataset.doi}" type="text" class="form-control col-md-6" name="doi" placeholder="DOI">
-                                            <label class="error-label" th:if="${#fields.hasErrors('doi')}" th:errors="*{doi}" th:text="#{edit.dataset.doierror}"></label>
+                                            <label class="error-label" th:if="${#fields.hasErrors('doi')}"  th:text="#{edit.dataset.doierror}"></label>
                                         </div>
 
                                         <div class="form-group">
@@ -51,14 +51,13 @@
                                                 <option disabled th:text="#{edit.dataset.selectlicense}"></option>
                                                 <option th:selected="${toUpdateDataset.license.name==license.name}" th:value="${license.name}" th:text="${license.name}" th:each="license : ${licenses}"></option>
                                             </select>
-                                            <label class="error-label" th:if="${#fields.hasErrors('license')}" th:errors="*{license}" th:text="edit.dataset.licenseerror"></label>
                                         </div>
                                     </div>
 
                                     <div class="form-group" th:if="${toUpdateDataset.type}=='userdataset'">
                                         <label for="DOI" id="ldoi" name="ldoi" class="col-md-12 control-label left" th:text="DOI" ></label>    
                                         <input th:attr="value = ${toUpdateDataset.doi}" type="text" class="form-control col-md-6" name="doi" placeholder="DOI">
-                                        <label class="error-label" th:if="${#fields.hasErrors('doi')}" th:errors="*{doi}" th:text="#{edit.dataset.doierror}"></label>
+                                        <label class="error-label" th:if="${#fields.hasErrors('doi')}" th:text="#{edit.dataset.doierror}"></label>
                                     </div>
                                     <div class="form-group form-check" th:if="${toUpdateDataset.type}=='userdataset'">
                                         <label th:text="#{edit.dataset.visibility}" class="col-md-12 control-label left"></label>

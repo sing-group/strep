@@ -27,7 +27,7 @@ public class License implements Serializable
      */
     @Id
     @NotNull(message = "Name of the license cannot be null")
-    @Size(min=1, max=100, message="Name must have beetween 1 and 100 characters")
+    @Size(min=1, max=100)
     @Column(length = 100, columnDefinition="VARCHAR(100)")    
     private String name;
 

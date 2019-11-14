@@ -32,57 +32,57 @@ public class Dataset implements Serializable {
     /**
      * System dataset type (BBDD representation)
      */
-    public static final String TYPE_SYSTEM="systemdataset";
+    public static final String TYPE_SYSTEM = "systemdataset";
 
     /**
      * System dataset type (BBDD representation)
      */
-    public static final String TYPE_USER="userdataset";
+    public static final String TYPE_USER = "userdataset";
 
     /**
      * public access (BBDD representation)
      */
-    public static final String ACCESS_PUBLIC="public";
+    public static final String ACCESS_PUBLIC = "public";
 
     /**
      * protected access (BBDD representation)
      */
-    public static final String ACCESS_PROTECTED="protected";
+    public static final String ACCESS_PROTECTED = "protected";
 
     /**
      * private access (BBDD representation)
      */
-    public static final String ACCESS_PRIVATE="private";
+    public static final String ACCESS_PRIVATE = "private";
 
     /**
      * Serial Version UID
      */
     private static final long serialVersionUID = 1L;
 
+    
     /**
      * The name of the dataset
      */
     @Id
     @NotNull
-    @Size(min = 1, max = 80, message = "The dataset name must have beetween 1 and 80 characters")
+    @Size(min = 1, max = 80)
     @Column(length = 80, columnDefinition = "VARCHAR(80)")
-    @Pattern(regexp = "^[A-Za-z0-9\\-_]*$", message = "The name of dataset should contain only alphanumeric characters. Additionally _ and - characters are also permitted.")
+    @Pattern(regexp = "^[A-Za-z0-9\\-_]*$")
     private String name;
 
     /**
      * The author of the dataset
      */
-    @Size(min = 1, max = 255, message = "Author must have beetween 1 and 255 characters")
+    @Size(min = 1, max = 255)
     @Column(length = 255, columnDefinition = "VARCHAR(255)")
-    @Pattern(regexp = "^[A-Za-z\\.\\-äáàëéèïíìöóòüúùñç ÄÁÀËÉÈÏÍÌÖÓÒÜÚÙÑÇ]*$",
-            message = "The author can only contains alphabetic characters. Spaces, dots and - are also permitted.")
+    @Pattern(regexp = "^[A-Za-z\\.\\-äáàëéèïíìöóòüúùñç ÄÁÀËÉÈÏÍÌÖÓÒÜÚÙÑÇ]*$")
     private String author;
 
     /**
      * The description of the dataset
      */
     @NotNull
-    @Size(min = 1, max = 1000, message = "Description must have beetween 1 and 1000 characters")
+    @Size(min = 1, max = 1000)
     @Lob
     private String description;
 
@@ -95,7 +95,7 @@ public class Dataset implements Serializable {
     /**
      * The doi for the dataset
      */
-    @Size(max = 80, message = "The dataset DOI (Digital Object Identifier) must have less than 80 characters")
+    @Size(max = 80)
     @Column(length = 80, columnDefinition = "VARCHAR(80)")
     private String doi;
 

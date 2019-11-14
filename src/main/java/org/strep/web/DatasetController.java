@@ -372,6 +372,7 @@ public class DatasetController {
             model.addAttribute("username", username);
             model.addAttribute("host", HOST_NAME);
             model.addAttribute("licenses", licenseRepository.findAll());
+            model.addAttribute("dataset",dataset);
             return "add_dataset";
         } else {
             String message = datasetService.uploadDataset(dataset, datasetFile, username);

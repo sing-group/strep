@@ -248,7 +248,7 @@ function checkSelectedDatasets(){
 }
 
 function back(url){
-  
+
   if (url===""){
      window.location= document.referrer;
   } else {
@@ -258,10 +258,10 @@ function back(url){
 
 $(document).ready(function () {
 
-$('#datasetSelectedError').hide();
-    /*$("#back").click(function() {
-       window.location= document.referer;
-    });*/
+    $('#datasetSelectedError').hide();
+    $("#back").click(function() {
+       window.location= document.referrer;
+    });
 
     // It's been done like this to make it work properly in Chrome
     document.getElementById('locales').addEventListener('change', function () {

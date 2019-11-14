@@ -24,7 +24,7 @@
                                     <div class="form-group">
                                         <label for="#{add.license.placeholder.name}" id="laddLicense" name="addLicense" class="col-md-3 control-label" th:text="#{add.license.placeholder.name}" ></label>
                                         <input class="form-control" type="text" name="name" th:attr="placeholder = #{add.license.placeholder.name}" required/>
-                                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
+                                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:text="#{license.msg.name}"></label>
                                     </div>
                                     <div class="form-group">
                                         <label for="#{add.license.placeholder.description}" id="laddLicense" name="addDescription" class="col-md-3 control-label" th:text="#{add.license.placeholder.description}" ></label>
