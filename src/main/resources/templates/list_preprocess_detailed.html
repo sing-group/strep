@@ -35,6 +35,8 @@
                         </div>
                     </div>
                 </div>
+                 <div class="alert alert-light" th:if="${datasets.size()==0}" th:text="#{list.datasets.table.nodatasets}"></div>
+                       
                 <div class="modal-content" th:each="dataset : ${datasets}">
                     <div class="modal-header">
                         <h5 th:text="${dataset.key}"></h5>

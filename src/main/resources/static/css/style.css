@@ -1,6 +1,7 @@
 html {
-    min-height: 100%;
     position: relative;
+    padding-bottom: 100px; 
+    min-height: 100vh
   }
 
 body
@@ -50,7 +51,11 @@ tr:nth-child(even){
 .footer-bg
 {
     background-color: #203939 !important;
-    margin-top:5em;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 84px;
+ /*   margin-top:5em;*/
 }
 
 .submit-button
@@ -455,6 +460,10 @@ legend{
 .card-header{
   background-color: #FFF;
 }
+.card-body{
+  font-size: 0.9375re !important;
+}
+
 .permission{
   background-color: #FBFBFB;
 }
@@ -484,6 +493,8 @@ legend{
 
 .justify{
   text-align: justify;
+   font-size: 0.9375rem !important;
+   font-weight:400;
 }
 
 .create{
