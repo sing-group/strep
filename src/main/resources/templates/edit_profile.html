@@ -1,52 +1,91 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title th:text="#{app.name}"></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">   
+    </head>
 
-<head>
-    <title th:text="#{app.name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Lora&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
-</head>
-
-<body class="main-bg">
-    <div class="container-fluid">
-
-        <div th:include="header.html">
-
+    <body class="main-bg">
+        <div class="header">
+            <div th:include="header.html"></div>
         </div>
+        <div class="container">
+            <div id="bs-docs-section">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="bs-component">
+                            <form action="#" th:action="@{/user/editprofile}" enctype="multipart/form-data" method="POST">
+                                <fieldset>
+                                    <legend><h2 th:text="#{editprofile.title}"></h2><hr/></legend>
+                                    <div class="form-group">
+                                        <img class="user-photo" th:if="${username}!=''" th:src="@{'/user/image?username='+${username}}" style="max-width: 150px;">
+                                    </div>
+                                     <div class="form-group">
+                                        <input type="file" name="photo" required>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group right">
+                                        <input type="submit" class="btn btn-primary" th:attr="value=#{editprofile.button}">
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:include="footer.html"></div>
+    </body>
+    <!--head>
+        <title th:text="#{app.name}"></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+              integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Lora&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
+    </head>
 
-        <div class="row page-content">
-            <div class="col-4">
+    <body class="main-bg">
+        <div class="container-fluid">
+
+            <div th:include="header.html">
 
             </div>
 
-            <div class="col-4 form-bg text-center">
-                <form action="#" th:action="@{/user/editprofile}" enctype="multipart/form-data" method="POST">
-                    <div class="form-group">
+            <div class="row page-content">
+                <div class="col-4">
+
+                </div>
+
+                <div class="col-4 form-bg text-center">
+                    <form action="#" th:action="@{/user/editprofile}" enctype="multipart/form-data" method="POST">
+                        <div class="form-group">
                             <p class="title-text" th:text="#{editprofile.photo}"></p>
                             <input type="file" name="photo" required>
                             <input type="submit" class="form-control submit-button" th:attr="value=#{editprofile.button}">
-                    </div>
+                        </div>
 
 
-                    
-                </form>
+
+                    </form>
+                </div>
+
+                <div class="col-4">
+
+                </div>
             </div>
 
-            <div class="col-4">
+            <div th:include="footer.html">
 
             </div>
-        </div>
 
-        <div th:include="footer.html">
 
         </div>
-
-
-    </div>
-</body>
+    </body-->
 
 </html>
