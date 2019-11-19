@@ -553,7 +553,7 @@ public class TaskCreateUdataset extends Task
     {
         StringBuilder stringBuilder = new StringBuilder();
 
-        if(this.getDatatypes().size()==0)
+        if(this.getDatatypes().isEmpty())
         {
             stringBuilder.append("Not datatypes selected");
         }
@@ -561,7 +561,7 @@ public class TaskCreateUdataset extends Task
         {
             for(Datatype datatype : this.getDatatypes())
             {
-                stringBuilder.append(datatype.getDatatype() + " ");
+                stringBuilder.append(datatype.getDatatype()).append(" ");
             }
         }
 

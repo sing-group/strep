@@ -13,8 +13,7 @@
                     <a id="userregister" class="nav-link" href="/user/register" th:text="#{signup.home.title}"></a>
                 </li>
             </ul>
-
-            <div sec:authorize="isAnonymous()" id="dlogin">
+            <div sec:authorize="isAnonymous()" id="dlogin" style="float: left">
                 <form action="#" th:action="@{/}" th:object="${user}" method="post" class="form-inline my-2 my-lg-0">
                     <label class="control-label-login" for="#{header.username}" id="laddLicense" name="lUsername" th:text="#{header.username}" ></label>
                     <input class="form-control mr-sm-2" type="text" id="username" name="username" th:attr="placeholder=#{header.username}">
@@ -25,10 +24,12 @@
                     <button class="btn btn-success my-2 my-sm-0" type="submit" value="Login">Login</button>
                 </form>
             </div>
-            <select id="locales" class="form-control">
-                <option id="en" value="en" th:text="EN" onclick="changeLocale(this.id)"></option>
-                <option id="es" value="es" th:text="ES" onclick="changeLocale(this.id)"></option>
-            </select>
+            <div class="header-lang-user no-login">
+                <select id="locales" class="form-control">
+                    <option id="en" value="en" th:text="EN" onclick="changeLocale(this.id)"></option>
+                    <option id="es" value="es" th:text="ES" onclick="changeLocale(this.id)"></option>
+                </select>     
+            </div>
         </div>
     </div>
     <div class="container" th:if="${username}!=null">
@@ -49,7 +50,7 @@
                                 <a class="dropdown-item topdiv-text" href="/dataset/upload" th:text="#{header.upload}"></a>
                             </div>
                             <a class="dropdown-item topdiv-text" href="/dataset/create" th:text="#{header.create}"></a>
-                             <a class="dropdown-item topdiv-text" href="/task/preprocess/detailed" th:text="#{header.preprocesstask}"></a>
+                            <a class="dropdown-item topdiv-text" href="/task/preprocess/detailed" th:text="#{header.preprocesstask}"></a>
                         </div>
                     </div>
                 </li>
@@ -111,18 +112,23 @@
             </ul>
 
             <!--TODO: Change this for an image passed from parameters-->
-            <select id="locales" class="form-control">
-                <option id="en" value="en" th:text="EN" onclick="changeLocale(this.id)"></option>
-                <option id="es" value="es" th:text="ES" onclick="changeLocale(this.id)"></option>
-            </select>
-            <a href="/user/editprofile">
-                <img class="user-photo" th:src="@{'/user/image?username='+${username}}" alt="photo" height="32" width="32">
-            </a>
-            <p th:text="${username}" class="topdiv-text"></p>
-            <div class="float-right logout-icon"></div>
-            <a href="/logout">
-                <img src="/images/logout.svg" alt="photo" height="32" width="32">
-            </a>
+
+            <div class="header-lang-user">
+                <select id="locales" class="form-control">
+                    <option id="en" value="en" th:text="EN" onclick="changeLocale(this.id)"></option>
+                    <option id="es" value="es" th:text="ES" onclick="changeLocale(this.id)"></option>
+                </select>
+                <a href="/user/editprofile">
+                    <img class="user-photo" th:src="@{'/user/image?username='+${username}}" height="32" width="32">
+                </a>
+                <span th:text="${username}" class="topdiv-text"></span>
+            </div>
+            <div class="float-right logout-icon">
+                <a href="/logout">
+                    <img src="/images/logout.svg" alt="photo" height="32" width="32">
+                </a>
+            </div>
+
         </div>
     </div>
 </nav>

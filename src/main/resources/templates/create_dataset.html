@@ -193,13 +193,13 @@
                                         <div class="col-10"></div>
                                     </div>
                                     <div class="row" id="spampercentage">
-                                        <div class="col-1">
-                                            <input type="number" class="form-control" th:placeholder="#{create.dataset.spampercentage}" id="inputSpamPercentage" name="inputSpamPercentage" value="0" required />
+                                        <div class="col-2">
+                                            <input type="number" class="form-control col-md-12" id="inputSpamPercentage" name="inputSpamPercentage" value="0" required />
                                         </div>
                                         <div class="col-2">
-                                            <input type="button" class="form-control btn btn-primary col-md-8" name="checkSpamButton" th:attr="value = #{create.dataset.button.check}" onclick="checkIfPosibleSpam()">
+                                            <input type="button" class="form-control btn btn-primary" name="checkSpamButton" th:attr="value = #{create.dataset.button.check}" onclick="checkIfPosibleSpam()">
                                         </div>
-                                        <div class="col-9">
+                                        <div class="col-8">
                                             <div th:fragment="info-spam" id="info-spam">
                                                 <span class="alert alert-danger" th:text="${spamErrorInput}" th:if="${spamErrorInput}!=null"/>
                                                 <span class="alert alert-info" th:text="${spamSuccessInfo}" th:if="${spamSuccessInfo}!=null"/>

@@ -447,7 +447,7 @@ public class Dataset implements Serializable {
      * @param hamPercentage the percentage of ham messages
      */
     public void setHamPercentage(int hamPercentage) {
-        this.hamPercentage = new Integer(hamPercentage);
+        this.hamPercentage = hamPercentage;
     }
 
     /**

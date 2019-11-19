@@ -29,7 +29,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 right">
-                                <a class="btn btn-list" id="back">
+                                <a class="btn btn-list" th:href="@{'/dataset/list'}">
                                     <i class="fas fa-arrow-circle-left"></i>
                                     <span th:text="#{back}"/>
                                 </a>
@@ -97,7 +97,7 @@
                                 <div th:unless="${task.spamMode}">
                                     <div class="row">
                                         <div class="col-3 left"><p class="title-text" th:text="#{creationtask.creationmode}"> </p></div>
-                                        <div class="col-9 left"><p class="normal-text" th:text="${creationtask.datatypes}"></p></div>
+                                        <div class="col-9 left"><p class="normal-text" th:text="#{creationtask.datatypes}" ></p></div>
                                     </div>
                                     <div class="row" th:if="${task.limitSpamPercentageEml}!=0">
                                         <div class="col-3 left"><p class="title-text" th:text="#{creationtask.spameml}"> </p></div>

@@ -32,7 +32,7 @@
                                 <div class="col-6"></div>
                                 <div class="col-6 right">
                                     <div class="btn-group">
-                                        <a class="btn btn-list" id="back">
+                                        <a class="btn btn-list" th:href="@{'/dataset/list'}">
                                             <i class="fas fa-arrow-circle-left"></i>
                                             <span th:text="#{back}"/>
                                         </a>
@@ -48,7 +48,6 @@
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </div>
-
                                     <div class="btn-group" th:if="${dataset.author == username and dataset.type == 'userdataset'}">
                                         <a class="btn btn-list" th:title="#{detailed.dataset.download}" data-toggle="tooltip" th:href="@{'/dataset/download?id=' + ${dataset.name}}">
                                             <i class="fas fa-file-download"></i>
@@ -62,11 +61,10 @@
                                         <a class="btn btn-list" th:title="#{detailed.dataset.viewpreprocess}" data-toggle="tooltip" th:href="@{'/task/preprocess?id=' + ${dataset.name}}">
                                             <i class="fas fa-tasks"></i>
                                         </a>
-                                        <a class="btn btn-list" th:title="#{detailed.dataset.detail}" data-toggle="tooltip" th:href="@{'/task/detailed?task=' + ${dataset.getCreationTask()}}">
+                                        <a class="btn btn-list" th:title="#{detailed.dataset.detail}" data-toggle="tooltip" th:href="@{'/task/detailed?task=' + ${dataset.getCreationTask().getId()}}">
                                             <i class="fas fa-info-circle"></i>
                                         </a>
                                     </div>
-
                                     <a class="btn btn-list" th:title="#{detailed.dataset.download}" data-toggle="tooltip" th:href="@{'/dataset/download?id=' + ${dataset.name}}"  th:if="${dataset.author!=username}">
                                         <i class="fas fa-file-download"></i>
                                     </a>

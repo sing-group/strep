@@ -88,8 +88,7 @@
                                 <th scope="col" th:text="#{list.preprocessing.message}" th:if="${state=='failed'}"></th>
                                 <th scope="col" th:text="#{list.preprocessing.name}"></th>
                                 <th scope="col" th:text="#{list.preprocessing.description}"></th>
-                                <th scope="col" th:text="#{list.preprocessing.pipeline}"></th>
-                                <th scope="col" th:text="#{list.preprocessing.csv}" th:if="${state=='success'}"></th>
+                                <th scope="col" th:text="#{list.preprocessing.actions}"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,12 +101,10 @@
                                 </td>
                                 <td th:text="${task.description}" class="justify">
                                 </td>
-                                <td>
+                                <td class="minw_110">
                                     <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{createtasks.downloadpipeline}" th:href="'/task/preprocess/downloadpipeline?id='+ ${task.id}">
                                         <i class="fas fa-file-download"></i>
                                     </a>
-                                </td>
-                                <td>
                                     <a class="btn btn-list" th:if="${state=='success'}"  data-toggle="tooltip" data-placement="right" th:title="#{createtasks.downloadcsv}" th:href="'/task/preprocess/downloadcsv?id='+ ${task.id}">
                                         <i class="fas fa-file-csv"></i>
                                     </a>
