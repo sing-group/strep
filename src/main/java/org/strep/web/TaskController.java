@@ -211,14 +211,20 @@ public class TaskController {
             }
             currentDatasetTasks.add(task);
         }
-
+        ArrayList<Task> datasetsNoPreprocessing = taskRepository.getUserTasks(username, Task.STATE_SUCESS);
+        for (Task data : datasetsNoPreprocessing) {
+            currentDataset = data.getDataset().getName();
+            if (!taskCreateUPreprocessingHM.containsKey(currentDataset)) {
+                taskCreateUPreprocessingHM.put(currentDataset, null);
+            }
+        }
         model.addAttribute("datasets", taskCreateUPreprocessingHM);
 
         return "list_preprocess_detailed";
     }
 
     @GetMapping("/preprocess/create")
-    public String createPreprocessingTask(Authentication authentication, Model model, 
+    public String createPreprocessingTask(Authentication authentication, Model model,
             TaskCreateUPreprocessing task,
             @RequestParam(name = "name") String datasetName) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();

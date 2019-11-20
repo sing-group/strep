@@ -149,11 +149,18 @@ public class TaskCreateUdataset extends Task
      * @param languages The languages selected in the filters to construct the new dataset
      * @param datatypes The datatypes selected in the filters to construct the new dataset
      * @param licenses The licenses selected in the filters to construct the new dataset
-     * @param limitPercentageEml The limit of percentage of .eml files
-     * @param limitPercentageTytb The limit of percentage of .tytb files
-     * @param limitPercentageTsms The limit of percentage of .tsms files
-     * @param limitPercentageTwtid The limit of percentage of .twtid files
-     * @param limitPercentageWarc The limit of percentage of .warc files
+     * @param datasets
+     * @param limitSpamPercentageEml
+     * @param limitHamPercentageEml
+     * @param limitSpamPercentageWarc
+     * @param limitHamPercentageWarc
+     * @param limitSpamPercentageTytb
+     * @param limitSpamPercentageTsms
+     * @param limitHamPercentageTsms
+     * @param limitSpamPercentageTwtid
+     * @param limitHamPercentageTwtid
+     * @param spamMode
+     * @param limitHamPercentageTytb
      */
     public TaskCreateUdataset(Dataset dataset, String state, String message, int limitPercentageSpam, int limitNumberOfFiles,
     Date dateFrom, Date dateTo, List<Language> languages, List<Datatype> datatypes,List<License> licenses, List<Dataset> datasets,

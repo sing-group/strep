@@ -14,13 +14,16 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Interface that extends CrudRepository implementation of basic CRUD operations with added queries for Task objects
+ * Interface that extends CrudRepository implementation of basic CRUD operations
+ * with added queries for Task objects
+ *
  * @author Ismael Vázquez
  */
-public interface TaskRepository extends CrudRepository<Task, Long>
-{
+public interface TaskRepository extends CrudRepository<Task, Long> {
+
     /**
      * Return the system task for the specified user
+     *
      * @param username the username of the user
      * @return A list of the system tasks of the user
      */
@@ -29,26 +32,29 @@ public interface TaskRepository extends CrudRepository<Task, Long>
 
     /**
      * Return the system task for the specified user
+     *
      * @param username the username of the user
      * @param inputSearch the input for filter de tasks
-     * @return A list of the system tasks of the user filtered 
+     * @return A list of the system tasks of the user filtered
      */
     @Query("select t from TaskCreateSdataset t where t.dataset.author=?1 and t.dataset.name LIKE %?2%")
     public ArrayList<Task> getSystemTasksFiltered(String username, String inputSearch);
 
     /**
      * Return the system task for the specified user
+     *
      * @param username the username of the user
      * @param inputSearch the input for filter de tasks
      * @param state the state for filter de tasks
-     * @return A list of the system tasks of the user filtered 
+     * @return A list of the system tasks of the user filtered
      */
     @Query("select t from TaskCreateSdataset t where t.dataset.author=?1 and t.dataset.name LIKE %?2% and t.state=?3")
     public ArrayList<Task> getSystemTasksFiltered(String username, String inputSearch, String state);
 
     /**
      * Return the system task for the specified user
-     * @param username 
+     *
+     * @param username
      * @param state the state for filter de tasks
      * @return the system task for the specified user filtered
      */
@@ -57,6 +63,7 @@ public interface TaskRepository extends CrudRepository<Task, Long>
 
     /**
      * Return the user tasks for the specified user
+     *
      * @param username the username of the user
      * @return A list of the user tasks of the user
      */
@@ -64,7 +71,8 @@ public interface TaskRepository extends CrudRepository<Task, Long>
     public ArrayList<Task> getUserTasks(String username);
 
     /**
-    * Return the user tasks for the specified user
+     * Return the user tasks for the specified user
+     *
      * @param username the username of the user
      * @param state the state for filter de tasks
      * @return A list of the user tasks of the user filtered
@@ -74,6 +82,7 @@ public interface TaskRepository extends CrudRepository<Task, Long>
 
     /**
      * Return the specified preprocessing task
+     *
      * @param id the id of the task
      * @return the preprocessing task with that id
      */
@@ -82,25 +91,28 @@ public interface TaskRepository extends CrudRepository<Task, Long>
 
     /**
      * Return the user task for the specified user
+     *
      * @param username the username of the user
      * @param inputSearch the input for filter the tasks
-     * @return A list of the user tasks of the user filtered 
+     * @return A list of the user tasks of the user filtered
      */
     @Query("select t from TaskCreateUdataset t where t.dataset.author=?1 and t.dataset.name LIKE %?2%")
     public ArrayList<Task> getUserTasksFiltered(String username, String inputSearch);
 
     /**
      * Return the user task for the specified user
+     *
      * @param username the username of the user
      * @param inputSearch the input for filter de tasks
      * @param state the state for filter the tasks
-     * @return A list of the user tasks of the user filtered 
+     * @return A list of the user tasks of the user filtered
      */
     @Query("select t from TaskCreateUdataset t where t.dataset.author=?1 and t.dataset.name LIKE %?2% and t.state=?3")
     public ArrayList<Task> getUserTasksFiltered(String username, String inputSearch, String state);
 
     /**
      * Return the User task with that id
+     *
      * @param id the id of the task
      * @return the user task with that id
      */
@@ -109,27 +121,36 @@ public interface TaskRepository extends CrudRepository<Task, Long>
 
     /**
      * Delete the user tasks of the specified dataset
+     *
      * @param datasetName the name of the dataset
      */
     @Transactional
     @Modifying
-    @Query(value="delete from task_create_udataset_datasets where dataset=?1", nativeQuery=true)
+    @Query(value = "delete from task_create_udataset_datasets where dataset=?1", nativeQuery = true)
     public void deleteUserTasks(String datasetName);
 
     /**
-     * Return a list with the preprocessing tasks of the dataset filtered by state
+     * Return a list with the preprocessing tasks of the dataset filtered by
+     * state
+     *
      * @param dataset the specified dataset
      * @param state the specified state
-     * @return a list with the preprocessing tasks of the dataset filtered by state
+     * @return a list with the preprocessing tasks of the dataset filtered by
+     * state
      */
-    @Query(value="select t from TaskCreateUPreprocessing t where t.preprocessDataset=?1 and t.state=?2")
+    @Query(value = "select t from TaskCreateUPreprocessing t where t.preprocessDataset=?1 and t.state=?2")
     public ArrayList<TaskCreateUPreprocessing> getPreprocessingTasks(Dataset dataset, String state);
 
     /**
-     * Return a list with the preprocessing tasks of the dataset filtered by state
+     * Return a list with the preprocessing tasks of the dataset filtered by
+     * state
+     *
      * @param state the specified state
-     * @return a list with the preprocessing tasks of the dataset filtered by state
+     * @return a list with the preprocessing tasks of the dataset filtered by
+     * state
      */
-    @Query(value="select t from TaskCreateUPreprocessing t where t.state=?1 ORDER BY t.preprocessDataset")
-    public ArrayList<TaskCreateUPreprocessing> getPreprocessingTasks(String state);    
+    @Query(value = "select t from TaskCreateUPreprocessing t where t.state=?1 ORDER BY t.preprocessDataset")
+    public ArrayList<TaskCreateUPreprocessing> getPreprocessingTasks(String state);
+
+
 }
