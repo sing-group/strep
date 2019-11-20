@@ -61,7 +61,7 @@
                                         <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{createtasks.downloadpipeline}" th:href="'/task/preprocess/downloadpipeline?id='+ ${task.id}">
                                             <i class="fas fa-file-download"></i>
                                         </a>
-                                        <a class="btn btn-list" th:if="${state=='success'}" th:href="'/task/preprocess/downloadcsv?id='+ ${task.id}">
+                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{createtasks.downloadcsv}" th:if="${state=='success'}" th:href="'/task/preprocess/downloadcsv?id='+ ${task.id}">
                                             <i class="fas fa-file-csv"></i>
                                         </a>
                                     </td>

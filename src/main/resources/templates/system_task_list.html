@@ -67,15 +67,14 @@
                             <tr>
                                 <th scope="col" th:text="#{systemtasks.date}"></th>
                                 <th scope="col" th:text="#{systemtasks.dataset}"></th>
-                                <th scope="col" th:text="#{systemtasks.message}"></th>
+                                <th scope="col" th:text="#{systemtasks.message}" th:if="${state=='failed'}"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="task : ${tasks}">
                                 <td th:text="${#dates.format(task.dataset.uploadDate, 'yyyy-MM-dd')}"></td>
                                 <td th:text="${task.dataset.name}"></td>
-                                <td th:if="${task.message}!=null" th:text="${task.message}"></td>
-                                <td th:if="${task.message}==null" th:text="#{list.usertasks.nomessageprovided}"></td>
+                                <td th:text="${task.message}" th:if="${state=='failed'}"></td>
                             </tr>
                         </tbody>
                     </table>

@@ -66,16 +66,14 @@
                         <thead>
                             <th scope="col" th:text="#{list.usertasks.date}"></th>
                             <th scope="col" th:text="#{list.usertasks.dataset}"></th>
-                            <th scope="col" th:text="#{list.usertasks.message}"></th>
+                            <th scope="col" th:text="#{list.usertasks.message}" th:if="${state=='failed'}"></th>
                             <th scope="col" th:text="#{list.usertasks.info}"></th>
                         </thead>
                         <tbody>
                             <tr th:each="task : ${tasks}">
-                                <!--<td th:text="${task.dataset.uploadDate}"></td>-->
                                 <td th:text="${#dates.format(task.dataset.uploadDate, 'yyyy-MM-dd')}"></td>
                                 <td th:text="${task.dataset.name}"></td>
-                                <td th:if="${task.message}!=null" th:text="${task.message}"></td>
-                                <td th:if="${task.message}==null" th:text="#{list.usertasks.nomessageprovided}"></td>
+                                <td th:text="${task.message}" th:if="${state=='failed'}"></td>
                                 <td>
                                     <a class="btn btn-list" th:href="@{'/task/detailed?task=' + ${task.id}}" data-toggle="tooltip" data-placement="right" th:title="#{list.usertasks.details}">
                                         <i class="fas fa-info-circle"></i>
