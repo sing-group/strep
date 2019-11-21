@@ -161,13 +161,12 @@ public class DatasetController {
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
         ArrayList<Dataset> datasets = new ArrayList<>();
-        
         switch (type) {
             case "community":
                 datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
                 break;
 
-            case "user":
+            case "user":               
                 // You have to do this because in case of canView permission, default view is communityDatasets but, default type is always user
                 if (authority.equals("canView")) {
                     datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
@@ -177,7 +176,6 @@ public class DatasetController {
                 break;
 
             case "usersystem":
-
                 if (authority.equals("canAdminister")) {
                     datasets = datasetRepository.getSystemDatasets();
                 } else {

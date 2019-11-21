@@ -27,13 +27,13 @@
                                         </a>
                                     </div>
                                     <div class="form-group">
-                                        <label for="#{add.dataset.placeholder.name}" id="lname" name="lname" class="col-md-3 control-label" th:text="#{add.dataset.placeholder.name}" ></label>
+                                        <label for="#{add.dataset.placeholder.name}" id="lname" name="lname" class="control-label" th:text="#{add.dataset.placeholder.name}" ></label>
                                         <p><small th:text="#{add.dataset.format}"/></p>
                                         <input type="text" class="form-control col-md-6" name="name" th:attr="placeholder = #{add.dataset.placeholder.name}" required="required" th:value="${dataset.name}" onchange="dynamicUrl(this.value)">
                                         <label class="error-label" th:if="${#fields.hasErrors('name')}" th:text="#{dataset.msg.name}"></label>
                                     </div>
                                     <div class="form-group">
-                                        <label for="#{add.dataset.placeholder.description}" id="ldescription" name="ldescription" class="col-md-3 control-label" th:text="#{add.dataset.placeholder.description}" ></label>
+                                        <label for="#{add.dataset.placeholder.description}" id="ldescription" name="ldescription" class="control-label" th:text="#{add.dataset.placeholder.description}" ></label>
                                         <textarea rows="5" class="form-control col-md-6" name="description" required="required" th:attr="placeholder = #{add.dataset.placeholder.description}" th:text="${dataset.description}"></textarea>
                                         <label class="error-label" th:if="${#fields.hasErrors('description')}" th:text="#{dataset.msg.description}"></label>
                                     </div>
