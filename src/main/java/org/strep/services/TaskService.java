@@ -118,6 +118,29 @@ public class TaskService {
 
     /**
      * This method creates a new user task
+     * @param dataset
+     * @param licenses
+     * @param languages
+     * @param datatypes
+     * @param datasets
+     * @param dateFrom
+     * @param dateTo
+     * @param inputSpamEml
+     * @param inputHamEml
+     * @param inputSpamWarc
+     * @param inputHamWarc
+     * @param inputSpamTsms
+     * @param inputHamTsms
+     * @param inputSpamTytb
+     * @param inputHamTytb
+     * @param inputSpamTwtid
+     * @param inputHamTwtid
+     * @param fileNumberInput
+     * @param inputSpamPercentage
+     * @param username
+     * @param spamMode
+     * 
+     * @return 
      */
     public String addNewUserDatasetTask(Dataset dataset, String[] licenses, String[] languages, String[] datatypes,
             String[] datasets, String dateFrom, String dateTo, int inputSpamEml, int inputHamEml, int inputSpamWarc,
@@ -127,10 +150,10 @@ public class TaskService {
         Locale locale = LocaleContextHolder.getLocale();
         String message = "";
 
-        ArrayList<License> licensesArray = new ArrayList<License>();
-        ArrayList<Language> languagesArray = new ArrayList<Language>();
-        ArrayList<Datatype> datatypesArray = new ArrayList<Datatype>();
-        ArrayList<Dataset> datasetsArray = new ArrayList<Dataset>();
+        ArrayList<License> licensesArray = new ArrayList<>();
+        ArrayList<Language> languagesArray = new ArrayList<>();
+        ArrayList<Datatype> datatypesArray = new ArrayList<>();
+        ArrayList<Dataset> datasetsArray = new ArrayList<>();
 
         if (licenses != null) {
             licensesArray = toArrayListLicenses(licenses);

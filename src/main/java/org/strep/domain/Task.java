@@ -17,32 +17,32 @@ import java.io.Serializable;
 
 /**
  * JPA Bean for the Dataset objects managed by application
+ *
  * @author Ismael Vázquez
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Task implements Serializable
-{
+public class Task implements Serializable {
+
     /**
      * Waiting state (BBDD representation)
      */
-    public static final String STATE_WAITING="waiting";
+    public static final String STATE_WAITING = "waiting";
 
     /**
      * Executing state (BBDD representation)
      */
-    public static final String STATE_EXECUTING="executing";
+    public static final String STATE_EXECUTING = "executing";
 
     /**
      * Sucess state (BBDD representation)
      */
-    public static final String STATE_SUCESS="success";
+    public static final String STATE_SUCESS = "success";
 
     /**
      * Sucess state (BBDD representation)
      */
-    public static final String STATE_FAILED="failed";
-
+    public static final String STATE_FAILED = "failed";
 
     /**
      * Serial Version UID
@@ -60,19 +60,24 @@ public class Task implements Serializable
      * The dataset associated to this task
      */
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
-    @JoinColumn(name="dataset_name")
+    @JoinColumn(name = "dataset_name")
     private Dataset dataset;
 
     /**
      * The state of the task
      */
-    @Pattern(regexp = "^(waiting|executing|sucess|failed)$", message = "The access must be waiting, executing, sucess or failed")
-    @Column(length = 10, columnDefinition="VARCHAR(10)")
+    @Pattern(regexp = "^(waiting|executing|success|failed)$", message = "The access must be waiting, executing, sucess or failed")
+    @Column(length = 10, columnDefinition = "VARCHAR(10)")
     private String state;
 
     /**
+     * Indicates if the task is active or not
+     */
+    private boolean active;
+
+    /**
      * The message of the task when failed
-     * 
+     *
      */
     @Column(nullable = true)
     @Lob
@@ -80,12 +85,12 @@ public class Task implements Serializable
 
     /**
      * Creates an instance of the task
+     *
      * @param dataset the dataset associated to the task
      * @param state the state of the task
      * @param message the message of the task when failed
      */
-    public Task(Dataset dataset, String state, String message)
-    {
+    public Task(Dataset dataset, String state, String message) {
         this.dataset = dataset;
         this.state = state;
         this.message = message;
@@ -94,80 +99,97 @@ public class Task implements Serializable
     /**
      * The default constructor of the task
      */
-    public Task()
-    {
+    public Task() {
 
     }
 
     /**
      * Return the dataset associated to the task
+     *
      * @return the dataset associated to the task
      */
-    public Dataset getDataset()
-    {
+    public Dataset getDataset() {
         return this.dataset;
     }
 
     /**
      * Stablish the dataset associated to the task
+     *
      * @param dataset the dataset associated to the task
      */
-    public void setDataset(Dataset dataset)
-    {
+    public void setDataset(Dataset dataset) {
         this.dataset = dataset;
     }
 
     /**
      * Return the id of the task
+     *
      * @return the id of the task
      */
-    public long getId()
-    {
+    public long getId() {
         return this.id;
     }
 
     /**
      * Stablish the id of the task
+     *
      * @param id the id of the task
      */
-    public void setId(long id)
-    {
+    public void setId(long id) {
         this.id = id;
     }
 
     /**
      * Return the state of the task
+     *
      * @return the state of the task
      */
-    public String getState()
-    {
+    public String getState() {
         return this.state;
     }
 
     /**
      * Stablish the state of the task
+     *
      * @param state the state of the task
      */
-    public void setState(String state)
-    {
+    public void setState(String state) {
         this.state = state;
     }
 
     /**
+     * Return true if the task is active, false otherwise
+     *
+     * @return True if the task is active, false otherwise
+     */
+    public boolean getActive() {
+        return this.active;
+    }
+
+    /**
+     * Stablish it a task is active or not
+     *
+     * @param active True if task is active, false otherwise
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    /**
      * Return the message of the task when failed
+     *
      * @return the message of the task when failed
      */
-    public String getMessage()
-    {
+    public String getMessage() {
         return this.message;
     }
 
     /**
-     * Stablish the message of the task when failed 
+     * Stablish the message of the task when failed
+     *
      * @param message the message of the task when failed
      */
-    public void setMessage(String message)
-    {
+    public void setMessage(String message) {
         this.message = message;
     }
 }

@@ -131,28 +131,28 @@
                                 <fieldset>
                                     <legend><h4 class="create" th:text="#{create.dataset.metadata}"></h4></legend>
                                     <div class="form-group">
-                                        <label for="#{create.dataset.placeholder.name}" id="lname" name="lname" class="col-md-3 control-label" th:text="#{create.dataset.placeholder.name}" ></label>                                                                    
+                                        <label for="#{create.dataset.placeholder.name}" id="lname" name="lname" class="control-label" th:text="#{create.dataset.placeholder.name}" ></label>                                                                    
                                         <input type="text" class="form-control col-md-6" name="name" th:attr="placeholder = #{create.dataset.placeholder.name}" required="required" onchange="dynamicUrl(this.value)" th:value="${dataset.name}">
                                         <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:attr="placeholder = #{add.dataset.placeholder.nameerror}" ></label>
                                     </div>
                                     <div class="form-group">
-                                        <label for="#{create.dataset.placeholder.description}" id="ldescription" name="ldescription" class="col-md-12 control-label left" th:text="#{create.dataset.placeholder.description}" ></label>  
+                                        <label for="#{create.dataset.placeholder.description}" id="ldescription" name="ldescription" class="control-label" th:text="#{create.dataset.placeholder.description}" ></label>  
                                         <textarea rows="5" class="form-control" name="description" th:attr="placeholder = #{create.dataset.placeholder.description}" required="required" th:text="${dataset.description}"></textarea>
                                         <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:attr="placeholder = #{add.dataset.placeholder.descriptionerror}"></label>
                                     </div>
                                     <div class="form-group">
-                                        <label for="DOI" id="ldoi" name="ldoi" class="col-md-12 control-label left" th:text="DOI" ></label>  
+                                        <label for="DOI" id="ldoi" name="ldoi" class="control-label" th:text="DOI" ></label>  
                                         <input type="text" class="form-control" name="doi" placeholder="DOI" th:value="${dataset.doi}">
                                         <label class="error-label" th:if="${#fields.hasErrors('doi')}" th:errors="*{doi}" th:attr="placeholder = #{add.dataset.placeholder.doierror}"></label>
                                     </div>
                                     <div class="form-group">
-                                        <label th:text="#{create.dataset.label.visibility}" class="col-md-12 control-label left" ></label>&nbsp;&nbsp;
+                                        <label th:text="#{create.dataset.label.visibility}" class="control-label" ></label>&nbsp;&nbsp;
                                         <label class="radio-inline main-text"><input type="radio" name="access" th:value="${T(org.strep.domain.Dataset).ACCESS_PRIVATE}" required="required" checked th:text="#{add.dataset.private}" th:checked="${dataset.access}==null or ${dataset.access}=='private'"></label>&nbsp;
                                         <label class="radio-inline main-text"><input type="radio" name="access" th:value="${T(org.strep.domain.Dataset).ACCESS_PROTECTED}" required="required" th:text="#{add.dataset.protected}" th:checked="${dataset.access}!=null and ${dataset.access}=='protected'"></label>&nbsp;
                                         <label class="radio-inline main-text"><input type="radio" name="access" th:value="${T(org.strep.domain.Dataset).ACCESS_PUBLIC}" required="required" th:text="#{add.dataset.public}" th:checked="${dataset.access}!=null and ${dataset.access}=='public'"></label>&nbsp;
                                     </div>
                                     <div class="form-group">
-                                        <label for="#{add.dataset.license}" id="llicense" name="llicense" class="col-md-12 control-label left" th:text="#{add.dataset.license}" ></label>
+                                        <label for="#{add.dataset.license}" id="llicense" name="llicense" class="control-label" th:text="#{add.dataset.license}" ></label>
                                         <select class="form-control col-md-6" id="selectLicense" name="license" required>
                                             <option value="" disabled selected th:text="#{add.dataset.placeholder.license}"></option>
                                             <option th:value="${license.name}" th:text="${license.name}" th:each="license : ${licenses}" th:selected="${dataset.license}!=null and ${dataset.license.name}==${license.name}"></option>

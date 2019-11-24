@@ -39,12 +39,12 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="DOI" id="ldoi" name="ldoi" class="col-md-12 control-label left" th:text="DOI" ></label>                            
+                                        <label for="DOI" id="ldoi" name="ldoi" class="control-label" th:text="DOI" ></label>                            
                                         <input type="text" class="form-control col-md-6" name="doi" placeholder="DOI" th:value="${dataset.doi}">
                                         <label class="error-label" th:if="${#fields.hasErrors('doi')}" th:text="#{dataset.msg.doi}"></label>
                                     </div>
                                     <div class="form-group">
-                                        <label for="#{add.dataset.license}" id="llicense" name="llicense" class="col-md-12 control-label left" th:attr="value = #{add.dataset.license}" ></label>         
+                                        <label for="#{add.dataset.license}" id="llicense" name="llicense" class="control-label" th:text="#{add.dataset.license}" ></label>         
                                         <select class="form-control col-md-6" id="selectLicense" name="license" required>
                                             <option value="" disabled selected th:text="#{add.dataset.placeholder.license}"></option>
                                             <div th:each="license : ${licenses}">
@@ -59,16 +59,17 @@
                                         <label class="radio-inline main-text"><input type="radio" name="access" th:value="${T(org.strep.domain.Dataset).ACCESS_PUBLIC}" required="required" th:text="#{add.dataset.public}" th:checked="${dataset.access}!=null and ${dataset.access}=='public'"></label>&nbsp;
                                     </div>
                                     <div class="form-group">
-                                        <label th:text="#{add.dataset.url}" class="col-md-12 control-label left"></label>
+                                        <label th:text="#{add.dataset.url}" class="control-label"></label>
                                         <input type="text" class="form-control col-md-6" id="url" name="url" th:attr="value = ${host}" readonly="readonly">
                                     </div>
                                     <div class="form-group">
-                                        <label for="dataset-file" class="main-text" th:attr="placeholder = #{add.dataset.zipfile}"></label>
+                                        <label for="dataset-file" class="main-text" th:text="#{add.dataset.zipfile}"></label>
+                                        <p><i class="fas fa-info"></i>&nbsp;<small th:text="#{add.dataset.formatzipfile}"></small></p>
                                         <input type="file" class="form-control-file col-md-6" name="dataset-file" id="dataset-file" required="required">
                                     </div>
                                     <hr/>
                                     <div class="form-group right">
-                                        <input type="submit" class="btn btn-primary" th:attr="value= #{add.dataset.title}"><br>
+                                        <input type="submit" class="btn btn-primary" th:attr="value= #{add.dataset.title}">
                                     </div>
                                 </fieldset>
                             </form>

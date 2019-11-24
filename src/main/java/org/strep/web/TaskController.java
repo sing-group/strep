@@ -104,6 +104,39 @@ public class TaskController {
 
     }
 
+    @GetMapping("/hide")
+    public String hideTask(Authentication authentication, Model model,
+            @RequestParam(name = "task") int id,
+            @RequestParam(name = "option") String option,
+            @RequestParam(name = "state") String state) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String username = userDetails.getUsername();
+        String authority = userService.getPermissionsByUsername(username);
+
+        model.addAttribute("authority", authority);
+        model.addAttribute("username", username);
+
+        Long idLong = new Long(id);
+        Optional<Task> optTask = taskRepository.findById(idLong);
+
+        Task task = optTask.get();
+
+        if (task.getDataset().getAuthor().equals(username)) {
+           task.setActive(Boolean.FALSE);
+            taskRepository.save(task);
+            switch (option) {
+                case "upload":
+                    return "redirect:/task/upload?state=" + state;
+                case "create":
+                    return "redirect:/task/create?state=" + state;
+                case "preprocess":
+                    return "redirect:/task/preprocess?state=" + state;
+            }
+        }
+        return "redirect:/error";
+    }
+
     @GetMapping("/detailed")
     public String detailedTask(Authentication authentication, Model model, @RequestParam(name = "task") int id) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
