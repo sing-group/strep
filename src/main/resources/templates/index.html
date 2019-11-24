@@ -15,11 +15,19 @@
             <div th:include="header.html"></div>
         </div>
         <div class="container" >
-            
-    <div class="alert alert-dismissible alert-danger error-label" th:unless="${param.error == null}">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <label class="" th:text="#{header.wrongusernameorpassword}"></label>
-    </div>
+            <div class="alert alert-dismissible alert-danger error-label" th:unless="${param.error == null}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <label class="" th:text="#{header.wrongusernameorpassword}"></label>
+            </div>
+            <div class="alert alert-dismissible alert-info" th:unless="${param.register==ok}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <label class="" th:text="#{header.registerok}"></label>
+            </div>
+            <div class="alert alert-dismissible alert-info" th:if="${param.confirmed}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p th:text="#{register.email.confirmedaccount1}" class="bold"></p>
+                <p th:text="#{register.email.confirmedaccount2}"></p>
+            </div>
             <div id="banner" class="page-header">
                 <div class="row">
                     <div class="col-12">
@@ -48,8 +56,8 @@
                     </div>
                     <div class="col-6">
                         <img class="wlc-pic"  src="/images/signup.png" alt="public datasets">
-                        <h3 class="main-text text-center"  th:text="#{signup.home.title}"></h3>
-                        <p class="main-text text-center"  th:text="#{signup.home.subtitle}"></p>
+                        <a href="/user/register"><h3 class="main-text text-center btn-list" th:text="#{signup.home.title}"></h3><a>
+                        <p class="main-text text-center" th:text="#{signup.home.subtitle}"></p>
                     </div>
                 </div>
             </div>

@@ -32,7 +32,11 @@
                                 <div class="col-6"></div>
                                 <div class="col-6 right">
                                     <div class="btn-group">
-                                        <a class="btn btn-list" th:href="@{'/dataset/list'}">
+                                        <a class="btn btn-list" th:if="${#strings.contains(#httpServletRequest.getHeader('referer'), 'dataset/list')}" id="back">
+                                            <i class="fas fa-arrow-circle-left"></i>
+                                            <span th:text="#{back}"/>
+                                        </a>
+                                        <a class="btn btn-list" th:unless="${#strings.contains(#httpServletRequest.getHeader('referer'), 'dataset/list')}" th:href="@{'/dataset/list'}">
                                             <i class="fas fa-arrow-circle-left"></i>
                                             <span th:text="#{back}"/>
                                         </a>
@@ -97,7 +101,7 @@
                         </div>
                         <div class="row">
                             <div class="col-3 left"> <p class="title-text" th:text="#{detailed.publicdataset.hampercentage}"> </p></div>
-                            <div class="col-9 left">   <p class="normal-text" th:text="${dataset.hamPercentage}"></p></div>
+                            <div class="col-9 left"><p class="normal-text" th:text="${dataset.hamPercentage}"></p></div>
                         </div>
                         <div class="row">
                             <div class="col-3 left"><p class="title-text" th:text="#{detailed.dataset.access}"> </p></div>

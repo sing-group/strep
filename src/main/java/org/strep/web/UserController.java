@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +22,8 @@ import org.strep.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -61,37 +65,52 @@ public class UserController {
     @Autowired
     private PermissionRepository permissionRepository;
 
+    /**
+     * The message i18n
+     */
+    @Autowired
+    MessageSource messageSource;
+
     @GetMapping("/register")
     public String register(User user) {
         return "register";
     }
 
     @PostMapping("/register")
-    public String addNewUser(@Valid User user, BindingResult bindingResult) {
+    public String addNewUser(@Valid User user, BindingResult bindingResult, Model model) {
+
         if (bindingResult.hasErrors()) {
             return "register";
         } else {
+            Locale locale = LocaleContextHolder.getLocale();
             String id = user.getUsername().toLowerCase();
             String email = user.getEmail().toLowerCase();
             String hash = new String(Base64.getEncoder().encode((id + email + Math.random()).getBytes()));
-
-            if (userRepository.findById(id).isPresent()) {
+            if (userRepository.findUserByEmail(email).isPresent()) {
+                model.addAttribute("message", messageSource.getMessage("header.wrongemail", null, locale));
+                model.addAttribute("user", user);
+                return "register";
+            } else if (userRepository.findById(id).isPresent()) {
+                model.addAttribute("message", messageSource.getMessage("header.wrongid", null, locale));
+                model.addAttribute("user", user);
                 return "register";
             } else {
-
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setTo(user.getEmail());
-                message.setSubject("Account activation");
-                message.setText("Welcome to STRep.\n\n Click in the following link to log into your account \n"+hostname+"/user/accountconfirmation?hash=" 
-                    + hash.replaceAll("=", "") + "\n\n Best regards.");
+                message.setSubject(messageSource.getMessage("register.email.subject", null, locale));
+                message.setText(messageSource.getMessage("register.email.textwelcome", null, locale) + "\n\n"
+                        + messageSource.getMessage("register.email.textwelcome", null, locale) + " \n" + hostname + "/user/accountconfirmation?hash="
+                        + hash.replaceAll("=", "") + "\n\n"
+                        + messageSource.getMessage("register.email.textregards", null, locale));
+                
                 mailSender.send(message);
 
                 User user2 = new User(id, email, hash.replaceAll("=", ""), user.getPassword(),
                         user.getName(), user.getSurname());
-                
+
                 userService.saveUser(user2);
 
-                return "redirect:/";
+                return "redirect:/?register=ok";
             }
         }
     }
@@ -103,8 +122,7 @@ public class UserController {
             User user = opt.get();
             user.setConfirmedAccount(true);
             userRepository.save(user);
-
-            return "redirect:/";
+            return "redirect:/?confirmed=true";
         } else {
             return "redirect:/user/register";
         }
@@ -192,7 +210,7 @@ public class UserController {
             RedirectAttributes redirectAttributes) {
 
         String message = userService.editPermissions(permission, username);
-        
+
         redirectAttributes.addAttribute("username", username);
         redirectAttributes.addAttribute("message", message);
         return "redirect:/user/detailed";

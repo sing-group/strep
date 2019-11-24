@@ -13,7 +13,12 @@
             <div th:include="header.html"></div>
         </div>
         <div class="container">
+            <div class="alert alert-dismissible alert-danger error-label" th:if="${message!=null}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <label class="" th:text="${message}"></label>
+            </div>
             <div id="bs-docs-section">
+
                 <div class="row">
                     <div class="col-12">
                         <div id="bs-component">
@@ -28,22 +33,22 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="#{register.placeholder.email}" id="laddEmail" name="laddEmail" class="col-md-3 control-label" th:text="#{register.placeholder.email}" ></label>
-                                        <input type="email" class="form-control col-md-6" name="email" th:attr="placeholder = #{register.placeholder.email}" required="required">
+                                        <input type="email" class="form-control col-md-6" name="email" th:attr="value=${user.email}" required="required">
                                         <label class="error-label" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"  th:text="#{register.emailerror}"></label>
                                     </div>
                                     <div class="form-group">
                                         <label for="#{register.placeholder.name}" id="laddEmail" name="laddName" class="col-md-3 control-label" th:text="#{register.placeholder.name}" ></label>
-                                        <input class="form-control col-md-6" type="text" name="name" th:attr="placeholder = #{register.placeholder.name}" required="required">
+                                        <input class="form-control col-md-6" type="text" name="name" required="required" th:attr="value=${user.name}">
                                         <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:text="#{register.nameerror}"></label> 
                                     </div>
                                     <div class="form-group">
                                         <label for="#{register.placeholder.surname}" id="laddEmail" name="laddSurname" class="col-md-3 control-label" th:text="#{register.placeholder.surname}" ></label>
-                                        <input class="form-control col-md-6" type="text" name="surname" th:attr="placeholder = #{register.placeholder.surname}" required="required">
+                                        <input class="form-control col-md-6" type="text" name="surname" th:attr="value=${user.surname}" required="required">
                                         <label class="error-label" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}" th:text="#{register.surnameerror}"></label> 
                                     </div>
                                     <div class="form-group">
                                         <label for="#{register.placeholder.username}" id="laddUsername" name="laddUsername" class="col-md-3 control-label" th:text="#{register.placeholder.username}" ></label>
-                                        <input type="text" class="form-control col-md-3" name="username" th:attr="placeholder = #{register.placeholder.username}" required="required">
+                                        <input type="text" class="form-control col-md-3" name="username" th:attr="value=${user.username}" required="required">
                                         <label class="error-label" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" th:text="#{register.usernameerror}"></label>
                                     </div>
                                     <div class="form-group">
