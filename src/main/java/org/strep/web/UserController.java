@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;

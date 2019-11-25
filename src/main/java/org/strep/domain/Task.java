@@ -94,13 +94,14 @@ public class Task implements Serializable {
         this.dataset = dataset;
         this.state = state;
         this.message = message;
+        this.active=true;
     }
 
     /**
      * The default constructor of the task
      */
     public Task() {
-
+        this.active=true;
     }
 
     /**

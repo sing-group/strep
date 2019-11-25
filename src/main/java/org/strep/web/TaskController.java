@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Optional;
 import javax.validation.Valid;
-import jdk.nashorn.internal.objects.NativeArray;
 
 import org.strep.domain.Dataset;
 import org.strep.domain.Task;
@@ -95,9 +94,9 @@ public class TaskController {
         model.addAttribute("state", state);
 
         if (inputSearch != null) {
-            model.addAttribute("tasks", taskRepository.getUserTasksFiltered(username, inputSearch, state));
+            model.addAttribute("tasks", taskRepository.getActiveUserTasksFiltered(username, inputSearch, state));
         } else {
-            model.addAttribute("tasks", taskRepository.getUserTasks(username, state));
+            model.addAttribute("tasks", taskRepository.getActiveUserTasks(username, state));
         }
 
         return "user_task_list";
@@ -198,7 +197,7 @@ public class TaskController {
             if (optDataset.isPresent() && optDataset.get().getAuthor().equals(username)) {
                 Dataset dataset = optDataset.get();
                 model.addAttribute("dataset", dataset);
-                tasks = taskRepository.getPreprocessingTasks(dataset, state);
+                tasks = taskRepository.getActivePreprocessingTasks(dataset, state);
                 model.addAttribute("state", state);
                 model.addAttribute("tasks", tasks);
             } else {
@@ -206,7 +205,7 @@ public class TaskController {
             }
         } else {
             for (Dataset optDataset : datasetRepository.findAll()) {
-                Collection<TaskCreateUPreprocessing> newTasks = taskRepository.getPreprocessingTasks(optDataset, state);
+                Collection<TaskCreateUPreprocessing> newTasks = taskRepository.getActivePreprocessingTasks(optDataset, state);
                 tasks.addAll(newTasks);
                 for (int i = 0; i < newTasks.size(); i++) {
                     datasets.add(optDataset);
