@@ -23,10 +23,14 @@
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <label class="" th:text="#{header.registerok}"></label>
             </div>
-            <div class="alert alert-dismissible alert-info" th:if="${param.confirmed}">
+            <div class="alert alert-dismissible alert-info" th:if="${param.confirmed!=null and param.confirmed[0]=='ok'}">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <p th:text="#{register.email.confirmedaccount1}" class="bold"></p>
                 <p th:text="#{register.email.confirmedaccount2}"></p>
+            </div>
+            <div class="alert alert-dismissible alert-error" th:if="${param.confirmed!=null and param.confirmed[0]=='nook'}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p th:text="#{register.email.noconfirmedaccount}"></p>
             </div>
             <div id="banner" class="page-header">
                 <div class="row">

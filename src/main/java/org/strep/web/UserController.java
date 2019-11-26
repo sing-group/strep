@@ -121,9 +121,9 @@ public class UserController {
             User user = opt.get();
             user.setConfirmedAccount(true);
             userRepository.save(user);
-            return "redirect:/?confirmed=true";
+            return "redirect:/?confirmed=ok";
         } else {
-            return "redirect:/user/register";
+            return "redirect:/?confirmed=nook";
         }
     }
 
@@ -160,14 +160,14 @@ public class UserController {
         model.addAttribute("username", sessionUsername);
 
         Optional<User> optUser = userRepository.findById(username);
-        ArrayList<Dataset> systemDatasets = datasetRepository.getUserDatasets(username, Dataset.TYPE_SYSTEM);
-        ArrayList<Dataset> userDatasets = datasetRepository.getUserDatasets(username, Dataset.TYPE_USER);
+        ArrayList<Dataset> systemDatasets = datasetRepository.getOwnDatasets(username, Dataset.TYPE_SYSTEM);
+        ArrayList<Dataset> userDatasets = datasetRepository.getOwnDatasets(username, Dataset.TYPE_USER);
         Iterable<Permission> permissions = permissionRepository.findAll();
 
         if (optUser.isPresent()) {
             User user = optUser.get();
             model.addAttribute("user", user);
-            model.addAttribute("userdatasetsnum", userDatasets.size());
+            model.addAttribute("userdatasetsnum", userDatasets.size()); 
             model.addAttribute("systemdatasetsnum", systemDatasets.size());
             model.addAttribute("permissions", permissions);
         }

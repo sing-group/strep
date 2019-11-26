@@ -102,12 +102,6 @@
                                 <td th:text="${task.description}" class="justify">
                                 </td>
                                 <td class="minw_110">
-                                    <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{createtasks.downloadpipeline}" th:href="'/task/preprocess/downloadpipeline?id='+ ${task.id}">
-                                        <i class="fas fa-file-download"></i>
-                                    </a>
-                                    <a class="btn btn-list" th:if="${state=='success'}"  data-toggle="tooltip" data-placement="right" th:title="#{createtasks.downloadcsv}" th:href="'/task/preprocess/downloadcsv?id='+ ${task.id}">
-                                        <i class="fas fa-file-csv"></i>
-                                    </a>
                                     <a class="btn btn-list" th:if="${username}==${task.getDataset().getAuthor()}" th:href="@{'/task/hide?task=' + ${task.id} + '&option=preprocess&state='+${state}}" data-toggle="tooltip" data-placement="right" th:title="#{list.usertasks.details}" th:onclick="'javascript:return confirm(\'' + #{list.usertasks.surehide} + '\');'">
                                         <i class="fas fa-eye-slash"></i>
                                     </a>

@@ -31,6 +31,7 @@
                             <div class="card border-primary mb3">
                                 <div class="card-header" th:text="#{permission.request.state}"></div>
                                 <div class="card-body">
+                                    <div class="alert alert-light" th:if="${permissionRequests.size()==0}" th:text="#{permission.request.norequests}"></div>
                                     <p th:each="request:${permissionRequests}">
                                         <img src="/images/clock.svg" alt="pending" width="32" height="32" th:if="${request.status}=='pending'">
                                         <img src="/images/tick.svg" alt="accepted" width="32" height="32" th:if="${request.status}=='accepted'">
