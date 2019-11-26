@@ -28,19 +28,19 @@
             <div id="bs-docs-section">
                 <div id="bs-component">
                     <ul class="nav nav-tabs">
-                        <li class="nav-item" th:if="${authority=='canView'}">
+                        <li class="nav-item" th:if="${authority==T(org.strep.domain.Permission).VIEW}">
                             <a class="nav-link disabled" href="/list/preprocess/datasets?type=user" th:text="#{list.datasets.table.user}"></a>
                         </li>
-                        <li class="nav-item" th:unless="${authority=='canView'}">
+                        <li class="nav-item" th:unless="${authority==T(org.strep.domain.Permission).VIEW}">
                             <a class="nav-link" th:classappend="${type=='user'} ? 'active' : ''" href="/list/preprocess/datasets?type=user" th:text="#{list.datasets.table.user}"></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:classappend="${type=='community'} ? 'active' : ''" href="/list/preprocess/datasets?type=community" th:text="#{list.datasets.table.community}"></a>
                         </li>
-                        <li class="nav-item" th:if="${authority=='canUpload' or authority=='canAdminister'}">
+                        <li class="nav-item" th:if="${authority==T(org.strep.domain.Permission).UPLOAD or authority==T(org.strep.domain.Permission).ADMINISTER}">
                             <a class="nav-link" th:classappend="${type=='usersystem'} ? 'active' : ''" href="/list/preprocess/datasets?type=usersystem" th:text="#{list.datasets.table.system}"></a>
                         </li>
-                        <li class="nav-item" th:unless="${authority=='canUpload' or authority=='canAdminister'}">
+                        <li class="nav-item" th:unless="${authority==T(org.strep.domain.Permission).UPLOAD or authority==T(org.strep.domain.Permission).ADMINISTER}">
                             <a class="nav-link disabled" href="/list/preprocess/datasets?type=usersystem" th:text="#{list.datasets.table.system}"></a>
                         </li>
                     </ul>

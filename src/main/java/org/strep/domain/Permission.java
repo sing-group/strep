@@ -17,10 +17,31 @@ import java.util.Set;
 public class Permission implements Serializable
 {
     /**
+     * View permission
+     */
+    public static final String VIEW = "View";
+    
+    /**
+     * Create corpus permission
+     */
+    public static final String CREATE_CORPUS = "CreateCorpus";
+    
+    /**
+     * Upload permission
+     */
+    public static final String UPLOAD = "Upload";
+    
+    /**
+     * Administer permission
+     */
+    public static final String ADMINISTER = "Administer";
+    
+    /**
      * Serial Version UID
      */
     private static final long serialVersionUID = 1L;
 
+    
     /**
      * The id of the permission
      */

@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.sql.DataSource;
+import org.strep.domain.Permission;
 
 @Configuration
 @EnableWebSecurity
@@ -51,12 +52,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers("/user/register").permitAll()
                 .antMatchers("/user/accountconfirmation").permitAll()
                 .antMatchers("/dataset/public/**").permitAll()
-                .antMatchers("/user/editProfile/**","/dataset/list/**", "/dataset/system/**","/dataset/protected/**", "/permission/**","/permission/solicit/**").hasAnyAuthority("canView","canCreateCorpus","canUpload","canAdminister")
-                .antMatchers("/dataset/create/**", "/task/create/**").hasAnyAuthority("canCreateCorpus", "canUpload", "canAdminister")
-                .antMatchers("/dataset/upload/**", "/task/upload/**").hasAnyAuthority("canUpload", "canAdminister")
+                .antMatchers("/user/editProfile/**","/dataset/list/**", "/dataset/system/**","/dataset/protected/**", "/permission/**","/permission/solicit/**").hasAnyAuthority(Permission.VIEW,Permission.CREATE_CORPUS,Permission.UPLOAD,Permission.ADMINISTER)
+                .antMatchers("/dataset/create/**", "/task/create/**").hasAnyAuthority(Permission.CREATE_CORPUS, Permission.UPLOAD, Permission.ADMINISTER)
+                .antMatchers("/dataset/upload/**", "/task/upload/**").hasAnyAuthority(Permission.UPLOAD, Permission.ADMINISTER)
                 .antMatchers("/license/list/**", "/license/add/**", "/user/list/**", "/permission/listrequests/**", "/user/detailed/**", "/user/delete/**", 
                 "/license/modify/**")
-                .hasAuthority("canAdminister").anyRequest()
+                .hasAuthority(Permission.ADMINISTER).anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/").failureUrl("/?error=true")
                 .defaultSuccessUrl("/dataset/list")

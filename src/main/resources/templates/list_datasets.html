@@ -28,13 +28,13 @@
                 </div>
             </div>
             <div id="bs-docs-section">
-                <div class="row" th:if="${authority=='canUpload' or authority=='canAdminister'}">
+                <div class="row" th:if="${authority==T(org.strep.domain.Permission).UPLOAD or authority==T(org.strep.domain.Permission).ADMINISTER}">
                     <div class="col-12 right">
                         <button type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/create'" th:text=" #{list.datasets.createbutton}"></button>
                         <button type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/upload'" th:text=" #{list.datasets.uploadbutton}"></button>
                     </div>
                 </div>
-                <div class="row" th:if="${authority=='canCreateCorpus'}">
+                <div class="row" th:if="${authority==T(org.strep.domain.Permission).CREATE_CORPUS}">
                     <div class="col-12 right">
                         <button type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/create'" th:text=" #{list.datasets.createbutton}"></button>
                     </div>
@@ -42,23 +42,23 @@
               
                 <div id="bs-component">
                     <ul class="nav nav-tabs">
-                        <li class="nav-item" th:if="${authority=='canView'}">
+                        <li class="nav-item" th:if="${authority==T(org.strep.domain.Permission).VIEW}">
                             <a class="nav-link disabled" href="/dataset/list?type=user" th:text="#{list.datasets.table.user}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.infoown}"></a>
                         </li>
-                        <li class="nav-item" th:unless="${authority=='canView'}">
+                        <li class="nav-item" th:unless="${authority==T(org.strep.domain.Permission).VIEW}">
                             <a class="nav-link" th:classappend="${type=='user'} ? 'active' : ''" href="/dataset/list?type=user" th:text="#{list.datasets.table.user}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.infoown}"></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:classappend="${type=='community' or (authority=='canView' and type=='user')} ? 'active' : ''" href="/dataset/list?type=community" th:text="#{list.datasets.table.community}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.infocommunity}"></a>
+                            <a class="nav-link" th:classappend="${type=='community' or (authority==T(org.strep.domain.Permission).VIEW and type=='user')} ? 'active' : ''" href="/dataset/list?type=community" th:text="#{list.datasets.table.community}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.infocommunity}"></a>
                         </li>
-                        <li class="nav-item"><!--th:if="${authority=='canUpload' or authority=='canAdminister'}"-->
+                        <li class="nav-item">
                             <a class="nav-link" th:classappend="${type=='usersystem'} ? 'active' : ''" href="/dataset/list?type=usersystem" th:text="#{list.datasets.table.system}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.infosystem}"></a>
                         </li>
                     </ul>
                     <div class="tab-pane fade active show" >
                         <div class="alert alert-light" th:if="${datasets.size()==0}" th:text="#{list.datasets.table.nodatasets}"></div>
                         <!-- ONLY CAN VIEW -->
-                        <table class="table table-hover margin20" th:if="${authority=='canView' and datasets.size()!=0}">
+                        <table class="table table-hover margin20" th:if="${authority==T(org.strep.domain.Permission).VIEW and datasets.size()!=0}">
                             <thead>
                                 <tr>
                                     <th scope="col" th:text="#{list.datasets.table.name}"></th>
@@ -105,7 +105,7 @@
                             </tbody>
                         </table>
                         <!-- -->
-                        <table class="table table-hover margin20" th:unless="${authority=='canView'}"> <!--th:if="${type=='usersystem' and datasets.size()!=0}-->
+                        <table class="table table-hover margin20" th:unless="${authority==T(org.strep.domain.Permission).VIEW or datasets.size()==0} "> <!--th:if="${type=='usersystem' and datasets.size()!=0}-->
                             <thead>
                                 <tr>
                                     <th scope="col"th:text="#{list.datasets.table.name}"></th>

@@ -19,6 +19,7 @@ import org.strep.domain.FileDatatypeType;
 import org.strep.domain.Language;
 import org.strep.domain.License;
 import org.strep.domain.User;
+import org.strep.domain.Permission;
 import org.strep.repositories.DatasetRepository;
 import org.strep.repositories.DatatypeRepository;
 import org.strep.repositories.FileDatatypeTypeRepository;
@@ -167,8 +168,8 @@ public class DatasetController {
                 break;
 
             case "user":               
-                // You have to do this because in case of canView permission, default view is communityDatasets but, default type is always user
-                if (authority.equals("canView")) {
+                // You have to do this because in case of view permission, default view is communityDatasets but, default type is always user
+                if (authority.equals(Permission.VIEW)) {
                     datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
                 } else {
                     datasets = datasetRepository.getOwnDatasets(username, Dataset.TYPE_USER);
@@ -176,7 +177,7 @@ public class DatasetController {
                 break;
 
             case "usersystem":
-                if (authority.equals("canAdminister")) {
+                if (authority.equals(Permission.ADMINISTER)) {
                     datasets = datasetRepository.getSystemDatasets();
                 } else {
                     datasets = datasetRepository.getSystemDatasets(username, Dataset.TYPE_SYSTEM);

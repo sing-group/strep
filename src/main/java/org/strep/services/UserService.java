@@ -152,15 +152,15 @@ public class UserService {
     private String convertPermIdToString(Long id) {
         switch (id.intValue()) {
             case 1:
-                return "canView";
+                return Permission.VIEW;
             case 2:
-                return "canCreateCorpus";
+                return Permission.CREATE_CORPUS;
             case 3:
-                return "canUpload";
+                return Permission.UPLOAD;
             case 4:
-                return "canAdminister";
+                return Permission.ADMINISTER;
             default:
-                return "canView";
+                return Permission.VIEW;
         }
     }
 
