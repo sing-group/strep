@@ -154,10 +154,10 @@
                                         <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.download}" th:href="@{'/dataset/download?id=' + ${dataset.name}}">
                                             <i class="fas fa-file-download"></i>
                                         </a>
-                                        <a class="btn btn-list" data-toggle="tooltip"  th:if="${authority=='canAdminister' or username==dataset.getAuthor()}" data-placement="right" th:title="#{list.datasets.table.edit}" th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
+                                        <a class="btn btn-list" data-toggle="tooltip"  th:if="${authority==T(org.strep.domain.Permission).ADMINISTER or username==dataset.getAuthor()}" data-placement="right" th:title="#{list.datasets.table.edit}" th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
                                             <i class="fas fa-pen-square"></i>
                                         </a>
-                                        <a class="btn btn-list" th:if="${authority=='canAdminister' or username==dataset.getAuthor()}" th:href="@{'/dataset/delete?id=' + ${dataset.name}}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.delete}" th:onclick="'javascript:return confirm(\'' + #{list.datasets.table.suredelete} + '\');'" >
+                                        <a class="btn btn-list" th:if="${authority==T(org.strep.domain.Permission).ADMINISTER or username==dataset.getAuthor()}" th:href="@{'/dataset/delete?id=' + ${dataset.name}}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.delete}" th:onclick="'javascript:return confirm(\'' + #{list.datasets.table.suredelete} + '\');'" >
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
