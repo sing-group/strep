@@ -33,40 +33,35 @@
                 <div class="alert alert-light" th:if="${users.size()==0}" th:text="#{list.users.nousers}"></div>
                 <table class="table table-hover margin20" th:if="${users.size()!=0}">
                     <thead>
-                    <th scope="col" th:text="#{list.users.photo}"></th>
-                    <th scope="col" th:text="#{list.users.name}"></th>
-                    <th scope="col" th:text="#{list.users.username}"></th>
-                    <th scope="col" th:text="#{list.users.permissions}"></th>
-                    <th scope="col" th:text="#{list.users.details}"></th>
-                    <th scope="col" th:text="#{list.users.actions}"></th>
                     <th scope="col" ></th>
+                    <th scope="col" th:text="#{list.users.photo}"></th>
+                    <th scope="col" th:text="#{list.users.username}"></th>
+                    <th scope="col" th:text="#{list.users.name}"></th>
+                    <th scope="col" th:text="#{list.users.permissions}"></th>
+                    <th scope="col" th:text="#{list.users.actions}"></th>
                     </thead>
                     <tbody>
                         <tr th:each="user : ${users}">
-                            <td><img class="user-photo" th:src="@{'/user/image?username='+${user.username}}" alt="photo" height="32" width="32"></td>
-                            <td th:text="${user.username}"></td>
-                            <td th:text="${user.name}"></td>
                             <td>
-                                <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fas fa-key"></i>
-                                    <span class="icon-caret-down"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li th:text="${permission.name}" th:each="permission : ${user.permission}"></li>
-                                </ul>
-                            </td>
-                            <td>
-                                <a class="btn btn-list" th:href="@{/user/detailed(username = ${user.username},type=user)}" th:title="#{list.users.details}">
-                                    <i class="fas fa-eye"></i>
-                                </a>
                                 <img src="/images/tick.svg" th:if="${user.confirmedAccount}" th:title="#{detailed.user.confirmed}" th:attr="alt = #{detailed.user.confirmed}" height="16" width="16">
                                 <img src="/images/warning.svg" th:unless="${user.confirmedAccount}" th:title="#{detailed.user.notconfirmed}" th:attr="alt = #{detailed.user.notconfirmed}" height="16" width="16">
                             </td>
+                            <td><img class="user-photo" th:src="@{'/user/image?username='+${user.username}}" alt="photo" height="32" width="32"></td>
                             <td>
+                                <span th:text="${user.username}"></span>
+                            </td>
+                            <td th:text="${user.name}"></td>
+                            <td>
+                                <p th:text="${user.permission.name}"></p>
+                            </td>
+                            <td class="minw_110">
+                                <a class="btn btn-list" th:href="@{/user/detailed(username = ${user.username},type=user)}" th:title="#{list.users.details}">
+                                    <i class="fas fa-eye"></i>
+                                </a>
                                 <a class="btn btn-list" th:href="@{/user/delete(username = ${user.username}, type=user)}" th:onclick="'javascript:return confirm(\'' + #{list.users.suredelete} + '\');'" th:title="#{list.users.delete}">
                                     <i class="fas fa-trash"></i>
                                 </a>
-                            </td>
+                            </td>                            
                         </tr>
                     </tbody>
                 </table>
