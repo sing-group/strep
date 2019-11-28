@@ -517,7 +517,19 @@ legend{
 .modal-content{
   margin-bottom: 10px;
 }
+.tab-pane{
+  overflow-x:auto;
+}
 /***** Responsive *****/
+
+@media (max-width: 375px){
+  #laddLicense{width:50%;}
+  #lPassword{width:50%;}
+  #username,#password{margin-bottom: 5px;}
+  .header-lang-user{margin-left:0px !important;}
+  .row{min-height: 60px;}
+}
+
 #dlogin{
   padding-right: 10px;
 }
@@ -531,6 +543,8 @@ legend{
 
 
 @media (max-width: 500px) {
+  .header-lang-user{margin-left:0px !important;}
+  .form-inline {min-height:80;}
   #dlogin { width: 100%; }
   #dmenu { width: 100%;}
   .dlocales{ width: 100%;}

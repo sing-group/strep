@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Set; 
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.strep.domain.Dataset;
@@ -39,9 +39,10 @@ import org.strep.domain.Task;
 * Service class to abstract to the controller of tasks jobs not related to the presentation
 * @author Ismael Vázquez
 * @author José Ramón Méndez
-*/
+ */
 @Service
 public class TaskService {
+
     /**
      * The repository to access datasets data
      */
@@ -104,20 +105,23 @@ public class TaskService {
 
     /**
      * Insert a system task to the database
+     *
      * @param dataset the dataset
      */
     public void addNewSystemTask(Dataset dataset) {
         TaskCreateSdataset taskCreateSdataset = new TaskCreateSdataset(dataset, Task.STATE_WAITING, null);
         //dataset.setTask(taskCreateSdataset);
-        if(dataset.getTasks()==null) dataset.setTasks(new ArrayList<Task>());
+        if (dataset.getTasks() == null) {
+            dataset.setTasks(new ArrayList<Task>());
+        }
         dataset.getTasks().add(taskCreateSdataset);
         taskRepository.save(taskCreateSdataset);
         datasetRepository.save(dataset);
     }
 
-
     /**
      * This method creates a new user task
+     *
      * @param dataset
      * @param licenses
      * @param languages
@@ -139,8 +143,8 @@ public class TaskService {
      * @param inputSpamPercentage
      * @param username
      * @param spamMode
-     * 
-     * @return 
+     *
+     * @return
      */
     public String addNewUserDatasetTask(Dataset dataset, String[] licenses, String[] languages, String[] datatypes,
             String[] datasets, String dateFrom, String dateTo, int inputSpamEml, int inputHamEml, int inputSpamWarc,
@@ -154,6 +158,7 @@ public class TaskService {
         ArrayList<Language> languagesArray = new ArrayList<>();
         ArrayList<Datatype> datatypesArray = new ArrayList<>();
         ArrayList<Dataset> datasetsArray = new ArrayList<>();
+
 
         if (licenses != null) {
             licensesArray = toArrayListLicenses(licenses);
@@ -182,30 +187,30 @@ public class TaskService {
             } else {
                 String shortName = dataset.getName().replaceAll(" ", "");
                 dataset.setName(shortName);
-                
+
                 Optional<Dataset> optDataset = datasetRepository.findById(dataset.getName());
 
                 if (optDataset.isPresent()) {
                     message = messageSource.getMessage("task.create.dataset.fail.alreadyexists", Stream.of().toArray(String[]::new), locale);
-                } 
-                else if (!correctFilters(datasets, inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, 
-                inputSpamTsms, inputHamTsms, inputSpamTytb, inputHamTytb, inputSpamTwtid, inputHamTwtid, fileNumberInput
-                ,inputSpamPercentage,spamMode)) {
+                } else if (!correctFilters(datasets, inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc,
+                        inputSpamTsms, inputHamTsms, inputSpamTytb, inputHamTytb, inputSpamTwtid, inputHamTwtid, fileNumberInput,
+                         inputSpamPercentage, spamMode)) {
 
                     message = messageSource.getMessage("task.create.dataset.fail.noenougthfiles", Stream.of().toArray(String[]::new), locale);
-                } 
-                 else {
+                } else {
                     if (!dateFrom.equals("") && !dateTo.equals("")) {
                         datasetRepository.save(dataset);
                         dateFromFormatted = simpleDateFormat.parse(dateFrom);
                         dateToFormatted = simpleDateFormat.parse(dateTo);
                         TaskCreateUdataset taskCreateUdataset = new TaskCreateUdataset(dataset, Task.STATE_WAITING, null, inputSpamPercentage,
-                        fileNumberInput, dateFromFormatted, dateToFormatted, languagesArray, datatypesArray, licensesArray, datasetsArray
-                        ,inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTytb, inputHamTytb, inputSpamTsms, inputHamTsms,
-                        inputSpamTwtid,inputHamTwtid, spamMode);
+                                fileNumberInput, dateFromFormatted, dateToFormatted, languagesArray, datatypesArray, licensesArray, datasetsArray,
+                                 inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTytb, inputHamTytb, inputSpamTsms, inputHamTsms,
+                                inputSpamTwtid, inputHamTwtid, spamMode);
                         Dataset toSaveDataset = datasetService.addUserDataset(dataset, username);
                         //toSaveDataset.setTask(taskCreateUdataset);
-                        if (toSaveDataset.getTasks()==null) toSaveDataset.setTasks(new ArrayList<>());
+                        if (toSaveDataset.getTasks() == null) {
+                            toSaveDataset.setTasks(new ArrayList<>());
+                        }
                         toSaveDataset.getTasks().add(taskCreateUdataset);
                         taskRepository.save(taskCreateUdataset);
                         datasetRepository.save(toSaveDataset);
@@ -214,12 +219,14 @@ public class TaskService {
 
                         datasetRepository.save(dataset);
                         TaskCreateUdataset taskCreateUdataset = new TaskCreateUdataset(dataset, Task.STATE_WAITING, null, inputSpamPercentage,
-                        fileNumberInput, null, null, languagesArray, datatypesArray, licensesArray, datasetsArray
-                        ,inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTytb, inputHamTytb, inputSpamTsms, inputHamTsms,
-                        inputSpamTwtid,inputHamTwtid, spamMode);
+                                fileNumberInput, null, null, languagesArray, datatypesArray, licensesArray, datasetsArray,
+                                 inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTytb, inputHamTytb, inputSpamTsms, inputHamTsms,
+                                inputSpamTwtid, inputHamTwtid, spamMode);
                         Dataset toSaveDataset = datasetService.addUserDataset(dataset, username);
                         //toSaveDataset.setTask(taskCreateUdataset);
-                        if (toSaveDataset.getTasks()==null) toSaveDataset.setTasks(new ArrayList<>());
+                        if (toSaveDataset.getTasks() == null) {
+                            toSaveDataset.setTasks(new ArrayList<>());
+                        }
                         toSaveDataset.getTasks().add(taskCreateUdataset);
                         taskRepository.save(taskCreateUdataset);
                         datasetRepository.save(toSaveDataset);
@@ -237,182 +244,163 @@ public class TaskService {
         return message;
     }
 
-    public String createPreprocessingTask(Dataset dataset, TaskCreateUPreprocessing task, MultipartFile pipeline)
-    {
+    public String createPreprocessingTask(Dataset dataset, TaskCreateUPreprocessing task, MultipartFile pipeline) {
         Locale locale = LocaleContextHolder.getLocale();
         String message = "";
-        try
-        {
+        try {
             TaskCreateUPreprocessing toCreateTask = new TaskCreateUPreprocessing(dataset, task.getName(), Task.STATE_WAITING, null, task.getDescription(), pipeline.getBytes(), null, new Date(), dataset);
             taskRepository.save(toCreateTask);
             message = messageSource.getMessage("createpreprocessing.sucessfull.message", Stream.of().toArray(String[]::new), locale);
-        }
-        catch(IOException ioException)
-        {            
+        } catch (IOException ioException) {
             message = messageSource.getMessage("createpreprocessing.pipeline.error", Stream.of(pipeline).toArray(String[]::new), locale);
 
             return message;
         }
 
         return message;
-        
+
     }
 
     /**
-     * This method take the pipeline of the specified task in the database and store if not exists in the pipeline storage
+     * This method take the pipeline of the specified task in the database and
+     * store if not exists in the pipeline storage
+     *
      * @param taskId the id of the task
      * @param username the username that want to download the pipeline
-     * @return the name of the file in the pipeline storage or null if it's not accesible
+     * @return the name of the file in the pipeline storage or null if it's not
+     * accesible
      */
-    public String downloadPipeline(Long taskId, String username)
-    {
+    public String downloadPipeline(Long taskId, String username) {
         String fileName = null;
 
         TaskCreateUPreprocessing task = taskRepository.findTaskCreateUPreprocessingById(taskId);
         Dataset dataset = task.getPreprocessDataset();
-        String name = dataset.getName()+taskId+".xml";
-        if(dataset.getAuthor().equals(username))
-        {
-            java.io.File file = new java.io.File(PIPELINE_PATH+name);
-            if(file.exists())
-            {
+        String name = dataset.getName() + taskId + ".xml";
+        if (dataset.getAuthor().equals(username)) {
+            java.io.File file = new java.io.File(PIPELINE_PATH + name);
+            if (file.exists()) {
                 fileName = name;
-            }
-            else
-            {
+            } else {
                 byte[] pipeline = task.getPipeline();
 
                 FileOutputStream fos;
 
-                try
-                {
+                try {
                     fos = new FileOutputStream(file);
                     fos.write(pipeline);
                     fos.close();
 
                     fileName = name;
-                }
-                catch(IOException ioException)
-                {
+                } catch (IOException ioException) {
                     return null;
                 }
-            } 
+            }
         }
         return fileName;
     }
 
     /**
-     * This method return the filename of the csv if it's available or null if it's not
+     * This method return the filename of the csv if it's available or null if
+     * it's not
+     *
      * @param taskId the id of the task
      * @param username the username of the user that want to download the csv
      * @return the filename of the csv if it's available or null if it's not
      */
-    public String downloadCsv(Long taskId, String username)
-    {
+    public String downloadCsv(Long taskId, String username) {
         String fileName = null;
 
         TaskCreateUPreprocessing task = taskRepository.findTaskCreateUPreprocessingById(taskId);
         Dataset dataset = task.getPreprocessDataset();
-        String name = dataset.getName()+taskId+".csv";
-        if(dataset.getAuthor().equals(username))
-        {
-            java.io.File file = new java.io.File(OUTPUT_PATH+name);
-            if(file.exists())
-            {
+        String name = dataset.getName() + taskId + ".csv";
+        if (dataset.getAuthor().equals(username)) {
+            java.io.File file = new java.io.File(OUTPUT_PATH + name);
+            if (file.exists()) {
                 fileName = name;
             }
         }
         return fileName;
     }
-    
 
     // Method for check if there are files with the indicated datatypes in the
     // selected datasets
     private boolean correctFilters(String[] datasetNames, int inputSpamEml, int inputHamEml, int inputSpamWarc, int inputHamWarc,
-     int inputSpamTsms, int inputHamTsms, int inputSpamTytb, int inputHamTytb, int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage, boolean spamMode) {
+            int inputSpamTsms, int inputHamTsms, int inputSpamTytb, int inputHamTytb, int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage, boolean spamMode) {
 
-            boolean success = true;
-            ArrayList<String> datasets = new ArrayList<String>();
+        boolean success = true;
+        ArrayList<String> datasets = new ArrayList<String>();
 
-            for(String datasetName : datasetNames)
-            {
-                datasets.add(datasetName);
-            }
+        for (String datasetName : datasetNames) {
+            datasets.add(datasetName);
+        }
 
-            if(!spamMode){
-                    int total = inputSpamEml+inputHamEml+inputSpamWarc+inputHamWarc+inputSpamTsms+inputHamTsms+inputSpamTytb+inputHamTytb+inputSpamTwtid+inputHamTwtid;
+        if (!spamMode) {
+            int total = inputSpamEml + inputHamEml + inputSpamWarc + inputHamWarc + inputSpamTsms + inputHamTsms + inputSpamTytb + inputHamTytb + inputSpamTwtid + inputHamTwtid;
 
-                    if((total!=100 && total!=0) || (total==0 && inputSpamPercentage==0) || fileNumberInput==0)
-                    {
-                        success = false;
-                    }
-                    else
-                    {
-                    HashMap<String, Integer> necesaryFilesMap = new HashMap<String, Integer>();
+            if ((total != 100 && total != 0) || (total == 0 && inputSpamPercentage == 0) || fileNumberInput == 0) {
+                success = false;
+            } else {
+                HashMap<String, Integer> necesaryFilesMap = new HashMap<String, Integer>();
 
-                    necesaryFilesMap.put(".emlspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamEml/100.00)));
-                    necesaryFilesMap.put(".emlham", (int) Math.ceil((double)fileNumberInput * ((double)inputHamEml/100.00)));
+                necesaryFilesMap.put(".emlspam", (int) Math.ceil((double) fileNumberInput * ((double) inputSpamEml / 100.00)));
+                necesaryFilesMap.put(".emlham", (int) Math.ceil((double) fileNumberInput * ((double) inputHamEml / 100.00)));
 
-                    necesaryFilesMap.put(".warcspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamWarc/100.00)));
-                    necesaryFilesMap.put(".warcham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamWarc/100.00)));
+                necesaryFilesMap.put(".warcspam", (int) Math.ceil((double) fileNumberInput * ((double) inputSpamWarc / 100.00)));
+                necesaryFilesMap.put(".warcham", (int) Math.ceil((double) fileNumberInput * ((double) inputHamWarc / 100.00)));
 
-                    necesaryFilesMap.put(".tsmsspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTsms/100.00)));
-                    necesaryFilesMap.put(".tsmsham", (int) Math.ceil((double)fileNumberInput * ((double)inputHamTsms/100.00)));
+                necesaryFilesMap.put(".tsmsspam", (int) Math.ceil((double) fileNumberInput * ((double) inputSpamTsms / 100.00)));
+                necesaryFilesMap.put(".tsmsham", (int) Math.ceil((double) fileNumberInput * ((double) inputHamTsms / 100.00)));
 
-                    necesaryFilesMap.put(".tytbspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTytb/100.00)));
-                    necesaryFilesMap.put(".tytbham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamTytb/100.00)));
+                necesaryFilesMap.put(".tytbspam", (int) Math.ceil((double) fileNumberInput * ((double) inputSpamTytb / 100.00)));
+                necesaryFilesMap.put(".tytbham", (int) Math.ceil((double) fileNumberInput * ((double) inputHamTytb / 100.00)));
 
-                    necesaryFilesMap.put(".twtidspam", (int) Math.ceil((double)fileNumberInput * ((double)inputSpamTwtid/100.00)));
-                    necesaryFilesMap.put(".twtidham",(int) Math.ceil((double)fileNumberInput * ((double)inputHamTwtid/100.00)));
+                necesaryFilesMap.put(".twtidspam", (int) Math.ceil((double) fileNumberInput * ((double) inputSpamTwtid / 100.00)));
+                necesaryFilesMap.put(".twtidham", (int) Math.ceil((double) fileNumberInput * ((double) inputHamTwtid / 100.00)));
 
-                    HashMap<String, Integer> databaseFilesMap = new HashMap<String, Integer>();
+                HashMap<String, Integer> databaseFilesMap = new HashMap<String, Integer>();
 
-                    databaseFilesMap.put(".emlspam", 0);
-                    databaseFilesMap.put(".emlham", 0);
+                databaseFilesMap.put(".emlspam", 0);
+                databaseFilesMap.put(".emlham", 0);
 
-                    databaseFilesMap.put(".warcspam", 0);
-                    databaseFilesMap.put(".warcham", 0);
+                databaseFilesMap.put(".warcspam", 0);
+                databaseFilesMap.put(".warcham", 0);
 
-                    databaseFilesMap.put(".tsmsspam",0);
-                    databaseFilesMap.put(".tsmsham", 0);
+                databaseFilesMap.put(".tsmsspam", 0);
+                databaseFilesMap.put(".tsmsham", 0);
 
-                    databaseFilesMap.put(".tytbspam", 0);
-                    databaseFilesMap.put(".tytbham", 0);
+                databaseFilesMap.put(".tytbspam", 0);
+                databaseFilesMap.put(".tytbham", 0);
 
-                    databaseFilesMap.put(".twtidspam", 0);
-                    databaseFilesMap.put(".twtidham", 0);
+                databaseFilesMap.put(".twtidspam", 0);
+                databaseFilesMap.put(".twtidham", 0);
 
-                    for (FileDatatypeType i: fileDatatypeTypeRepository.findAll())
-                    {
-                        if(datasets.contains(i.getId().getDataset()))
-                        {
-                           Integer previous=databaseFilesMap.get(i.getId().getExtension()+i.getId().getType());
-                           databaseFilesMap.replace(i.getId().getExtension()+i.getId().getType(),
-                              i.getCount()+(previous==null?0:previous));
-                        }
-                    }
-
-                    Set<String> keys = databaseFilesMap.keySet();
-
-                    for(String key: keys)
-                    {
-                        if(databaseFilesMap.get(key) < necesaryFilesMap.get(key))
-                        {
-                            success = false;
-                        }
+                for (FileDatatypeType i : fileDatatypeTypeRepository.findAll()) {
+                    if (datasets.contains(i.getId().getDataset())) {
+                        Integer previous = databaseFilesMap.get(i.getId().getExtension() + i.getId().getType());
+                        databaseFilesMap.replace(i.getId().getExtension() + i.getId().getType(),
+                                i.getCount() + (previous == null ? 0 : previous));
                     }
                 }
-            }else{
-                int necesarySpamFiles = (int) Math.ceil((double)fileNumberInput * ((double)inputSpamPercentage/100.00));
-                int availableSpamFiles = datasetRepository.countFilesByType(datasets,"spam");
 
-                int necesaryHamFiles = fileNumberInput-necesarySpamFiles;
-                int availableHamFiles = datasetRepository.countFilesByType(datasets,"ham");
+                Set<String> keys = databaseFilesMap.keySet();
 
-                success =!(availableSpamFiles<necesarySpamFiles || availableHamFiles<necesaryHamFiles);
+                for (String key : keys) {
+                    if (databaseFilesMap.get(key) < necesaryFilesMap.get(key)) {
+                        success = false;
+                    }
+                }
             }
+        } else {
+            int necesarySpamFiles = (int) Math.ceil((double) fileNumberInput * ((double) inputSpamPercentage / 100.00));
+            int availableSpamFiles = datasetRepository.countFilesByType(datasets, "spam");
 
-            return success;
+            int necesaryHamFiles = fileNumberInput - necesarySpamFiles;
+            int availableHamFiles = datasetRepository.countFilesByType(datasets, "ham");
+
+            success = !(availableSpamFiles < necesarySpamFiles || availableHamFiles < necesaryHamFiles);
+        }
+
+        return success;
     }
 
     //Method for convert array to arraylist
@@ -470,6 +458,5 @@ public class TaskService {
 
         return languagesArray;
     }
-
 
 }

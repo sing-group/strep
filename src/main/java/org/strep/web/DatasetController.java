@@ -50,6 +50,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.lang.Math;
+import org.springframework.data.domain.Sort;
 
 /**
  * This controller responds to all requests related to datasets
@@ -699,7 +700,8 @@ public class DatasetController {
 
         Iterable<License> licenses = licenseRepository.findAll();
         Iterable<Datatype> datatypes = datatypeRepository.findAll();
-        Iterable<Language> languages = languageRepository.findAll();
+        Iterable<Language> languages = languageRepository.findAllSortedByDescription();
+        
 
         model.addAttribute("host", HOST_NAME);
         model.addAttribute("authority", authority);
@@ -717,8 +719,8 @@ public class DatasetController {
             BindingResult bindingResult, RedirectAttributes redirectAttributes,
             @RequestParam(name = "datasets", required = false) String[] datasets,
             @RequestParam(name = "licenses", required = false) String[] licenses,
-            @RequestParam(name = "language", required = false) String[] languages,
-            @RequestParam(name = "datatype", required = false) String[] datatypes,
+            @RequestParam(name = "languages", required = false) String[] languages,
+            @RequestParam(name = "datatypes", required = false) String[] datatypes,
             @RequestParam(name = "inputSpamPercentage", required = false, defaultValue = "0") int inputSpamPercentage,
             @RequestParam(name = "inputFileNumber", required = false, defaultValue = "0") int inputFileNumber,
             @RequestParam(name = "inputSpam.eml", required = false, defaultValue = "0") int inputSpamEml,

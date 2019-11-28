@@ -12,9 +12,9 @@ function retrieveDatasetInfo(id) {
 
 function updateDatasetsList()
 {
-    var licenses = $('#license').find("option:selected");//document.getElementsByName("licenses");
-    var languages = $('#language').find("option:selected");//$('input[name="language"]:checked');//document.getElementsByName("language");
-    var datatypes = $('#datatype').find("option:selected");//$('input[name="datatype"]:checked');//document.getElementsByName("datatype");
+    var licenses = $('#licenses').find("option:selected");//document.getElementsByName("licenses");
+    var languages = $('#languages').find("option:selected");//$('input[name="language"]:checked');//document.getElementsByName("language");
+    var datatypes = $('#datatypes').find("option:selected");//$('input[name="datatype"]:checked');//document.getElementsByName("datatype");
     var dateValue1 = document.getElementById("date1").value;
     var dateValue2 = document.getElementById("date2").value;
 

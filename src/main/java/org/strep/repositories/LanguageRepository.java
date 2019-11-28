@@ -1,5 +1,6 @@
 package org.strep.repositories;
 
+import org.springframework.data.jpa.repository.Query;
 import org.strep.domain.Language;
 
 import org.springframework.data.repository.CrudRepository;
@@ -10,4 +11,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface LanguageRepository extends CrudRepository<Language, String>
 {
+     @Query(value = "select l from Language l ORDER BY l.description")
+    public  Iterable<Language> findAllSortedByDescription();
 }
