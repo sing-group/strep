@@ -4,25 +4,29 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import javax.validation.Valid;
 
 import org.strep.domain.Dataset;
 import org.strep.domain.Datatype;
-import org.strep.domain.FileDatatypeType;
 import org.strep.domain.Language;
 import org.strep.domain.License;
 import org.strep.domain.User;
 import org.strep.domain.Permission;
 import org.strep.repositories.DatasetRepository;
 import org.strep.repositories.DatatypeRepository;
-import org.strep.repositories.FileDatatypeTypeRepository;
+import org.strep.repositories.FileRepository;
 import org.strep.repositories.LanguageRepository;
 import org.strep.repositories.LicenseRepository;
 import org.strep.services.DatasetService;
@@ -50,7 +54,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.lang.Math;
-import org.springframework.data.domain.Sort;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * This controller responds to all requests related to datasets
@@ -87,8 +92,13 @@ public class DatasetController {
     private TaskService taskService;
 
     @Autowired
-    private FileDatatypeTypeRepository fileDatatypeTypeRepository;
+    private FileRepository fileRepository;
 
+    /**
+     * To parse dates
+     */
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    
     /**
      * The message i18n
      */
@@ -509,6 +519,12 @@ public class DatasetController {
     @GetMapping("/checkPosibleSpam")
     public String showInfoSpam(Model model, @RequestParam(name = "inputSpam", required = false) String inputSpam,
             @RequestParam(name = "datasets", required = false) String[] datasets,
+            //Now these parameters are neccesary
+            @RequestParam(name = "language", required = false) String[] languages,
+            @RequestParam(name = "datatype", required = false) String[] sdatatypes,
+            @RequestParam(name = "date1", required = false) String date1,
+            @RequestParam(name = "date2", required = false) String date2,
+            //Now the previous parameters are neccesary            
             @RequestParam(name = "fileNumber", required = false) String fileNumber) {
         int inputSpamInt = -1;
         int availableFilesSpam = -1;
@@ -533,8 +549,48 @@ public class DatasetController {
 
             neccesaryFilesSpam = (int) Math.ceil((double) fileNumberInt * ((double) inputSpamInt / 100.00));
             neccesaryFilesHam = fileNumberInt - neccesaryFilesSpam;
-            availableFilesSpam = datasetRepository.countFilesByType(arrayListDatasets, "spam");
-            availableFilesHam = datasetRepository.countFilesByType(arrayListDatasets, "ham");
+
+            //Parse the received date
+            Date d1=null,d2=null;
+            if (date1==null || date1.equals("")){
+                d1=fileRepository.getEarliestDate();
+            }else try{
+                d1=simpleDateFormat.parse(date1);
+            }catch(ParseException pe){
+                d1=fileRepository.getEarliestDate();
+            }
+            if (date2==null || date2.equals("")){
+                d2=fileRepository.getLatestDate();
+            } else try{
+                d2=simpleDateFormat.parse(date2);
+            }catch(ParseException pe){
+                d2=fileRepository.getLatestDate();
+            }
+
+            //Parse the received languages
+            List<String> l;
+            if (languages == null) {
+                Iterable<Language> allLangs = languageRepository.findAll();
+                l = StreamSupport.stream(allLangs.spliterator(), false)
+                .map(Language::getLanguage)
+                .collect(Collectors.toList());
+            } else {
+                l=Arrays.asList(languages);
+            }
+
+            //Parse the received datatypes
+            List<String> d;
+            if (sdatatypes == null) {
+                Iterable<Datatype> datatypes = datatypeRepository.findAll();
+                d = StreamSupport.stream(datatypes.spliterator(), false)
+                .map(Datatype::getDatatype)
+                .collect(Collectors.toList());
+            } else {
+                d=Arrays.asList(sdatatypes);
+            }    
+
+            availableFilesSpam = fileRepository.countSystemDatasetFilesByType(arrayListDatasets, l, d, d1, d2, "spam");
+            availableFilesHam = fileRepository.countSystemDatasetFilesByType(arrayListDatasets, l, d, d1, d2, "ham");
 
             String message = messageSource.getMessage("checkposiblespam.dataset.message", Stream.of(
                     Integer.toString(neccesaryFilesSpam),
@@ -576,7 +632,14 @@ public class DatasetController {
      * @return The part of the view that is going to be updated
      */
     @GetMapping("/checkPosibleDatatypes")
-    public String showInfoDatatypes(Model model, @RequestParam("inputSpamEml") int inputSpamEml,
+    public String showInfoDatatypes(Model model, 
+            //Now these parameters are neccesary
+            @RequestParam(name = "language", required = false) String[] languages,
+            @RequestParam(name = "datatype", required = false) String[] sdatatypes,
+            @RequestParam(name = "date1", required = false) String date1,
+            @RequestParam(name = "date2", required = false) String date2,
+            //Now the previous parameters are neccesary
+            @RequestParam("inputSpamEml") int inputSpamEml,
             @RequestParam("inputHamEml") int inputHamEml, @RequestParam("inputSpamWarc") int inputSpamWarc,
             @RequestParam("inputHamWarc") int inputHamWarc, @RequestParam("inputSpamTsms") int inputSpamTsms,
             @RequestParam("inputHamTsms") int inputHamTsms, @RequestParam("inputSpamTytb") int inputSpamTytb,
@@ -643,28 +706,60 @@ public class DatasetController {
 
             HashMap<String, Integer> databaseFilesMap = new HashMap<String, Integer>();
 
-            databaseFilesMap.put(".emlspam", 0);
-            databaseFilesMap.put(".emlham", 0);
+            //Compute available files
 
-            databaseFilesMap.put(".warcspam", 0);
-            databaseFilesMap.put(".warcham", 0);
-
-            databaseFilesMap.put(".tsmsspam", 0);
-            databaseFilesMap.put(".tsmsham", 0);
-
-            databaseFilesMap.put(".tytbspam", 0);
-            databaseFilesMap.put(".tytbham", 0);
-
-            databaseFilesMap.put(".twtidspam", 0);
-            databaseFilesMap.put(".twtidham", 0);
-
-            for (FileDatatypeType i : fileDatatypeTypeRepository.findAll()) {
-                if (datasets.contains(i.getId().getDataset())) {
-                    Integer previous = databaseFilesMap.get(i.getId().getExtension() + i.getId().getType());
-                    databaseFilesMap.replace(i.getId().getExtension() + i.getId().getType(),
-                            i.getCount() + (previous == null ? 0 : previous));
-                }
+            //Parse the received date
+            Date d1=null,d2=null;
+            if (date1==null || date1.equals("")){
+                d1=fileRepository.getEarliestDate();
+            }else try{
+                d1=simpleDateFormat.parse(date1);
+            }catch(ParseException pe){
+                d1=fileRepository.getEarliestDate();
             }
+            if (date2==null || date2.equals("")){
+                d2=fileRepository.getLatestDate();
+            } else try{
+                d2=simpleDateFormat.parse(date2);
+            }catch(ParseException pe){
+                d2=fileRepository.getLatestDate();
+            }
+
+            //Parse the received languages
+            List<String> l;
+            if (languages == null) {
+                Iterable<Language> allLangs = languageRepository.findAll();
+                l = StreamSupport.stream(allLangs.spliterator(), false)
+                .map(Language::getLanguage)
+                .collect(Collectors.toList());
+            } else {
+                l=Arrays.asList(languages);
+            }
+    
+            databaseFilesMap.put(".emlspam", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+            databaseFilesMap.put(".emlham", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
+
+            databaseFilesMap.put(".warcspam", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+            databaseFilesMap.put(".warcham", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
+
+            databaseFilesMap.put(".tsmsspam", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+            databaseFilesMap.put(".tsmsham", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
+
+            databaseFilesMap.put(".tytbspam", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tytb").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+            databaseFilesMap.put(".tytbham", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tytb").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
+
+            databaseFilesMap.put(".twtidspam", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+            databaseFilesMap.put(".twtidham", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
 
             Set<String> keys = databaseFilesMap.keySet();
             boolean success = true;

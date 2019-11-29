@@ -5,16 +5,19 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.strep.domain.Dataset;
 import org.strep.domain.Datatype;
-import org.strep.domain.FileDatatypeType;
 import org.strep.domain.Language;
 import org.strep.domain.License;
 import org.strep.domain.TaskCreateSdataset;
@@ -22,7 +25,7 @@ import org.strep.domain.TaskCreateUPreprocessing;
 import org.strep.domain.TaskCreateUdataset;
 import org.strep.repositories.DatasetRepository;
 import org.strep.repositories.DatatypeRepository;
-import org.strep.repositories.FileDatatypeTypeRepository;
+import org.strep.repositories.FileRepository;
 import org.strep.repositories.LanguageRepository;
 import org.strep.repositories.LicenseRepository;
 import org.strep.repositories.TaskRepository;
@@ -74,12 +77,6 @@ public class TaskService {
     private LanguageRepository languageRepository;
 
     /**
-     * The repository to access fileDatatypeType data
-     */
-    @Autowired
-    private FileDatatypeTypeRepository fileDatatypeTypeRepository;
-
-    /**
      * The datasets service
      */
     @Autowired
@@ -102,6 +99,14 @@ public class TaskService {
      */
     @Value("${csv.storage}")
     private String OUTPUT_PATH;
+
+    @Autowired
+    private FileRepository fileRepository;
+
+    /**
+     * To parse dates
+     */
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * Insert a system task to the database
@@ -194,7 +199,7 @@ public class TaskService {
                     message = messageSource.getMessage("task.create.dataset.fail.alreadyexists", Stream.of().toArray(String[]::new), locale);
                 } else if (!correctFilters(datasets, inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc,
                         inputSpamTsms, inputHamTsms, inputSpamTytb, inputHamTytb, inputSpamTwtid, inputHamTwtid, fileNumberInput,
-                         inputSpamPercentage, spamMode)) {
+                         inputSpamPercentage, spamMode, languages, datatypes, dateFrom, dateTo)) {
 
                     message = messageSource.getMessage("task.create.dataset.fail.noenougthfiles", Stream.of().toArray(String[]::new), locale);
                 } else {
@@ -322,10 +327,12 @@ public class TaskService {
         return fileName;
     }
 
-    // Method for check if there are files with the indicated datatypes in the
+    // Method for check if there are enought files with the indicated datatypes in the
     // selected datasets
     private boolean correctFilters(String[] datasetNames, int inputSpamEml, int inputHamEml, int inputSpamWarc, int inputHamWarc,
-            int inputSpamTsms, int inputHamTsms, int inputSpamTytb, int inputHamTytb, int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage, boolean spamMode) {
+            int inputSpamTsms, int inputHamTsms, int inputSpamTytb, int inputHamTytb, int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage, boolean spamMode,
+            String languages[], String sdatatypes[], String date1, String date2 //filters
+            ) {
 
         boolean success = true;
         ArrayList<String> datasets = new ArrayList<String>();
@@ -359,28 +366,58 @@ public class TaskService {
 
                 HashMap<String, Integer> databaseFilesMap = new HashMap<String, Integer>();
 
-                databaseFilesMap.put(".emlspam", 0);
-                databaseFilesMap.put(".emlham", 0);
+            //Parse the received date
+            Date d1=null,d2=null;
+            if (date1==null || date1.equals("")){
+                d1=fileRepository.getEarliestDate();
+            }else try{
+                d1=simpleDateFormat.parse(date1);
+            }catch(ParseException pe){
+                d1=fileRepository.getEarliestDate();
+            }
+            if (date2==null || date2.equals("")){
+                d2=fileRepository.getLatestDate();
+            } else try{
+                d2=simpleDateFormat.parse(date2);
+            }catch(ParseException pe){
+                d2=fileRepository.getLatestDate();
+            }
 
-                databaseFilesMap.put(".warcspam", 0);
-                databaseFilesMap.put(".warcham", 0);
+            //Parse the received languages
+            List<String> l;
+            if (languages == null) {
+                Iterable<Language> allLangs = languageRepository.findAll();
+                l = StreamSupport.stream(allLangs.spliterator(), false)
+                .map(Language::getLanguage)
+                .collect(Collectors.toList());
+            } else {
+                l=Arrays.asList(languages);
+            }
+    
+            databaseFilesMap.put(".emlspam", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+            databaseFilesMap.put(".emlham", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
 
-                databaseFilesMap.put(".tsmsspam", 0);
-                databaseFilesMap.put(".tsmsham", 0);
+            databaseFilesMap.put(".warcspam", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+            databaseFilesMap.put(".warcham", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
 
-                databaseFilesMap.put(".tytbspam", 0);
-                databaseFilesMap.put(".tytbham", 0);
+            databaseFilesMap.put(".tsmsspam", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+            databaseFilesMap.put(".tsmsham", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
 
-                databaseFilesMap.put(".twtidspam", 0);
-                databaseFilesMap.put(".twtidham", 0);
+            databaseFilesMap.put(".tytbspam", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tytb").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+            databaseFilesMap.put(".tytbham", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tytb").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
 
-                for (FileDatatypeType i : fileDatatypeTypeRepository.findAll()) {
-                    if (datasets.contains(i.getId().getDataset())) {
-                        Integer previous = databaseFilesMap.get(i.getId().getExtension() + i.getId().getType());
-                        databaseFilesMap.replace(i.getId().getExtension() + i.getId().getType(),
-                                i.getCount() + (previous == null ? 0 : previous));
-                    }
-                }
+            databaseFilesMap.put(".twtidspam", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+            databaseFilesMap.put(".twtidham", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
 
                 Set<String> keys = databaseFilesMap.keySet();
 
@@ -391,11 +428,54 @@ public class TaskService {
                 }
             }
         } else {
+            
             int necesarySpamFiles = (int) Math.ceil((double) fileNumberInput * ((double) inputSpamPercentage / 100.00));
-            int availableSpamFiles = datasetRepository.countFilesByType(datasets, "spam");
+            //int availableSpamFiles = datasetRepository.countFilesByType(datasets, "spam");
 
             int necesaryHamFiles = fileNumberInput - necesarySpamFiles;
-            int availableHamFiles = datasetRepository.countFilesByType(datasets, "ham");
+            //int availableHamFiles = datasetRepository.countFilesByType(datasets, "ham");
+
+           //Parse the received date
+           Date d1=null,d2=null;
+           if (date1==null || date1.equals("")){
+               d1=fileRepository.getEarliestDate();
+           }else try{
+               d1=simpleDateFormat.parse(date1);
+           }catch(ParseException pe){
+               d1=fileRepository.getEarliestDate();
+           }
+           if (date2==null || date2.equals("")){
+               d2=fileRepository.getLatestDate();
+           } else try{
+               d2=simpleDateFormat.parse(date2);
+           }catch(ParseException pe){
+               d2=fileRepository.getLatestDate();
+           }
+
+           //Parse the received languages
+           List<String> l;
+           if (languages == null) {
+               Iterable<Language> allLangs = languageRepository.findAll();
+               l = StreamSupport.stream(allLangs.spliterator(), false)
+               .map(Language::getLanguage)
+               .collect(Collectors.toList());
+           } else {
+               l=Arrays.asList(languages);
+           }
+
+           //Parse the received datatypes
+           List<String> d;
+           if (sdatatypes == null) {
+               Iterable<Datatype> datatypes = datatypeRepository.findAll();
+               d = StreamSupport.stream(datatypes.spliterator(), false)
+               .map(Datatype::getDatatype)
+               .collect(Collectors.toList());
+           } else {
+               d=Arrays.asList(sdatatypes);
+           }    
+
+           int availableSpamFiles = fileRepository.countSystemDatasetFilesByType(datasets, l, d, d1, d2, "spam");
+           int availableHamFiles = fileRepository.countSystemDatasetFilesByType(datasets, l, d, d1, d2, "ham");
 
             success = !(availableSpamFiles < necesarySpamFiles || availableHamFiles < necesaryHamFiles);
         }

@@ -128,7 +128,9 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      * @param date2 the valid final date
      * @return a list of system datasets that meet the requirements
      */
-    @Query(value = "select distinct(d.name) from dataset d inner join dataset_languages lang on d.name=lang.dataset_name inner join dataset_datatypes data on d.name=data.dataset_name where d.type='systemdataset' and lang.language in ?1 and data.data_type in ?2 and d.id in ?3 and (d.first_file_date <= ?5 and d.last_file_date >= ?4)", nativeQuery = true)
+    @Query(value = "SELECT distinct(d.name) FROM dataset d INNER JOIN dataset_languages lang ON d.name=lang.dataset_name INNER JOIN dataset_datatypes data ON d.name=data.dataset_name "
+                 + " WHERE d.type='systemdataset' AND lang.language in ?1 AND data.data_type in ?2 AND d.id in ?3 AND (d.first_file_date <= ?5 AND d.last_file_date >= ?4)",
+           nativeQuery = true)
     public ArrayList<String> getFilteredDatasetsByDate(Collection<String> languages, Collection<String> datatypes, Collection<String> license, String date1, String date2);
 
     /**
@@ -137,11 +139,11 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      * @param datasetNames the names of the datasets
      * @return A list of the datatypes associated to those datasets
      */
-    @Query(value = "select distinct(data_type) from dataset_datatypes where dataset_name in (?1)", nativeQuery = true)
+    @Query(value = "SELECT distinct(data_type) FROM dataset_datatypes WHERE dataset_name IN (?1)", nativeQuery = true)
     public ArrayList<String> getDatasetsDatatypes(Collection<String> datasetNames);
 
     /**
-     * Return the number of spam files associated to specified datasets
+     * Return the number of spam/ham files associated to specified datasets
      *
      * @param datasetNames the name the datasets
      * @return the number of spam files associated to those datasets
