@@ -52,6 +52,8 @@ public class File implements Serializable
     /**
      * The date of the file
      */
+    @Basic
+    @Temporal(TemporalType.DATE)    
     private Date date;
 
     /**

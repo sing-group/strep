@@ -86,10 +86,10 @@ INSERT IGNORE INTO language(language,description) VALUES("ZH-CN","Simplified Chi
 INSERT IGNORE INTO language(language,description) VALUES("ZH-TW","Traditional Chinese");
 
 INSERT IGNORE INTO datatype(dataType) VALUES(".eml");
-INSERT IGNORE INTO datatype(dataType) VALUES(".tytb");
 INSERT IGNORE INTO datatype(dataType) VALUES(".tsms");
 INSERT IGNORE INTO datatype(dataType) VALUES(".twtid");
 INSERT IGNORE INTO datatype(dataType) VALUES(".warc");
+INSERT IGNORE INTO datatype(dataType) VALUES(".ytbid");
 
 INSERT IGNORE INTO license(restriction_level, name, description, url) VALUES(1, "Public domain", '
 Public Domain Mark

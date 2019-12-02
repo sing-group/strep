@@ -358,8 +358,8 @@ public class TaskService {
                 necesaryFilesMap.put(".tsmsspam", (int) Math.ceil((double) fileNumberInput * ((double) inputSpamTsms / 100.00)));
                 necesaryFilesMap.put(".tsmsham", (int) Math.ceil((double) fileNumberInput * ((double) inputHamTsms / 100.00)));
 
-                necesaryFilesMap.put(".tytbspam", (int) Math.ceil((double) fileNumberInput * ((double) inputSpamTytb / 100.00)));
-                necesaryFilesMap.put(".tytbham", (int) Math.ceil((double) fileNumberInput * ((double) inputHamTytb / 100.00)));
+                necesaryFilesMap.put(".ytbidspam", (int) Math.ceil((double) fileNumberInput * ((double) inputSpamTytb / 100.00)));
+                necesaryFilesMap.put(".ytbidham", (int) Math.ceil((double) fileNumberInput * ((double) inputHamTytb / 100.00)));
 
                 necesaryFilesMap.put(".twtidspam", (int) Math.ceil((double) fileNumberInput * ((double) inputSpamTwtid / 100.00)));
                 necesaryFilesMap.put(".twtidham", (int) Math.ceil((double) fileNumberInput * ((double) inputHamTwtid / 100.00)));
@@ -409,10 +409,10 @@ public class TaskService {
             databaseFilesMap.put(".tsmsham", 
                 fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
 
-            databaseFilesMap.put(".tytbspam", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tytb").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
-            databaseFilesMap.put(".tytbham", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tytb").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
+            databaseFilesMap.put(".ytbidspam", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+            databaseFilesMap.put(".ytbidham", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
 
             databaseFilesMap.put(".twtidspam", 
                 fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
@@ -454,7 +454,7 @@ public class TaskService {
 
            //Parse the received languages
            List<String> l;
-           if (languages == null) {
+           if (languages == null || languages.length==0) {
                Iterable<Language> allLangs = languageRepository.findAll();
                l = StreamSupport.stream(allLangs.spliterator(), false)
                .map(Language::getLanguage)
@@ -465,7 +465,7 @@ public class TaskService {
 
            //Parse the received datatypes
            List<String> d;
-           if (sdatatypes == null) {
+           if (sdatatypes == null || sdatatypes.length==0) {
                Iterable<Datatype> datatypes = datatypeRepository.findAll();
                d = StreamSupport.stream(datatypes.spliterator(), false)
                .map(Datatype::getDatatype)

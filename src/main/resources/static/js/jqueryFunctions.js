@@ -83,8 +83,8 @@ function updateTable(id)
         var inputHamEml = document.getElementById("inputHam.eml");
         var inputSpamTsms = document.getElementById("inputSpam.tsms");
         var inputHamTsms = document.getElementById("inputHam.tsms");
-        var inputSpamTytb = document.getElementById("inputSpam.tytb");
-        var inputHamTytb = document.getElementById("inputHam.tytb");
+        var inputSpamTytb = document.getElementById("inputSpam.ytbid");
+        var inputHamTytb = document.getElementById("inputHam.ytbid");
         var inputSpamTwtid = document.getElementById("inputSpam.twtid");
         var inputHamTwtid = document.getElementById("inputHam.twtid");
         var inputSpamWarc = document.getElementById("inputSpam.warc");

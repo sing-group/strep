@@ -569,7 +569,7 @@ public class DatasetController {
 
             //Parse the received languages
             List<String> l;
-            if (languages == null) {
+            if (languages == null || languages.length==0) {
                 Iterable<Language> allLangs = languageRepository.findAll();
                 l = StreamSupport.stream(allLangs.spliterator(), false)
                 .map(Language::getLanguage)
@@ -580,7 +580,7 @@ public class DatasetController {
 
             //Parse the received datatypes
             List<String> d;
-            if (sdatatypes == null) {
+            if (sdatatypes == null || sdatatypes.length == 0) {
                 Iterable<Datatype> datatypes = datatypeRepository.findAll();
                 d = StreamSupport.stream(datatypes.spliterator(), false)
                 .map(Datatype::getDatatype)
@@ -694,9 +694,9 @@ public class DatasetController {
             necesaryFilesMap.put(".tsmsham",
                     (int) Math.ceil((double) fileNumberInput * ((double) inputHamTsms / 100.00)));
 
-            necesaryFilesMap.put(".tytbspam",
+            necesaryFilesMap.put(".ytbidspam",
                     (int) Math.ceil((double) fileNumberInput * ((double) inputSpamTytb / 100.00)));
-            necesaryFilesMap.put(".tytbham",
+            necesaryFilesMap.put(".ytbidham",
                     (int) Math.ceil((double) fileNumberInput * ((double) inputHamTytb / 100.00)));
 
             necesaryFilesMap.put(".twtidspam",
@@ -751,10 +751,10 @@ public class DatasetController {
             databaseFilesMap.put(".tsmsham", 
                 fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
 
-            databaseFilesMap.put(".tytbspam", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tytb").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
-            databaseFilesMap.put(".tytbham", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tytb").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
+            databaseFilesMap.put(".ytbidspam", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+            databaseFilesMap.put(".ytbidham", 
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
 
             databaseFilesMap.put(".twtidspam", 
                 fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
@@ -824,8 +824,8 @@ public class DatasetController {
             @RequestParam(name = "inputHam.warc", required = false, defaultValue = "0") int inputHamWarc,
             @RequestParam(name = "inputSpam.tsms", required = false, defaultValue = "0") int inputSpamTsms,
             @RequestParam(name = "inputHam.tsms", required = false, defaultValue = "0") int inputHamTsms,
-            @RequestParam(name = "inputSpam.tytb", required = false, defaultValue = "0") int inputSpamTytb,
-            @RequestParam(name = "inputHam.tytb", required = false, defaultValue = "0") int inputHamTytb,
+            @RequestParam(name = "inputSpam.ytbid", required = false, defaultValue = "0") int inputSpamTytb,
+            @RequestParam(name = "inputHam.ytbid", required = false, defaultValue = "0") int inputHamTytb,
             @RequestParam(name = "inputSpam.twtid", required = false, defaultValue = "0") int inputSpamTwtid,
             @RequestParam(name = "inputHam.twtid", required = false, defaultValue = "0") int inputHamTwtid,
             @RequestParam(name = "date1", required = false) String dateFrom,

@@ -46,14 +46,14 @@ public class TaskCreateUdataset extends Task
     private int limitHamPercentageTwtid;
 
     /**
-     * The spam percentage limit for tytb files
+     * The spam percentage limit for ytbid files
      */
-    private int limitSpamPercentageTytb;
+    private int limitSpamPercentageYtbid;
 
     /**
-     * The ham percentage limit for tytb files
+     * The ham percentage limit for ytbid files
      */
-    private int limitHamPercentageTytb;
+    private int limitHamPercentageYtbid;
     
     /**
      * The spam percentage limit for warc files
@@ -177,8 +177,8 @@ public class TaskCreateUdataset extends Task
         this.limitHamPercentageTwtid = limitHamPercentageTwtid;
         this.limitSpamPercentageWarc = limitSpamPercentageWarc;
         this.limitHamPercentageWarc = limitHamPercentageWarc;
-        this.limitSpamPercentageTytb = limitSpamPercentageTytb;
-        this.limitHamPercentageTytb = limitHamPercentageTytb;
+        this.limitSpamPercentageYtbid = limitSpamPercentageTytb;
+        this.limitHamPercentageYtbid = limitHamPercentageTytb;
         this.limitPercentageSpam = limitPercentageSpam;
         this.limitNumberOfFiles = limitNumberOfFiles;
         this.dateFrom = dateFrom;
@@ -440,39 +440,39 @@ public class TaskCreateUdataset extends Task
     }
 
     /**
-     * Return the spam percentage limit for tytb files
-     * @return the spam percentage limit for tytb files
+     * Return the spam percentage limit for ytbid files
+     * @return the spam percentage limit for ytbid files
      */
-    public int getLimitSpamPercentageTytb()
+    public int getLimitSpamPercentageYtbid()
     {
-        return this.limitSpamPercentageTytb;
+        return this.limitSpamPercentageYtbid;
     }
     
     /**
-     * Stablish the spam percentage limit for tytb files
-     * @param limitSpamPercentageTytb the spam percentage limit for tytb files
+     * Stablish the spam percentage limit for ytbid files
+     * @param limitSpamPercentageYtbid the spam percentage limit for ytbid files
      */
-    public void setLimitSpamPercentageTytb(int limitSpamPercentageTytb)
+    public void setLimitSpamPercentageYtbid(int limitSpamPercentageYtbid)
     {
-        this.limitSpamPercentageTytb = limitSpamPercentageTytb;
+        this.limitSpamPercentageYtbid = limitSpamPercentageYtbid;
     }
     
     /**
-     * Return the ham percentage limit for tytb files
-     * @return the ham percentage limit for tytb files
+     * Return the ham percentage limit for ytbid files
+     * @return the ham percentage limit for ytbid files
      */
-    public int getLimitHamPercentageTytb()
+    public int getLimitHamPercentageYtbid()
     {
-        return this.limitHamPercentageTytb;
+        return this.limitHamPercentageYtbid;
     }
     
     /**
-     * Stablish the ham percentage limit for tytb files
-     * @param limitHamPercentageTytb the ham percentage limit for tytb files
+     * Stablish the ham percentage limit for ytbid files
+     * @param limitHamPercentageYtbid the ham percentage limit for ytbid files
      */
-    public void setLimitHamPercentageTytb(int limitHamPercentageTytb)
+    public void setLimitHamPercentageYtbid(int limitHamPercentageYtbid)
     {
-        this.limitHamPercentageTytb = limitHamPercentageTytb;
+        this.limitHamPercentageYtbid = limitHamPercentageYtbid;
     }
 
     /**
