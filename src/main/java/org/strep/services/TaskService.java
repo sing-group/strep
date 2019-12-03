@@ -298,7 +298,7 @@ public class TaskService {
     // Method for check if there are enought files with the indicated datatypes in the
     // selected datasets
     private boolean correctFilters(List<String> datasetNames, int inputSpamEml, int inputHamEml, int inputSpamWarc, int inputHamWarc,
-            int inputSpamTsms, int inputHamTsms, int inputSpamYtbid, int inputHamYtbId, int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage, boolean spamMode,
+            int inputSpamTsms, int inputHamTsms, int inputSpamYtbid, int inputHamYtbid, int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage, boolean spamMode,
             List<String> languages, List<String> sdatatypes, List<String> licenses, Date date1, Date date2 //filters
             ) {
 
@@ -310,7 +310,7 @@ public class TaskService {
         //}
 
         if (!spamMode) {
-            int total = inputSpamEml + inputHamEml + inputSpamWarc + inputHamWarc + inputSpamTsms + inputHamTsms + inputSpamYtbid + inputHamYtbId + inputSpamTwtid + inputHamTwtid;
+            int total = inputSpamEml + inputHamEml + inputSpamWarc + inputHamWarc + inputSpamTsms + inputHamTsms + inputSpamYtbid + inputHamYtbid + inputSpamTwtid + inputHamTwtid;
 
             if ((total != 100 && total != 0) || (total == 0 && inputSpamPercentage == 0) || fileNumberInput == 0) {
                 success = false;
@@ -327,7 +327,7 @@ public class TaskService {
                 necesaryFilesMap.put(".tsmsham", (int) Math.ceil((double) fileNumberInput * ((double) inputHamTsms / 100.00)));
 
                 necesaryFilesMap.put(".ytbidspam", (int) Math.ceil((double) fileNumberInput * ((double) inputSpamYtbid / 100.00)));
-                necesaryFilesMap.put(".ytbidham", (int) Math.ceil((double) fileNumberInput * ((double) inputHamYtbId / 100.00)));
+                necesaryFilesMap.put(".ytbidham", (int) Math.ceil((double) fileNumberInput * ((double) inputHamYtbid / 100.00)));
 
                 necesaryFilesMap.put(".twtidspam", (int) Math.ceil((double) fileNumberInput * ((double) inputSpamTwtid / 100.00)));
                 necesaryFilesMap.put(".twtidham", (int) Math.ceil((double) fileNumberInput * ((double) inputHamTwtid / 100.00)));

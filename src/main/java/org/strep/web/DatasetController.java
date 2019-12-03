@@ -848,8 +848,8 @@ public class DatasetController {
             @RequestParam(name = "inputHam.warc", required = false, defaultValue = "0") int inputHamWarc,
             @RequestParam(name = "inputSpam.tsms", required = false, defaultValue = "0") int inputSpamTsms,
             @RequestParam(name = "inputHam.tsms", required = false, defaultValue = "0") int inputHamTsms,
-            @RequestParam(name = "inputSpam.ytbid", required = false, defaultValue = "0") int inputSpamTytb,
-            @RequestParam(name = "inputHam.ytbid", required = false, defaultValue = "0") int inputHamTytb,
+            @RequestParam(name = "inputSpam.ytbid", required = false, defaultValue = "0") int inputSpamYtbid,
+            @RequestParam(name = "inputHam.ytbid", required = false, defaultValue = "0") int inputHamYtbid,
             @RequestParam(name = "inputSpam.twtid", required = false, defaultValue = "0") int inputSpamTwtid,
             @RequestParam(name = "inputHam.twtid", required = false, defaultValue = "0") int inputHamTwtid,
             @RequestParam(name = "date1", required = false) String dateFrom,
@@ -938,7 +938,7 @@ public class DatasetController {
             
             message = taskService.addNewUserDatasetTask(dataset, lic, l, d, datas, d1,
                     d2, inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTsms, inputHamTsms,
-                    inputSpamTytb, inputHamTytb, inputSpamTwtid, inputHamTwtid, inputFileNumber, inputSpamPercentage,
+                    inputSpamYtbid, inputHamYtbid, inputSpamTwtid, inputHamTwtid, inputFileNumber, inputSpamPercentage,
                     username, modeSpam);
 
             redirectAttributes.addFlashAttribute("message", message);
