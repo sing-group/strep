@@ -199,7 +199,7 @@ public class TaskService {
                     message = messageSource.getMessage("task.create.dataset.fail.alreadyexists", Stream.of().toArray(String[]::new), locale);
                 } else if (!correctFilters(datasets, inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc,
                         inputSpamTsms, inputHamTsms, inputSpamTytb, inputHamTytb, inputSpamTwtid, inputHamTwtid, fileNumberInput,
-                         inputSpamPercentage, spamMode, languages, datatypes, dateFrom, dateTo)) {
+                         inputSpamPercentage, spamMode, languages, datatypes, licenses, dateFrom, dateTo)) {
 
                     message = messageSource.getMessage("task.create.dataset.fail.noenougthfiles", Stream.of().toArray(String[]::new), locale);
                 } else {
@@ -331,7 +331,7 @@ public class TaskService {
     // selected datasets
     private boolean correctFilters(String[] datasetNames, int inputSpamEml, int inputHamEml, int inputSpamWarc, int inputHamWarc,
             int inputSpamTsms, int inputHamTsms, int inputSpamTytb, int inputHamTytb, int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage, boolean spamMode,
-            String languages[], String sdatatypes[], String date1, String date2 //filters
+            String languages[], String sdatatypes[], String licenses[], String date1, String date2 //filters
             ) {
 
         boolean success = true;
@@ -393,31 +393,42 @@ public class TaskService {
             } else {
                 l=Arrays.asList(languages);
             }
+
+            //Parse the received licenses
+            List<String> lic;
+            if (licenses == null || licenses.length == 0) {
+                Iterable<License> licens = licenseRepository.findAll();
+                lic = StreamSupport.stream(licens.spliterator(), false)
+                    .map(License::getName)
+                    .collect(Collectors.toList());
+            } else {
+                lic=Arrays.asList(licenses);
+            }           
     
             databaseFilesMap.put(".emlspam", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
             databaseFilesMap.put(".emlham", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
 
             databaseFilesMap.put(".warcspam", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
             databaseFilesMap.put(".warcham", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
 
             databaseFilesMap.put(".tsmsspam", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
             databaseFilesMap.put(".tsmsham", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
 
             databaseFilesMap.put(".ytbidspam", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
             databaseFilesMap.put(".ytbidham", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
 
             databaseFilesMap.put(".twtidspam", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "spam"));
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
             databaseFilesMap.put(".twtidham", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), d1, d2, "ham"));
+                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
 
                 Set<String> keys = databaseFilesMap.keySet();
 
@@ -472,10 +483,21 @@ public class TaskService {
                .collect(Collectors.toList());
            } else {
                d=Arrays.asList(sdatatypes);
-           }    
+           }
 
-           int availableSpamFiles = fileRepository.countSystemDatasetFilesByType(datasets, l, d, d1, d2, "spam");
-           int availableHamFiles = fileRepository.countSystemDatasetFilesByType(datasets, l, d, d1, d2, "ham");
+            //Parse the received licenses
+            List<String> lic;
+            if (licenses == null || licenses.length == 0) {
+                Iterable<License> licens = licenseRepository.findAll();
+                lic = StreamSupport.stream(licens.spliterator(), false)
+                    .map(License::getName)
+                    .collect(Collectors.toList());
+            } else {
+                lic=Arrays.asList(licenses);
+            }         
+
+           int availableSpamFiles = fileRepository.countSystemDatasetFilesByType(datasets, l, d, lic, d1, d2, "spam");
+           int availableHamFiles = fileRepository.countSystemDatasetFilesByType(datasets, l, d, lic, d1, d2, "ham");
 
             success = !(availableSpamFiles < necesarySpamFiles || availableHamFiles < necesaryHamFiles);
         }

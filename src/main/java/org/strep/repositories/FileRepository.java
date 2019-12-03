@@ -29,15 +29,16 @@ public interface FileRepository extends CrudRepository<File, Long>
      */
     @Query(value = 
       "SELECT count(file.id) as count "
-     +"FROM file, dataset_files "
+     +"FROM file, dataset_files, dataset "
      +"WHERE "
-     +  "file.id=dataset_files.file_id " //Join conditions
-     +  "AND dataset_files.dataset_name IN (?1) AND file.language IN (?2) "+ //filtering conditions
-        "AND file.extension IN (?3) AND file.date>=?4 AND file.date<=?5 AND " 
-     +  "file.type = ?6", //see only ham or spam files
+     +  "file.id=dataset_files.file_id and dataset_files.dataset_name=dataset.name " //Join conditions
+     +  "AND dataset_files.dataset_name IN (?1) AND file.language IN (?2) " //filtering conditions
+     +  "AND file.extension IN (?3) AND file.date>=?5 AND file.date<=?6 " 
+     +  "AND dataset.id in (?4) AND "
+     +  "file.type = ?7", //see only ham or spam files
     nativeQuery = true)
     public int countSystemDatasetFilesByType(Collection<String> datasetNames, Collection<String> languages, Collection<String> extensions, 
-                                             Date startDate, Date endDate, String type);
+                                             Collection<String> licenses, Date startDate, Date endDate, String type);
     
     /**
     * Find the date of the latest file
