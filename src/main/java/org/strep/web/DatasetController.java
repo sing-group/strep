@@ -520,11 +520,11 @@ public class DatasetController {
     public String showInfoSpam(Model model, @RequestParam(name = "inputSpam", required = false) String inputSpam,
             @RequestParam(name = "datasets", required = false) String[] datasets,
             //Now these parameters are neccesary
-            @RequestParam(name = "language", required = false) String[] languages,
-            @RequestParam(name = "datatype", required = false) String[] sdatatypes,
+            @RequestParam(name = "languages", required = false) String[] languages,
+            @RequestParam(name = "datatypes", required = false) String[] sdatatypes,
             @RequestParam(name = "date1", required = false) String date1,
             @RequestParam(name = "date2", required = false) String date2,
-            @RequestParam(name = "license", required = false) String[] licenses,
+            @RequestParam(name = "licenses", required = false) String[] licenses,
             //Now the previous parameters are neccesary            
             @RequestParam(name = "fileNumber", required = false) String fileNumber) {
         int inputSpamInt = -1;
@@ -646,11 +646,11 @@ public class DatasetController {
     @GetMapping("/checkPosibleDatatypes")
     public String showInfoDatatypes(Model model, 
             //Now these parameters are neccesary
-            @RequestParam(name = "language", required = false) String[] languages,
-            @RequestParam(name = "datatype", required = false) String[] sdatatypes,
+            @RequestParam(name = "languages", required = false) String[] languages,
+            @RequestParam(name = "datatypes", required = false) String[] sdatatypes,
             @RequestParam(name = "date1", required = false) String date1,
             @RequestParam(name = "date2", required = false) String date2,
-            @RequestParam(name = "license", required = false) String[] licenses,
+            @RequestParam(name = "licenses", required = false) String[] licenses,
             //Now the previous parameters are neccesary
             @RequestParam("inputSpamEml") int inputSpamEml,
             @RequestParam("inputHamEml") int inputHamEml, @RequestParam("inputSpamWarc") int inputSpamWarc,

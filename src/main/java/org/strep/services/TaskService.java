@@ -435,6 +435,7 @@ public class TaskService {
                 for (String key : keys) {
                     if (databaseFilesMap.get(key) < necesaryFilesMap.get(key)) {
                         success = false;
+                        break;
                     }
                 }
             }
