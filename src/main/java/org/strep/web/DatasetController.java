@@ -839,7 +839,7 @@ public class DatasetController {
             @RequestParam(name = "datasets", required = false) String[] datasets,
             @RequestParam(name = "license", required = false) String[] licenses,
             @RequestParam(name = "languages", required = false) String[] languages,
-            @RequestParam(name = "datatypes", required = false) String[] datatypes,
+            @RequestParam(name = "datatypes", required = false) String[] sdatatypes,
             @RequestParam(name = "inputSpamPercentage", required = false, defaultValue = "0") int inputSpamPercentage,
             @RequestParam(name = "inputFileNumber", required = false, defaultValue = "0") int inputFileNumber,
             @RequestParam(name = "inputSpam.eml", required = false, defaultValue = "0") int inputSpamEml,
@@ -875,10 +875,72 @@ public class DatasetController {
                 modeSpam = true;
             }
 
-            message = taskService.addNewUserDatasetTask(dataset, licenses, languages, datatypes, datasets, dateFrom,
-                    dateTo, inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTsms, inputHamTsms,
+            //Parse the received date
+            Date d1=null,d2=null;
+            if (dateFrom==null || dateFrom.equals("")){
+                d1=fileRepository.getEarliestDate();
+            }else try{
+                d1=simpleDateFormat.parse(dateFrom);
+            }catch(ParseException pe){
+                d1=fileRepository.getEarliestDate();
+            }
+            if (dateTo==null || dateTo.equals("")){
+                d2=fileRepository.getLatestDate();
+            } else try{
+                d2=simpleDateFormat.parse(dateTo);
+            }catch(ParseException pe){
+                d2=fileRepository.getLatestDate();
+            }
+
+            //Parse the received languages
+            List<String> l;
+            if (languages == null) {
+                Iterable<Language> allLangs = languageRepository.findAll();
+                l = StreamSupport.stream(allLangs.spliterator(), false)
+                .map(Language::getLanguage)
+                .collect(Collectors.toList());
+            } else {
+                l=Arrays.asList(languages);
+            }
+
+            //Parse the received licenses
+            List<String> lic;
+            if (licenses == null || licenses.length == 0) {
+                Iterable<License> licens = licenseRepository.findAll();
+                lic = StreamSupport.stream(licens.spliterator(), false)
+                    .map(License::getName)
+                    .collect(Collectors.toList());
+            } else {
+                lic=Arrays.asList(licenses);
+            }   
+
+            //Parse the received datatypes
+            List<String> d;
+            if (sdatatypes == null || sdatatypes.length == 0) {
+                Iterable<Datatype> datatypes = datatypeRepository.findAll();
+                d = StreamSupport.stream(datatypes.spliterator(), false)
+                    .map(Datatype::getDatatype)
+                    .collect(Collectors.toList());
+            } else {
+                d=Arrays.asList(sdatatypes);
+            }
+
+            List<String> datas;
+            if (datasets == null || datasets.length == 0) {
+                Iterable<Dataset> ldatas = datasetRepository.findAll();
+                datas = StreamSupport.stream(ldatas.spliterator(), false)
+                    .map(Dataset::getName)
+                    .collect(Collectors.toList());
+            } else {
+                datas=Arrays.asList(datasets);
+            }
+
+            
+            message = taskService.addNewUserDatasetTask(dataset, lic, l, d, datas, d1,
+                    d2, inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTsms, inputHamTsms,
                     inputSpamTytb, inputHamTytb, inputSpamTwtid, inputHamTwtid, inputFileNumber, inputSpamPercentage,
                     username, modeSpam);
+
             redirectAttributes.addFlashAttribute("message", message);
             return "redirect:/dataset/list";
         }
