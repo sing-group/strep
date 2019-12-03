@@ -111,7 +111,7 @@ function updateTable(id)
         }
 
         url += "&inputSpamEml=" + inputSpamEmlValue + "&inputHamEml=" + inputHamEmlValue + "&inputSpamTsms=" + inputSpamTsmsValue + "&inputHamTsms=" + inputHamTsmsValue +
-                "&inputSpamTytb=" + inputSpamTytbValue + "&inputHamTytb=" + inputHamTytbValue + "&inputSpamTwtid=" + inputSpamTwtidValue + "&inputHamTwtid=" + inputHamTwtidValue +
+                "&inputSpamYtbid=" + inputSpamTytbValue + "&inputHamYtbid=" + inputHamTytbValue + "&inputSpamTwtid=" + inputSpamTwtidValue + "&inputHamTwtid=" + inputHamTwtidValue +
                 "&inputSpamWarc=" + inputSpamWarcValue + "&inputHamWarc=" + inputHamWarcValue;
         checkSelectedDatasets();
         $("#datatypes-table").load(url, function (response, status, xhr) {

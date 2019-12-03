@@ -635,8 +635,8 @@ public class DatasetController {
      * @param inputHamWarc Ham WARC percentage
      * @param inputSpamTsms Spam SMS percentage
      * @param inputHamTsms Ham SMS percentage
-     * @param inputSpamTytb Spam YTB percentage
-     * @param inputHamTytb Ham YTB percentage
+     * @param inputSpamYtbid Spam YTB percentage
+     * @param inputHamYtbid Ham YTB percentage
      * @param inputSpamTwtid Spam TWT percentage
      * @param inputHamTwtid Ham TWV percentage
      * @param datasetNames The datasets
@@ -655,8 +655,8 @@ public class DatasetController {
             @RequestParam("inputSpamEml") int inputSpamEml,
             @RequestParam("inputHamEml") int inputHamEml, @RequestParam("inputSpamWarc") int inputSpamWarc,
             @RequestParam("inputHamWarc") int inputHamWarc, @RequestParam("inputSpamTsms") int inputSpamTsms,
-            @RequestParam("inputHamTsms") int inputHamTsms, @RequestParam("inputSpamTytb") int inputSpamTytb,
-            @RequestParam("inputHamTytb") int inputHamTytb, @RequestParam("inputSpamTwtid") int inputSpamTwtid,
+            @RequestParam("inputHamTsms") int inputHamTsms, @RequestParam("inputSpamYtbid") int inputSpamYtbid,
+            @RequestParam("inputHamYtbid") int inputHamYtbid, @RequestParam("inputSpamTwtid") int inputSpamTwtid,
             @RequestParam("inputHamTwtid") int inputHamTwtid,
             @RequestParam(name = "datasets", required = false) String[] datasetNames,
             @RequestParam("inputFileNumber") int fileNumberInput) {
@@ -676,8 +676,8 @@ public class DatasetController {
         model.addAttribute("inputhameml", inputHamEml);
         model.addAttribute("inputspamwarc", inputSpamWarc);
         model.addAttribute("inputhamwarc", inputHamWarc);
-        model.addAttribute("inputspamtytb", inputSpamTytb);
-        model.addAttribute("inputhamtytb", inputHamTytb);
+        model.addAttribute("inputspamytbid", inputSpamYtbid);
+        model.addAttribute("inputhamytbid", inputHamYtbid);
         model.addAttribute("inputspamtsms", inputSpamTsms);
         model.addAttribute("inputhamtsms", inputHamTsms);
         model.addAttribute("inputspamtwtid", inputSpamTwtid);
@@ -685,7 +685,7 @@ public class DatasetController {
 
         if (datasets == null || fileNumberInput == 0
                 || (inputSpamEml + inputHamEml + inputSpamWarc + inputHamWarc + inputSpamTsms + inputHamTsms
-                + inputSpamTytb + inputHamTytb + inputSpamTwtid + inputHamTwtid) != 100) {
+                + inputSpamYtbid + inputHamYtbid + inputSpamTwtid + inputHamTwtid) != 100) {
             model.addAttribute("datatypesInputError",
                     messageSource.getMessage("checkposibledatatypes.dataset.datatypesinputerror", Stream.of().toArray(String[]::new), locale)
             );
@@ -708,9 +708,9 @@ public class DatasetController {
                     (int) Math.ceil((double) fileNumberInput * ((double) inputHamTsms / 100.00)));
 
             necesaryFilesMap.put(".ytbidspam",
-                    (int) Math.ceil((double) fileNumberInput * ((double) inputSpamTytb / 100.00)));
+                    (int) Math.ceil((double) fileNumberInput * ((double) inputSpamYtbid / 100.00)));
             necesaryFilesMap.put(".ytbidham",
-                    (int) Math.ceil((double) fileNumberInput * ((double) inputHamTytb / 100.00)));
+                    (int) Math.ceil((double) fileNumberInput * ((double) inputHamYtbid / 100.00)));
 
             necesaryFilesMap.put(".twtidspam",
                     (int) Math.ceil((double) fileNumberInput * ((double) inputSpamTwtid / 100.00)));
@@ -837,7 +837,7 @@ public class DatasetController {
     public String setCreateDataset(Authentication authentication, Model model, @Valid Dataset dataset,
             BindingResult bindingResult, RedirectAttributes redirectAttributes,
             @RequestParam(name = "datasets", required = false) String[] datasets,
-            @RequestParam(name = "license", required = false) String[] licenses,
+            @RequestParam(name = "licenses", required = false) String[] licenses,
             @RequestParam(name = "languages", required = false) String[] languages,
             @RequestParam(name = "datatypes", required = false) String[] sdatatypes,
             @RequestParam(name = "inputSpamPercentage", required = false, defaultValue = "0") int inputSpamPercentage,
