@@ -45,13 +45,56 @@
                                             <a class="license" th:title="#{detailed.license.original}" th:href="${license.url}" th:text="${license.url}"></a>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <i class="fas fa-check" th:if="${license.redistribute==true}"></i>
+                                            <i class="fas fa-times" th:unless="${license.redistribute==true}"></i>&nbsp;                                         
+                                            <label th:text="#{add.license.redistribute}"></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <i class="fas fa-check" th:if="${license.attributeRequired==true}"></i>
+                                            <i class="fas fa-times" th:unless="${license.attributeRequired==true}"></i>&nbsp;                                         
+                                            <label th:text="#{add.license.attributerequired}"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <i class="fas fa-check" th:if="${license.commerciallyUse==true}"></i>
+                                            <i class="fas fa-times" th:unless="${license.commerciallyUse==true}"></i>&nbsp;                                         
+                                            <label th:text="#{add.license.commerciallyuse}"/>
+                                                                                          
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 ">
+                                            <i class="fas fa-check" th:if="${license.adaptWork==true}"></i>
+                                            <i class="fas fa-times" th:unless="${license.adaptWork==true}"></i>&nbsp;                                         
+                                            <label th:text="#{add.license.adaptwork}"/>                                            
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 ">
+                                            <i class="fas fa-check" th:if="${license.changeLicense==true}"></i>
+                                            <i class="fas fa-times" th:unless="${license.changeLicense==true}"></i>&nbsp;                                         
+                                            <label th:text="#{add.license.changelicense}"/>                                                
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <!--                                
+                                                                
+                                                                
+                                -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div th:include="footer.html">
-    </body>
+    </div>
+</div>
+<div th:include="footer.html">
+</body>
 </html>                    

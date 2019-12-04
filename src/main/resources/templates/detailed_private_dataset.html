@@ -85,6 +85,10 @@
                             <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.description}"> </p></div>
                             <div class="col-9 left"> <p class="normal-text" th:text="${dataset.description}"></p></div>
                         </div>
+                        <div class="row" th:if="${dataset.citationRequest!=null}">
+                            <div class="col-3 left"> <p class="title-text" th:text="#{add.dataset.placeholder.citationrequest}"> </p></div>
+                            <div class="col-9 left"> <p class="normal-text" th:text="${dataset.citationRequest}"></p></div>
+                        </div>
                         <div class="row">
                             <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.uploaddate}"> </p></div>
                             <div class="col-9 left"> <p class="normal-text" th:text="${#dates.format(dataset.uploadDate, 'yyyy-MM-dd')}"></p></div>

@@ -59,7 +59,6 @@ public class Dataset implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
-    
     /**
      * The name of the dataset
      */
@@ -85,6 +84,12 @@ public class Dataset implements Serializable {
     @Size(min = 1, max = 1000)
     @Lob
     private String description;
+
+    /**
+     * The citation request of the dataset
+     */
+    @Lob
+    private String citationRequest;
 
     /**
      * The pipeline used to generate the dataset
@@ -214,18 +219,20 @@ public class Dataset implements Serializable {
      * @param url the url of the dataset
      * @param author the author of the dataset
      * @param description the description of the dataset
+     * @param citationRequest the citation request of the dataset
      * @param access the access of the dataset
      * @param spamPercentage the spam percentage of the dataset
      * @param hamPercentage the ham percentage of the dataset
      * @param type the type of the dataset
      * @param license the license of the dataset
      */
-    public Dataset(String name, String url, String author, String description, String access, Integer spamPercentage, Integer hamPercentage,
+    public Dataset(String name, String url, String author, String description, String citationRequest, String access, Integer spamPercentage, Integer hamPercentage,
             String type, License license) {
         this.name = name;
         this.url = url;
         this.author = author;
         this.description = description;
+        this.citationRequest = citationRequest;
         this.access = access;
         this.spamPercentage = spamPercentage;
         this.hamPercentage = hamPercentage;
@@ -304,6 +311,25 @@ public class Dataset implements Serializable {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * Returns the citation request of the dataset
+     *
+     * @return the citation request of the dataset
+     */
+
+    public String getCitationRequest() {
+        return citationRequest;
+    }
+
+    /**
+     * Set the citation request of the datset
+     *
+     * @param citationRequest the citation request of the datset
+     */
+    public void setCitationRequest(String citationRequest) {
+        this.citationRequest = citationRequest;
     }
 
     /**

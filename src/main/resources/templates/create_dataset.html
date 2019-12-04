@@ -71,11 +71,6 @@
                         <i class="fas fa-info"></i>&nbsp;<small th:text="#{create.dataset.filteroptions}"></small>
                     </div>
                 </div>
-                <!--div class="row">
-                    <div class="col-12 right">
-                        <input type="button"  class="btn btn-primary" th:attr="value = #{create.dataset.apply}">
-                    </div>
-                </div-->
                 <div class="row"><div class="col-12">&nbsp;&nbsp;</div></div>
                 <!-- DATASETS LIST -->
                 <div class="row">
@@ -141,6 +136,11 @@
                                         <label for="#{create.dataset.placeholder.description}" id="ldescription" name="ldescription" class="control-label" th:text="#{create.dataset.placeholder.description}" ></label>  
                                         <textarea rows="5" class="form-control" name="description" th:attr="placeholder = #{create.dataset.placeholder.description}" required="required" th:text="${dataset.description}"></textarea>
                                         <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:attr="placeholder = #{add.dataset.placeholder.descriptionerror}"></label>
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="#{add.dataset.placeholder.citationRequest}" id="lcitationRequest" name="lcitationRequest" class="control-label" th:text="#{add.dataset.placeholder.citationRequest}" ></label>  
+                                        <textarea rows="5" class="form-control" name="citationRequest" th:attr="placeholder = #{add.dataset.placeholder.citationRequest}" th:text="${dataset.citationRequest}"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="DOI" id="ldoi" name="ldoi" class="control-label" th:text="DOI" ></label>  

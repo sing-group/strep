@@ -117,6 +117,7 @@ public class LicenseController
     @PostMapping("/add")
     public String addLicense(Authentication authentication, Model model, @Valid License license,BindingResult bindingResult, RedirectAttributes redirectAttributes)
     {
+        System.out.println("license redistribute: " + license.isRedistribute());
         Locale locale = LocaleContextHolder.getLocale();
         
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -149,11 +150,10 @@ public class LicenseController
             }
             return "redirect:/license/list";
         }
-
     }
 
     @GetMapping("/modify")
-    public String modifyLicense(Authentication authentication, Model model, License license, @RequestParam("name")String name)
+    public String modifyLicense(Authentication authentication, Model model, License license, @RequestParam("name") String name)
     {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
@@ -194,6 +194,8 @@ public class LicenseController
         }
         else
         {
+            System.out.println("adapt; " + license.isAdaptWork());
+            
             licenseRepository.save(license);
             redirectAttributes.addFlashAttribute("message", 
                 messageSource.getMessage("modify.license.sucess", Stream.of().toArray(String[]::new), locale)

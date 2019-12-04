@@ -37,7 +37,11 @@
                                     <div class="form-group">
                                         <label for="#{add.dataset.placeholder.description}" id="ldescription" name="ldescription" class="col-md-3 control-label" th:text="#{add.dataset.placeholder.description}" ></label>
                                         <textarea th:text="${toUpdateDataset.description}" rows="5" class="form-control" name="description" th:attr="placeholder = #{edit.dataset.placeholder.description}" required="required"></textarea>
-                                         <label class="error-label" th:if="${#fields.hasErrors('description')}" th:text="#{dataset.msg.description}"></label>
+                                        <label class="error-label" th:if="${#fields.hasErrors('description')}" th:text="#{dataset.msg.description}"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="#{add.dataset.placeholder.citationrequest}" id="lcitationRequest" name="lcitationRequest" class="control-label" th:text="#{add.dataset.placeholder.citationrequest}" ></label>  
+                                        <textarea  th:text="${toUpdateDataset.citationRequest}"  rows="5" class="form-control" name="citationRequest"></textarea>
                                     </div>
                                     <div th:if="${toUpdateDataset.type}=='systemdataset'">
                                         <div class="form-group">

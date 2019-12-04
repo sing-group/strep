@@ -38,7 +38,10 @@
                                         <textarea rows="5" class="form-control col-md-6" name="description" required="required" th:attr="placeholder = #{add.dataset.placeholder.description}" th:text="${dataset.description}"></textarea>
                                         <label class="error-label" th:if="${#fields.hasErrors('description')}" th:text="#{dataset.msg.description}"></label>
                                     </div>
-
+                                    <div class="form-group">
+                                        <label for="#{add.dataset.placeholder.citationrequest}" id="lcitationRequest" name="lcitationRequest" class="control-label" th:text="#{add.dataset.placeholder.citationrequest}" ></label>
+                                        <textarea rows="5" class="form-control col-md-6" name="citationRequest" th:attr="placeholder = #{add.dataset.placeholder.citationrequest}" th:text="${dataset.citationRequest}"></textarea>
+                                    </div>
                                     <div class="form-group">
                                         <label for="DOI" id="ldoi" name="ldoi" class="control-label" th:text="DOI" ></label>                            
                                         <input type="text" class="form-control col-md-6" name="doi" placeholder="DOI" th:value="${dataset.doi}">

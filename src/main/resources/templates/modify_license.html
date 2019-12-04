@@ -49,6 +49,37 @@
                                             <input class="form-control" type="text" name="url" th:attr="value = ${licenseToModify.url}" required />
                                             <label class="error-label" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></label>
                                         </div>
+                                        <hr/>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="redistribute" name="redistribute" th:checked="${licenseToModify.redistribute==true}">
+                                            <label class="custom-control-label" for="redistribute" th:text="#{add.license.redistribute}"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="attributeRequired" name="attributeRequired" th:checked="${licenseToModify.attributeRequired==true}">
+                                            <label class="custom-control-label" for="attributeRequired" th:text="#{add.license.attributerequired}"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="commerciallyUse" name="commerciallyUse" th:checked="${licenseToModify.commerciallyUse==true}">
+                                            <label class="custom-control-label" for="commerciallyUse" th:text="#{add.license.commerciallyuse}"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="adaptWork" name="adaptWork" th:checked="${licenseToModify.adaptWork==true}">
+                                            <label class="custom-control-label" for="adaptWork" th:text="#{add.license.adaptwork}"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="changeLicense" name="changeLicense" th:checked="${licenseToModify.changeLicense==true}">
+                                            <label class="custom-control-label" for="changeLicense" th:text="#{add.license.changelicense}"></label>
+                                        </div>
+                                    </div>
                                         <div class="row">
                                             <div class="col-12 right">
                                                 <input type="submit" class="btn btn-primary" value="Modify license">
