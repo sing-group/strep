@@ -32,7 +32,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="licenses" th:text="#{create.dataset.licenses}"></label>
-                            <select multiple="" class="form-control" id="licenses" name="licenses">
+                            <select multiple="" class="form-control" id="licenses" name="licenses" onchange="updateDatasetsList()">
                                 <option value="" th:text="#{create.dataset.nooptionselected}">
                                 <option th:each="license : ${licenses}" th:attr="value = ${license.name}" th:text="${license.name}"></option>
                             </select>
@@ -41,7 +41,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="datatypes" th:text="#{create.dataset.datatypes}"></label>
-                            <select multiple="" class="form-control" id="datatypes" name="datatypes">
+                            <select multiple="" class="form-control" id="datatypes" name="datatypes" onchange="updateDatasetsList()">
                                 <option value="" th:text="#{create.dataset.nooptionselected}">
                                 <option th:each="datatype : ${datatypes}" th:attr="value = ${datatype.datatype}" onchange="enableInput(this.id)" th:id="${datatype.datatype}+checkbox" th:text="${datatype.datatype}"></option>
                             </select>
@@ -50,7 +50,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="languages" th:text="#{create.dataset.languages}"></label>
-                            <select multiple="" class="form-control" id="languages" name="languages">
+                            <select multiple="" class="form-control" id="languages" name="languages" onchange="updateDatasetsList()">
                                 <option value="" th:text="#{create.dataset.nooptionselected}">
                                 <option th:each="language : ${languages}" th:attr="value = ${language.language}" th:text="${language.description}"></option>
                             </select>
@@ -60,9 +60,9 @@
                         <p for="date" th:text="#{create.dataset.daterange}"></p>
                         <div class="form-group right">                            
                             <label for="date1" th:text="#{create.dataset.from}"></label>&nbsp;
-                            <input type="date" id="date1" name="date1"><br/>
+                            <input type="date" id="date1" name="date1" onchange="updateDatasetsList()"><br/>
                             <label for="date2" th:text="#{create.dataset.to}"></label>&nbsp;&nbsp;
-                            <input type="date" id="date2" name="date2">
+                            <input type="date" id="date2" name="date2" onchange="updateDatasetsList()">
                         </div>
                     </div>
                 </div>
@@ -71,11 +71,11 @@
                         <i class="fas fa-info"></i>&nbsp;<small th:text="#{create.dataset.filteroptions}"></small>
                     </div>
                 </div>
-                <div class="row">
+                <!--div class="row">
                     <div class="col-12 right">
-                        <input type="button" onclick="updateDatasetsList()" class="btn btn-primary" th:attr="value = #{create.dataset.apply}">
+                        <input type="button"  class="btn btn-primary" th:attr="value = #{create.dataset.apply}">
                     </div>
-                </div>
+                </div-->
                 <div class="row"><div class="col-12">&nbsp;&nbsp;</div></div>
                 <!-- DATASETS LIST -->
                 <div class="row">
