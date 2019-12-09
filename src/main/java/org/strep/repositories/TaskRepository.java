@@ -137,7 +137,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      */
     @Transactional
     @Modifying
-    @Query(value = "delete from task_create_udataset_datasets where dataset=?1 and t.active='1'", nativeQuery = true)
+    @Query(value = "delete from task_create_udataset_datasets where dataset=?1", nativeQuery = true)
     public void deleteUserTasks(String datasetName);
 
     /**

@@ -178,7 +178,7 @@ public class DatasetController {
                 datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
                 break;
 
-            case "user":               
+            case "user":
                 // You have to do this because in case of view permission, default view is communityDatasets but, default type is always user
                 if (authority.equals(Permission.VIEW)) {
                     datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
@@ -282,7 +282,10 @@ public class DatasetController {
     }
 
     @GetMapping("/delete")
-    public String deleteDataset(Authentication authentication, Model model, @RequestParam("id") String name, RedirectAttributes redirectAttributes) {
+    public String deleteDataset(Authentication authentication, Model model,
+            @RequestParam("id") String name,
+            @RequestParam(name = "type", required = false, defaultValue = "user") String type,
+            RedirectAttributes redirectAttributes) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Locale locale = LocaleContextHolder.getLocale();
 
@@ -309,7 +312,7 @@ public class DatasetController {
             );
         }
 
-        return "redirect:/dataset/list";
+        return "redirect:/dataset/list?type=" + type;
     }
 
     @GetMapping("/access")
@@ -382,7 +385,7 @@ public class DatasetController {
             model.addAttribute("username", username);
             model.addAttribute("host", HOST_NAME);
             model.addAttribute("licenses", licenseRepository.findAll());
-            model.addAttribute("dataset",dataset);
+            model.addAttribute("dataset", dataset);
             return "add_dataset";
         } else {
             String message = datasetService.uploadDataset(dataset, datasetFile, username);
@@ -423,6 +426,7 @@ public class DatasetController {
 
     @PostMapping("/edit")
     public String editDataset(Authentication authentication, Model model, @Valid Dataset dataset, BindingResult bindingResult, RedirectAttributes redirectAttributes,
+            @RequestParam(name = "type", required = false, defaultValue = "user") String type,
             @RequestParam(name = "id") String name) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
@@ -457,7 +461,7 @@ public class DatasetController {
             redirectAttributes.addFlashAttribute("message", message);
             model.addAttribute("authority", authority);
             model.addAttribute("username", username);
-            return "redirect:/dataset/list?type=user";
+            return "redirect:/dataset/list?type=" + type;
         }
 
     }
@@ -552,31 +556,35 @@ public class DatasetController {
             neccesaryFilesHam = fileNumberInt - neccesaryFilesSpam;
 
             //Parse the received date
-            Date d1=null,d2=null;
-            if (date1==null || date1.equals("")){
-                d1=fileRepository.getEarliestDate();
-            }else try{
-                d1=simpleDateFormat.parse(date1);
-            }catch(ParseException pe){
-                d1=fileRepository.getEarliestDate();
+            Date d1 = null, d2 = null;
+            if (date1 == null || date1.equals("")) {
+                d1 = fileRepository.getEarliestDate();
+            } else {
+                try {
+                    d1 = simpleDateFormat.parse(date1);
+                } catch (ParseException pe) {
+                    d1 = fileRepository.getEarliestDate();
+                }
             }
-            if (date2==null || date2.equals("")){
-                d2=fileRepository.getLatestDate();
-            } else try{
-                d2=simpleDateFormat.parse(date2);
-            }catch(ParseException pe){
-                d2=fileRepository.getLatestDate();
+            if (date2 == null || date2.equals("")) {
+                d2 = fileRepository.getLatestDate();
+            } else {
+                try {
+                    d2 = simpleDateFormat.parse(date2);
+                } catch (ParseException pe) {
+                    d2 = fileRepository.getLatestDate();
+                }
             }
 
             //Parse the received languages
             List<String> l;
-            if (languages == null || languages.length==0) {
+            if (languages == null || languages.length == 0) {
                 Iterable<Language> allLangs = languageRepository.findAll();
                 l = StreamSupport.stream(allLangs.spliterator(), false)
-                    .map(Language::getLanguage)
-                    .collect(Collectors.toList());
+                        .map(Language::getLanguage)
+                        .collect(Collectors.toList());
             } else {
-                l=Arrays.asList(languages);
+                l = Arrays.asList(languages);
             }
 
             //Parse the received datatypes
@@ -584,22 +592,22 @@ public class DatasetController {
             if (sdatatypes == null || sdatatypes.length == 0) {
                 Iterable<Datatype> datatypes = datatypeRepository.findAll();
                 d = StreamSupport.stream(datatypes.spliterator(), false)
-                    .map(Datatype::getDatatype)
-                    .collect(Collectors.toList());
+                        .map(Datatype::getDatatype)
+                        .collect(Collectors.toList());
             } else {
-                d=Arrays.asList(sdatatypes);
-            }    
+                d = Arrays.asList(sdatatypes);
+            }
 
             //Parse the received licenses
             List<String> lic;
             if (licenses == null || licenses.length == 0) {
                 Iterable<License> licens = licenseRepository.findAll();
                 lic = StreamSupport.stream(licens.spliterator(), false)
-                    .map(License::getName)
-                    .collect(Collectors.toList());
+                        .map(License::getName)
+                        .collect(Collectors.toList());
             } else {
-                lic=Arrays.asList(licenses);
-            }   
+                lic = Arrays.asList(licenses);
+            }
 
             availableFilesSpam = fileRepository.countSystemDatasetFilesByType(arrayListDatasets, l, d, lic, d1, d2, "spam");
             availableFilesHam = fileRepository.countSystemDatasetFilesByType(arrayListDatasets, l, d, lic, d1, d2, "ham");
@@ -644,7 +652,7 @@ public class DatasetController {
      * @return The part of the view that is going to be updated
      */
     @GetMapping("/checkPosibleDatatypes")
-    public String showInfoDatatypes(Model model, 
+    public String showInfoDatatypes(Model model,
             //Now these parameters are neccesary
             @RequestParam(name = "languages", required = false) String[] languages,
             @RequestParam(name = "datatypes", required = false) String[] sdatatypes,
@@ -720,22 +728,25 @@ public class DatasetController {
             HashMap<String, Integer> databaseFilesMap = new HashMap<String, Integer>();
 
             //Compute available files
-
             //Parse the received date
-            Date d1=null,d2=null;
-            if (date1==null || date1.equals("")){
-                d1=fileRepository.getEarliestDate();
-            }else try{
-                d1=simpleDateFormat.parse(date1);
-            }catch(ParseException pe){
-                d1=fileRepository.getEarliestDate();
+            Date d1 = null, d2 = null;
+            if (date1 == null || date1.equals("")) {
+                d1 = fileRepository.getEarliestDate();
+            } else {
+                try {
+                    d1 = simpleDateFormat.parse(date1);
+                } catch (ParseException pe) {
+                    d1 = fileRepository.getEarliestDate();
+                }
             }
-            if (date2==null || date2.equals("")){
-                d2=fileRepository.getLatestDate();
-            } else try{
-                d2=simpleDateFormat.parse(date2);
-            }catch(ParseException pe){
-                d2=fileRepository.getLatestDate();
+            if (date2 == null || date2.equals("")) {
+                d2 = fileRepository.getLatestDate();
+            } else {
+                try {
+                    d2 = simpleDateFormat.parse(date2);
+                } catch (ParseException pe) {
+                    d2 = fileRepository.getLatestDate();
+                }
             }
 
             //Parse the received languages
@@ -743,10 +754,10 @@ public class DatasetController {
             if (languages == null) {
                 Iterable<Language> allLangs = languageRepository.findAll();
                 l = StreamSupport.stream(allLangs.spliterator(), false)
-                .map(Language::getLanguage)
-                .collect(Collectors.toList());
+                        .map(Language::getLanguage)
+                        .collect(Collectors.toList());
             } else {
-                l=Arrays.asList(languages);
+                l = Arrays.asList(languages);
             }
 
             //Parse the received licenses
@@ -754,36 +765,36 @@ public class DatasetController {
             if (licenses == null || licenses.length == 0) {
                 Iterable<License> licens = licenseRepository.findAll();
                 lic = StreamSupport.stream(licens.spliterator(), false)
-                    .map(License::getName)
-                    .collect(Collectors.toList());
+                        .map(License::getName)
+                        .collect(Collectors.toList());
             } else {
-                lic=Arrays.asList(licenses);
-            }           
-    
-            databaseFilesMap.put(".emlspam", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
-            databaseFilesMap.put(".emlham", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
+                lic = Arrays.asList(licenses);
+            }
 
-            databaseFilesMap.put(".warcspam", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
-            databaseFilesMap.put(".warcham", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
+            databaseFilesMap.put(".emlspam",
+                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
+            databaseFilesMap.put(".emlham",
+                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
 
-            databaseFilesMap.put(".tsmsspam", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
-            databaseFilesMap.put(".tsmsham", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
+            databaseFilesMap.put(".warcspam",
+                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
+            databaseFilesMap.put(".warcham",
+                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
 
-            databaseFilesMap.put(".ytbidspam", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
-            databaseFilesMap.put(".ytbidham", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
+            databaseFilesMap.put(".tsmsspam",
+                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
+            databaseFilesMap.put(".tsmsham",
+                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
 
-            databaseFilesMap.put(".twtidspam", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
-            databaseFilesMap.put(".twtidham", 
-                fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
+            databaseFilesMap.put(".ytbidspam",
+                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
+            databaseFilesMap.put(".ytbidham",
+                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
+
+            databaseFilesMap.put(".twtidspam",
+                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
+            databaseFilesMap.put(".twtidham",
+                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
 
             Set<String> keys = databaseFilesMap.keySet();
             boolean success = true;
@@ -820,7 +831,6 @@ public class DatasetController {
         Iterable<License> licenses = licenseRepository.findAll();
         Iterable<Datatype> datatypes = datatypeRepository.findAll();
         Iterable<Language> languages = languageRepository.findAllSortedByDescription();
-        
 
         model.addAttribute("host", HOST_NAME);
         model.addAttribute("authority", authority);
@@ -876,20 +886,24 @@ public class DatasetController {
             }
 
             //Parse the received date
-            Date d1=null,d2=null;
-            if (dateFrom==null || dateFrom.equals("")){
-                d1=fileRepository.getEarliestDate();
-            }else try{
-                d1=simpleDateFormat.parse(dateFrom);
-            }catch(ParseException pe){
-                d1=fileRepository.getEarliestDate();
+            Date d1 = null, d2 = null;
+            if (dateFrom == null || dateFrom.equals("")) {
+                d1 = fileRepository.getEarliestDate();
+            } else {
+                try {
+                    d1 = simpleDateFormat.parse(dateFrom);
+                } catch (ParseException pe) {
+                    d1 = fileRepository.getEarliestDate();
+                }
             }
-            if (dateTo==null || dateTo.equals("")){
-                d2=fileRepository.getLatestDate();
-            } else try{
-                d2=simpleDateFormat.parse(dateTo);
-            }catch(ParseException pe){
-                d2=fileRepository.getLatestDate();
+            if (dateTo == null || dateTo.equals("")) {
+                d2 = fileRepository.getLatestDate();
+            } else {
+                try {
+                    d2 = simpleDateFormat.parse(dateTo);
+                } catch (ParseException pe) {
+                    d2 = fileRepository.getLatestDate();
+                }
             }
 
             //Parse the received languages
@@ -897,10 +911,10 @@ public class DatasetController {
             if (languages == null) {
                 Iterable<Language> allLangs = languageRepository.findAll();
                 l = StreamSupport.stream(allLangs.spliterator(), false)
-                .map(Language::getLanguage)
-                .collect(Collectors.toList());
+                        .map(Language::getLanguage)
+                        .collect(Collectors.toList());
             } else {
-                l=Arrays.asList(languages);
+                l = Arrays.asList(languages);
             }
 
             //Parse the received licenses
@@ -908,34 +922,33 @@ public class DatasetController {
             if (licenses == null || licenses.length == 0) {
                 Iterable<License> licens = licenseRepository.findAll();
                 lic = StreamSupport.stream(licens.spliterator(), false)
-                    .map(License::getName)
-                    .collect(Collectors.toList());
+                        .map(License::getName)
+                        .collect(Collectors.toList());
             } else {
-                lic=Arrays.asList(licenses);
-            }   
+                lic = Arrays.asList(licenses);
+            }
 
             //Parse the received datatypes
             List<String> d;
             if (sdatatypes == null || sdatatypes.length == 0) {
                 Iterable<Datatype> datatypes = datatypeRepository.findAll();
                 d = StreamSupport.stream(datatypes.spliterator(), false)
-                    .map(Datatype::getDatatype)
-                    .collect(Collectors.toList());
+                        .map(Datatype::getDatatype)
+                        .collect(Collectors.toList());
             } else {
-                d=Arrays.asList(sdatatypes);
+                d = Arrays.asList(sdatatypes);
             }
 
             List<String> datas;
             if (datasets == null || datasets.length == 0) {
                 Iterable<Dataset> ldatas = datasetRepository.findAll();
                 datas = StreamSupport.stream(ldatas.spliterator(), false)
-                    .map(Dataset::getName)
-                    .collect(Collectors.toList());
+                        .map(Dataset::getName)
+                        .collect(Collectors.toList());
             } else {
-                datas=Arrays.asList(datasets);
+                datas = Arrays.asList(datasets);
             }
 
-            
             message = taskService.addNewUserDatasetTask(dataset, lic, l, d, datas, d1,
                     d2, inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTsms, inputHamTsms,
                     inputSpamYtbid, inputHamYtbid, inputSpamTwtid, inputHamTwtid, inputFileNumber, inputSpamPercentage,
