@@ -98,7 +98,7 @@ public class DatasetController {
      * To parse dates
      */
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    
+
     /**
      * The message i18n
      */
@@ -426,7 +426,7 @@ public class DatasetController {
 
     @PostMapping("/edit")
     public String editDataset(Authentication authentication, Model model, @Valid Dataset dataset, BindingResult bindingResult, RedirectAttributes redirectAttributes,
-            @RequestParam(name = "type", required = false, defaultValue = "user") String type,
+            @RequestParam(name = "typeDatasetList", required = false, defaultValue = "user") String type,
             @RequestParam(name = "id") String name) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
@@ -467,7 +467,7 @@ public class DatasetController {
     }
 
     @GetMapping("/modal")
-    public String getDatasetInfo(Authentication authentication, Model model, @RequestParam("id") String id) {
+    public String getDatasetInfo(Authentication authenftication, Model model, @RequestParam("id") String id) {
         Optional<Dataset> opt = datasetRepository.findById(id);
 
         if (opt.isPresent()) {
@@ -494,6 +494,62 @@ public class DatasetController {
         return "create_dataset::datasets-list";
     }
 
+    @GetMapping("/checkLicenses")
+    public String checkLicenses(Authentication authentication, Model model,
+            @RequestParam(name = "datasets", required = true) String[] datasets,
+            @RequestParam(name = "checkedDatasets", required = true) String[] checkedDatasets) {
+
+        String message = "hola";
+        //ArrayList<Dataset> filteredDatasets = new ArrayList<>();
+        ArrayList<Dataset> allDatasets = new ArrayList<>();
+        ArrayList<String> filteredDatasets = new ArrayList<>();
+        
+
+        Dataset dataset;
+        ArrayList<License> licenses = new ArrayList<>();
+        
+        for (String datasetName : datasets) {
+            allDatasets.add(datasetRepository.findDatasetByName(datasetName));
+        }
+        for (String datasetName : checkedDatasets) {
+            dataset = datasetRepository.findDatasetByName(datasetName);
+            filteredDatasets.add(dataset.getName());
+            licenses.add(dataset.getLicense());
+        }
+        System.out.println("licenses: " + licenses.size());
+        System.out.println("filteredDatasets: " + filteredDatasets.size());
+        Boolean exit = false;
+        int position = 0;
+        if (licenses.size() > 0) {
+            while (position < licenses.size() && exit == false) {
+                System.out.println("while");
+                if (licenses.get(position).isAdaptWork()) { // Adapt the work? YES
+                    System.out.println("YES");
+                    /*if (licenses.get(position).isAttributeRequired()) { // Attribute required YES
+
+                } else { // Attribute required NO
+                    
+                }*/
+                } else { // Adapt the work? NO
+                    System.out.println("NO, position: " + position);
+                    filteredDatasets.remove(position);
+                    message = "Dataset " + filteredDatasets.get(position) + ": Your not allowed to adapt the work";
+                    exit = true;
+                }
+                position++;
+            }
+        }
+        System.out.println("datasets:" + datasets.length);
+        System.out.println("filteredDatasets:" + filteredDatasets);
+        model.addAttribute("message", message);
+        model.addAttribute("filteredDatasets", filteredDatasets);
+        model.addAttribute("datasets", allDatasets);
+
+//        ArrayList<Dataset> datasets = datasetService.getFilteredDatasets(languages, datatypes, licenses, date1, date2);
+//        model.addAttribute("datasets", datasets);
+        return "create_dataset::datasets-list";
+    }
+
     @GetMapping("/updateDatatypesTable")
     public String updateDatatypesTable(Model model,
             @RequestParam(name = "datasets", required = false) String[] datasetNames) {
@@ -517,6 +573,11 @@ public class DatasetController {
      * @param model The model
      * @param inputSpam The percentage of spam messages desired
      * @param datasets The selected datasets
+     * @param languages
+     * @param sdatatypes
+     * @param date1
+     * @param date2
+     * @param licenses
      * @param fileNumber The number of files to be included in the dataset
      * @return The view fragment that is going to be updated
      */
@@ -821,6 +882,7 @@ public class DatasetController {
 
     @GetMapping("/create")
     public String getCreateDataset(Authentication authentication, Model model, Dataset dataset) {
+       
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -847,6 +909,7 @@ public class DatasetController {
     public String setCreateDataset(Authentication authentication, Model model, @Valid Dataset dataset,
             BindingResult bindingResult, RedirectAttributes redirectAttributes,
             @RequestParam(name = "datasets", required = false) String[] datasets,
+            @RequestParam(name = "filteredDatasets", required = false) String[] filteredDatasets,
             @RequestParam(name = "licenses", required = false) String[] licenses,
             @RequestParam(name = "languages", required = false) String[] languages,
             @RequestParam(name = "datatypes", required = false) String[] sdatatypes,

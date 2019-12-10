@@ -95,10 +95,10 @@
                                         </ul>
                                     </td>
                                     <td>
-                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.view}" th:href="@{'/dataset/detailed?id=' + ${dataset.name}}">
+                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.view}" th:href="@{'/dataset/detailed?id=' + ${dataset.name}+ '&type=' + ${type}}">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.download}" th:href="@{'/dataset/download?id=' + ${dataset.name}}">
+                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.download}" th:href="@{'/dataset/download?id=' + ${dataset.name}+ '&type=' + ${type}}">
                                             <i class="fas fa-file-download"></i>
                                         </a>
                                     </td>
@@ -142,23 +142,23 @@
                                         </ul>
                                     </td>
                                     <td>
-                                        <a class="btn btn-list " data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.view}" th:href="@{'/dataset/detailed?id=' + ${dataset.name}}">
+                                        <a class="btn btn-list " data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.view}" th:href="@{'/dataset/detailed?id=' + ${dataset.name}+ '&type=' + ${type}}">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                         <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.preprocess}" th:if="${type=='user'}" th:href="@{'/task/preprocess?id=' + ${dataset.name}}">
+                                         <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.preprocess}" th:if="${type=='user'}" th:href="@{'/task/preprocess?id=' + ${dataset.name}+ '&type=' + ${type}}">
                                             <i class="fas fa-tasks"></i>
                                         </a>
 
-                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.creationdetails}"  th:if="${type=='user'}" th:href="@{'/task/detailed?task=' + ${dataset.getCreationTask().id}}">
+                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.creationdetails}"  th:if="${type=='user'}" th:href="@{'/task/detailed?task=' + ${dataset.getCreationTask().id}+ '&type=' + ${type}}">
                                             <i class="fas fa-info-circle"></i>
                                         </a>
-                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.download}" th:href="@{'/dataset/download?id=' + ${dataset.name}}">
+                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.download}" th:href="@{'/dataset/download?id=' + ${dataset.name}+ '&type=' + ${type}}">
                                             <i class="fas fa-file-download"></i>
                                         </a>
-                                        <a class="btn btn-list" data-toggle="tooltip"  th:if="${authority==T(org.strep.domain.Permission).ADMINISTER or username==dataset.getAuthor()}" data-placement="right" th:title="#{list.datasets.table.edit}" th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
+                                        <a class="btn btn-list" data-toggle="tooltip"  th:if="${authority==T(org.strep.domain.Permission).ADMINISTER or username==dataset.getAuthor()}" data-placement="right" th:title="#{list.datasets.table.edit}" th:href="@{'/dataset/edit?id=' + ${dataset.name}+ '&type=' + ${type}}">
                                             <i class="fas fa-pen-square"></i>
                                         </a>
-                                        <a class="btn btn-list" th:if="${authority==T(org.strep.domain.Permission).ADMINISTER or username==dataset.getAuthor()}" th:href="@{'/dataset/delete?id=' + ${dataset.name}}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.delete}" th:onclick="'javascript:return confirm(\'' + #{list.datasets.table.suredelete} + '\');'" >
+                                        <a class="btn btn-list" th:if="${authority==T(org.strep.domain.Permission).ADMINISTER or username==dataset.getAuthor()}" th:href="@{'/dataset/delete?id=' + ${dataset.name} + '&type=' + ${type}}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.delete}" th:onclick="'javascript:return confirm(\'' + #{list.datasets.table.suredelete} + '\');'" >
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
