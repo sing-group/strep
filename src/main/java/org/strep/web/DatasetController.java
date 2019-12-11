@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -174,30 +175,31 @@ public class DatasetController {
         String authority = userService.getPermissionsByUsername(username);
         ArrayList<Dataset> datasets = new ArrayList<>();
         switch (type) {
-            case "community":
+        case "community":
+            datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
+            break;
+
+        case "user":
+            // You have to do this because in case of view permission, default view is
+            // communityDatasets but, default type is always user
+            if (authority.equals(Permission.VIEW)) {
                 datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
-                break;
+            } else {
+                datasets = datasetRepository.getOwnDatasets(username, Dataset.TYPE_USER);
+            }
+            break;
 
-            case "user":
-                // You have to do this because in case of view permission, default view is communityDatasets but, default type is always user
-                if (authority.equals(Permission.VIEW)) {
-                    datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
-                } else {
-                    datasets = datasetRepository.getOwnDatasets(username, Dataset.TYPE_USER);
-                }
-                break;
+        case "usersystem":
+            if (authority.equals(Permission.ADMINISTER)) {
+                datasets = datasetRepository.getSystemDatasets();
+            } else {
+                datasets = datasetRepository.getSystemDatasets(username, Dataset.TYPE_SYSTEM);
+            }
+            break;
 
-            case "usersystem":
-                if (authority.equals(Permission.ADMINISTER)) {
-                    datasets = datasetRepository.getSystemDatasets();
-                } else {
-                    datasets = datasetRepository.getSystemDatasets(username, Dataset.TYPE_SYSTEM);
-                }
-                break;
-
-            default:
-                datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
-                type = "community";
+        default:
+            datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
+            type = "community";
         }
         model.addAttribute("type", type);
         model.addAttribute("authority", authority);
@@ -258,8 +260,8 @@ public class DatasetController {
             Dataset dataset = opt.get();
             String owner = dataset.getAuthor();
 
-            if (dataset.getAccess().equals(Dataset.ACCESS_PUBLIC) || dataset.getAccess().equals(Dataset.ACCESS_PROTECTED)
-                    || owner.equals(username)) {
+            if (dataset.getAccess().equals(Dataset.ACCESS_PUBLIC)
+                    || dataset.getAccess().equals(Dataset.ACCESS_PROTECTED) || owner.equals(username)) {
 
                 if (datasetService.getDownloadFiles(name)) {
                     FileInputStream fis = new FileInputStream(new File(BASE_PATH + name + ".zip"));
@@ -282,8 +284,7 @@ public class DatasetController {
     }
 
     @GetMapping("/delete")
-    public String deleteDataset(Authentication authentication, Model model,
-            @RequestParam("id") String name,
+    public String deleteDataset(Authentication authentication, Model model, @RequestParam("id") String name,
             @RequestParam(name = "type", required = false, defaultValue = "user") String type,
             RedirectAttributes redirectAttributes) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -295,21 +296,15 @@ public class DatasetController {
         if (opt.isPresent() && opt.get().getAuthor().equals(username)) {
             Dataset dataset = opt.get();
             if (datasetService.deleteDataset(dataset)) {
-                model.addAttribute(
-                        "message",
-                        messageSource.getMessage("delete.dataset.sucess", Stream.of().toArray(String[]::new), locale)
-                );
+                model.addAttribute("message",
+                        messageSource.getMessage("delete.dataset.sucess", Stream.of().toArray(String[]::new), locale));
             } else {
-                model.addAttribute(
-                        "message",
-                        messageSource.getMessage("delete.dataset.fail", Stream.of().toArray(String[]::new), locale)
-                );
+                model.addAttribute("message",
+                        messageSource.getMessage("delete.dataset.fail", Stream.of().toArray(String[]::new), locale));
             }
         } else {
-            model.addAttribute(
-                    "message",
-                    messageSource.getMessage("delete.dataset.fail", Stream.of().toArray(String[]::new), locale)
-            );
+            model.addAttribute("message",
+                    messageSource.getMessage("delete.dataset.fail", Stream.of().toArray(String[]::new), locale));
         }
 
         return "redirect:/dataset/list?type=" + type;
@@ -336,21 +331,19 @@ public class DatasetController {
         if (opt.isPresent()) {
             Dataset dataset = opt.get();
 
-            if (access.equals(Dataset.ACCESS_PRIVATE) || access.equals(Dataset.ACCESS_PUBLIC) || access.equals(Dataset.ACCESS_PROTECTED)) {
+            if (access.equals(Dataset.ACCESS_PRIVATE) || access.equals(Dataset.ACCESS_PUBLIC)
+                    || access.equals(Dataset.ACCESS_PROTECTED)) {
                 dataset.setAccess(access);
                 datasetRepository.save(dataset);
-                model.addAttribute("message",
-                        messageSource.getMessage("changeacess.dataset.sucess", Stream.of(access).toArray(String[]::new), locale)
-                );
+                model.addAttribute("message", messageSource.getMessage("changeacess.dataset.sucess",
+                        Stream.of(access).toArray(String[]::new), locale));
             } else {
-                model.addAttribute("message",
-                        messageSource.getMessage("changeacess.dataset.fail.invalidaccess", Stream.of(access).toArray(String[]::new), locale)
-                );
+                model.addAttribute("message", messageSource.getMessage("changeacess.dataset.fail.invalidaccess",
+                        Stream.of(access).toArray(String[]::new), locale));
             }
         } else {
-            model.addAttribute("message",
-                    messageSource.getMessage("changeacess.dataset.fail.datasetnotfound", Stream.of().toArray(String[]::new), locale)
-            );
+            model.addAttribute("message", messageSource.getMessage("changeacess.dataset.fail.datasetnotfound",
+                    Stream.of().toArray(String[]::new), locale));
         }
 
         return "list_datasets";
@@ -398,7 +391,8 @@ public class DatasetController {
     }
 
     @GetMapping("/edit")
-    public String editDataset(Authentication authentication, @RequestParam("id") String name, Model model, Dataset dataset) {
+    public String editDataset(Authentication authentication, @RequestParam("id") String name, Model model,
+            Dataset dataset) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -425,7 +419,8 @@ public class DatasetController {
     }
 
     @PostMapping("/edit")
-    public String editDataset(Authentication authentication, Model model, @Valid Dataset dataset, BindingResult bindingResult, RedirectAttributes redirectAttributes,
+    public String editDataset(Authentication authentication, Model model, @Valid Dataset dataset,
+            BindingResult bindingResult, RedirectAttributes redirectAttributes,
             @RequestParam(name = "typeDatasetList", required = false, defaultValue = "user") String type,
             @RequestParam(name = "id") String name) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -436,8 +431,8 @@ public class DatasetController {
         Optional<Dataset> optDataset = datasetRepository.findById(name);
 
         if (bindingResult.hasErrors()) {
-            //TODO: Revisar este mensaje de error
-            //System.out.println("ERRORES");
+            // TODO: Revisar este mensaje de error
+            // System.out.println("ERRORES");
             if (optDataset.isPresent()) {
                 Dataset toUpdateDataset = optDataset.get();
 
@@ -494,60 +489,135 @@ public class DatasetController {
         return "create_dataset::datasets-list";
     }
 
-    @GetMapping("/checkLicenses")
-    public String checkLicenses(Authentication authentication, Model model,
+    @GetMapping("/filterDatasetsByLicense")
+    public String filterDatasetsByLicense(Authentication authentication, Model model,
             @RequestParam(name = "datasets", required = true) String[] datasets,
             @RequestParam(name = "checkedDatasets", required = true) String[] checkedDatasets) {
 
-        String message = "hola";
-        //ArrayList<Dataset> filteredDatasets = new ArrayList<>();
+        StringBuilder message = new StringBuilder();
         ArrayList<Dataset> allDatasets = new ArrayList<>();
-        ArrayList<String> filteredDatasets = new ArrayList<>();
-        
+        List<String> filteredDatasets = new ArrayList<>();
 
-        Dataset dataset;
-        ArrayList<License> licenses = new ArrayList<>();
-        
+        ArrayList<License> checkedDatasetsLicenses = new ArrayList<>();
+
         for (String datasetName : datasets) {
             allDatasets.add(datasetRepository.findDatasetByName(datasetName));
         }
-        for (String datasetName : checkedDatasets) {
-            dataset = datasetRepository.findDatasetByName(datasetName);
-            filteredDatasets.add(dataset.getName());
-            licenses.add(dataset.getLicense());
-        }
-        System.out.println("licenses: " + licenses.size());
-        System.out.println("filteredDatasets: " + filteredDatasets.size());
-        Boolean exit = false;
-        int position = 0;
-        if (licenses.size() > 0) {
-            while (position < licenses.size() && exit == false) {
-                System.out.println("while");
-                if (licenses.get(position).isAdaptWork()) { // Adapt the work? YES
-                    System.out.println("YES");
-                    /*if (licenses.get(position).isAttributeRequired()) { // Attribute required YES
 
-                } else { // Attribute required NO
-                    
-                }*/
-                } else { // Adapt the work? NO
-                    System.out.println("NO, position: " + position);
-                    filteredDatasets.remove(position);
-                    message = "Dataset " + filteredDatasets.get(position) + ": Your not allowed to adapt the work";
-                    exit = true;
+        for (String datasetName : checkedDatasets) {
+            Dataset dataset = datasetRepository.findDatasetByName(datasetName);
+            filteredDatasets.add(dataset.getName());
+            checkedDatasetsLicenses.add(dataset.getLicense());
+        }
+
+        int position = 0;
+        boolean exit = false;
+        if (checkedDatasetsLicenses.size() > 0) {
+            while (position < checkedDatasetsLicenses.size() && exit == false) {
+                License currentLicense = checkedDatasetsLicenses.get(position);
+System.out.println(currentLicense.getName());
+                if (!currentLicense.isAdaptWork()) {
+                    System.out.println("isAdaptWork: NO " + currentLicense.getName());
+                    if (checkedDatasets.length > 1) {
+                        System.out.println("lenght>1 YES" + currentLicense.getName());
+                        message.append("Dataset ").append(filteredDatasets.get(position)).append(
+                                " : Your not allowed to adapt the work, you can combine this dataset with others.");
+                        filteredDatasets.remove(position);
+                        exit = true;
+                    }
+                }
+
+                if (!currentLicense.isChangeLicense() && !exit) {
+                    int indexLicenses = 0;
+                    while (!exit || indexLicenses < checkedDatasetsLicenses.size()) {
+                        if (!currentLicense.getName().equals(checkedDatasetsLicenses.get(indexLicenses).getName())) {
+                            message.append("Dataset ").append(filteredDatasets.get(position))
+                                    .append(" : Your not allowed to change license to this dataset.");
+                            filteredDatasets.remove(position);
+                            exit = true;
+                        }
+                        indexLicenses++;
+                    }
                 }
                 position++;
             }
+
         }
-        System.out.println("datasets:" + datasets.length);
-        System.out.println("filteredDatasets:" + filteredDatasets);
-        model.addAttribute("message", message);
+        model.addAttribute("message", message.toString());
         model.addAttribute("filteredDatasets", filteredDatasets);
         model.addAttribute("datasets", allDatasets);
-
-//        ArrayList<Dataset> datasets = datasetService.getFilteredDatasets(languages, datatypes, licenses, date1, date2);
-//        model.addAttribute("datasets", datasets);
         return "create_dataset::datasets-list";
+        /*
+         * Iterable<License> licenses = licenseRepository.findAll(); Iterator<License>
+         * licensesIterator = licenses.iterator();
+         * 
+         * ArrayList<License> checkedDatasetsLicenses = new ArrayList<>();
+         * 
+         * for (String datasetName : datasets) {
+         * allDatasets.add(datasetRepository.findDatasetByName(datasetName)); }
+         * 
+         * for (String datasetName : checkedDatasets) { Dataset dataset =
+         * datasetRepository.findDatasetByName(datasetName);
+         * filteredDatasets.add(dataset.getName());
+         * checkedDatasetsLicenses.add(dataset.getLicense()); } Boolean exit = false;
+         * int position = 0; String access = null; String citationRequest = null; if
+         * (checkedDatasetsLicenses.size() > 0) { while (position <
+         * checkedDatasetsLicenses.size() && exit == false) { License currentLicense =
+         * checkedDatasetsLicenses.get(position);
+         * System.out.println(currentLicense.getName()); if
+         * (currentLicense.isAdaptWork()) { // Adapt the work? YES
+         * System.out.println("adapt to work YES"); if
+         * (currentLicense.isAttributeRequired()) { // Is required to attribute? YES
+         * System.out.println("required to attribute YES"); License license =
+         * licensesIterator.next();
+         * 
+         * while (licensesIterator.hasNext()){
+         * 
+         * if (!license.isAttributeRequired()) { System.out.println(license.getName());
+         * licensesIterator.remove();
+         * 
+         * 
+         * } license = licensesIterator.next(); }
+         * 
+         * System.out.println("required to attribute YES after"); citationRequest =
+         * "ola ola"; // Faltaría rellenar el campo citationRequest }
+         * 
+         * if (!currentLicense.isChangeLicense()) { // Change license? NO
+         * System.out.println("change license NO"); boolean changeLicense = true; int
+         * tmpPosition = 0; License tmpCurrentLicense = null; while (changeLicense ||
+         * tmpPosition < checkedDatasetsLicenses.size()) { tmpCurrentLicense =
+         * checkedDatasetsLicenses.get(position); if
+         * (!tmpCurrentLicense.isChangeLicense()) { if
+         * (!tmpCurrentLicense.getName().equals(currentLicense.getName())) {
+         * changeLicense = false; } } } if (changeLicense) { licenses.clear();
+         * licenses.add(currentLicense); } else {
+         * message.append("Dataset ").append(filteredDatasets.get(position))
+         * .append(": Your not allowed to change the license");
+         * filteredDatasets.remove(position); exit = true; } } else { // Change license?
+         * YES System.out.println("change license YES"); if
+         * (currentLicense.isRedistribute()) { // Redistribute? YES
+         * System.out.println("redistribute YES"); if
+         * (!currentLicense.isCommerciallyUse()) {// Commercially use? NO
+         * System.out.println("commercially NO"); for (License dlicense : licenses) { if
+         * (!dlicense.isCommerciallyUse()) { licenses.remove(dlicense); } } } } else {//
+         * Redistribute? NO // Solo licencias que no permitan distribuir // Visibilidad
+         * private System.out.println("redistribute NO"); access =
+         * Dataset.ACCESS_PRIVATE; for (License dlicense : licenses) { if
+         * (!dlicense.isRedistribute()) { licenses.remove(dlicense); } } } }
+         * 
+         * 
+         * } else { // Adapt the work? NO System.out.println("adapt to work NO"); if
+         * (checkedDatasets.length > 1) {
+         * message.append("Dataset ").append(filteredDatasets.get(position)).append(
+         * " : Your not allowed to adapt the work, you can combine this dataset with others"
+         * ); filteredDatasets.remove(position); exit = true; } } position++; } }
+         * model.addAttribute("message", message.toString());
+         * model.addAttribute("filteredDatasets", filteredDatasets);
+         * model.addAttribute("datasets", allDatasets); model.addAttribute("licenses",
+         * licensesIterator); model.addAttribute("access", access);
+         * model.addAttribute("citationRequest", citationRequest);
+         */
+
     }
 
     @GetMapping("/updateDatatypesTable")
@@ -570,9 +640,9 @@ public class DatasetController {
     /**
      * Check spam percentage data
      *
-     * @param model The model
-     * @param inputSpam The percentage of spam messages desired
-     * @param datasets The selected datasets
+     * @param model      The model
+     * @param inputSpam  The percentage of spam messages desired
+     * @param datasets   The selected datasets
      * @param languages
      * @param sdatatypes
      * @param date1
@@ -584,13 +654,13 @@ public class DatasetController {
     @GetMapping("/checkPosibleSpam")
     public String showInfoSpam(Model model, @RequestParam(name = "inputSpam", required = false) String inputSpam,
             @RequestParam(name = "datasets", required = false) String[] datasets,
-            //Now these parameters are neccesary
+            // Now these parameters are neccesary
             @RequestParam(name = "languages", required = false) String[] languages,
             @RequestParam(name = "datatypes", required = false) String[] sdatatypes,
             @RequestParam(name = "date1", required = false) String date1,
             @RequestParam(name = "date2", required = false) String date2,
             @RequestParam(name = "licenses", required = false) String[] licenses,
-            //Now the previous parameters are neccesary            
+            // Now the previous parameters are neccesary
             @RequestParam(name = "fileNumber", required = false) String fileNumber) {
         int inputSpamInt = -1;
         int availableFilesSpam = -1;
@@ -616,7 +686,7 @@ public class DatasetController {
             neccesaryFilesSpam = (int) Math.ceil((double) fileNumberInt * ((double) inputSpamInt / 100.00));
             neccesaryFilesHam = fileNumberInt - neccesaryFilesSpam;
 
-            //Parse the received date
+            // Parse the received date
             Date d1 = null, d2 = null;
             if (date1 == null || date1.equals("")) {
                 d1 = fileRepository.getEarliestDate();
@@ -637,59 +707,58 @@ public class DatasetController {
                 }
             }
 
-            //Parse the received languages
+            // Parse the received languages
             List<String> l;
             if (languages == null || languages.length == 0) {
                 Iterable<Language> allLangs = languageRepository.findAll();
-                l = StreamSupport.stream(allLangs.spliterator(), false)
-                        .map(Language::getLanguage)
+                l = StreamSupport.stream(allLangs.spliterator(), false).map(Language::getLanguage)
                         .collect(Collectors.toList());
             } else {
                 l = Arrays.asList(languages);
             }
 
-            //Parse the received datatypes
+            // Parse the received datatypes
             List<String> d;
             if (sdatatypes == null || sdatatypes.length == 0) {
                 Iterable<Datatype> datatypes = datatypeRepository.findAll();
-                d = StreamSupport.stream(datatypes.spliterator(), false)
-                        .map(Datatype::getDatatype)
+                d = StreamSupport.stream(datatypes.spliterator(), false).map(Datatype::getDatatype)
                         .collect(Collectors.toList());
             } else {
                 d = Arrays.asList(sdatatypes);
             }
 
-            //Parse the received licenses
+            // Parse the received licenses
             List<String> lic;
             if (licenses == null || licenses.length == 0) {
                 Iterable<License> licens = licenseRepository.findAll();
-                lic = StreamSupport.stream(licens.spliterator(), false)
-                        .map(License::getName)
+                lic = StreamSupport.stream(licens.spliterator(), false).map(License::getName)
                         .collect(Collectors.toList());
             } else {
                 lic = Arrays.asList(licenses);
             }
 
-            availableFilesSpam = fileRepository.countSystemDatasetFilesByType(arrayListDatasets, l, d, lic, d1, d2, "spam");
-            availableFilesHam = fileRepository.countSystemDatasetFilesByType(arrayListDatasets, l, d, lic, d1, d2, "ham");
+            availableFilesSpam = fileRepository.countSystemDatasetFilesByType(arrayListDatasets, l, d, lic, d1, d2,
+                    "spam");
+            availableFilesHam = fileRepository.countSystemDatasetFilesByType(arrayListDatasets, l, d, lic, d1, d2,
+                    "ham");
 
-            String message = messageSource.getMessage("checkposiblespam.dataset.message", Stream.of(
-                    Integer.toString(neccesaryFilesSpam),
-                    Integer.toString(availableFilesSpam),
-                    Integer.toString(neccesaryFilesHam),
-                    Integer.toString(availableFilesHam)
-            ).toArray(String[]::new), locale);
-            //String message = "Necesary spam files:" + neccesaryFilesSpam + "\nAvailable spam files" + availableFilesSpam;
-            //message += " / Necesary ham files:" + neccesaryFilesHam + "\nAvailable spam files" + availableFilesHam;
+            String message = messageSource.getMessage("checkposiblespam.dataset.message",
+                    Stream.of(Integer.toString(neccesaryFilesSpam), Integer.toString(availableFilesSpam),
+                            Integer.toString(neccesaryFilesHam), Integer.toString(availableFilesHam))
+                            .toArray(String[]::new),
+                    locale);
+            // String message = "Necesary spam files:" + neccesaryFilesSpam + "\nAvailable
+            // spam files" + availableFilesSpam;
+            // message += " / Necesary ham files:" + neccesaryFilesHam + "\nAvailable spam
+            // files" + availableFilesHam;
             if (availableFilesSpam >= neccesaryFilesSpam && availableFilesHam >= neccesaryFilesHam) {
                 model.addAttribute("spamSuccessInfo", message);
             } else {
                 model.addAttribute("spamInsufficientInfo", message);
             }
         } else {
-            model.addAttribute("spamErrorInput",
-                    messageSource.getMessage("checkposiblespam.dataset.spamerrorimput", Stream.of().toArray(String[]::new), locale)
-            );
+            model.addAttribute("spamErrorInput", messageSource.getMessage("checkposiblespam.dataset.spamerrorimput",
+                    Stream.of().toArray(String[]::new), locale));
         }
         return "create_dataset::info-spam";
     }
@@ -697,36 +766,35 @@ public class DatasetController {
     /**
      * Validates the input data when "Check" button is pressed
      *
-     * @param model the model
-     * @param inputSpamEml Spam EML percentage
-     * @param inputHamEml Ham EML percentage
-     * @param inputSpamWarc Spam WARC percentage
-     * @param inputHamWarc Ham WARC percentage
-     * @param inputSpamTsms Spam SMS percentage
-     * @param inputHamTsms Ham SMS percentage
-     * @param inputSpamYtbid Spam YTB percentage
-     * @param inputHamYtbid Ham YTB percentage
-     * @param inputSpamTwtid Spam TWT percentage
-     * @param inputHamTwtid Ham TWV percentage
-     * @param datasetNames The datasets
+     * @param model           the model
+     * @param inputSpamEml    Spam EML percentage
+     * @param inputHamEml     Ham EML percentage
+     * @param inputSpamWarc   Spam WARC percentage
+     * @param inputHamWarc    Ham WARC percentage
+     * @param inputSpamTsms   Spam SMS percentage
+     * @param inputHamTsms    Ham SMS percentage
+     * @param inputSpamYtbid  Spam YTB percentage
+     * @param inputHamYtbid   Ham YTB percentage
+     * @param inputSpamTwtid  Spam TWT percentage
+     * @param inputHamTwtid   Ham TWV percentage
+     * @param datasetNames    The datasets
      * @param fileNumberInput Number of files for the new dataset
      * @return The part of the view that is going to be updated
      */
     @GetMapping("/checkPosibleDatatypes")
     public String showInfoDatatypes(Model model,
-            //Now these parameters are neccesary
+            // Now these parameters are neccesary
             @RequestParam(name = "languages", required = false) String[] languages,
             @RequestParam(name = "datatypes", required = false) String[] sdatatypes,
             @RequestParam(name = "date1", required = false) String date1,
             @RequestParam(name = "date2", required = false) String date2,
             @RequestParam(name = "licenses", required = false) String[] licenses,
-            //Now the previous parameters are neccesary
-            @RequestParam("inputSpamEml") int inputSpamEml,
-            @RequestParam("inputHamEml") int inputHamEml, @RequestParam("inputSpamWarc") int inputSpamWarc,
-            @RequestParam("inputHamWarc") int inputHamWarc, @RequestParam("inputSpamTsms") int inputSpamTsms,
-            @RequestParam("inputHamTsms") int inputHamTsms, @RequestParam("inputSpamYtbid") int inputSpamYtbid,
-            @RequestParam("inputHamYtbid") int inputHamYtbid, @RequestParam("inputSpamTwtid") int inputSpamTwtid,
-            @RequestParam("inputHamTwtid") int inputHamTwtid,
+            // Now the previous parameters are neccesary
+            @RequestParam("inputSpamEml") int inputSpamEml, @RequestParam("inputHamEml") int inputHamEml,
+            @RequestParam("inputSpamWarc") int inputSpamWarc, @RequestParam("inputHamWarc") int inputHamWarc,
+            @RequestParam("inputSpamTsms") int inputSpamTsms, @RequestParam("inputHamTsms") int inputHamTsms,
+            @RequestParam("inputSpamYtbid") int inputSpamYtbid, @RequestParam("inputHamYtbid") int inputHamYtbid,
+            @RequestParam("inputSpamTwtid") int inputSpamTwtid, @RequestParam("inputHamTwtid") int inputHamTwtid,
             @RequestParam(name = "datasets", required = false) String[] datasetNames,
             @RequestParam("inputFileNumber") int fileNumberInput) {
 
@@ -754,10 +822,9 @@ public class DatasetController {
 
         if (datasets == null || fileNumberInput == 0
                 || (inputSpamEml + inputHamEml + inputSpamWarc + inputHamWarc + inputSpamTsms + inputHamTsms
-                + inputSpamYtbid + inputHamYtbid + inputSpamTwtid + inputHamTwtid) != 100) {
-            model.addAttribute("datatypesInputError",
-                    messageSource.getMessage("checkposibledatatypes.dataset.datatypesinputerror", Stream.of().toArray(String[]::new), locale)
-            );
+                        + inputSpamYtbid + inputHamYtbid + inputSpamTwtid + inputHamTwtid) != 100) {
+            model.addAttribute("datatypesInputError", messageSource.getMessage(
+                    "checkposibledatatypes.dataset.datatypesinputerror", Stream.of().toArray(String[]::new), locale));
         } else {
             HashMap<String, Integer> necesaryFilesMap = new HashMap<String, Integer>();
 
@@ -788,8 +855,8 @@ public class DatasetController {
 
             HashMap<String, Integer> databaseFilesMap = new HashMap<String, Integer>();
 
-            //Compute available files
-            //Parse the received date
+            // Compute available files
+            // Parse the received date
             Date d1 = null, d2 = null;
             if (date1 == null || date1.equals("")) {
                 d1 = fileRepository.getEarliestDate();
@@ -810,52 +877,50 @@ public class DatasetController {
                 }
             }
 
-            //Parse the received languages
+            // Parse the received languages
             List<String> l;
             if (languages == null) {
                 Iterable<Language> allLangs = languageRepository.findAll();
-                l = StreamSupport.stream(allLangs.spliterator(), false)
-                        .map(Language::getLanguage)
+                l = StreamSupport.stream(allLangs.spliterator(), false).map(Language::getLanguage)
                         .collect(Collectors.toList());
             } else {
                 l = Arrays.asList(languages);
             }
 
-            //Parse the received licenses
+            // Parse the received licenses
             List<String> lic;
             if (licenses == null || licenses.length == 0) {
                 Iterable<License> licens = licenseRepository.findAll();
-                lic = StreamSupport.stream(licens.spliterator(), false)
-                        .map(License::getName)
+                lic = StreamSupport.stream(licens.spliterator(), false).map(License::getName)
                         .collect(Collectors.toList());
             } else {
                 lic = Arrays.asList(licenses);
             }
 
-            databaseFilesMap.put(".emlspam",
-                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
-            databaseFilesMap.put(".emlham",
-                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
+            databaseFilesMap.put(".emlspam", fileRepository.countSystemDatasetFilesByType(datasets, l,
+                    Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
+            databaseFilesMap.put(".emlham", fileRepository.countSystemDatasetFilesByType(datasets, l,
+                    Stream.of(".eml").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
 
-            databaseFilesMap.put(".warcspam",
-                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
-            databaseFilesMap.put(".warcham",
-                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
+            databaseFilesMap.put(".warcspam", fileRepository.countSystemDatasetFilesByType(datasets, l,
+                    Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
+            databaseFilesMap.put(".warcham", fileRepository.countSystemDatasetFilesByType(datasets, l,
+                    Stream.of(".warc").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
 
-            databaseFilesMap.put(".tsmsspam",
-                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
-            databaseFilesMap.put(".tsmsham",
-                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
+            databaseFilesMap.put(".tsmsspam", fileRepository.countSystemDatasetFilesByType(datasets, l,
+                    Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
+            databaseFilesMap.put(".tsmsham", fileRepository.countSystemDatasetFilesByType(datasets, l,
+                    Stream.of(".tsms").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
 
-            databaseFilesMap.put(".ytbidspam",
-                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
-            databaseFilesMap.put(".ytbidham",
-                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
+            databaseFilesMap.put(".ytbidspam", fileRepository.countSystemDatasetFilesByType(datasets, l,
+                    Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
+            databaseFilesMap.put(".ytbidham", fileRepository.countSystemDatasetFilesByType(datasets, l,
+                    Stream.of(".ytbid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
 
-            databaseFilesMap.put(".twtidspam",
-                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
-            databaseFilesMap.put(".twtidham",
-                    fileRepository.countSystemDatasetFilesByType(datasets, l, Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
+            databaseFilesMap.put(".twtidspam", fileRepository.countSystemDatasetFilesByType(datasets, l,
+                    Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "spam"));
+            databaseFilesMap.put(".twtidham", fileRepository.countSystemDatasetFilesByType(datasets, l,
+                    Stream.of(".twtid").collect(Collectors.toCollection(ArrayList::new)), lic, d1, d2, "ham"));
 
             Set<String> keys = databaseFilesMap.keySet();
             boolean success = true;
@@ -882,7 +947,7 @@ public class DatasetController {
 
     @GetMapping("/create")
     public String getCreateDataset(Authentication authentication, Model model, Dataset dataset) {
-       
+
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -948,7 +1013,7 @@ public class DatasetController {
                 modeSpam = true;
             }
 
-            //Parse the received date
+            // Parse the received date
             Date d1 = null, d2 = null;
             if (dateFrom == null || dateFrom.equals("")) {
                 d1 = fileRepository.getEarliestDate();
@@ -969,34 +1034,31 @@ public class DatasetController {
                 }
             }
 
-            //Parse the received languages
+            // Parse the received languages
             List<String> l;
             if (languages == null) {
                 Iterable<Language> allLangs = languageRepository.findAll();
-                l = StreamSupport.stream(allLangs.spliterator(), false)
-                        .map(Language::getLanguage)
+                l = StreamSupport.stream(allLangs.spliterator(), false).map(Language::getLanguage)
                         .collect(Collectors.toList());
             } else {
                 l = Arrays.asList(languages);
             }
 
-            //Parse the received licenses
+            // Parse the received licenses
             List<String> lic;
             if (licenses == null || licenses.length == 0) {
                 Iterable<License> licens = licenseRepository.findAll();
-                lic = StreamSupport.stream(licens.spliterator(), false)
-                        .map(License::getName)
+                lic = StreamSupport.stream(licens.spliterator(), false).map(License::getName)
                         .collect(Collectors.toList());
             } else {
                 lic = Arrays.asList(licenses);
             }
 
-            //Parse the received datatypes
+            // Parse the received datatypes
             List<String> d;
             if (sdatatypes == null || sdatatypes.length == 0) {
                 Iterable<Datatype> datatypes = datatypeRepository.findAll();
-                d = StreamSupport.stream(datatypes.spliterator(), false)
-                        .map(Datatype::getDatatype)
+                d = StreamSupport.stream(datatypes.spliterator(), false).map(Datatype::getDatatype)
                         .collect(Collectors.toList());
             } else {
                 d = Arrays.asList(sdatatypes);
@@ -1005,17 +1067,15 @@ public class DatasetController {
             List<String> datas;
             if (datasets == null || datasets.length == 0) {
                 Iterable<Dataset> ldatas = datasetRepository.findAll();
-                datas = StreamSupport.stream(ldatas.spliterator(), false)
-                        .map(Dataset::getName)
+                datas = StreamSupport.stream(ldatas.spliterator(), false).map(Dataset::getName)
                         .collect(Collectors.toList());
             } else {
                 datas = Arrays.asList(datasets);
             }
 
-            message = taskService.addNewUserDatasetTask(dataset, lic, l, d, datas, d1,
-                    d2, inputSpamEml, inputHamEml, inputSpamWarc, inputHamWarc, inputSpamTsms, inputHamTsms,
-                    inputSpamYtbid, inputHamYtbid, inputSpamTwtid, inputHamTwtid, inputFileNumber, inputSpamPercentage,
-                    username, modeSpam);
+            message = taskService.addNewUserDatasetTask(dataset, lic, l, d, datas, d1, d2, inputSpamEml, inputHamEml,
+                    inputSpamWarc, inputHamWarc, inputSpamTsms, inputHamTsms, inputSpamYtbid, inputHamYtbid,
+                    inputSpamTwtid, inputHamTwtid, inputFileNumber, inputSpamPercentage, username, modeSpam);
 
             redirectAttributes.addFlashAttribute("message", message);
             return "redirect:/dataset/list";

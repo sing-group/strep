@@ -161,4 +161,15 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      */
     @Query(value = "select count(f.id) from dataset d inner join dataset_files df on d.name=df.dataset_name inner join file f on df.file_id=f.id where d.name in(?1) group by f.extension, f.type", nativeQuery = true)
     public ArrayList<Object> getFilesByExtensionAndType(Collection<String> datasetNames);
+    
+    
+    /**
+     * Return datasets by name
+     *
+     * @param name the name of the dataset
+     * @return A list of available datasets owned by author and filtered by type
+     */
+    @Query(value = "SELECT * FROM dataset WHERE name=?1", nativeQuery = true)
+    public  Dataset findDatasetByName(String name);
+
 }

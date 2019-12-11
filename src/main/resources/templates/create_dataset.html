@@ -1,145 +1,174 @@
 <!DOCTYPE html>
 <html>
-    <head> 
-        <title th:text="#{app.name}"></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="initial-scale=1, width=device-width">
-        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="/css/style.css">  
-        <link rel="icon" type="image/png" href="/images/STRepLogo.png">
-    </head>
-    <body class="main-bg">
-        <div class="header">
-            <div th:include="header.html"></div>
+
+<head>
+    <title th:text="#{app.name}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/images/STRepLogo.png">
+</head>
+
+<body class="main-bg">
+    <div class="header">
+        <div th:include="header.html"></div>
+    </div>
+    <div class="container">
+        <div id="banner" class="page-header">
+            <div class="row">
+                <div class="col-12">
+                    <h2 th:text="#{create.dataset.title}"></h2>
+                </div>
+            </div>
         </div>
-        <div class="container">
-            <div id="banner" class="page-header">
-                <div class="row">
-                    <div class="col-12">
-                        <h2 th:text="#{create.dataset.title}"></h2> 
+        <div class="row">
+            <div class="col-12">
+                <h4 class="create" th:text="#{create.dataset.filters}"></h4>
+            </div>
+        </div>
+        <form action="#" th:action="@{/dataset/create}" th:object="${dataset}" enctype="multipart/form-data"
+            method="POST">
+            <!-- FILTERS -->
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="licenses" th:text="#{create.dataset.licenses}"></label>
+                        <select multiple="" class="form-control" id="licenses" name="licenses"
+                            onchange="updateDatasetsList()">
+                            <option value="" th:text="#{create.dataset.nooptionselected}">
+                            <option th:each="license : ${licenses}" th:attr="value = ${license.name}"
+                                th:text="${license.name}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="datatypes" th:text="#{create.dataset.datatypes}"></label>
+                        <select multiple="" class="form-control" id="datatypes" name="datatypes"
+                            onchange="updateDatasetsList()">
+                            <option value="" th:text="#{create.dataset.nooptionselected}">
+                            <option th:each="datatype : ${datatypes}" th:attr="value = ${datatype.datatype}"
+                                onchange="enableInput(this.id)" th:id="${datatype.datatype}+checkbox"
+                                th:text="${datatype.datatype}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="languages" th:text="#{create.dataset.languages}"></label>
+                        <select multiple="" class="form-control" id="languages" name="languages"
+                            onchange="updateDatasetsList()">
+                            <option value="" th:text="#{create.dataset.nooptionselected}">
+                            <option th:each="language : ${languages}" th:attr="value = ${language.language}"
+                                th:text="${language.description}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <p for="date" th:text="#{create.dataset.daterange}"></p>
+                    <div class="form-group right">
+                        <label for="date1" th:text="#{create.dataset.from}"></label>&nbsp;
+                        <input type="date" id="date1" name="date1" onchange="updateDatasetsList()"><br />
+                        <label for="date2" th:text="#{create.dataset.to}"></label>&nbsp;&nbsp;
+                        <input type="date" id="date2" name="date2" onchange="updateDatasetsList()">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <h4 class="create" th:text="#{create.dataset.filters}"></h4> 
+                    <i class="fas fa-info"></i>&nbsp;<small th:text="#{create.dataset.filteroptions}"></small>
                 </div>
             </div>
-            <form action="#" th:action="@{/dataset/create}" th:object="${dataset}" enctype="multipart/form-data" method="POST">
-                <!-- FILTERS -->
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="licenses" th:text="#{create.dataset.licenses}"></label>
-                            <select multiple="" class="form-control" id="licenses" name="licenses" onchange="updateDatasetsList()">
-                                <option value="" th:text="#{create.dataset.nooptionselected}">
-                                <option th:each="license : ${licenses}" th:attr="value = ${license.name}" th:text="${license.name}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="datatypes" th:text="#{create.dataset.datatypes}"></label>
-                            <select multiple="" class="form-control" id="datatypes" name="datatypes" onchange="updateDatasetsList()">
-                                <option value="" th:text="#{create.dataset.nooptionselected}">
-                                <option th:each="datatype : ${datatypes}" th:attr="value = ${datatype.datatype}" onchange="enableInput(this.id)" th:id="${datatype.datatype}+checkbox" th:text="${datatype.datatype}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="languages" th:text="#{create.dataset.languages}"></label>
-                            <select multiple="" class="form-control" id="languages" name="languages" onchange="updateDatasetsList()">
-                                <option value="" th:text="#{create.dataset.nooptionselected}">
-                                <option th:each="language : ${languages}" th:attr="value = ${language.language}" th:text="${language.description}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <p for="date" th:text="#{create.dataset.daterange}"></p>
-                        <div class="form-group right">                            
-                            <label for="date1" th:text="#{create.dataset.from}"></label>&nbsp;
-                            <input type="date" id="date1" name="date1" onchange="updateDatasetsList()"><br/>
-                            <label for="date2" th:text="#{create.dataset.to}"></label>&nbsp;&nbsp;
-                            <input type="date" id="date2" name="date2" onchange="updateDatasetsList()">
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col-12">&nbsp;&nbsp;</div>
+            </div>
+            <!-- DATASETS LIST -->
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="create" th:text="#{create.dataset.select}"></h4>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <i class="fas fa-info"></i>&nbsp;<small th:text="#{create.dataset.filteroptions}"></small>
-                    </div>
+            </div>
+            <div class="tab-pane fade active show" th:fragment="datasets-list" id="datasets-list">
+                <div class="alert alert-light" th:if="${datasets.size()==0}"
+                    th:text="#{list.datasets.table.nodatasets}">
                 </div>
-                <div class="row"><div class="col-12">&nbsp;&nbsp;</div></div>
-                <!-- DATASETS LIST -->
-                <div class="row">
-                    <div class="col-12">
-                        <h4 class="create" th:text="#{create.dataset.select}"></h4> 
-                    </div>
+                <div class="alert alert-info" th:if="${message!=null && !message.equals('')}">
+                    <p th:text="${message}"></p>
                 </div>
-                <div class="tab-pane fade active show">
-                    <div class="alert alert-light" th:if="${datasets.size()==0}" th:text="#{list.datasets.table.nodatasets}"></div>
-                    <table class="table table-hover" th:fragment="datasets-list" id="datasets-list">
-                        <tr class="alert alert-light" th:if="${datasets.size()==0}"><td colspan="6" th:text="#{list.datasets.table.nodatasets}"></td></tr>
-                        <thead th:if="${datasets.size()!=0}">
+                <table class="table table-hover" >
+                    <tr class="alert alert-light" th:if="${datasets.size()==0}">
+                        <td colspan="6" th:text="#{list.datasets.table.nodatasets}"></td>
+                    </tr>
+                    <thead th:if="${datasets.size()!=0}">
                         <th scope="col" th:text="#{create.dataset.table.name}"></th>
                         <th scope="col" th:text="#{create.dataset.table.author}"></th>
                         <th scope="col" th:text="#{create.dataset.table.license}"></th>
                         <th scope="col" th:text="#{create.dataset.table.languages}"></th>
                         <th scope="col" th:text="#{create.dataset.table.datatypes}"></th>
                         <th scope="col" th:text="#{create.dataset.table.select}"></th>
-                        </thead>
-                        <tbody th:if="${datasets.size()!=0}">                            
-                            <tr th:each="dataset : ${datasets}">
-                                <th scope="row" th:text="${dataset.name}"></th>
-                                <td th:text="${dataset.author}"></td>
-                                <td th:text="${dataset.license.name}"></td>
-                                <td>
-                                    <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <i class="fas fa-language"></i>
-                                        <span class="icon-caret-down"></span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li th:text="${language.description}" th:each="language : ${dataset.language}"></li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <a class="btn btn-list dropdown-toggle" data-toggle="dropdown"
-                                       href="#">
-                                        <i class="fas fa-file-signature"></i>
-                                        <span class="icon-caret-down"></span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li th:text="${datatype.datatype}" th:each="datatype : ${dataset.datatypes}"></li>
-                                    </ul>
-                                </td>
-                                <td><input id="checkboxUpdateTable" class="form-control" type="checkbox" name="datasets" th:attr="value = ${dataset.name}" onclick="updateTable(this.id)"></td>
-                            </tr>             
-                        </tbody>
-                    </table>
+                    </thead>
+                    <tbody th:if="${datasets.size()!=0}">
+                        <tr th:each="dataset : ${datasets}">
+                            <th scope="row" th:text="${dataset.name}"></th>
+                            <td th:text="${dataset.author}"></td>
+                            <td th:text="${dataset.license.name}"></td>
+                            <td>
+                                <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fas fa-language"></i>
+                                    <span class="icon-caret-down"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li th:text="${language.description}" th:each="language : ${dataset.language}"></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fas fa-file-signature"></i>
+                                    <span class="icon-caret-down"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li th:text="${datatype.datatype}" th:each="datatype : ${dataset.datatypes}"></li>
+                                </ul>
+                            </td>
+                            <!--- th:checked="${filteredDatasets.contains(dataset.name)}" -->
+                            <td><input id="checkboxUpdateTable" class="form-control" type="checkbox"
+                                    th:checked="${filteredDatasets!=null and filteredDatasets.contains(dataset.name)}"
+                                    name="datasets" th:attr="value = ${dataset.name}" onclick="checkLicenses();"></td>
+                            <!--updateTable(this.id)-->
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div id="bs-docs-section">
+                <div class="row">
+                    <div class="col-12">&nbsp;&nbsp;</div>
                 </div>
-                
-                <div id="bs-docs-section">
-                    <div class="row"><div class="col-12">&nbsp;&nbsp;</div></div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div id="bs-component">
-                                <fieldset>
-                                    <legend><h4 class="create" th:text="#{create.dataset.metadata}"></h4></legend>
-                                    <div class="form-group">
-                                        <label for="#{create.dataset.placeholder.name}" id="lname" name="lname" class="control-label" th:text="#{create.dataset.placeholder.name}" ></label>                                                                    
-                                        <input type="text" class="form-control col-md-6" name="name" th:attr="placeholder = #{create.dataset.placeholder.name}" required="required" onchange="dynamicUrl(this.value)" th:value="${dataset.name}">
-                                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:attr="placeholder = #{add.dataset.placeholder.nameerror}" ></label>
+                <div class="row">
+                    <div class="col-12">
+                        <div id="bs-component">
+                            <fieldset>
+                                <legend>
+                                    <h4 class="create" th:text="#{create.dataset.metadata}"></h4>
+                                </legend>
+                                <div class="form-group">
+                                    <label for="#{create.dataset.placeholder.name}" id="lname" name="lname"
+                                        class="control-label" th:text="#{create.dataset.placeholder.name}"></label>
+                                    <input type="text" class="form-control col-md-6" name="name" required="required"
+                                        onchange="dynamicUrl(this.value)" th:value="${dataset.name}">
+                                    <label class="error-label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:attr="placeholder = #{add.dataset.placeholder.nameerror}" ></label>
                                     </div>
                                     <div class="form-group">
                                         <label for="#{create.dataset.placeholder.description}" id="ldescription" name="ldescription" class="control-label" th:text="#{create.dataset.placeholder.description}" ></label>  
-                                        <textarea rows="5" class="form-control" name="description" th:attr="placeholder = #{create.dataset.placeholder.description}" required="required" th:text="${dataset.description}"></textarea>
+                                        <textarea rows="5" class="form-control" name="description" th:attr="placeholder = #{create.dataset.placeholder.description}" required="required" th:text="${dataset!=null}?${dataset.description}:'s'"></textarea>
                                         <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:attr="placeholder = #{add.dataset.placeholder.descriptionerror}"></label>
                                     </div>
-                                    </div>
                                     <div class="form-group">
-                                        <label for="citationRequest" id="lcitationRequest" name="lcitationRequest" class="control-label" th:text="#{add.dataset.placeholder.citationRequest}" ></label>  
+                                        <label for="citationRequest" id="lcitationRequest" name="lcitationRequest" class="control-label" th:text="#{add.dataset.placeholder.citationrequest}" ></label>  
                                         <textarea rows="5" class="form-control" name="citationRequest" th:attr="placeholder = #{add.dataset.placeholder.citationrequest}" th:text="${dataset.citationRequest}"></textarea>
                                     </div>
                                     <div class="form-group">
