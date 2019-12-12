@@ -514,110 +514,185 @@ public class DatasetController {
         boolean exit = false;
         if (checkedDatasetsLicenses.size() > 0) {
             while (position < checkedDatasetsLicenses.size() && exit == false) {
+                String msg = "";
                 License currentLicense = checkedDatasetsLicenses.get(position);
-System.out.println(currentLicense.getName());
                 if (!currentLicense.isAdaptWork()) {
-                    System.out.println("isAdaptWork: NO " + currentLicense.getName());
                     if (checkedDatasets.length > 1) {
-                        System.out.println("lenght>1 YES" + currentLicense.getName());
-                        message.append("Dataset ").append(filteredDatasets.get(position)).append(
-                                " : Your not allowed to adapt the work, you can combine this dataset with others.");
-                        filteredDatasets.remove(position);
+                        msg = "Dataset " + filteredDatasets.get(position)
+                                + " : Your not allowed to adapt the work, you can combine this dataset with others.";
+                        if (message.lastIndexOf(msg) == -1) {
+                            message.append(msg).append("\r\n");
+                        }
                         exit = true;
                     }
                 }
 
-                if (!currentLicense.isChangeLicense() && !exit) {
+                if (!currentLicense.isChangeLicense()) {
                     int indexLicenses = 0;
-                    while (!exit || indexLicenses < checkedDatasetsLicenses.size()) {
-                        if (!currentLicense.getName().equals(checkedDatasetsLicenses.get(indexLicenses).getName())) {
-                            message.append("Dataset ").append(filteredDatasets.get(position))
-                                    .append(" : Your not allowed to change license to this dataset.");
-                            filteredDatasets.remove(position);
+                    while (!exit && indexLicenses < checkedDatasetsLicenses.size()
+                            && checkedDatasetsLicenses.size() > 1) {
+                        msg = "";
+                        /*
+                         * System.out.println( ">> currentLicense.getName()" + currentLicense.getName()
+                         * + " - " + indexLicenses);
+                         * System.out.println(">> checkedDatasetsLicenses.get(indexLicenses).getName()"
+                         * + checkedDatasetsLicenses.get(indexLicenses).getName());
+                         */
+                        if (!currentLicense.getName().equals(checkedDatasetsLicenses.get(indexLicenses).getName())
+                                && !checkedDatasetsLicenses.get(indexLicenses).isChangeLicense()) {
+                            msg = "Dataset " + filteredDatasets.get(position)
+                                    + " : Your not allowed to change license to this dataset.";
+                            if (message.lastIndexOf(msg) == -1) {
+                                message.append(msg).append("\r\n");
+                            }
                             exit = true;
                         }
                         indexLicenses++;
                     }
                 }
-                position++;
-            }
 
+                if (exit) {
+                    filteredDatasets.remove(position);
+                } else {
+                    position++;
+                }
+            }
         }
         model.addAttribute("message", message.toString());
         model.addAttribute("filteredDatasets", filteredDatasets);
         model.addAttribute("datasets", allDatasets);
         return "create_dataset::datasets-list";
-        /*
-         * Iterable<License> licenses = licenseRepository.findAll(); Iterator<License>
-         * licensesIterator = licenses.iterator();
-         * 
-         * ArrayList<License> checkedDatasetsLicenses = new ArrayList<>();
-         * 
-         * for (String datasetName : datasets) {
-         * allDatasets.add(datasetRepository.findDatasetByName(datasetName)); }
-         * 
-         * for (String datasetName : checkedDatasets) { Dataset dataset =
-         * datasetRepository.findDatasetByName(datasetName);
-         * filteredDatasets.add(dataset.getName());
-         * checkedDatasetsLicenses.add(dataset.getLicense()); } Boolean exit = false;
-         * int position = 0; String access = null; String citationRequest = null; if
-         * (checkedDatasetsLicenses.size() > 0) { while (position <
-         * checkedDatasetsLicenses.size() && exit == false) { License currentLicense =
-         * checkedDatasetsLicenses.get(position);
-         * System.out.println(currentLicense.getName()); if
-         * (currentLicense.isAdaptWork()) { // Adapt the work? YES
-         * System.out.println("adapt to work YES"); if
-         * (currentLicense.isAttributeRequired()) { // Is required to attribute? YES
-         * System.out.println("required to attribute YES"); License license =
-         * licensesIterator.next();
-         * 
-         * while (licensesIterator.hasNext()){
-         * 
-         * if (!license.isAttributeRequired()) { System.out.println(license.getName());
-         * licensesIterator.remove();
-         * 
-         * 
-         * } license = licensesIterator.next(); }
-         * 
-         * System.out.println("required to attribute YES after"); citationRequest =
-         * "ola ola"; // Faltaría rellenar el campo citationRequest }
-         * 
-         * if (!currentLicense.isChangeLicense()) { // Change license? NO
-         * System.out.println("change license NO"); boolean changeLicense = true; int
-         * tmpPosition = 0; License tmpCurrentLicense = null; while (changeLicense ||
-         * tmpPosition < checkedDatasetsLicenses.size()) { tmpCurrentLicense =
-         * checkedDatasetsLicenses.get(position); if
-         * (!tmpCurrentLicense.isChangeLicense()) { if
-         * (!tmpCurrentLicense.getName().equals(currentLicense.getName())) {
-         * changeLicense = false; } } } if (changeLicense) { licenses.clear();
-         * licenses.add(currentLicense); } else {
-         * message.append("Dataset ").append(filteredDatasets.get(position))
-         * .append(": Your not allowed to change the license");
-         * filteredDatasets.remove(position); exit = true; } } else { // Change license?
-         * YES System.out.println("change license YES"); if
-         * (currentLicense.isRedistribute()) { // Redistribute? YES
-         * System.out.println("redistribute YES"); if
-         * (!currentLicense.isCommerciallyUse()) {// Commercially use? NO
-         * System.out.println("commercially NO"); for (License dlicense : licenses) { if
-         * (!dlicense.isCommerciallyUse()) { licenses.remove(dlicense); } } } } else {//
-         * Redistribute? NO // Solo licencias que no permitan distribuir // Visibilidad
-         * private System.out.println("redistribute NO"); access =
-         * Dataset.ACCESS_PRIVATE; for (License dlicense : licenses) { if
-         * (!dlicense.isRedistribute()) { licenses.remove(dlicense); } } } }
-         * 
-         * 
-         * } else { // Adapt the work? NO System.out.println("adapt to work NO"); if
-         * (checkedDatasets.length > 1) {
-         * message.append("Dataset ").append(filteredDatasets.get(position)).append(
-         * " : Your not allowed to adapt the work, you can combine this dataset with others"
-         * ); filteredDatasets.remove(position); exit = true; } } position++; } }
-         * model.addAttribute("message", message.toString());
-         * model.addAttribute("filteredDatasets", filteredDatasets);
-         * model.addAttribute("datasets", allDatasets); model.addAttribute("licenses",
-         * licensesIterator); model.addAttribute("access", access);
-         * model.addAttribute("citationRequest", citationRequest);
-         */
 
+    }
+
+    @GetMapping("/composeCitationRequest")
+    public String composeCitationRequest(Authentication authentication, Model model,
+            @RequestParam(name = "datasets", required = true) String[] datasets,
+            @RequestParam(name = "checkedDatasets", required = true) String[] checkedDatasets) {
+
+        StringBuilder message = new StringBuilder();
+        ArrayList<Dataset> allDatasets = new ArrayList<>();
+        List<String> filteredDatasets = new ArrayList<>();
+        StringBuilder allCitationRequestFields = new StringBuilder();
+        String citationRequest = "";
+
+        ArrayList<License> checkedDatasetsLicenses = new ArrayList<>();
+        for (String datasetName : datasets) {
+            allDatasets.add(datasetRepository.findDatasetByName(datasetName));
+        }
+        for (String datasetName : checkedDatasets) {
+            Dataset dataset = datasetRepository.findDatasetByName(datasetName);
+            allCitationRequestFields.append(dataset.getCitationRequest()).append("\r\n");
+            filteredDatasets.add(dataset.getName());
+            checkedDatasetsLicenses.add(dataset.getLicense());
+        }
+
+        int position = 0;
+        boolean exit = false;
+        if (checkedDatasetsLicenses.size() > 0) {
+            while (position < checkedDatasetsLicenses.size() && exit == false) {
+                License currentLicense = checkedDatasetsLicenses.get(position);
+                if (currentLicense.isAttributeRequired()) {
+                    citationRequest = allCitationRequestFields.toString();
+                    exit = true;
+                }
+            }
+        }
+
+        model.addAttribute("citationRequest", citationRequest);
+        return "create_dataset::citation-request";
+    }
+
+    @GetMapping("/validateCitationRequest")
+    public String validateCitationRequest(Authentication authentication, Model model,
+            @RequestParam(name = "license", required = true) String license) {
+        Iterable<License> licenses = licenseRepository.findByName(license);
+        for (License lic : licenses) {
+            if (lic.isAttributeRequired()) {
+                model.addAttribute("requiredCitationRequest", "1");
+            } else {
+                model.addAttribute("requiredCitationRequest", "0");
+            }
+        }
+        return "create_dataset::citation-request";
+    }
+
+    @GetMapping("/checkLicenses")
+    public String checkLicenses(Authentication authentication, Model model,
+            @RequestParam(name = "datasets", required = true) String[] datasets,
+            @RequestParam(name = "checkedDatasets", required = true) String[] checkedDatasets) {
+        Iterable<License> allLicenses = licenseRepository.findAll();
+        ArrayList<License> checkedDatasetsLicenses = new ArrayList<>();
+
+        for (String datasetName : checkedDatasets) {
+            Dataset dataset = datasetRepository.findDatasetByName(datasetName);
+            checkedDatasetsLicenses.add(dataset.getLicense());
+        }
+
+        ArrayList<License> licenses = new ArrayList<>();
+        for (License license : allLicenses) {
+            licenses.add(license);
+        }
+
+        for (License currentLicense : checkedDatasetsLicenses) {
+            if (!currentLicense.isChangeLicense()) { // Change license? NO
+                for (License license : allLicenses) {
+                    if (!license.getName().equals(currentLicense.getName())) {
+                        licenses.remove(license);
+                    }
+                }
+                break;
+            } else {
+                if (currentLicense.isAttributeRequired()) { // Attribute required? YES
+                    for (License license : allLicenses) {
+                        if (!license.isAttributeRequired()) {
+                            licenses.remove(license);
+                        }
+                    }
+                }
+                if (!currentLicense.isRedistribute()) { // Redistribute? NO
+                    for (License license : allLicenses) {
+                        if (license.isRedistribute()) {
+                            licenses.remove(license);
+                        }
+                    }
+                }
+                if (!currentLicense.isCommerciallyUse()) { // Commercially? NO
+                    for (License license : allLicenses) {
+                        if (license.isCommerciallyUse()) {
+                            licenses.remove(license);
+                        }
+                    }
+                }
+            }
+        }
+
+        model.addAttribute("licenses", licenses);
+        return "create_dataset::check-licenses";
+    }
+
+    @GetMapping("/checkAccess")
+    public String checkAccess(Authentication authentication, Model model,
+            @RequestParam(name = "datasets", required = true) String[] datasets,
+            @RequestParam(name = "checkedDatasets", required = true) String[] checkedDatasets) {
+
+        String access = "";
+        ArrayList<License> checkedDatasetsLicenses = new ArrayList<>();
+
+        for (String datasetName : checkedDatasets) {
+            Dataset dataset = datasetRepository.findDatasetByName(datasetName);
+            checkedDatasetsLicenses.add(dataset.getLicense());
+        }
+
+        for (License license : checkedDatasetsLicenses) {
+            if (!license.isRedistribute()) {
+                access = Dataset.ACCESS_PRIVATE;
+                break;
+            }
+        }
+
+        model.addAttribute("access", access);
+        return "create_dataset::check-access";
     }
 
     @GetMapping("/updateDatatypesTable")

@@ -65,8 +65,19 @@ function updateDatasetsList() {
     });
 }
 
-function checkLicenses() {
+function validateCitationRequest() {
+    var license = $("#selectLicense").val();
+    var url = "/dataset/validateCitationRequest?license=" + license;
 
+    $("#citation-request").load(url, function (response, status, xhr) {
+        alert(response)
+        if (response.substr(0, 2) == "<!") {
+            location.reload();
+        }
+    });
+}
+
+function checkLicenses() {
     var datasetsList = $("input[name=datasets]");
     var selectedDatasets = $("input[name=datasets]:checked");
     var vCheckedDatasets = [];
@@ -83,24 +94,48 @@ function checkLicenses() {
         }
     }
 
-    var url = "";
+    var params = "";
 
     var firstElement = true;
     if (vCheckedDatasets.length > 0) {
-        url += encodeURI((firstElement ? "checkedDatasets=" : "&checkedDatasets=") + vCheckedDatasets);
+        params += encodeURI((firstElement ? "checkedDatasets=" : "&checkedDatasets=") + vCheckedDatasets);
         firstElement = false;
     }
 
     if (vDatasets.length > 0) {
-        url += encodeURI(("&datasets=") + vDatasets);
+        params += encodeURI(("&datasets=") + vDatasets);
     }
-    var urlCheckLicenses = "/dataset/filterDatasetsByLicense?" + url;
+
+    var urlCheckLicenses = "/dataset/filterDatasetsByLicense?" + params;
     $("#datasets-list").load(urlCheckLicenses, function (response, status, xhr) {
 
         if (response.substr(0, 2) == "<!") {
             location.reload();
+        } else {
+            var urlComposeCitationRequest = "/dataset/composeCitationRequest?" + params;
+            $("#citation-request").load(urlComposeCitationRequest, function (response, status, xhr) {
+                if (response.substr(0, 2) == "<!") {
+                    location.reload();
+                }
+            });
+
+            var urlCheckLicenses = "/dataset/checkLicenses?" + params;
+            $("#check-licenses").load(urlCheckLicenses, function (response, status, xhr) {
+                if (response.substr(0, 2) == "<!") {
+                    location.reload();
+                }
+            });
+
+            var urlCheckAccess = "/dataset/checkAccess?" + params;
+            $("#check-access").load(urlCheckAccess, function (response, status, xhr) {
+                if (response.substr(0, 2) == "<!") {
+                    location.reload();
+                }
+            });
         }
     });
+
+
 
 }
 

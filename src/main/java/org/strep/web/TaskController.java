@@ -63,7 +63,8 @@ public class TaskController {
 
     @GetMapping("/upload")
     public String listSystemTasks(Authentication authentication, Model model,
-            @RequestParam(name = "searchInput", required = false) String inputSearch, @RequestParam(name = "state", required = false, defaultValue = Task.STATE_WAITING) String state) {
+            @RequestParam(name = "searchInput", required = false) String inputSearch,
+            @RequestParam(name = "state", required = false, defaultValue = Task.STATE_WAITING) String state) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -83,7 +84,8 @@ public class TaskController {
 
     @GetMapping("/create")
     public String listUserTasks(Authentication authentication, Model model,
-            @RequestParam(name = "searchInput", required = false) String inputSearch, @RequestParam(name = "state", required = false, defaultValue = Task.STATE_WAITING) String state) {
+            @RequestParam(name = "searchInput", required = false) String inputSearch,
+            @RequestParam(name = "state", required = false, defaultValue = Task.STATE_WAITING) String state) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -104,10 +106,8 @@ public class TaskController {
     }
 
     @GetMapping("/hide")
-    public String hideTask(Authentication authentication, Model model,
-            @RequestParam(name = "task") int id,
-            @RequestParam(name = "option") String option,
-            @RequestParam(name = "state") String state) {
+    public String hideTask(Authentication authentication, Model model, @RequestParam(name = "task") int id,
+            @RequestParam(name = "option") String option, @RequestParam(name = "state") String state) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -122,15 +122,15 @@ public class TaskController {
         Task task = optTask.get();
 
         if (task.getDataset().getAuthor().equals(username)) {
-           task.setActive(Boolean.FALSE);
+            task.setActive(Boolean.FALSE);
             taskRepository.save(task);
             switch (option) {
-                case "upload":
-                    return "redirect:/task/upload?state=" + state;
-                case "create":
-                    return "redirect:/task/create?state=" + state;
-                case "preprocess":
-                    return "redirect:/task/preprocess?state=" + state;
+            case "upload":
+                return "redirect:/task/upload?state=" + state;
+            case "create":
+                return "redirect:/task/create?state=" + state;
+            case "preprocess":
+                return "redirect:/task/preprocess?state=" + state;
             }
         }
         return "redirect:/error";
@@ -190,7 +190,7 @@ public class TaskController {
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
 
-        //Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
+        // Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
         if (datasetName != null && !datasetName.equals("")) {
             Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
 
@@ -205,7 +205,8 @@ public class TaskController {
             }
         } else {
             for (Dataset optDataset : datasetRepository.findAll()) {
-                Collection<TaskCreateUPreprocessing> newTasks = taskRepository.getActivePreprocessingTasks(optDataset, state);
+                Collection<TaskCreateUPreprocessing> newTasks = taskRepository.getActivePreprocessingTasks(optDataset,
+                        state);
                 tasks.addAll(newTasks);
                 for (int i = 0; i < newTasks.size(); i++) {
                     datasets.add(optDataset);
@@ -221,9 +222,10 @@ public class TaskController {
 
     @GetMapping("/preprocess/detailed")
     public String listDetailedPreprocesss(Authentication authentication, Model model,
-            @RequestParam(name = "state", required = false, defaultValue = Task.STATE_SUCESS) String state) {
+            @RequestParam(name = "state", required = false, defaultValue = Task.STATE_SUCESS) String state,
+            @RequestParam(name = "name", required = false, defaultValue = "") String name) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
+System.out.println("name: " + name);
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
 
@@ -232,7 +234,13 @@ public class TaskController {
         model.addAttribute("state", state);
 
         HashMap<String, ArrayList<TaskCreateUPreprocessing>> taskCreateUPreprocessingHM = new HashMap<>();
-        ArrayList<TaskCreateUPreprocessing> tasks = taskRepository.getPreprocessingTasks(Task.STATE_SUCESS);
+
+        ArrayList<TaskCreateUPreprocessing> tasks;// = taskRepository.getPreprocessingTasks(Task.STATE_SUCESS);
+        if (name.equals("")) {
+            tasks = taskRepository.getPreprocessingTasks(Task.STATE_SUCESS);
+        } else {
+            tasks = taskRepository.getPreprocessingTasksByDatasetName(Task.STATE_SUCESS, name);
+        }
         String currentDataset = "";
         ArrayList<TaskCreateUPreprocessing> currentDatasetTasks = null;
         for (TaskCreateUPreprocessing task : tasks) {
@@ -256,8 +264,7 @@ public class TaskController {
     }
 
     @GetMapping("/preprocess/create")
-    public String createPreprocessingTask(Authentication authentication, Model model,
-            TaskCreateUPreprocessing task,
+    public String createPreprocessingTask(Authentication authentication, Model model, TaskCreateUPreprocessing task,
             @RequestParam(name = "name") String datasetName) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
@@ -282,7 +289,8 @@ public class TaskController {
     @PostMapping("/preprocess/create")
     public String createPreprocessingTask(Authentication authentication, Model model,
             @RequestParam(name = "preprocessDataset") String datasetName, RedirectAttributes redirectAttributes,
-            @Valid @ModelAttribute("task") TaskCreateUPreprocessing task, BindingResult bindingResult, @RequestParam(name = "multipart") MultipartFile pipeline) {
+            @Valid @ModelAttribute("task") TaskCreateUPreprocessing task, BindingResult bindingResult,
+            @RequestParam(name = "multipart") MultipartFile pipeline) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -341,7 +349,8 @@ public class TaskController {
     }
 
     @GetMapping("/preprocess/downloadcsv")
-    public ResponseEntity<InputStreamResource> downloadCsv(Authentication authentication, @RequestParam("id") Long taskId) {
+    public ResponseEntity<InputStreamResource> downloadCsv(Authentication authentication,
+            @RequestParam("id") Long taskId) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
