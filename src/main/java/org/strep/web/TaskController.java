@@ -225,7 +225,6 @@ public class TaskController {
             @RequestParam(name = "state", required = false, defaultValue = Task.STATE_SUCESS) String state,
             @RequestParam(name = "name", required = false, defaultValue = "") String name) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-System.out.println("name: " + name);
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
 
@@ -235,31 +234,47 @@ System.out.println("name: " + name);
 
         HashMap<String, ArrayList<TaskCreateUPreprocessing>> taskCreateUPreprocessingHM = new HashMap<>();
 
-        ArrayList<TaskCreateUPreprocessing> tasks;// = taskRepository.getPreprocessingTasks(Task.STATE_SUCESS);
-        if (name.equals("")) {
-            tasks = taskRepository.getPreprocessingTasks(Task.STATE_SUCESS);
-        } else {
-            tasks = taskRepository.getPreprocessingTasksByDatasetName(Task.STATE_SUCESS, name);
-        }
+        ArrayList<TaskCreateUPreprocessing> tasks = taskRepository.getPreprocessingTasks(Task.STATE_SUCESS);
+
         String currentDataset = "";
         ArrayList<TaskCreateUPreprocessing> currentDatasetTasks = null;
         for (TaskCreateUPreprocessing task : tasks) {
-            if (!currentDataset.equals(task.getDataset().getName())) {
-                currentDataset = task.getDataset().getName();
-                currentDatasetTasks = new ArrayList<>();
-                taskCreateUPreprocessingHM.put(currentDataset, currentDatasetTasks);
+            if (!name.equals("")) {
+                if (name.equals(task.getDataset().getName())) {
+                    if (!currentDataset.equals(task.getDataset().getName())) {
+                        currentDataset = task.getDataset().getName();
+                        currentDatasetTasks = new ArrayList<>();
+                        taskCreateUPreprocessingHM.put(currentDataset, currentDatasetTasks);
+                    }
+                    currentDatasetTasks.add(task);
+                }
+            } else {
+                if (!currentDataset.equals(task.getDataset().getName())) {
+                    currentDataset = task.getDataset().getName();
+                    currentDatasetTasks = new ArrayList<>();
+                    taskCreateUPreprocessingHM.put(currentDataset, currentDatasetTasks);
+                }
+                currentDatasetTasks.add(task);
             }
-            currentDatasetTasks.add(task);
         }
+
         ArrayList<Task> datasetsNoPreprocessing = taskRepository.getUserTasks(username, Task.STATE_SUCESS);
         for (Task data : datasetsNoPreprocessing) {
             currentDataset = data.getDataset().getName();
-            if (!taskCreateUPreprocessingHM.containsKey(currentDataset)) {
-                taskCreateUPreprocessingHM.put(currentDataset, null);
+
+            if (!name.equals("")) {
+                if (currentDataset.equals(name)) {
+                    if (!taskCreateUPreprocessingHM.containsKey(currentDataset)) {
+                        taskCreateUPreprocessingHM.put(currentDataset, null);
+                    }
+                }
+            } else {
+                if (!taskCreateUPreprocessingHM.containsKey(currentDataset)) {
+                    taskCreateUPreprocessingHM.put(currentDataset, null);
+                }
             }
         }
         model.addAttribute("datasets", taskCreateUPreprocessingHM);
-
         return "list_preprocess_detailed";
     }
 

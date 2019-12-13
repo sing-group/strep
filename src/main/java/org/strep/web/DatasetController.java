@@ -25,11 +25,13 @@ import org.strep.domain.Language;
 import org.strep.domain.License;
 import org.strep.domain.User;
 import org.strep.domain.Permission;
+import org.strep.domain.TaskCreateUdataset;
 import org.strep.repositories.DatasetRepository;
 import org.strep.repositories.DatatypeRepository;
 import org.strep.repositories.FileRepository;
 import org.strep.repositories.LanguageRepository;
 import org.strep.repositories.LicenseRepository;
+import org.strep.repositories.TaskRepository;
 import org.strep.services.DatasetService;
 import org.strep.services.TaskService;
 import org.strep.services.UserService;
@@ -82,6 +84,9 @@ public class DatasetController {
 
     @Autowired
     private LicenseRepository licenseRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     @Autowired
     private DatatypeRepository datatypeRepository;
@@ -392,7 +397,7 @@ public class DatasetController {
 
     @GetMapping("/edit")
     public String editDataset(Authentication authentication, @RequestParam("id") String name, Model model,
-            Dataset dataset) {
+            @RequestParam(name = "task") int task_id, Dataset dataset) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
@@ -400,6 +405,22 @@ public class DatasetController {
 
         Optional<Dataset> optDataset = datasetRepository.findById(name);
 
+        // Check licenses to stablish visibility
+        Long idLong = new Long(task_id);
+        Optional<TaskCreateUdataset> optTask = taskRepository.findTaskCreateUdatasetById(idLong);
+
+        String visibility = "";
+        if (optTask.isPresent()) {
+            TaskCreateUdataset task = optTask.get();
+            Optional<Dataset> optSourceDataset = datasetRepository.findById(task.getDataset().getName());
+            if (optSourceDataset.isPresent()) {
+                for (Dataset sourceDataset : task.getDatasets()) {
+                    if (!sourceDataset.getLicense().isRedistribute()) {
+                        visibility = Dataset.ACCESS_PRIVATE;
+                    }
+                }
+            }
+        }
         if (optDataset.isPresent()) {
             Dataset toUpdateDataset = optDataset.get();
 
@@ -407,8 +428,10 @@ public class DatasetController {
                 model.addAttribute("authority", authority);
                 model.addAttribute("username", username);
                 model.addAttribute("host", HOST_NAME);
+                model.addAttribute("visibility", visibility);
                 model.addAttribute("licenses", licenseRepository.findAll());
                 model.addAttribute("toUpdateDataset", toUpdateDataset);
+
                 return "edit_dataset";
             } else {
                 return "redirect:/error";
@@ -532,12 +555,6 @@ public class DatasetController {
                     while (!exit && indexLicenses < checkedDatasetsLicenses.size()
                             && checkedDatasetsLicenses.size() > 1) {
                         msg = "";
-                        /*
-                         * System.out.println( ">> currentLicense.getName()" + currentLicense.getName()
-                         * + " - " + indexLicenses);
-                         * System.out.println(">> checkedDatasetsLicenses.get(indexLicenses).getName()"
-                         * + checkedDatasetsLicenses.get(indexLicenses).getName());
-                         */
                         if (!currentLicense.getName().equals(checkedDatasetsLicenses.get(indexLicenses).getName())
                                 && !checkedDatasetsLicenses.get(indexLicenses).isChangeLicense()) {
                             msg = "Dataset " + filteredDatasets.get(position)

@@ -26,10 +26,10 @@
                 </div>
             </div>
             <div id="bs-docs-section">
-                <div class="row" th:if="${datasets==null}">
+                <div class="row" th:if="${#httpServletRequest.getParameter('name')!=null}">
                     <div class="col-12">
                         <div class="form-group right">
-                            <a class="btn btn-list" id="back">
+                            <a class="btn btn-list" th:href="@{/dataset/list/(type=${param.type})}">
                                 <i class="fas fa-arrow-circle-left"></i>
                                 <span th:text="#{back}"/>
                             </a>

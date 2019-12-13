@@ -39,10 +39,6 @@
                                         <label class="error-label" th:if="${#fields.hasErrors('description')}" th:text="#{dataset.msg.description}"></label>
                                     </div>
                                     <div class="form-group">
-                                        <label for="#{add.dataset.placeholder.citationrequest}" id="lcitationRequest" name="lcitationRequest" class="control-label" th:text="#{add.dataset.placeholder.citationrequest}" ></label>
-                                        <textarea rows="5" class="form-control col-md-6" name="citationRequest" th:attr="placeholder = #{add.dataset.placeholder.citationrequest}" th:text="${dataset.citationRequest}"></textarea>
-                                    </div>
-                                    <div class="form-group">
                                         <label for="DOI" id="ldoi" name="ldoi" class="control-label" th:text="DOI" ></label>                            
                                         <input type="text" class="form-control col-md-6" name="doi" placeholder="DOI" th:value="${dataset.doi}">
                                         <label class="error-label" th:if="${#fields.hasErrors('doi')}" th:text="#{dataset.msg.doi}"></label>
@@ -55,6 +51,10 @@
                                                 <option th:value="${license.name}" th:text="${license.name}" th:selected="${dataset.license}!=null and ${dataset.license.name}==${license.name}"></option><!--th:selected="${dataset.license.name==license.name}" ${i.id} == ${employee.statusid}-->
                                             </div>
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="#{add.dataset.placeholder.citationrequest}" id="lcitationRequest" name="lcitationRequest" class="control-label" th:text="#{add.dataset.placeholder.citationrequest}" ></label>
+                                        <textarea rows="5" class="form-control col-md-6" name="citationRequest" th:attr="placeholder = #{add.dataset.placeholder.citationrequest}" th:text="${dataset.citationRequest}"></textarea>
                                     </div>
                                     <div class="form-group form-check">
                                         <label th:text="#{add.dataset.visibility}" class="col-md-12 control-label left"></label>
