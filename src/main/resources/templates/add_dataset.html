@@ -1,37 +1,48 @@
 <!DOCTYPE html>
 <html>
-    <head> 
-        <title th:text="#{app.name}"></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="initial-scale=1, width=device-width">
-        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="/css/style.css">  
-        <link rel="icon" type="image/png" href="/images/STRepLogo.png">
-    </head>
-    <body class="main-bg">
-        <div class="header">
-            <div th:include="header.html"></div>
-        </div>
-        <div class="container">
-            <div id="bs-docs-section">
-                <div class="row">
-                    <div class="col-12">
-                        <div id="bs-component">
-                            <form action="#" th:action="@{/dataset/upload}" th:object="${dataset}" enctype="multipart/form-data" method="POST">
-                                <fieldset>
-                                    <legend><h2 th:text="#{add.dataset.title}"></h2><hr/></legend>
-                                    <div class="form-group right">
-                                        <a class="btn btn-list" id="back">
-                                            <i class="fas fa-arrow-circle-left"></i>
-                                            <span th:text="#{back}"/>
-                                        </a>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="#{add.dataset.placeholder.name}" id="lname" name="lname" class="control-label" th:text="#{add.dataset.placeholder.name}" ></label>
-                                        <p><small th:text="#{add.dataset.format}"/></p>
-                                        <input type="text" class="form-control col-md-6" name="name" th:attr="placeholder = #{add.dataset.placeholder.name}" required="required" th:value="${dataset.name}" onchange="dynamicUrl(this.value)">
-                                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:text="#{dataset.msg.name}"></label>
+
+<head>
+    <title th:text="#{app.name}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/images/STRepLogo.png">
+</head>
+
+<body class="main-bg">
+    <div class="header">
+        <div th:include="header.html"></div>
+    </div>
+    <div class="container">
+        <div id="bs-docs-section">
+            <div class="row">
+                <div class="col-12">
+                    <div id="bs-component">
+                        <form action="#" th:action="@{/dataset/upload}" th:object="${dataset}"
+                            enctype="multipart/form-data" method="POST">
+                            <fieldset>
+                                <legend>
+                                    <h2 th:text="#{add.dataset.title}"></h2>
+                                    <hr />
+                                </legend>
+                                <div class="form-group right">
+                                    <a class="btn btn-list" id="back">
+                                        <i class="fas fa-arrow-circle-left"></i>
+                                        <span th:text="#{back}" />
+                                    </a>
+                                </div>
+                                <div class="form-group">
+                                    <label for="#{add.dataset.placeholder.name}" id="lname" name="lname"
+                                        class="control-label" th:text="#{add.dataset.placeholder.name}"></label>
+                                    <p><small th:text="#{add.dataset.format}" /></p>
+                                    <input type="text" class="form-control col-md-6" name="name"
+                                        th:attr="placeholder = #{add.dataset.placeholder.name}" required="required"
+                                        th:value="${dataset.name}" onchange="dynamicUrl(this.value)">
+                                    <label class="error-label" th:if="${#fields.hasErrors('name')}" th:text="#{dataset.msg.name}"></label>
                                     </div>
                                     <div class="form-group">
                                         <label for="#{add.dataset.placeholder.description}" id="ldescription" name="ldescription" class="control-label" th:text="#{add.dataset.placeholder.description}" ></label>
@@ -45,16 +56,17 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="#{add.dataset.license}" id="llicense" name="llicense" class="control-label" th:text="#{add.dataset.license}" ></label>         
-                                        <select class="form-control col-md-6" id="selectLicense" name="license" required>
+                                        <select class="form-control col-md-6" id="selectLicense" name="license" required onchange="validateCitationRequest()">
                                             <option value="" disabled selected th:text="#{add.dataset.placeholder.license}"></option>
-                                            <div th:each="license : ${licenses}">
-                                                <option th:value="${license.name}" th:text="${license.name}" th:selected="${dataset.license}!=null and ${dataset.license.name}==${license.name}"></option><!--th:selected="${dataset.license.name==license.name}" ${i.id} == ${employee.statusid}-->
-                                            </div>
+                                            <option th:each="license : ${licenses}" th:value="${license.name}" th:text="${license.name}" th:selected="${dataset.license}!=null and ${dataset.license.name}==${license.name}"></option><!--th:selected="${dataset.license.name==license.name}" ${i.id} == ${employee.statusid}-->
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="#{add.dataset.placeholder.citationrequest}" id="lcitationRequest" name="lcitationRequest" class="control-label" th:text="#{add.dataset.placeholder.citationrequest}" ></label>
-                                        <textarea rows="5" class="form-control col-md-6" name="citationRequest" th:attr="placeholder = #{add.dataset.placeholder.citationrequest}" th:text="${dataset.citationRequest}"></textarea>
+                                        <div id="citation-request" th:fragment="citation-request">
+                                            <label for="#{add.dataset.placeholder.citationrequest}" id="lcitationRequest" name="lcitationRequest" class="control-label" th:text="#{add.dataset.placeholder.citationrequest}" ></label>
+                                            <textarea rows="5" class="form-control col-md-6" name="citationRequest" th:required="${requiredCitationRequest=='1'}?true:false" th:text="${citationRequest}"></textarea>
+                                            <label th:if="${message}!=''" class="error-label" th:text="${message}"></label>
+                                        </div>
                                     </div>
                                     <div class="form-group form-check">
                                         <label th:text="#{add.dataset.visibility}" class="col-md-12 control-label left"></label>

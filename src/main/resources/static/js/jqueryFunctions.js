@@ -2,7 +2,7 @@ function retrieveDatasetInfo(id) {
     var url = "/dataset/modal?id=" + id;
 
     $("#dataset-info").load(url, function (response, status, xhr) {
-        if (response.substr(0, 2) == "<!") {
+        if (status == "error") {
             location.reload();
         }
     });
@@ -59,22 +59,28 @@ function updateDatasetsList() {
     }
 
     $("#datasets-list").load(url, function (response, status, xhr) {
-        if (response.substr(0, 2) == "<!") {
+        if (status == "error") {
             location.reload();
         }
     });
 }
 
 function validateCitationRequest() {
-    var license = $("#selectLicense").val();
-    var url = "/dataset/validateCitationRequest?license=" + license;
-
-    $("#citation-request").load(url, function (response, status, xhr) {
-        alert(response)
-        if (response.substr(0, 2) == "<!") {
-            location.reload();
+    if (!$("#citationRequest").attr("readonly")) {
+        var license = $("#selectLicense").val();
+        var url = "";        
+        if (location.href.lastIndexOf("create") != -1) {
+            url = encodeURI("/dataset/validateCitationRequestOnCreate?license=" + license);
+        } else {
+            url = encodeURI("/dataset/validateCitationRequest?license=" + license);
         }
-    });
+
+        $("#citation-request").load(url, function (response, status, xhr) {
+            if (status == "error") {
+                location.reload();
+            }
+        });
+    }
 }
 
 function checkLicenses() {
@@ -108,27 +114,26 @@ function checkLicenses() {
 
     var urlCheckLicenses = "/dataset/filterDatasetsByLicense?" + params;
     $("#datasets-list").load(urlCheckLicenses, function (response, status, xhr) {
-
-        if (response.substr(0, 2) == "<!") {
+        if (status == "error") {
             location.reload();
         } else {
             var urlComposeCitationRequest = "/dataset/composeCitationRequest?" + params;
             $("#citation-request").load(urlComposeCitationRequest, function (response, status, xhr) {
-                if (response.substr(0, 2) == "<!") {
+                if (status == "error") {
                     location.reload();
                 }
             });
 
             var urlCheckLicenses = "/dataset/checkLicenses?" + params;
             $("#check-licenses").load(urlCheckLicenses, function (response, status, xhr) {
-                if (response.substr(0, 2) == "<!") {
+                if (status == "error") {
                     location.reload();
                 }
             });
 
             var urlCheckAccess = "/dataset/checkAccess?" + params;
             $("#check-access").load(urlCheckAccess, function (response, status, xhr) {
-                if (response.substr(0, 2) == "<!") {
+                if (status == "error") {
                     location.reload();
                 }
             });
@@ -180,7 +185,7 @@ function updateTable(id) {
             "&inputSpamWarc=" + inputSpamWarcValue + "&inputHamWarc=" + inputHamWarcValue;
         checkSelectedDatasets();
         $("#datatypes-table").load(url, function (response, status, xhr) {
-            if (response.substr(0, 2) == "<!") {
+            if (status == "error") {
                 location.reload();
             }
         });
@@ -197,7 +202,7 @@ function updateTable(id) {
 
         checkSelectedDatasets();
         $("#datatypes-table").load(url, function (response, status, xhr) {
-            if (response.substr(0, 2) == "<!") {
+            if (status == "error") {
                 location.reload();
             }
         });
@@ -219,7 +224,7 @@ function checkIfPosibleSpam() {
     }
 
     $("#info-spam").load(url, function (response, status, xhr) {
-        if (response.substr(0, 2) == "<!") {
+        if (status == "error") {
             location.reload();
         }
     });

@@ -186,16 +186,17 @@
                                     </div>
                                     <div class="form-group" th:fragment="check-licenses" id="check-licenses">
                                         <label for="#{add.dataset.license}" id="llicense" name="llicense" class="control-label" th:text="#{add.dataset.license}" ></label>
-                                        <select class="form-control col-md-6" id="selectLicense" name="license" required> <!-- onchange="validateCitationRequest()"-->
+                                        <select class="form-control col-md-6" id="selectLicense" name="license" required onchange="validateCitationRequest()"> 
                                             <option value="" disabled selected th:text="#{add.dataset.placeholder.license}"></option>
                                             <option th:value="${license.name}" th:text="${license.name}" th:each="license : ${licenses}"></option>
                                         </select>
                                     </div>
                                     <div class="form-group" th:fragment="citation-request" id="citation-request">
-                                            <label for="citationRequest" id="lcitationRequest" name="lcitationRequest" class="control-label" th:text="#{add.dataset.placeholder.citationrequest}" ></label>  
-                                            <textarea th:if="${citationRequest} =='' or ${citationRequest==null}" rows="5" class="form-control" id="citationRequest" name="citationRequest" th:attr="placeholder = #{add.dataset.placeholder.citationrequest}"></textarea>
-                                            <textarea th:unless="${citationRequest=='' or citationRequest==null}" rows="5" class="form-control" id="citationRequest" name="citationRequest" th:attr="placeholder = #{add.dataset.placeholder.citationrequest}" th:text="${citationRequest}" readonly></textarea>
-                                        </div>
+                                        <label for="citationRequest" id="lcitationRequest" name="lcitationRequest" class="control-label" th:text="#{add.dataset.placeholder.citationrequest}" ></label>  
+                                        <textarea th:if="${citationRequest} =='' or ${citationRequest==null}" th:required="${requiredCitationRequest=='1'}?true:false" rows="5" class="form-control" id="citationRequest" name="citationRequest" th:attr="placeholder = #{add.dataset.placeholder.citationrequest}" th:text="${citationRequest}"></textarea>
+                                        <textarea th:unless="${citationRequest=='' or citationRequest==null}" th:required="${requiredCitationRequest=='1'}?true:false" rows="5" class="form-control" id="citationRequest" name="citationRequest" th:attr="placeholder = #{add.dataset.placeholder.citationrequest}" th:text="${citationRequest}" readonly></textarea>
+                                        <label th:if="${message}!=''" th:text="${message}" class="error-label"></label>
+                                    </div>
                                     <div class="form-group">
                                         <label th:text="#{create.dataset.label.url}"></label>
                                         <input type="text" class="form-control col-md-6" id="url" name="url" th:attr="value = ${host}" readonly="readonly">

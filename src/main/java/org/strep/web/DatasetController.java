@@ -11,7 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -423,8 +422,8 @@ public class DatasetController {
         }
         if (optDataset.isPresent()) {
             Dataset toUpdateDataset = optDataset.get();
-
-            if (toUpdateDataset.getAuthor().equals(username)) {
+            
+            if (toUpdateDataset.getAuthor().equals(username) || authority.equals(Permission.ADMINISTER)) {
                 model.addAttribute("authority", authority);
                 model.addAttribute("username", username);
                 model.addAttribute("host", HOST_NAME);
@@ -516,7 +515,7 @@ public class DatasetController {
     public String filterDatasetsByLicense(Authentication authentication, Model model,
             @RequestParam(name = "datasets", required = true) String[] datasets,
             @RequestParam(name = "checkedDatasets", required = true) String[] checkedDatasets) {
-
+        Locale locale = LocaleContextHolder.getLocale();
         StringBuilder message = new StringBuilder();
         ArrayList<Dataset> allDatasets = new ArrayList<>();
         List<String> filteredDatasets = new ArrayList<>();
@@ -542,7 +541,7 @@ public class DatasetController {
                 if (!currentLicense.isAdaptWork()) {
                     if (checkedDatasets.length > 1) {
                         msg = "Dataset " + filteredDatasets.get(position)
-                                + " : Your not allowed to adapt the work, you can combine this dataset with others.";
+                                + " : " + messageSource.getMessage("filterdatasetsbylicense.dataset.notadaptwork", null, locale);
                         if (message.lastIndexOf(msg) == -1) {
                             message.append(msg).append("\r\n");
                         }
@@ -558,7 +557,7 @@ public class DatasetController {
                         if (!currentLicense.getName().equals(checkedDatasetsLicenses.get(indexLicenses).getName())
                                 && !checkedDatasetsLicenses.get(indexLicenses).isChangeLicense()) {
                             msg = "Dataset " + filteredDatasets.get(position)
-                                    + " : Your not allowed to change license to this dataset.";
+                                + messageSource.getMessage("filterdatasetsbylicense.dataset.notchangelicense", null, locale);
                             if (message.lastIndexOf(msg) == -1) {
                                 message.append(msg).append("\r\n");
                             }
@@ -599,7 +598,10 @@ public class DatasetController {
         }
         for (String datasetName : checkedDatasets) {
             Dataset dataset = datasetRepository.findDatasetByName(datasetName);
-            allCitationRequestFields.append(dataset.getCitationRequest()).append("\r\n");
+            allCitationRequestFields.append(dataset.getCitationRequest());
+            if (!allCitationRequestFields.toString().equals("")){
+                allCitationRequestFields.append("\r\n");
+            }
             filteredDatasets.add(dataset.getName());
             checkedDatasetsLicenses.add(dataset.getLicense());
         }
@@ -623,14 +625,46 @@ public class DatasetController {
     @GetMapping("/validateCitationRequest")
     public String validateCitationRequest(Authentication authentication, Model model,
             @RequestParam(name = "license", required = true) String license) {
-        Iterable<License> licenses = licenseRepository.findByName(license);
+                Locale locale = LocaleContextHolder.getLocale();
+                String requiredCitationRequest= "0";
+                Iterable<License> licenses = licenseRepository.findByName(license);
+        String licenseName = "";
         for (License lic : licenses) {
             if (lic.isAttributeRequired()) {
-                model.addAttribute("requiredCitationRequest", "1");
-            } else {
-                model.addAttribute("requiredCitationRequest", "0");
-            }
+                licenseName = lic.getName();
+                requiredCitationRequest= "1";
+            } 
         }
+        String message= "";
+        if (requiredCitationRequest.equals("1")){
+            message = messageSource.getMessage("validatecitationrequest.requiredfield",Stream.of(licenseName).toArray(String[]::new), locale);        
+        } 
+        model.addAttribute("message", message);
+        model.addAttribute("requiredCitationRequest", requiredCitationRequest);
+        return "add_dataset::citation-request";
+    }
+
+    @GetMapping("/validateCitationRequestOnCreate")
+    public String validateCitationRequestOnCreate(Authentication authentication, Model model,
+            @RequestParam(name = "license", required = true) String license) {
+                Locale locale = LocaleContextHolder.getLocale();
+                String requiredCitationRequest= "0";
+                Iterable<License> licenses = licenseRepository.findByName(license);
+        
+        String licenseName = "";
+        for (License lic : licenses) {
+            if (lic.isAttributeRequired()) {
+                licenseName = lic.getName();
+                requiredCitationRequest= "1";
+            } 
+        }
+        
+        String message= "";
+        if (requiredCitationRequest.equals("1")){
+            message = messageSource.getMessage("validatecitationrequest.requiredfield", Stream.of(licenseName).toArray(String[]::new), locale);
+        } 
+        model.addAttribute("message", message);
+        model.addAttribute("requiredCitationRequest", requiredCitationRequest);
         return "create_dataset::citation-request";
     }
 
