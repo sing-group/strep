@@ -68,7 +68,7 @@ function updateDatasetsList() {
 function validateCitationRequest() {
     if (!$("#citationRequest").attr("readonly")) {
         var license = $("#selectLicense").val();
-        var url = "";        
+        var url = "";
         if (location.href.lastIndexOf("create") != -1) {
             url = encodeURI("/dataset/validateCitationRequestOnCreate?license=" + license);
         } else {
@@ -88,59 +88,59 @@ function checkLicenses() {
     var selectedDatasets = $("input[name=datasets]:checked");
     var vCheckedDatasets = [];
     var vDatasets = [];
-
-    for (var i = 0; i < selectedDatasets.length; i++) {
-        if (selectedDatasets[i].value != "") {
-            vCheckedDatasets.push(selectedDatasets[i].value);
+    if (selectedDatasets.length > 0) {
+        for (var i = 0; i < selectedDatasets.length; i++) {
+            if (selectedDatasets[i].value != "") {
+                vCheckedDatasets.push(selectedDatasets[i].value);
+            }
         }
-    }
-    for (var i = 0; i < datasetsList.length; i++) {
-        if (datasetsList[i].value != "") {
-            vDatasets.push(datasetsList[i].value);
+        for (var i = 0; i < datasetsList.length; i++) {
+            if (datasetsList[i].value != "") {
+                vDatasets.push(datasetsList[i].value);
+            }
         }
-    }
 
-    var params = "";
-
-    var firstElement = true;
-    if (vCheckedDatasets.length > 0) {
-        params += encodeURI((firstElement ? "checkedDatasets=" : "&checkedDatasets=") + vCheckedDatasets);
-        firstElement = false;
-    }
-
-    if (vDatasets.length > 0) {
-        params += encodeURI(("&datasets=") + vDatasets);
-    }
-
-    var urlCheckLicenses = "/dataset/filterDatasetsByLicense?" + params;
-    $("#datasets-list").load(urlCheckLicenses, function (response, status, xhr) {
-        if (status == "error") {
-            location.reload();
-        } else {
-            var urlComposeCitationRequest = "/dataset/composeCitationRequest?" + params;
-            $("#citation-request").load(urlComposeCitationRequest, function (response, status, xhr) {
-                if (status == "error") {
-                    location.reload();
-                }
-            });
-
-            var urlCheckLicenses = "/dataset/checkLicenses?" + params;
-            $("#check-licenses").load(urlCheckLicenses, function (response, status, xhr) {
-                if (status == "error") {
-                    location.reload();
-                }
-            });
-
-            var urlCheckAccess = "/dataset/checkAccess?" + params;
-            $("#check-access").load(urlCheckAccess, function (response, status, xhr) {
-                if (status == "error") {
-                    location.reload();
-                }
-            });
+        var params = "";
+        var firstElement = true;
+        if (vCheckedDatasets.length > 0) {
+            params += encodeURI((firstElement ? "checkedDatasets=" : "&checkedDatasets=") + vCheckedDatasets);
+            firstElement = false;
         }
-    });
 
+        if (vDatasets.length > 0) {
+            params += encodeURI(("&datasets=") + vDatasets);
+        }
 
+        var urlCheckLicenses = "/dataset/filterDatasetsByLicense?" + params;
+        $("#datasets-list").load(urlCheckLicenses, function (response, status, xhr) {
+            if (status == "error") {
+                location.reload();
+            } else {
+                var urlComposeCitationRequest = "/dataset/composeCitationRequest?" + params;
+                $("#citation-request").load(urlComposeCitationRequest, function (response, status, xhr) {
+                    if (status == "error") {
+                        location.reload();
+                    }
+                });
+
+                var urlCheckLicenses = "/dataset/checkLicenses?" + params;
+                $("#check-licenses").load(urlCheckLicenses, function (response, status, xhr) {
+                    if (status == "error") {
+                        location.reload();
+                    }
+                });
+
+                var urlCheckAccess = "/dataset/checkAccess?" + params;
+                $("#check-access").load(urlCheckAccess, function (response, status, xhr) {
+                    if (status == "error") {
+                        location.reload();
+                    }
+                });
+            }
+        });
+    } else {
+        location.reload();
+    }
 
 }
 
