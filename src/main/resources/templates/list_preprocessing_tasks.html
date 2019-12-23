@@ -29,27 +29,9 @@
             </div>
             <div id="bs-docs-section">
                 <div class="row" th:if="${dataset!=null}">
-                    <div class="col-10">
-                        <div class="form-group right">
-                            <a class="btn btn-list" th:href="@{'/dataset/list'}">
-                                <i class="fas fa-arrow-circle-left"></i>
-                                <span th:text="#{back}"/>
-                            </a>
-                        </div>
-                    </div>
                     <div class="col-2">
                         <a class="btn btn-primary" th:href="'/task/preprocess/create?name='+${dataset.name}" th:text=" #{list.preprocessing.button}">                         
                         </a>
-                    </div>
-                </div>
-                <div class="row" th:if="${dataset==null}">
-                    <div class="col-12">
-                        <div class="form-group right">
-                            <a class="btn btn-list" id="back">
-                                <i class="fas fa-arrow-circle-left"></i>
-                                <span th:text="#{back}"/>
-                            </a>
-                        </div>
                     </div>
                 </div>
                 <ul class="nav nav-tabs">

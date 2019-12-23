@@ -24,16 +24,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <h2 class="main-text left" th:text="#{detailed.task}"></h2>
-                                    <hr/>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 right">
-                                <a class="btn btn-list" id="back"><!-- th:href="@{'/dataset/list'}"-->
-                                    <i class="fas fa-arrow-circle-left"></i>
-                                    <span th:text="#{back}"/>
-                                </a>
                             </div>
                         </div>
                         <div class="card border-primary mb3">
@@ -141,6 +132,12 @@
                                         <div class="col-9 left"><p class="normal-text" th:text="${task.limitHamPercentageWarc}"></p></div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <input type="hidden" th:value="${param.type}">
+                        <div class="row">
+                            <div class="col-12 right">                                
+                                <a class="btn btn-primary" th:text="#{back}" th:href="@{'/dataset/list?type=' + ${param.type}}"></a>
                             </div>
                         </div>
                     </div>

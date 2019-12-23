@@ -401,7 +401,6 @@ public class DatasetController {
 
         String username = userDetails.getUsername();
         String authority = userService.getPermissionsByUsername(username);
-
         Optional<Dataset> optDataset = datasetRepository.findById(name);
 
         // Check licenses to stablish visibility
@@ -410,10 +409,10 @@ public class DatasetController {
 
         String visibility = "";
         if (optTask.isPresent()) {
-            TaskCreateUdataset task = optTask.get();
+             TaskCreateUdataset task = optTask.get();
             Optional<Dataset> optSourceDataset = datasetRepository.findById(task.getDataset().getName());
             if (optSourceDataset.isPresent()) {
-                for (Dataset sourceDataset : task.getDatasets()) {
+                 for (Dataset sourceDataset : task.getDatasets()) {
                     if (!sourceDataset.getLicense().isRedistribute()) {
                         visibility = Dataset.ACCESS_PRIVATE;
                     }
@@ -422,7 +421,6 @@ public class DatasetController {
         }
         if (optDataset.isPresent()) {
             Dataset toUpdateDataset = optDataset.get();
-            
             if (toUpdateDataset.getAuthor().equals(username) || authority.equals(Permission.ADMINISTER)) {
                 model.addAttribute("authority", authority);
                 model.addAttribute("username", username);
@@ -458,7 +456,7 @@ public class DatasetController {
             if (optDataset.isPresent()) {
                 Dataset toUpdateDataset = optDataset.get();
 
-                if (toUpdateDataset.getAuthor().equals(username)) {
+                if (toUpdateDataset.getAuthor().equals(username) || authority.equals(Permission.ADMINISTER)) {
                     model.addAttribute("authority", authority);
                     model.addAttribute("username", username);
                     model.addAttribute("host", HOST_NAME);
@@ -466,10 +464,14 @@ public class DatasetController {
                     model.addAttribute("toUpdateDataset", toUpdateDataset);
                     return "edit_dataset";
                 } else {
+
+             System.out.println("ERROR 2");
                     return "redirect:/error";
                 }
 
             } else {
+
+             System.out.println("ERROR 1");
                 return "redirect:/error";
             }
 

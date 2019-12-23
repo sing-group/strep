@@ -1,5 +1,6 @@
 package org.strep.web;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Optional;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import org.apache.commons.io.IOUtils;
 
 import org.strep.domain.Dataset;
 import org.strep.domain.Permission;
@@ -98,16 +100,16 @@ public class UserController {
                 message.setTo(user.getEmail());
                 message.setSubject(messageSource.getMessage("register.email.subject", null, locale));
                 message.setText(messageSource.getMessage("register.email.textwelcome", null, locale) + "\n\n"
-                        + messageSource.getMessage("register.email.textwelcome", null, locale) + " \n" + hostname + "/user/accountconfirmation?hash="
+                        + hostname + "/user/accountconfirmation?hash="
                         + hash.replaceAll("=", "") + "\n\n"
                         + messageSource.getMessage("register.email.textregards", null, locale));
-                
+
                 mailSender.send(message);
 
                 User user2 = new User(id, email, hash.replaceAll("=", ""), user.getPassword(),
                         user.getName(), user.getSurname());
 
-                userService.saveUser(user2);
+                userService.createUser(user2);
 
                 return "redirect:/?register=ok";
             }
@@ -167,7 +169,7 @@ public class UserController {
         if (optUser.isPresent()) {
             User user = optUser.get();
             model.addAttribute("user", user);
-            model.addAttribute("userdatasetsnum", userDatasets.size()); 
+            model.addAttribute("userdatasetsnum", userDatasets.size());
             model.addAttribute("systemdatasetsnum", systemDatasets.size());
             model.addAttribute("permissions", permissions);
         }
@@ -226,7 +228,9 @@ public class UserController {
 
         if (optUser.isPresent()) {
             User user = optUser.get();
-
+            user.setPassword(user.getEncryptedPassword().substring(0, 29));
+            user.setConfirmPassword(user.getEncryptedPassword().substring(0, 29));
+            user.setUsername(user.getUsername());
             model.addAttribute("username", username);
             model.addAttribute("authority", authority);
             model.addAttribute("user", user);
@@ -238,12 +242,56 @@ public class UserController {
 
     @PostMapping("editprofile")
     public String editProfile(Authentication authentication, Model model,
-            @RequestParam(name = "photo", required = true) MultipartFile multipartFile) {
+            @Valid User loadedUser, BindingResult result,
+            @RequestParam(name = "photomp", required = false) MultipartFile multipartFile) {
+
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
+        Locale locale = LocaleContextHolder.getLocale();
         String username = userDetails.getUsername();
+        String authority = userService.getPermissionsByUsername(username);
+        model.addAttribute("username", username);
+        model.addAttribute("authority", authority);
 
-        userService.editProfile(username, multipartFile);
+        if (result.hasErrors()) {
+            if (result.getFieldErrors().get(0).getField().equals("password")){
+                model.addAttribute("message", messageSource.getMessage("editprofile.passwordnotmatch", null, locale));
+            } else {
+                model.addAttribute("message", messageSource.getMessage("editprofile.error", null, locale));
+            }
+            
+            model.addAttribute("user", loadedUser);            
+            
+            return "edit_profile";
+        }
+
+        Optional<User> optUser = userRepository.findById(username);
+        String savedEmail = optUser.get().getEmail();
+        byte[] photo;
+        try {
+            if (multipartFile.isEmpty()) {
+                if (optUser.get().getPhoto() == null) {
+                    photo = IOUtils.toByteArray(this.getClass().getResourceAsStream("static.images/authorplaceholderwhite.svg"));
+                } else {
+                    photo = optUser.get().getPhoto();
+                }
+            }else{
+                photo = multipartFile.getBytes();
+            }
+        } catch (Exception e) {
+            photo = optUser.get().getPhoto();
+        }
+        loadedUser.setPhoto(photo);
+
+        loadedUser.setEmail(loadedUser.getEmail().toLowerCase());
+
+        if (!savedEmail.equals(loadedUser.getEmail()) && userRepository.findUserByEmail(loadedUser.getEmail()).isPresent()) {
+            model.addAttribute("message", messageSource.getMessage("header.wrongemail", null, locale));
+            model.addAttribute("user", loadedUser);
+            return "edit_profile";
+        }
+
+        userService.updateUser(loadedUser);
 
         return "redirect:/user/editprofile";
     }
@@ -274,3 +322,4 @@ public class UserController {
     }
 
 }
+

@@ -26,16 +26,6 @@
                 </div>
             </div>
             <div id="bs-docs-section">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="form-group right">
-                            <a class="btn btn-list" id="back">
-                                <i class="fas fa-arrow-circle-left"></i>
-                                <span th:text="#{back}"/>
-                            </a>
-                        </div>
-                    </div>
-                </div>
                 <form class="form-inline form-group right" action="/task/upload" method="GET">
                     <input type="hidden" name="state" th:attr="value = ${state}">
                     <input type="text" class="form-control mr-sm-2" name="searchInput" th:attr="placeholder = #{systemtasks.placeholder.search}">

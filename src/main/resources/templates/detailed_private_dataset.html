@@ -23,22 +23,11 @@
                             <div class="row">
                                 <div class="col-12">
                                     <h2 class="main-text left" th:text="#{detailed.publicdataset.details}"></h2>
-                                    <hr/>
                                 </div>
                             </div>
-                            <div class="row">
+                           <!--div class="row">
                                 <div class="col-6"></div>
                                 <div class="col-6 right">
-                                    <div class="btn-group">
-                                        <a class="btn btn-list" th:if="${#strings.contains(#httpServletRequest.getHeader('referer'), 'dataset/list')}" id="back">
-                                            <i class="fas fa-arrow-circle-left"></i>
-                                            <span th:text="#{back}"/>
-                                        </a>
-                                        <a class="btn btn-list" th:unless="${#strings.contains(#httpServletRequest.getHeader('referer'), 'dataset/list')}" th:href="@{'/dataset/list'}">
-                                            <i class="fas fa-arrow-circle-left"></i>
-                                            <span th:text="#{back}"/>
-                                        </a>
-                                    </div>
                                     <div class="btn-group" th:if="${dataset.author == username and dataset.type != 'userdataset'}">
                                         <a class="btn btn-list" th:title="#{detailed.dataset.download}" data-toggle="tooltip" th:href="@{'/dataset/download?id=' + ${dataset.name}}">
                                             <i class="fas fa-file-download"></i>
@@ -54,7 +43,7 @@
                                         <a class="btn btn-list" th:title="#{detailed.dataset.download}" data-toggle="tooltip" th:href="@{'/dataset/download?id=' + ${dataset.name}}">
                                             <i class="fas fa-file-download"></i>
                                         </a>
-                                        <a class="btn btn-list" th:title="#{detailed.dataset.edit}" data-toggle="tooltip" th:href="@{'/dataset/edit?id=' + ${dataset.name}}">
+                                        <a class="btn btn-list" th:title="#{detailed.dataset.edit}" data-toggle="tooltip" th:href="@{'/dataset/edit?id=' + ${dataset.name} + '&task=' + ${dataset.getCreationTask().getId()}}">
                                             <i class="fas fa-pen-square"></i>
                                         </a>
                                         <a class="btn btn-list" th:title="#{detailed.dataset.delete}" data-toggle="tooltip" th:href="@{'/dataset/delete?id=' + ${dataset.name}}">
@@ -71,7 +60,7 @@
                                         <i class="fas fa-file-download"></i>
                                     </a>
                                 </div>
-                            </div>
+                            </div-->
                         </div>
                         <div class="row">
                             <div class="col-3 left"><p class="title-text" th:text="#{detailed.dataset.author}"> </p></div>
@@ -125,7 +114,13 @@
                             <div class="col-3 left"> <p class="title-text" th:text="#{detailed.dataset.share}"> </p></div>
                             <div class="col-9 left"> <p class="normal-text" th:text="${dataset.url}"></p></div>
                         </div>
-
+                        <hr/>
+                        <input type="hidden" th:value="${param.type}">
+                        <div class="row">
+                            <div class="col-12 right">
+                                <a class="btn btn-primary" th:if="${param}!=null" th:text="#{back}" th:href="@{'/dataset/list?type=' + ${param.type}}"></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

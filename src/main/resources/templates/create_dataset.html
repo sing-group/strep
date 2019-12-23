@@ -308,7 +308,8 @@
                     <hr/>
                     <div class="row">
                         <div class="col-12 right">
-                            <input type="submit" class="btn btn-primary" th:attr="value = #{create.dataset.button.submit}"><br>
+                            <input type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/list'" th:attr="value = #{back}">
+                            <input type="submit" class="btn btn-primary" th:attr="value = #{create.dataset.button.submit}">
                         </div>
                     </div>
                 </div>

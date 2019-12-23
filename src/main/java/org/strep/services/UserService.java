@@ -63,11 +63,11 @@ public class UserService {
     }
 
     /**
-     * Save the specified user
+     * Save the specified user, in case of new user
      *
      * @param user the specified user
      */
-    public void saveUser(User user) {
+    public void createUser(User user) {
         user.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setConfirmedAccount(false);
 
@@ -76,6 +76,30 @@ public class UserService {
         if (opt.isPresent()) {
             Permission permission = opt.get();
             user.setPermission(permission);
+
+            userRepository.save(user);
+        }
+    }
+
+    /**
+     * Update the specified user
+     *
+     * @param user the specified user to update
+     */
+    public void updateUser(User user) {
+        user.setConfirmedAccount(true);
+        Optional<User> optUser = userRepository.findById(user.getUsername());
+
+        if (optUser.isPresent()) {
+            User u = optUser.get();
+
+            if (user.getPassword().equals(u.getEncryptedPassword().substring(0, 29))) {
+                user.setEncryptedPassword(u.getEncryptedPassword());
+            } else {
+                user.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            }
+
+            user.setPermission(u.getPermission());
             userRepository.save(user);
         }
     }
@@ -110,7 +134,7 @@ public class UserService {
         Optional<User> userOpt = userRepository.findById(username);
         if (permissionOpt.isPresent() && userOpt.isPresent()) {
             Permission permission = permissionOpt.get();
-            User user=userOpt.get();
+            User user = userOpt.get();
             user.setPermission(permission);
             userRepository.save(user);
 

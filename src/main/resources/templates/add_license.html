@@ -21,7 +21,7 @@
                         <div id="bs-component">
                             <form action="#" th:action="@{/license/add}" th:object="${license}" method="POST">
                                 <fieldset>
-                                    <legend><h2 th:text="#{add.license.title}"></h2><hr/></legend>
+                                    <legend><h2 th:text="#{add.license.title}"></h2></legend>
                                     <div class="form-group">
                                         <label for="#{add.license.placeholder.name}" id="laddLicense" name="addLicense" class="control-label" th:text="#{add.license.placeholder.name}" ></label>
                                         <input class="form-control" type="text" name="name" th:attr="placeholder = #{add.license.placeholder.name}" required/>
@@ -71,6 +71,7 @@
                                     <hr/>
                                     
                                     <div class="form-group right">
+                                        <input type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/list'" th:attr="value = #{back}">
                                         <input type="submit" class="btn btn-primary" th:attr="value = #{add.license.button.upload}"><br>
                                     </div>
                                 </fieldset>

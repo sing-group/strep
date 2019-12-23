@@ -22,7 +22,7 @@
                         <div id="bs-component">
                             <form action="#" th:action="@{/task/preprocess/create}" th:object="${task}" enctype="multipart/form-data" method="POST">
                                 <fieldset>
-                                    <legend><h2 th:text="#{createpreprocessing.title}"></h2><hr/></legend>
+                                    <legend><h2 th:text="#{createpreprocessing.title}"></h2></legend>
                                     <div class="form-group right">
                                         <a class="btn btn-list"  th:href="@{'/task/preprocess?id=' + ${dataset.name}}" > 
                                             <i class="fas fa-arrow-circle-left"></i>

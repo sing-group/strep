@@ -27,15 +27,6 @@
                             <div class="row">
                                 <div class="col-12">
                                     <h2 class="main-text left" th:text="#{detailed.publicdataset.details}"></h2>
-                                    <hr/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 right">
-                                    <a class="btn btn-list" id="back">
-                                        <i class="fas fa-arrow-circle-left"></i>
-                                        <span th:text="#{back}"/>
-                                    </a>
                                 </div>
                             </div>
                             <div class="card border-primary mb3">
@@ -104,6 +95,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12 right">
+                                                        <input type="button" class="btn btn-primary" th:value="#{back}" onclick="window.location.href = '/user/list'"></input>
                                                         <button type="submit" class="btn btn-primary" th:text="#{detailed.user.edit}"></button>
                                                     </div>
                                                 </div>

@@ -21,18 +21,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <h2 class="main-text left" th:text="#{modify.license.title}"></h2>
-                                    <hr/>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-12 right">
-                                    <a class="btn btn-list" id="back">
-                                        <i class="fas fa-arrow-circle-left"></i>
-                                        <span th:text="#{back}"/>
-                                    </a>
-                                </div>
-                            </div>
-
                             <div class="card border-primary mb3">
                                 <div class="card-header" th:text="${license.name}"></div>
                                 <div class="card-body">
@@ -82,6 +72,7 @@
                                     </div>
                                         <div class="row">
                                             <div class="col-12 right">
+                                                <input type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/list'" th:attr="value = #{back}">
                                                 <input type="submit" class="btn btn-primary" value="Modify license">
                                             </div>
                                         </div>

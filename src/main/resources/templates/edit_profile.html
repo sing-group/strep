@@ -1,44 +1,85 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title th:text="#{app.name}"></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="/css/style.css">   
-        <link rel="icon" type="image/png" href="/images/STRepLogo.png">
-    </head>
 
-    <body class="main-bg">
-        <div class="header">
-            <div th:include="header.html"></div>
+<head>
+    <title th:text="#{app.name}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/images/STRepLogo.png">
+</head>
+
+<body class="main-bg">
+    <div class="header">
+        <div th:include="header.html"></div>
+    </div>
+    <div class="container">
+        <div class="alert alert-dismissible alert-danger error-label" th:if="${message!=null}">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <label class="" th:text="${message}"></label>
         </div>
-        <div class="container">
-            <div id="bs-docs-section">
-                <div class="row">
-                    <div class="col-12">
-                        <div id="bs-component">
-                            <form action="#" th:action="@{/user/editprofile}" enctype="multipart/form-data" method="POST">
-                                <fieldset>
-                                    <legend><h2 th:text="#{editprofile.title}"></h2><hr/></legend>
-                                    <div class="form-group">
-                                        <img class="user-photo" th:if="${username}!=''" th:src="@{'/user/image?username='+${username}}" style="max-width: 150px;">
-                                    </div>
-                                     <div class="form-group">
-                                        <input type="file" name="photo" required>
-                                    </div>
-                                    <hr>
-                                    <div class="form-group right">
-                                        <input type="submit" class="btn btn-primary" th:attr="value=#{editprofile.button}">
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div>
+        <label class="" th:text="${message}"></label>
+        <div id="bs-docs-section">
+            <div class="row">
+                <div class="col-12">
+                    <div id="bs-component">
+                        <form action="#" th:action="@{/user/editprofile}" th:object="${user}" enctype="multipart/form-data" method="POST">
+                            <fieldset>
+                                <legend>
+                                    <h2 th:text="#{editprofile.title}"></h2>
+                                </legend>
+                                <div class="form-group">
+                                    <img class="user-photo" th:if="${username}!=''"
+                                        th:src="@{'/user/image?username='+${username}}" style="max-width: 150px;">
+                                </div>
+                                <div class="form-group">
+                                    <input type="file" name="photomp">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" th:text="#{editprofile.username}"></label>
+                                    <input type="hidden" name="username" th:value="${user.username}">
+                                </div>
+                                <div class="form-group">
+                                    <label th:text="#{editprofile.name}"></label>
+                                    <input type="text" class="form-control col-md-6" name="name" required="required"
+                                        th:value="${user.name}">
+                                </div>
+                                <div class="form-group">
+                                    <label th:text="#{editprofile.surname}"></label>
+                                    <input type="text" class="form-control col-md-6" name="surname"
+                                        th:value="${user.surname}">
+                                </div>
+                                <div class="form-group">
+                                    <label th:text="#{editprofile.email}"></label>
+                                    <input type="text" class="form-control col-md-6" name="email"
+                                        th:value="${user.email}" required>
+                                </div>
+                                 <div class="form-group">
+                                    <label th:text="#{editprofile.password}"></label>
+                                    <input type="password" class="form-control col-md-6" name="password" th:value="${user.password}">
+                                    <label class="error-label" th:if="${#fields.hasErrors('password')}"></label>
+                                </div>
+                                 <div class="form-group">
+                                    <label th:text="#{editprofile.confirmPassword}"></label>
+                                    <input type="password" class="form-control col-md-6" name="confirmPassword" th:value="${user.confirmPassword}">
+                                    <label class="error-label" th:if="${#fields.hasErrors('confirmPassword')}"></label>
+                                </div>
+                                <hr>
+                                <div class="form-group right">
+                                    <input type="submit" class="btn btn-primary" th:attr="value=#{editprofile.button}">
+                                </div>
+                            </fieldset>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div th:include="footer.html" ></div>
-    </body>
+    </div>
+    <div th:include="footer.html"></div>
+</body>
+
 </html>

@@ -141,7 +141,6 @@ function checkLicenses() {
     } else {
         location.reload();
     }
-
 }
 
 function updateTable(id) {
@@ -230,6 +229,11 @@ function checkIfPosibleSpam() {
     });
 }
 
+function about() { 
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+}
+  
 function checkNullValues(input) {
     if (input != null) {
         return input.value;

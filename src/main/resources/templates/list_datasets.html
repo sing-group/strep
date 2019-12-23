@@ -19,7 +19,7 @@
             <div class="alert alert-dismissible alert-info" th:if="${message}">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <i class="fas fa-info-circle"></i>&nbsp;
-                <span th:text="${message}"/>
+                <span th:text="${message}"></span>
             </div>
             <div id="banner" class="page-header">
                 <div class="row">
@@ -40,7 +40,6 @@
                         <button type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/create'" th:text=" #{list.datasets.createbutton}"></button>
                     </div>
                 </div>
-              
                 <div id="bs-component">
                     <ul class="nav nav-tabs">
                         <li class="nav-item" th:if="${authority==T(org.strep.domain.Permission).VIEW}">
@@ -56,7 +55,7 @@
                             <a class="nav-link" th:classappend="${type=='usersystem'} ? 'active' : ''" href="/dataset/list?type=usersystem" th:text="#{list.datasets.table.system}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.infosystem}"></a>
                         </li>
                     </ul>
-                    <div class="tab-pane fade active show" >
+                    <div class="tab-pane fade active show add-border" >
                         <div class="alert alert-light" th:if="${datasets.size()==0}" th:text="#{list.datasets.table.nodatasets}"></div>
                         <!-- ONLY CAN VIEW -->
                         <table class="table table-hover margin20" th:if="${authority==T(org.strep.domain.Permission).VIEW and datasets.size()!=0}">
@@ -109,11 +108,11 @@
                         <table class="table table-hover margin20" th:unless="${authority==T(org.strep.domain.Permission).VIEW or datasets.size()==0} "> <!--th:if="${type=='usersystem' and datasets.size()!=0}-->
                             <thead>
                                 <tr>
-                                    <th scope="col"th:text="#{list.datasets.table.name}"></th>
+                                    <th scope="col" th:text="#{list.datasets.table.name}"></th>
                                     <th scope="col" th:text="#{list.datasets.table.author}"></th>
                                     <th scope="col" th:text="#{list.datasets.table.date}"></th>
                                     <th scope="col" th:text="#{list.datasets.table.license}"></th>
-                                    <th scope="col" th:text="#{list.datasets.table.fileinfo}" colspan="2"></th>
+                                    <th scope="col" th:text="#{list.datasets.table.fileinfo}" colspan="2">d</th>
                                     <th scope="col" th:text="#{list.datasets.table.actions}"></th>
                                 </tr>
                             </thead>
@@ -124,7 +123,7 @@
                                     <td th:text="${#dates.format(dataset.uploadDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${dataset.license.name}"></td>
                                     <td>
-                                        <a class="btn btn-list btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
                                             <i class="fas fa-language"></i>
                                             <span class="icon-caret-down"></span>
                                         </a>

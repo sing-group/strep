@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 
 //import java.util.HashSet;
 import java.util.Objects;
+import org.strep.validator.FieldMatch;
 //import java.util.Set;
 
 /**
@@ -18,6 +19,7 @@ import java.util.Objects;
  * @author Ismael Vázquez
  */
 @Entity
+@FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match")
 public class User implements Serializable {
 
     /**
@@ -48,6 +50,12 @@ public class User implements Serializable {
     @Size(min = 8, max = 30, message = "Password must have beetween 8 and 30 characters")
     @Transient 
     private String password;
+    /**
+     * The confirmation of password (decripted)
+     */
+    @Size(min = 8, max = 30, message = "Password must have beetween 8 and 30 characters")
+    @Transient 
+    private String confirmPassword;
 
     /**
      * The encripted password (Will be saved in BBDD)
@@ -121,6 +129,27 @@ public class User implements Serializable {
         this.name = name;
         this.surname = surname;
     }
+    
+    /**
+     * Create instances of the user
+     *
+     * @param username the username of the user
+     * @param email the email of the user
+     * @param hash the hash of the user
+     * @param password the password of the user
+     * @param confirmPassword the password of the user
+     * @param name the name of the user
+     * @param surname the surname of the user
+     */
+    public User(String username, String email, String hash, String password,String confirmPassword, String name, String surname) {
+        this.username = username;
+        this.email = email;
+        this.hash = hash;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.name = name;
+        this.surname = surname;
+    }
 
     /**
      * Return the username of the user
@@ -175,7 +204,25 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    /**
+     * Return the the confirmation of user password
+     *
+     * @return the confirmation of user password
+     */
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
 
+    /**
+     * Stablish the confirmation of the user password
+     *
+     * @param confirmPassword the confirmation of user password
+     */
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+    
     /**
      * Return the name of the user
      *
