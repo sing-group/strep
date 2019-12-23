@@ -28,12 +28,12 @@
                 </div>
             </div>
             <div id="bs-docs-section">
-                <div class="row" th:if="${dataset!=null}">
+                <!--div class="row" th:if="${dataset!=null}">
                     <div class="col-2">
                         <a class="btn btn-primary" th:href="'/task/preprocess/create?name='+${dataset.name}" th:text=" #{list.preprocessing.button}">                         
                         </a>
                     </div>
-                </div>
+                </div-->
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a th:if="${dataset!=null}" class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"
@@ -61,7 +61,7 @@
                            th:href="'/task/preprocess?state=success'" th:text="#{list.preprocessing.success}"></a>                        
                     </li>
                 </ul>
-                <div class="tab-pane fade active show" >
+                <div class="tab-pane fade active show add-border" >
                     <div class="alert alert-light" th:if="${tasks.size()==0}" th:text="#{list.preprocessing.notasks}"></div>
                     <table class="table table-hover margin20" th:if="${tasks.size()!=0}">
                         <thead>
