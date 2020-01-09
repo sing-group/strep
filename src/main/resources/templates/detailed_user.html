@@ -34,7 +34,8 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-12 right">
-                                            <img class="user-photo" th:src="@{'/user/image?username='+${username}}" th:title="${user.username}" width="64">
+                                            <img th:if="${photo!=null}" class="user-photo" th:src="@{'/user/image?username='+${username}}" th:title="${user.username}" width="64">
+                                            <i th:unless="${photo!=null}" class="fas fa-user fa-6x"></i>
                                         </div>
                                     </div>
                                     <div class="row">

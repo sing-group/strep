@@ -132,6 +132,7 @@ function checkLicenses() {
 
                 var urlCheckAccess = "/dataset/checkAccess?" + params;
                 $("#check-access").load(urlCheckAccess, function (response, status, xhr) {
+                    updateTable();
                     if (status == "error") {
                         location.reload();
                     }

@@ -20,24 +20,26 @@
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <p class=" main-text" th:text="${param.message}"></p>
                 </div>
+                <div id="banner" class="page-header">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 th:text="#{list.permission.title}"></h2>
+                            </div>
+                        </div>
+                    </div>
                 <div id="bs-docs-section">
                     <div class="row">
                         <div class="col-12">
                             <div id="bs-component">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h2 class="main-text left" th:text="#{list.permission.title}"></h2>
-                                    </div>
-                                </div>
                                 <div class="card border-primary mb3">
-                                    <div class="card-header permission">Can view</div>
+                                    <div class="card-header permission" th:text="${T(org.strep.domain.Permission).VIEW}"></div>
                                     <div class="card-body">
                                         <p class="justify" th:text="#{list.permission.canviewdescription}"></p>
                                     </div>
                                 </div>
                                 <div class="row"><div class="col-12"></div></div>
                                 <div class="card border-primary mb3">
-                                    <div class="card-header permission">Can create corpus</div>
+                                    <div class="card-header permission" th:text="${T(org.strep.domain.Permission).CREATE_CORPUS}"></div>
                                     <div class="card-body">
                                         <p class="justify" th:text="#{list.permission.cancreatenewcorpus}"></p>
                                         <p class="justify" th:text="#{list.permission.same}"></p>
@@ -53,7 +55,7 @@
                                 </div>
                                 <div class="row"><div class="col-12"></div></div>
                                 <div class="card border-primary mb3">
-                                    <div class="card-header permission">Can upload</div>
+                                    <div class="card-header permission" th:text="${T(org.strep.domain.Permission).UPLOAD}"></div>
                                     <div class="card-body">
                                         <p class="justify" th:text="#{list.permission.canupload}"></p>
                                         <p class="justify" th:text="#{list.permission.same}"></p>
@@ -69,7 +71,7 @@
                                 </div>
                                 <div class="row"><div class="col-12"></div></div>
                                 <div class="card border-primary mb3">
-                                    <div class="card-header permission">Can administer</div>
+                                    <div class="card-header permission" th:text="${T(org.strep.domain.Permission).ADMINISTER}"></div>
                                     <div class="card-body">
                                         <p class="justify" th:text="#{list.permission.canadminister}"></p>
                                         <p class="justify" th:text="#{list.permission.same}"></p>

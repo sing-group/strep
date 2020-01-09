@@ -67,8 +67,7 @@
                             <a class="dropdown-item topdiv-text" href="/task/preprocess" th:text="#{header.preprocess}"></a>
                         </div>
                     </li>
-                </div>
-
+                </div>                
                 <div th:if="${authority==T(org.strep.domain.Permission).ADMINISTER}">
                     <li class="nav-item dropdown">
                         <a class="topdiv-text dropdown-toggle nav-link" id="navbar-link" href="#" data-toggle="dropdown"
@@ -118,14 +117,15 @@
                     <option id="en" value="en" th:text="EN" onclick="changeLocale(this.id)"></option>
                     <option id="es" value="es" th:text="ES" onclick="changeLocale(this.id)"></option>
                 </select>
-                <a href="/user/editprofile">
-                    <img class="user-photo" th:src="@{'/user/image?username='+${username}}" height="32" width="32">
+                <a href="/user/editprofile" class="icons">
+                    <img th:if="${photo!=null}" class="user-photo" th:src="@{'/user/image?username='+${username}}" height="32" width="32">
+                    <i th:unless="${photo!=null}" class="fas fa-user fa-2x"></i>
                 </a>
-                <span th:text="${username}" class="topdiv-text"></span>
+                &nbsp;<span th:text="${username}" class="topdiv-text"></span>&nbsp;&nbsp;
             </div>
             <div class="float-right logout-icon">
-                <a href="/logout">
-                    <img src="/images/logout.svg" alt="photo" height="32" width="32">
+                <a href="/logout" class="logout-icon icons">
+                    <i class="fas fa-door-open fa-2x"></i>
                 </a>
             </div>
 

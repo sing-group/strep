@@ -10,10 +10,12 @@ import javax.validation.Valid;
 
 import org.strep.domain.Dataset;
 import org.strep.domain.Task;
+import org.strep.domain.User;
 import org.strep.domain.TaskCreateUPreprocessing;
 import org.strep.domain.TaskCreateUdataset;
 import org.strep.repositories.DatasetRepository;
 import org.strep.repositories.TaskRepository;
+import org.strep.repositories.UserRepository;
 import org.strep.services.TaskService;
 import org.strep.services.UserService;
 
@@ -53,6 +55,9 @@ public class TaskController {
     private DatasetRepository datasetRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private TaskService taskService;
 
     @Value("${pipeline.storage}")
@@ -68,11 +73,14 @@ public class TaskController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
         model.addAttribute("state", state);
+        model.addAttribute("photo", optUser.get().getPhoto());
+
         if (inputSearch != null) {
             model.addAttribute("tasks", taskRepository.getSystemTasksFiltered(username, inputSearch, state));
         } else {
@@ -89,11 +97,13 @@ public class TaskController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
         model.addAttribute("state", state);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         if (inputSearch != null) {
             model.addAttribute("tasks", taskRepository.getActiveUserTasksFiltered(username, inputSearch, state));
@@ -111,10 +121,12 @@ public class TaskController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         Long idLong = new Long(id);
         Optional<Task> optTask = taskRepository.findById(idLong);
@@ -141,10 +153,12 @@ public class TaskController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         Long idLong = new Long(id);
         Optional<TaskCreateUdataset> optTask = taskRepository.findTaskCreateUdatasetById(idLong);
@@ -182,6 +196,7 @@ public class TaskController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         ArrayList<TaskCreateUPreprocessing> tasks = new ArrayList<>();
@@ -189,6 +204,7 @@ public class TaskController {
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         // Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
         if (datasetName != null && !datasetName.equals("")) {
@@ -224,13 +240,17 @@ public class TaskController {
     public String listDetailedPreprocesss(Authentication authentication, Model model,
             @RequestParam(name = "state", required = false, defaultValue = Task.STATE_SUCESS) String state,
             @RequestParam(name = "name", required = false, defaultValue = "") String name) {
+        
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
         model.addAttribute("state", state);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         HashMap<String, ArrayList<TaskCreateUPreprocessing>> taskCreateUPreprocessingHM = new HashMap<>();
 
@@ -284,10 +304,12 @@ public class TaskController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
 
@@ -309,9 +331,12 @@ public class TaskController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
+        
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
 
@@ -340,7 +365,6 @@ public class TaskController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
-
         String fileName = taskService.downloadPipeline(taskId, username);
 
         if (fileName != null) {

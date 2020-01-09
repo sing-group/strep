@@ -1,83 +1,86 @@
 <!DOCTYPE HTML>
 <html>
 
-    <head>
-        <title th:text="#{app.name}"></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="/css/style.css"> 
-        <link rel="icon" type="image/png" href="/images/STRepLogo.png">
-    </head>
+<head>
+    <title th:text="#{app.name}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/images/STRepLogo.png">
+</head>
 
-    <body class="main-bg">
-        <div class="header">
-            <div th:include="header.html"></div>
+<body class="main-bg">
+    <div class="header">
+        <div th:include="header.html"></div>
+    </div>
+    <div class="container">
+        <div class="alert alert-dismissible alert-info" th:if="${message}">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p class=" main-text" th:text="${message}"></p>
         </div>
-        <div class="container" >
-            <div class="alert alert-dismissible alert-info" th:if="${message}">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <p class=" main-text" th:text="${message}"></p>
-            </div>
-            <div id="banner" class="page-header">
-                <div class="row">
-                    <div class="col-12">
-                        <h2><span th:text="#{list.preprocessingtask.title} "/><span th:if="${dataset!=null}">&#58;<span/>&nbsp;<span th:if="${dataset!=null}" th:text="@{${dataset.name}} "/></h2>
-                    </div>
+        <div id="banner" class="page-header">
+            <div class="row">
+                <div class="col-12">
+                    <h2 th:text="#{list.preprocessingtask.title}"></h2>
                 </div>
             </div>
-            <div id="bs-docs-section">
-                <!--div class="row" th:if="${dataset!=null}">
-                    <div class="col-2">
-                        <a class="btn btn-primary" th:href="'/task/preprocess/create?name='+${dataset.name}" th:text=" #{list.preprocessing.button}">                         
-                        </a>
-                    </div>
-                </div-->
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a th:if="${dataset!=null}" class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"
-                           th:href="'/task/preprocess?state=waiting&id='+${dataset.name}" th:text="#{list.preprocessing.waiting}"></a>
-                        <a th:if="${dataset==null}" class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"
-                           th:href="'/task/preprocess?state=waiting'" th:text="#{list.preprocessing.waiting}"></a>                        
-                    </li>
-                    <li class="nav-item">
-                        <a th:if="${dataset!=null}" class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''"
-                           th:href="'/task/preprocess?state=executing&id='+${dataset.name}" th:text="#{list.preprocessing.executing}"></a>
-                        <a th:if="${dataset==null}" class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''"
-                           th:href="'/task/preprocess?state=executing'" th:text="#{list.preprocessing.executing}"></a>                        
-                    </li>
-                    <li class="nav-item">
-                        <a th:if="${dataset!=null}" class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''"
-                           th:href="'/task/preprocess?state=failed&id='+${dataset.name}" th:text="#{list.preprocessing.failed}"></a>
-                        <a th:if="${dataset==null}" class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''"
-                           th:href="'/task/preprocess?state=failed'" th:text="#{list.preprocessing.failed}"></a>                        
-                    </li>
+        </div>
+        <div class="row">
+            <div class="col-12"></div>
+        </div>
+        <div id="bs-docs-section">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a th:if="${dataset!=null}" class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"
+                        th:href="'/task/preprocess?state=waiting&id='+${dataset.name}"
+                        th:text="#{list.preprocessing.waiting}"></a>
+                    <a th:if="${dataset==null}" class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"
+                        th:href="'/task/preprocess?state=waiting'" th:text="#{list.preprocessing.waiting}"></a>
+                </li>
+                <li class="nav-item">
+                    <a th:if="${dataset!=null}" class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''"
+                        th:href="'/task/preprocess?state=executing&id='+${dataset.name}"
+                        th:text="#{list.preprocessing.executing}"></a>
+                    <a th:if="${dataset==null}" class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''"
+                        th:href="'/task/preprocess?state=executing'" th:text="#{list.preprocessing.executing}"></a>
+                </li>
+                <li class="nav-item">
+                    <a th:if="${dataset!=null}" class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''"
+                        th:href="'/task/preprocess?state=failed&id='+${dataset.name}"
+                        th:text="#{list.preprocessing.failed}"></a>
+                    <a th:if="${dataset==null}" class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''"
+                        th:href="'/task/preprocess?state=failed'" th:text="#{list.preprocessing.failed}"></a>
+                </li>
 
-                    <li class="nav-item">
-                        <a th:if="${dataset!=null}" class="nav-link" th:classappend="${state=='success'} ? 'active' : ''"
-                           th:href="'/task/preprocess?state=success&id='+${dataset.name}" th:text="#{list.preprocessing.success}"></a>
-                        <a th:if="${dataset==null}" class="nav-link" th:classappend="${state=='success'} ? 'active' : ''"
-                           th:href="'/task/preprocess?state=success'" th:text="#{list.preprocessing.success}"></a>                        
-                    </li>
-                </ul>
-                <div class="tab-pane fade active show add-border" >
-                    <div class="alert alert-light" th:if="${tasks.size()==0}" th:text="#{list.preprocessing.notasks}"></div>
-                    <table class="table table-hover margin20" th:if="${tasks.size()!=0}">
-                        <thead>
-                            <tr>
-                                <th scope="col">Dataset</th>
-                                <th scope="col" th:text="#{list.preprocessing.date}"></th>
-                                <th scope="col" th:text="#{list.preprocessing.message}" th:if="${state=='failed'}"></th>
-                                <th scope="col" th:text="#{list.preprocessing.name}"></th>
-                                <th scope="col" th:text="#{list.preprocessing.description}"></th>
-                                <th scope="col" th:text="#{list.preprocessing.actions}"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="task : ${tasks}">
-                                <td th:text="${task.dataset.name}"></td>
-                                <td th:text="${#dates.format(task.date, 'yyyy-MM-dd')}"></td>
+                <li class="nav-item">
+                    <a th:if="${dataset!=null}" class="nav-link" th:classappend="${state=='success'} ? 'active' : ''"
+                        th:href="'/task/preprocess?state=success&id='+${dataset.name}"
+                        th:text="#{list.preprocessing.success}"></a>
+                    <a th:if="${dataset==null}" class="nav-link" th:classappend="${state=='success'} ? 'active' : ''"
+                        th:href="'/task/preprocess?state=success'" th:text="#{list.preprocessing.success}"></a>
+                </li>
+            </ul>
+            <div class="tab-pane fade active show add-border">
+                <div class="alert alert-light" th:if="${tasks.size()==0}" th:text="#{list.preprocessing.notasks}"></div>
+                <table class="table table-hover margin20" th:if="${tasks.size()!=0}">
+                    <thead>
+                        <tr>
+                            <th scope="col">Dataset</th>
+                            <th scope="col" th:text="#{list.preprocessing.date}"></th>
+                            <th scope="col" th:text="#{list.preprocessing.message}" th:if="${state=='failed'}"></th>
+                            <th scope="col" th:text="#{list.preprocessing.name}"></th>
+                            <th scope="col" th:text="#{list.preprocessing.description}"></th>
+                            <th scope="col" th:text="#{list.preprocessing.actions}"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="task : ${tasks}">
+                            <td th:text="${task.dataset.name}"></td>
+                            <td th:text="${#dates.format(task.date, 'yyyy-MM-dd')}"></td>
                                 <td th:text="${task.message}" th:if="${state=='failed'}" class="justify">
                                 </td>
                                 <td th:text="${task.name}">

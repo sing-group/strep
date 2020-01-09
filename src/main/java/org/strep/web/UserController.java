@@ -135,10 +135,12 @@ public class UserController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         if (searchInput == null) {
             model.addAttribute("users", userRepository.findAll());
@@ -154,14 +156,15 @@ public class UserController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String sessionUsername = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(sessionUsername);
         String maxUserPermission = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
         model.addAttribute("maxUserPermission", maxUserPermission);
         model.addAttribute("username", sessionUsername);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
-        Optional<User> optUser = userRepository.findById(username);
         ArrayList<Dataset> systemDatasets = datasetRepository.getOwnDatasets(username, Dataset.TYPE_SYSTEM);
         ArrayList<Dataset> userDatasets = datasetRepository.getOwnDatasets(username, Dataset.TYPE_USER);
         Iterable<Permission> permissions = permissionRepository.findAll();
@@ -185,11 +188,13 @@ public class UserController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optRegUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
         String message = "";
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
+        model.addAttribute("photo", optRegUser.get().getPhoto());
 
         Optional<User> optUser = userRepository.findById(deleteUsername);
 
@@ -222,9 +227,8 @@ public class UserController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
-        String authority = userService.getPermissionsByUsername(username);
-
         Optional<User> optUser = userRepository.findById(username);
+        String authority = userService.getPermissionsByUsername(username);
 
         if (optUser.isPresent()) {
             User user = optUser.get();
@@ -233,7 +237,8 @@ public class UserController {
             user.setUsername(user.getUsername());
             model.addAttribute("username", username);
             model.addAttribute("authority", authority);
-            model.addAttribute("user", user);
+            model.addAttribute("user", user); 
+            model.addAttribute("photo", user.getPhoto());
             return "edit_profile.html";
         } else {
             return "redirect:/dataset/list";
@@ -249,9 +254,12 @@ public class UserController {
 
         Locale locale = LocaleContextHolder.getLocale();
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
+        
         model.addAttribute("username", username);
         model.addAttribute("authority", authority);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         if (result.hasErrors()) {
             if (result.getFieldErrors().get(0).getField().equals("password")){
@@ -265,7 +273,6 @@ public class UserController {
             return "edit_profile";
         }
 
-        Optional<User> optUser = userRepository.findById(username);
         String savedEmail = optUser.get().getEmail();
         byte[] photo;
         try {
@@ -299,7 +306,6 @@ public class UserController {
     @GetMapping("image")
     public void showUserImage(@RequestParam(name = "username") String username, HttpServletResponse response)
             throws IOException {
-
         Optional<User> optUser = userRepository.findById(username);
         if (optUser.isPresent()) {
             User user = optUser.get();

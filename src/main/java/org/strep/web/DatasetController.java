@@ -31,6 +31,7 @@ import org.strep.repositories.FileRepository;
 import org.strep.repositories.LanguageRepository;
 import org.strep.repositories.LicenseRepository;
 import org.strep.repositories.TaskRepository;
+import org.strep.repositories.UserRepository;
 import org.strep.services.DatasetService;
 import org.strep.services.TaskService;
 import org.strep.services.UserService;
@@ -98,6 +99,9 @@ public class DatasetController {
 
     @Autowired
     private FileRepository fileRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * To parse dates
@@ -176,6 +180,7 @@ public class DatasetController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
         ArrayList<Dataset> datasets = new ArrayList<>();
         switch (type) {
@@ -209,6 +214,7 @@ public class DatasetController {
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
         model.addAttribute("datasets", datasets);
+        model.addAttribute("photo", optUser.get().getPhoto());
         return "list_datasets";
     }
 
@@ -217,6 +223,7 @@ public class DatasetController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
@@ -234,6 +241,7 @@ public class DatasetController {
                     model.addAttribute("dataset", dataset);
                     model.addAttribute("languages", languages);
                     model.addAttribute("datatypes", datatypes);
+                    model.addAttribute("photo", optUser.get().getPhoto());
                     return "detailed_private_dataset";
                 } else {
                     return "redirect:/error";
@@ -242,6 +250,7 @@ public class DatasetController {
                 model.addAttribute("dataset", dataset);
                 model.addAttribute("languages", languages);
                 model.addAttribute("datatypes", datatypes);
+                model.addAttribute("photo", optUser.get().getPhoto());
                 return "detailed_private_dataset";
             }
         } else {
@@ -256,7 +265,6 @@ public class DatasetController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
-
         Optional<Dataset> opt = datasetRepository.findById(name);
 
         if (opt.isPresent()) {
@@ -322,6 +330,7 @@ public class DatasetController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
         ArrayList<Dataset> datasets = datasetRepository.getUserDatasets(username);
 
@@ -329,6 +338,7 @@ public class DatasetController {
         model.addAttribute("username", username);
         model.addAttribute("datasets", datasets);
         model.addAttribute("type", "user");
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         Optional<Dataset> opt = datasetRepository.findById(name);
 
@@ -359,13 +369,14 @@ public class DatasetController {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
         model.addAttribute("host", HOST_NAME);
         model.addAttribute("licenses", licenseRepository.findAll());
-
+        model.addAttribute("photo", optUser.get().getPhoto());
         return "add_dataset";
     }
 
@@ -375,8 +386,10 @@ public class DatasetController {
             RedirectAttributes redirectAttributes, Model model) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
+        model.addAttribute("photo", optUser.get().getPhoto());
         if (bindingResult.hasErrors()) {
             model.addAttribute("authority", authority);
             model.addAttribute("username", username);
@@ -400,6 +413,7 @@ public class DatasetController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
         Optional<Dataset> optDataset = datasetRepository.findById(name);
 
@@ -428,6 +442,7 @@ public class DatasetController {
                 model.addAttribute("visibility", visibility);
                 model.addAttribute("licenses", licenseRepository.findAll());
                 model.addAttribute("toUpdateDataset", toUpdateDataset);
+                model.addAttribute("photo", optUser.get().getPhoto());
 
                 return "edit_dataset";
             } else {
@@ -446,6 +461,7 @@ public class DatasetController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         Optional<Dataset> optDataset = datasetRepository.findById(name);
@@ -462,6 +478,7 @@ public class DatasetController {
                     model.addAttribute("host", HOST_NAME);
                     model.addAttribute("licenses", licenseRepository.findAll());
                     model.addAttribute("toUpdateDataset", toUpdateDataset);
+                    model.addAttribute("photo", optUser.get().getPhoto());
                     return "edit_dataset";
                 } else {
 
@@ -480,6 +497,7 @@ public class DatasetController {
             redirectAttributes.addFlashAttribute("message", message);
             model.addAttribute("authority", authority);
             model.addAttribute("username", username);
+            model.addAttribute("photo", optUser.get().getPhoto());
             return "redirect:/dataset/list?type=" + type;
         }
 
@@ -1079,6 +1097,7 @@ public class DatasetController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         ArrayList<Dataset> datasets = datasetRepository.getSystemDatasets();
@@ -1094,6 +1113,7 @@ public class DatasetController {
         model.addAttribute("licenses", licenses);
         model.addAttribute("datatypes", datatypes);
         model.addAttribute("languages", languages);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         return "create_dataset";
     }

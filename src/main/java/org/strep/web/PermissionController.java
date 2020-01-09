@@ -50,10 +50,12 @@ public class PermissionController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         return "show_permissions";
     }
@@ -74,12 +76,15 @@ public class PermissionController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
+        
         ArrayList<PermissionRequest> permissionRequests = permissionRequestRepository.findRequestsByUsername(username);
 
         model.addAttribute("username", username);
         model.addAttribute("authority", authority);
         model.addAttribute("permissionRequests", permissionRequests);
+        model.addAttribute("photo", optUser.get().getPhoto());
         
         if(message!=null)
         {
@@ -96,10 +101,12 @@ public class PermissionController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("username", username);
         model.addAttribute("authority", authority);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         ArrayList<PermissionRequest> permissionRequests;
 

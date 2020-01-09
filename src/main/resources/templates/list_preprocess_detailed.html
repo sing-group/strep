@@ -21,7 +21,7 @@
             <div id="banner" class="page-header">
                 <div class="row">
                     <div class="col-12">
-                        <h2><span th:text="#{list.preprocessing.dataset.title} "/><span th:if="${dataset!=null}">&#58;<span/>&nbsp;<span th:if="${dataset!=null}" th:text="@{${dataset.name}} "/></h2>
+                        <h2 th:text="#{list.preprocessing.dataset.title}"></h2>
                     </div>
                 </div>
             </div>
@@ -45,10 +45,10 @@
                             </thead>
                             <tbody>
                                 <tr th:each="task : ${dataset.value}">
-                                    <td th:text="${#dates.format(task.date, 'yyyy-MM-dd')}"></td>
-                                    <td th:text="${task.name}"></td>
+                                    <td th:text="${#dates.format(task.date, 'yyyy-MM-dd')}" style="width: auto"></td>
+                                    <td th:text="${task.name}" style="width: auto"></td>
                                     <td th:text="${task.description}" width="100%" class="justify"></td>
-                                    <td class="minw_110">
+                                    <td style="width: auto"><!--class="minw_110"-->
                                         <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{createtasks.downloadpipeline}" th:href="'/task/preprocess/downloadpipeline?id='+ ${task.id}">
                                             <i class="fas fa-file-download"></i>
                                         </a>

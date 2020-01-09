@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import javax.validation.Valid;
 
 import org.strep.domain.License;
+import org.strep.domain.User;
 import org.strep.repositories.LicenseRepository;
 import org.strep.services.LicenseService;
 import org.strep.services.UserService;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.strep.repositories.UserRepository;
 
 /**
  * This controller responds to all requests related to licenses
@@ -35,6 +37,9 @@ public class LicenseController
 
     @Autowired
     private LicenseRepository licenseRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private UserService userService;
@@ -54,11 +59,13 @@ public class LicenseController
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
-
+        model.addAttribute("photo", optUser.get().getPhoto());
+        
         Iterable<License> licenses;
 
         if(searchInput==null)
@@ -82,10 +89,12 @@ public class LicenseController
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         Optional<License> licenseOpt = licenseRepository.findById(name);
 
@@ -106,10 +115,12 @@ public class LicenseController
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         return "add_license";
     }
@@ -123,7 +134,10 @@ public class LicenseController
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
+        
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         if(bindingResult.hasErrors())
         {
@@ -158,10 +172,12 @@ public class LicenseController
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         Optional<License> licenseOpt = licenseRepository.findById(name);
         if(licenseOpt.isPresent())
@@ -184,7 +200,10 @@ public class LicenseController
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
+
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         if(bindingResult.hasErrors())
         {
@@ -213,11 +232,13 @@ public class LicenseController
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
         String message = "";
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
+        model.addAttribute("photo", optUser.get().getPhoto());
 
         Optional<License> licenseOpt = licenseRepository.findById(name);
 
