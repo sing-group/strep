@@ -73,7 +73,7 @@
                                 <tr th:each="dataset : ${datasets}">
                                     <th scope="row" th:text="${dataset.name}"></th>
                                     <td th:text="${dataset.author}"></td>
-                                    <td th:text="${#dates.format(dataset.uploadDate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#dates.format(dataset.uploadDate, 'yyyy-MM-dd')}" class="td-date"></td>
                                     <td th:text="${dataset.license.name}"></td>
                                     <td>
                                         <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
@@ -120,7 +120,7 @@
                                 <tr th:each="dataset : ${datasets}">
                                     <th scope="row" th:text="${dataset.name}"></th>
                                     <td th:text="${dataset.author}"></td>
-                                    <td th:text="${#dates.format(dataset.uploadDate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#dates.format(dataset.uploadDate, 'yyyy-MM-dd')}" class="td-date"></td>
                                     <td th:text="${dataset.license.name}"></td>
                                     <td>
                                         <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">

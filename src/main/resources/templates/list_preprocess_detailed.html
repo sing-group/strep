@@ -45,10 +45,10 @@
                             </thead>
                             <tbody>
                                 <tr th:each="task : ${dataset.value}">
-                                    <td th:text="${#dates.format(task.date, 'yyyy-MM-dd')}" style="width: auto"></td>
-                                    <td th:text="${task.name}" style="width: auto"></td>
+                                    <td th:text="${#dates.format(task.date, 'yyyy-MM-dd')}" class="td-date"></td>
+                                    <td th:text="${task.name}"></td>
                                     <td th:text="${task.description}" width="100%" class="justify"></td>
-                                    <td style="width: auto"><!--class="minw_110"-->
+                                    <td >
                                         <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{createtasks.downloadpipeline}" th:href="'/task/preprocess/downloadpipeline?id='+ ${task.id}">
                                             <i class="fas fa-file-download"></i>
                                         </a>

@@ -80,12 +80,12 @@
                     <tbody>
                         <tr th:each="task : ${tasks}">
                             <td th:text="${task.dataset.name}"></td>
-                            <td th:text="${#dates.format(task.date, 'yyyy-MM-dd')}"></td>
-                                <td th:text="${task.message}" th:if="${state=='failed'}" class="justify">
+                            <td th:text="${#dates.format(task.date, 'yyyy-MM-dd')}" class="td-date"></td>
+                                <td th:text="${task.message}" th:if="${state=='failed'}" class="justify td-width-100">
                                 </td>
                                 <td th:text="${task.name}">
                                 </td>
-                                <td th:text="${task.description}" class="justify">
+                                <td th:text="${task.description}" class="justify td-width-100" >
                                 </td>
                                 <td class="minw_110">
                                     <a class="btn btn-list" th:if="${username}==${task.getDataset().getAuthor()}" th:href="@{'/task/hide?task=' + ${task.id} + '&option=preprocess&state='+${state}}" data-toggle="tooltip" data-placement="right" th:title="#{list.usertasks.details}" th:onclick="'javascript:return confirm(\'' + #{list.usertasks.surehide} + '\');'">

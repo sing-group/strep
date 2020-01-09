@@ -34,8 +34,6 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
         {
             final Object firstObj = getFieldValue(value, firstFieldName);
             final Object secondObj = getFieldValue(value, secondFieldName);
-            System.out.println("validator: " + firstObj + " - " + secondObj);
-            //valid = (firstObj==null && secondObj==null ) ||(firstObj.equals("") && secondObj.equals("")) || firstObj.equals(secondObj);
 
            valid =  firstObj == null && secondObj == null || firstObj != null && firstObj.equals(secondObj);
         }

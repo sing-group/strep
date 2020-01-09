@@ -334,6 +334,12 @@ border-top: 5px solid #203939
     font-size: 14px;
     margin-bottom: 0em !important;
 }
+.td-date{
+  min-width: 7.2em;
+}
+.td-width-100{
+  width:100%;
+}
 .logo-uvigo{
   max-width: 210px;
   padding: 10px;

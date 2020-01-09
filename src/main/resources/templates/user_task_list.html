@@ -73,9 +73,9 @@
                     </thead>
                     <tbody>
                         <tr th:each="task : ${tasks}">
-                            <td th:text="${#dates.format(task.dataset.uploadDate, 'yyyy-MM-dd')}"></td>
-                                <td th:text="${task.dataset.name}"></td>
-                                <td th:text="${task.message}" th:if="${state=='failed'}"></td>
+                            <td th:text="${#dates.format(task.dataset.uploadDate, 'yyyy-MM-dd')}" class="td-date"></td>
+                                <td th:text="${task.dataset.name}" class=td-width-100></td>
+                                <td th:text="${task.message}" th:if="${state=='failed'}" class="td-width-100"></td>
                                 <td>
                                     <a class="btn btn-list" th:if="${username==task.getDataset().getAuthor()}" th:href="@{'/task/hide?task=' + ${task.id} + '&option=create&state='+${state}}" data-toggle="tooltip" data-placement="right" th:title="#{list.usertasks.details}" th:onclick="'javascript:return confirm(\'' + #{list.usertasks.surehide} + '\');'">
                                         <i class="fas fa-eye-slash"></i>

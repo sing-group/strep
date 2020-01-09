@@ -68,16 +68,16 @@
                     <thead>
                         <tr>
                             <th scope="col" th:text="#{systemtasks.date}"></th>
-                            <th scope="col" th:text="#{systemtasks.dataset}"></th>
+                            <th scope="col" th:text="#{systemtasks.dataset}" class="td-width-100"></th>
                             <th scope="col" th:text="#{systemtasks.message}" th:if="${state=='failed'}"></th>
                             <th th:text="#{systemtasks.actions}"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="task : ${tasks}">
-                            <td th:text="${#dates.format(task.dataset.uploadDate, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${#dates.format(task.dataset.uploadDate, 'yyyy-MM-dd')}" class="td-date"></td>
                                 <td th:text="${task.dataset.name}"></td>
-                                <td th:text="${task.message}" th:if="${state=='failed'}"></td>
+                                <td th:text="${task.message}" th:if="${state=='failed'}" class="td-width-100"></td>
                                 <td>
                                     <a class="btn btn-list" th:if="${username}==${task.getDataset().getAuthor()}" th:href="@{'/task/upload?task=' + ${task.id} + '&option=upload&state='+${state}}" data-toggle="tooltip" data-placement="right" th:title="#{list.usertasks.details}" th:onclick="'javascript:return confirm(\'' + #{list.usertasks.surehide} + '\');'">
                                         <i class="fas fa-eye-slash"></i>
