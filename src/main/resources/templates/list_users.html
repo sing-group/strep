@@ -22,6 +22,11 @@
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <p class=" main-text" th:text="${message}"></p>
         </div>
+
+        <div class="alert alert-dismissible alert-info" th:if="${param.message}!=null and ${param.message[0]}=='nook'">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p class=" main-text" th:text="#{list.users.confirmerror}"></p>
+        </div>
         <div id="banner" class="page-header">
             <div class="row">
                 <div class="col-12">
@@ -61,7 +66,8 @@
                                 height="16" width="16">
                         </td>
                         <td>
-                            <img th:if="${user.photo!=null}" class="user-photo" th:src="@{'/user/image?username='+${user.username}}" alt="photo" height="32" width="32">
+                            <img th:if="${user.photo!=null}" class="user-photo"
+                                th:src="@{'/user/image?username='+${user.username}}" alt="photo" height="32" width="32">
                             <i th:unless="${user.photo!=null}" class="fas fa-user fa-2x"></i>
                         </td>
                         <td>
@@ -72,6 +78,12 @@
                             <p th:text="${user.permission.name}"></p>
                         </td>
                         <td class="minw_110">
+
+                            <a th:if="${!user.confirmedAccount}" class="btn btn-list" data-toggle="tooltip"
+                                data-placement="right" title="#{list.users.confirmerror}"
+                                th:href="@{/user/confirm(username = ${user.username})}">
+                                <i class="fas fa-check"></i>
+                            </a>
                             <a class="btn btn-list" th:href="@{/user/detailed(username = ${user.username},type=user)}"
                                 th:title="#{list.users.details}">
                                 <i class="fas fa-eye"></i>

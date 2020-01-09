@@ -129,6 +129,24 @@ public class UserController {
         }
     }
 
+    @GetMapping("/confirm")
+    public String confirmAccountRequest(@RequestParam("username") String username, Authentication authentication)
+    {
+        Optional<User> userOpt=userRepository.findById(username);
+        Locale locale = LocaleContextHolder.getLocale();
+        
+        if (userOpt.isPresent() ){
+            User user = userOpt.get();
+            user.setConfirmedAccount(true);
+
+            userRepository.save(user);
+            return "redirect:/user/list";
+        } else {
+             return "redirect:/user/list?message=nook";
+        }
+    }
+
+
     @GetMapping("list")
     public String listUsers(@RequestParam(name = "search", required = false) String searchInput,
             Authentication authentication, Model model) {
