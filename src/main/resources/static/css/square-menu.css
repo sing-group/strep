@@ -75,10 +75,10 @@
     background-image: url('https://farm8.staticflickr.com/7187/6895047173_d4b1a0d798.jpg');
   }
   a.radial-menu:nth-child(5){
-    width:55%;
-    height:55%;
-    left:22.5%; 
-    top:22.5%;
+    width:40%;
+    height:40%;
+    left:30%; 
+    top:30%;
     border-radius:50vmin;
     /*box-shadow:0 0 0 5vmin #FFFFFF;*/
     box-shadow:0 0 0 3vmin #FFFFFF;
