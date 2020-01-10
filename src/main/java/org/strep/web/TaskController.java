@@ -2,10 +2,13 @@ package org.strep.web;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.validation.Valid;
 
 import org.strep.domain.Dataset;
@@ -137,12 +140,12 @@ public class TaskController {
             task.setActive(Boolean.FALSE);
             taskRepository.save(task);
             switch (option) {
-            case "upload":
-                return "redirect:/task/upload?state=" + state;
-            case "create":
-                return "redirect:/task/create?state=" + state;
-            case "preprocess":
-                return "redirect:/task/preprocess?state=" + state;
+                case "upload":
+                    return "redirect:/task/upload?state=" + state;
+                case "create":
+                    return "redirect:/task/create?state=" + state;
+                case "preprocess":
+                    return "redirect:/task/preprocess?state=" + state;
             }
         }
         return "redirect:/error";
@@ -240,9 +243,9 @@ public class TaskController {
     public String listDetailedPreprocesss(Authentication authentication, Model model,
             @RequestParam(name = "state", required = false, defaultValue = Task.STATE_SUCESS) String state,
             @RequestParam(name = "name", required = false, defaultValue = "") String name) {
-        
+
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        
+
         String username = userDetails.getUsername();
         Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
@@ -306,17 +309,19 @@ public class TaskController {
         String username = userDetails.getUsername();
         Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
+        Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
 
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
         model.addAttribute("photo", optUser.get().getPhoto());
 
-        Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
-
         if (optDataset.isPresent() && optDataset.get().getAuthor().equals(username)) {
             Dataset dataset = optDataset.get();
+            ArrayList<TaskCreateUPreprocessing> tasks = taskRepository.findAllTaskCreateUPreprocessing(dataset, Task.STATE_SUCESS);
+
             model.addAttribute("dataset", dataset);
             model.addAttribute("task", new TaskCreateUPreprocessing());
+            model.addAttribute("tasks", tasks);
             return "create_preprocessing_task";
         } else {
             return "redirect:/error";
@@ -325,15 +330,16 @@ public class TaskController {
 
     @PostMapping("/preprocess/create")
     public String createPreprocessingTask(Authentication authentication, Model model,
-            @RequestParam(name = "preprocessDataset") String datasetName, RedirectAttributes redirectAttributes,
+            RedirectAttributes redirectAttributes,
             @Valid @ModelAttribute("task") TaskCreateUPreprocessing task, BindingResult bindingResult,
+            @RequestParam(name = "preprocessDataset") String datasetName,
             @RequestParam(name = "multipart") MultipartFile pipeline) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
         Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
-        
+
         model.addAttribute("authority", authority);
         model.addAttribute("username", username);
         model.addAttribute("photo", optUser.get().getPhoto());
@@ -349,14 +355,41 @@ public class TaskController {
                 model.addAttribute("task", task);
                 return "create_preprocessing_task";
             }
-
-            String message = taskService.createPreprocessingTask(dataset, task, pipeline);
-            redirectAttributes.addAttribute("message", message);
-            return "redirect:/task/preprocess?id=" + datasetName;
+                try {
+                    String message = taskService.createPreprocessingTask(dataset, task, pipeline.getBytes());
+                    redirectAttributes.addAttribute("message", message);
+                    return "redirect:/task/preprocess?id=" + datasetName;
+                } catch (IOException ex) {
+                    Logger.getLogger(TaskController.class.getName()).log(Level.SEVERE, null, ex);
+                    return "redirect:/error";
+                }
+            
         } else {
             return "redirect:/error";
         }
 
+    }
+
+    @PostMapping("/preprocess/reuse")
+    public String createPreprocessingTask(Authentication authentication, Model model,
+            RedirectAttributes redirectAttributes,
+            @RequestParam(name = "preprocessDataset") String datasetName,
+            @RequestParam(name = "task") String taskId) {
+
+        Long id = new Long(taskId);
+        Optional<Dataset> optDataset = datasetRepository.findById(datasetName);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+
+        if (optDataset.isPresent() && optDataset.get().getAuthor().equals(username)) {
+            Dataset dataset = optDataset.get();
+            TaskCreateUPreprocessing task = taskRepository.findTaskCreateUPreprocessingById(id);
+            String message = taskService.createPreprocessingTask(dataset, task, task.getPipeline());
+            redirectAttributes.addAttribute("message", message);
+
+            return "redirect:/task/preprocess?id=" + datasetName;
+        }
+        return "redirect:/error";
     }
 
     @GetMapping("/preprocess/downloadpipeline")
@@ -373,7 +406,7 @@ public class TaskController {
                 HttpHeaders httpHeaders = new HttpHeaders();
                 httpHeaders.set("content-type", "application/xml");
                 httpHeaders.set("content-disposition", "attachment;" + "filename=" + fileName);
-                ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
+                ResponseEntity<InputStreamResource> response = new ResponseEntity<>(
                         new InputStreamResource(fis), httpHeaders, HttpStatus.CREATED);
                 return response;
 

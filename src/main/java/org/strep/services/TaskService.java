@@ -217,14 +217,14 @@ public class TaskService {
         return message;
     }
 
-    public String createPreprocessingTask(Dataset dataset, TaskCreateUPreprocessing task, MultipartFile pipeline) {
+    public String createPreprocessingTask(Dataset dataset, TaskCreateUPreprocessing task, byte[] pipeline) {
         Locale locale = LocaleContextHolder.getLocale();
         String message = "";
         try {
-            TaskCreateUPreprocessing toCreateTask = new TaskCreateUPreprocessing(dataset, task.getName(), Task.STATE_WAITING, null, task.getDescription(), pipeline.getBytes(), null, new Date(), dataset);
+            TaskCreateUPreprocessing toCreateTask = new TaskCreateUPreprocessing(dataset, task.getName(), Task.STATE_WAITING, null, task.getDescription(), pipeline, null, new Date(), dataset);
             taskRepository.save(toCreateTask);
             message = messageSource.getMessage("createpreprocessing.sucessfull.message", Stream.of().toArray(String[]::new), locale);
-        } catch (IOException ioException) {
+        } catch (Exception exception) {
             message = messageSource.getMessage("createpreprocessing.pipeline.error", Stream.of(pipeline).toArray(String[]::new), locale);
 
             return message;

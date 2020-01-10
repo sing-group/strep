@@ -323,7 +323,7 @@ $(document).ready(function () {
         changeLocale($('#locales').val());
     }, false);
 
-    //Needed to update properly the dropbox
+    // Needed to update properly the dropbox
     let params = new URLSearchParams(location.search);
     var lang = params.get('lang');
     if (lang != null) {
@@ -340,4 +340,18 @@ $(document).ready(function () {
         $("#" + pathname).addClass("active");
     }
 
+    // create_preprocessing_task. Needed to disabled the unselect option.
+    $("#selectTask").change(function () {
+        if ($("#selectTask option:selected" ).val() != ""){
+            $("#name").attr("disabled", true);
+            $("#description").attr("disabled", true);
+            $("#dataset-file").attr("disabled", true);
+            $("#createPreprocessingTaskF").attr("action","/task/preprocess/reuse")
+        } else {
+            $("#name").attr("disabled", false);
+            $("#description").attr("disabled", false);
+            $("#dataset-file").attr("disabled", false);
+            $("#createPreprocessingTaskF").attr("action","/task/preprocess/create")
+        }
+    });
 });
