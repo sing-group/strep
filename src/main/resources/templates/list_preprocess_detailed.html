@@ -48,7 +48,7 @@
                                     <td th:text="${#dates.format(task.date, 'yyyy-MM-dd')}" class="td-date"></td>
                                     <td th:text="${task.name}"></td>
                                     <td th:text="${task.description}" width="100%" class="justify"></td>
-                                    <td >
+                                    <td class="minw_110">
                                         <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{createtasks.downloadpipeline}" th:href="'/task/preprocess/downloadpipeline?id='+ ${task.id}">
                                             <i class="fas fa-file-download"></i>
                                         </a>

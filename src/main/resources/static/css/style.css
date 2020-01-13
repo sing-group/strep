@@ -62,8 +62,6 @@ tr:nth-child(even){
     bottom: 0px;
     width: 100%;
     height: 84px;
-    left: 0px ;
- /*   margin-top:5em;*/
 }
 
 .submit-button
@@ -554,7 +552,7 @@ legend{
   border-bottom: 1px solid #203939 !important;
 }
 .minw_110{
-  min-width: 110px;
+  min-width: 110px !important;
 }
 .modal-content{
   margin-bottom: 10px;

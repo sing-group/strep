@@ -106,9 +106,12 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @param id the id of the task
      * @return the preprocessing task with that id
      */
-     //select access from dataset where name='nuevo' and (author='admin' OR access <>'private')
-    @Query("select t from TaskCreateUPreprocessing t where t.active='1' and t.state=?2 and t.preprocessDataset<>?1")
-    public ArrayList<TaskCreateUPreprocessing> findAllTaskCreateUPreprocessing(Dataset dataset, String state);
+    @Query(value="SELECT t "+
+    "FROM TaskCreateUPreprocessing t, Dataset d "+
+    "WHERE d.name=t.preprocessDataset.name "+
+    "AND t.preprocessDataset.name<>?1 AND (d.access IN ('public','protected') OR d.author=?2) " +
+    "AND  t.state=?3")
+    public ArrayList<TaskCreateUPreprocessing> findAllTaskCreateUPreprocessing(String datasetName, String username, String state);
 
     /**
      * Return the user task for the specified user

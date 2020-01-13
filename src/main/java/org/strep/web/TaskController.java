@@ -317,11 +317,31 @@ public class TaskController {
 
         if (optDataset.isPresent() && optDataset.get().getAuthor().equals(username)) {
             Dataset dataset = optDataset.get();
-            ArrayList<TaskCreateUPreprocessing> tasks = taskRepository.findAllTaskCreateUPreprocessing(dataset, Task.STATE_SUCESS);
+            ArrayList<TaskCreateUPreprocessing> distinctTasks = new ArrayList<>();
+            ArrayList<TaskCreateUPreprocessing> tasks = taskRepository.findAllTaskCreateUPreprocessing(datasetName, username, Task.STATE_SUCESS);
+
+            for (TaskCreateUPreprocessing t : tasks) {
+                String taskName = t.getName();
+
+                if (distinctTasks.size() > 0) {
+                    boolean exists = false;
+                    for (TaskCreateUPreprocessing dt : distinctTasks) {
+                        if (dt.getName().equals(taskName)) {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (!exists){
+                        distinctTasks.add(t);
+                    }
+                } else {
+                    distinctTasks.add(t);
+                }
+            }
 
             model.addAttribute("dataset", dataset);
             model.addAttribute("task", new TaskCreateUPreprocessing());
-            model.addAttribute("tasks", tasks);
+            model.addAttribute("tasks", distinctTasks);
             return "create_preprocessing_task";
         } else {
             return "redirect:/error";
@@ -355,15 +375,15 @@ public class TaskController {
                 model.addAttribute("task", task);
                 return "create_preprocessing_task";
             }
-                try {
-                    String message = taskService.createPreprocessingTask(dataset, task, pipeline.getBytes());
-                    redirectAttributes.addAttribute("message", message);
-                    return "redirect:/task/preprocess?id=" + datasetName;
-                } catch (IOException ex) {
-                    Logger.getLogger(TaskController.class.getName()).log(Level.SEVERE, null, ex);
-                    return "redirect:/error";
-                }
-            
+            try {
+                String message = taskService.createPreprocessingTask(dataset, task, pipeline.getBytes());
+                redirectAttributes.addAttribute("message", message);
+                return "redirect:/task/preprocess?id=" + datasetName;
+            } catch (IOException ex) {
+                Logger.getLogger(TaskController.class.getName()).log(Level.SEVERE, null, ex);
+                return "redirect:/error";
+            }
+
         } else {
             return "redirect:/error";
         }

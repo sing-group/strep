@@ -1,195 +1,79 @@
 <!DOCTYPE HTML>
 <html>
 
-<head>
-    <title th:text="#{app.name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/css/square-menu.css">
-    <link rel="icon" type="image/png" href="/images/STRepLogo.png">
-</head>
+    <head>
+        <title th:text="#{app.name}"></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+              integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="stylesheet" type="text/css" href="/css/square-menu.css">
+        <link rel="icon" type="image/png" href="/images/STRepLogo.png">
+    </head>
 
-<body class="main-bg">
-    <div class="header">
-        <div th:include="header.html"></div>
-    </div>
-    <!--<p th:text="${T(org.strep.configuration.ApplicationConfig).getAppName()}"></p>-->
-    <div class="container">
-        <div class="alert alert-dismissible alert-danger error-label" th:unless="${param.error == null}">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <label class="" th:text="#{header.wrongusernameorpassword}"></label>
+    <body class="main-bg">
+        <div class="header">
+            <div th:include="header.html"></div>
         </div>
-        <div class="alert alert-dismissible alert-info" th:unless="${param.register==ok}">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <label class="" th:text="#{header.registerok}"></label>
-        </div>
-        <div class="alert alert-dismissible alert-info" th:if="${param.confirmed!=null and param.confirmed[0]=='ok'}">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <p th:text="#{register.email.confirmedaccount1}" class="bold"></p>
-            <p th:text="#{register.email.confirmedaccount2}"></p>
-        </div>
-        <div class="alert alert-dismissible alert-error"
-            th:if="${param.confirmed!=null and param.confirmed[0]=='nook'}">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <p th:text="#{register.email.noconfirmedaccount}"></p>
-        </div>
-        <!--div id="banner" class="page-header">
-                <div class="row">
-                    <div class="col-12">
-                        <h1 th:text="#{title.home}" class="aligned-input"></h1> 
-                    </div>
-                </div>
-            </div>-->
-        <div id="bs-docs-section" class="rmenu-section">
-            <div class="row">
-                <div class="col-6">
-
-                    <div class="home-text">
-                        <p>
-                            <span th:text="#{title.home}" class="title-home"></span></br></br>
-                            Research data for spam (rdata4spam) emerged as corpora repository designed keeping in mind
-                            the protection of the authors of compiled texts, ensuring all techniques can be applied and
-                            facilitating preprocessing of data according the user needs. 
-                        </br></br>
-                            rdata4spam is powered by STRep software (Spam Text Repository, https://github.com/sing-group/strep), BDP4J (Big Data
-                            Preprocessing for Java, https://github.com/sing-group/bdp4j) and NLPA (Natural Language
-                            Processing Architecture, https://github.com/sing-group/nlpa).
-                            
-                        </p>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="wrap">
-                        <a class="radial-menu" href="#">
-                            <div></div>
-                        </a>
-                        <a class="radial-menu" href="#">
-                            <div></div>
-                        </a>
-                        <a class="radial-menu" href="#">
-                            <div></div>
-                        </a>
-                        <a class="radial-menu" href="#">
-                            <div></div>
-                        </a>
-                        <a class="radial-menu" href="#">
-                            <div></div>
-                        </a>
-                    </div>
-                </div>
+        <div class="container">
+            <div class="alert alert-dismissible alert-danger error-label" th:unless="${param.error == null}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <label class="" th:text="#{header.wrongusernameorpassword}"></label>
             </div>
-            <!-- VERSION INICIAL
-                    <div class="row">
-                    <div class="col-6">
-                        <img class="wlc-pic" src="/images/public_dataset.png" th:attr="alt = #{public.home.title}">
-                        <a href="/dataset/public"><h3 class="main-text text-center" th:text="#{public.home.title}"></h3></a>
-                        <p class="main-text text-center" th:text="#{public.home.subtitle}"></p>  
-                    </div>
-                    <div class="col-6">
-                        <img class="wlc-pic"  src="/images/storeexchangecreate.svg" th:attr="alt = #{store.home.title}">
-                        <h3 class="main-text text-center" th:text="#{store.home.title}"></h3>
-                        <p class="main-text text-center" th:text="#{store.home.subtitle}"></p> 
-                    </div>
-                </div>
+            <div class="alert alert-dismissible alert-info" th:unless="${param.register==ok}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <label class="" th:text="#{header.registerok}"></label>
+            </div>
+            <div class="alert alert-dismissible alert-info" th:if="${param.confirmed!=null and param.confirmed[0]=='ok'}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p th:text="#{register.email.confirmedaccount1}" class="bold"></p>
+                <p th:text="#{register.email.confirmedaccount2}"></p>
+            </div>
+            <div class="alert alert-dismissible alert-error"
+                 th:if="${param.confirmed!=null and param.confirmed[0]=='nook'}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p th:text="#{register.email.noconfirmedaccount}"></p>
+            </div>
+            <div id="bs-docs-section" class="rmenu-section">
                 <div class="row">
                     <div class="col-6">
-                        <img class="wlc-pic" src="/images/tiposarchivos.png" th:attr="alt = #{formats.home.title}">
-                        <h3 class="main-text text-center"  th:text="#{formats.home.title}"></h3>
-                        <p class="main-text text-center"  th:text="#{formats.home.subtitle}"></p> 
+
+                        <div class="home-text">
+                            <p>
+                                <span th:text="#{title.home}" class="title-home"></span></br></br>
+                                <span th:text="#{public.home.text1}"></span>
+                                </br></br>
+                                <span th:text="#{public.home.text2}"></span>
+                            </p>
+                        </div>
                     </div>
                     <div class="col-6">
-                        <img class="wlc-pic"  src="/images/signup.png" th:attr="alt = #{singup.home.title}">
-                        <a href="/user/register"><h3 class="main-text text-center btn-list" th:text="#{signup.home.title}"></h3></a>
-                        <p class="main-text text-center" th:text="#{signup.home.subtitle}"></p>
-                    </div>
-                </div>
-            </div-->
-            <!-- ÓVALO
-        <div class="row">
-                        
-                            
-                <div class="home-text">
-                   
-                </div>
-            <div class="col-12">
-                <div class="wrap">
-                    <a class="radial-menu" href="#">
-                        <div></div>
-                    </a>
-                    <a class="radial-menu" href="#">
-                        <div></div>
-                    </a>
-                    <a class="radial-menu" href="#">
-                        <div></div>
-                    </a>
-                    <a class="radial-menu" href="#">
-                        <div></div>
-                    </a>
-                    <a class="radial-menu" href="#">
-                        <div></div>
-                    </a>
-                </div>
-            </div>
-        </div>-->
-            <!-- CÍRCULO CON TEXTO
-            <div class="row">
-                <div class="col-6">
-                    
-                    <div class="home-text">
-                        <p>
-                            <span th:text="#{title.home}" class="title-home"></span></br></br>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley of type and scrambled it to make a type specimen book. It has survived not only five
-                            centuries, but also the leap into electronic typesetting.
-                            </br></br>
-                            It is a long established fact that a reader will be distracted by the readable content of a
-                            page when looking at its layout.
-                            Many desktop publishing packages and web page
-                            editors now use Lorem Ipsum as their default
-                            model text.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="wrap">
-                        <a class="radial-menu" href="#">
-                            <div></div>
-                        </a>
-                        <a class="radial-menu" href="#">
-                            <div></div>
-                        </a>
-                        <a class="radial-menu" href="#">
-                            <div></div>
-                        </a>
-                        <a class="radial-menu" href="#">
-                            <div></div>
-                        </a>
-                        <a class="radial-menu" href="#">
-                            <div></div>
-                        </a>
+                        <div class="wrap">
+                            <a class="radial-menu" href="#">
+                                <div></div>
+                            </a>
+                            <a class="radial-menu" href="#">
+                                <div></div>
+                            </a>
+                            <a class="radial-menu" href="#">
+                                <div></div>
+                            </a>
+                            <a class="radial-menu" href="#">
+                                <div></div>
+                            </a>
+                            <a class="radial-menu" href="#">
+                                <div></div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-            -->
-            <!-- SOLO IMAGEN CENTRAL
-                    <div class="wrap">
-                      <a class="radial-menu" href="#"><div></div></a>
-                      <a class="radial-menu" href="#"><div></div></a>
-                      <a class="radial-menu" href="#"><div></div></a>
-                      <a class="radial-menu" href="#"><div></div></a>
-                      <a class="radial-menu" href="#"><div></div></a>
-                    </div>
-                -->
         </div>
         <div class="footer">
             <div th:include="footer.html"></div>
         </div>
-</body>
-
+    </body>
 </html>
