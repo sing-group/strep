@@ -181,8 +181,8 @@ function updateTable(id) {
         }
 
         url += "&inputSpamEml=" + inputSpamEmlValue + "&inputHamEml=" + inputHamEmlValue + "&inputSpamTsms=" + inputSpamTsmsValue + "&inputHamTsms=" + inputHamTsmsValue +
-            "&inputSpamYtbid=" + inputSpamTytbValue + "&inputHamYtbid=" + inputHamTytbValue + "&inputSpamTwtid=" + inputSpamTwtidValue + "&inputHamTwtid=" + inputHamTwtidValue +
-            "&inputSpamWarc=" + inputSpamWarcValue + "&inputHamWarc=" + inputHamWarcValue;
+                "&inputSpamYtbid=" + inputSpamTytbValue + "&inputHamYtbid=" + inputHamTytbValue + "&inputSpamTwtid=" + inputSpamTwtidValue + "&inputHamTwtid=" + inputHamTwtidValue +
+                "&inputSpamWarc=" + inputSpamWarcValue + "&inputHamWarc=" + inputHamWarcValue;
         checkSelectedDatasets();
         $("#datatypes-table").load(url, function (response, status, xhr) {
             if (status == "error") {
@@ -230,11 +230,11 @@ function checkIfPosibleSpam() {
     });
 }
 
-function about() { 
+function about() {
     var popup = document.getElementById("myPopup");
     popup.classList.toggle("show");
 }
-  
+
 function checkNullValues(input) {
     if (input != null) {
         return input.value;
@@ -276,7 +276,6 @@ function changeLocale(id) {
 function deniedRequest() {
 
     document.getElementById('permissionForm').action = '/permission/reject';
-    alert(document.getElementById('permissionForm').action)
     document.getElementById('permissionForm').submit();
 }
 
@@ -342,16 +341,35 @@ $(document).ready(function () {
 
     // create_preprocessing_task. Needed to disabled the unselect option.
     $("#selectTask").change(function () {
-        if ($("#selectTask option:selected" ).val() != ""){
-            $("#name").attr("disabled", true);
-            $("#description").attr("disabled", true);
+        //$('#errorLabelName').remove();
+        var taskId = $("#selectTask option:selected").val()
+        if (taskId !== "") {
+            
             $("#dataset-file").attr("disabled", true);
-            $("#createPreprocessingTaskF").attr("action","/task/preprocess/reuse")
+            $("#createPreprocessingTaskF").attr("action", "/task/preprocess/reuse");
+            
+            // Fill name and description 
+            var url = encodeURI("/task/fillFields?id=" + taskId);
+
+            $("#task-data").load(url, function (response, status, xhr) {
+          //      $('#errorLabelName').remove();
+                if (status === "error") {
+                    alert("error");
+                    location.reload();
+                } else {
+                    $("#name").attr("readonly", true);
+                    $("#description").attr("readonly", true);
+                }
+            });
+
         } else {
-            $("#name").attr("disabled", false);
-            $("#description").attr("disabled", false);
+            $("#name").attr("readonly", false);
+            $("#name").val("");
+            $("#description").attr("readonly", false);
+            $("#description").val("");
             $("#dataset-file").attr("disabled", false);
-            $("#createPreprocessingTaskF").attr("action","/task/preprocess/create")
+            $('.error-label').attr("disabled", false);
+            $("#createPreprocessingTaskF").attr("action", "/task/preprocess/create")
         }
     });
 });

@@ -7,7 +7,7 @@ INSERT IGNORE INTO dataset_types(id, description, name) VALUES(1, "Datasets crea
  
 --Admin password 12admin34
 INSERT IGNORE INTO user(username, confirmed_account, email, hash, name, encrypted_password, photo, surname, permission_id) VALUES ('admin',b'1',
-  'onlinepreprocessor@gmail.com','system_default','System Administrator','$2a$10$3Gfa1K4Te7xeE4s8cvOhnecyN7v.iai4GXkhlrX1JXokt1PLHrKYi',null,'',4);
+  'rdata.repository@gmail.com','system_default','System Administrator','$2a$10$3Gfa1K4Te7xeE4s8cvOhnecyN7v.iai4GXkhlrX1JXokt1PLHrKYi',null,'',4);
 INSERT IGNORE INTO permission(id, name, description) VALUES (1,"View", 
   "Users can: view system datasets, view protected datasets and request permissions");
 INSERT IGNORE INTO permission(id, name, description) VALUES (2,"CreateCorpus", 

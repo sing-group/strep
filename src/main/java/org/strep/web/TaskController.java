@@ -151,6 +151,16 @@ public class TaskController {
         return "redirect:/error";
     }
 
+     @GetMapping("/fillFields")
+    public String fillTaskFields(Authentication authentication, Model model, @RequestParam("id") int id) {
+        Long idLong = new Long(id);
+        TaskCreateUPreprocessing task = taskRepository.findTaskCreateUPreprocessingById(idLong);
+        model.addAttribute("task",task);
+        System.out.println("task name: " + task.getName());
+        System.out.println("task description: " + task.getDescription());
+        return "create_preprocessing_task::task-data";
+    }
+    
     @GetMapping("/detailed")
     public String detailedTask(Authentication authentication, Model model, @RequestParam(name = "task") int id) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();

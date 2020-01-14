@@ -37,18 +37,40 @@
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <p th:text="#{register.email.noconfirmedaccount}"></p>
             </div>
-            <div id="bs-docs-section" class="rmenu-section">
-                <div class="row">
-                    <div class="col-6">
-
-                        <div class="home-text">
-                            <p>
-                                <span th:text="#{title.home}" class="title-home"></span></br></br>
-                                <span th:text="#{public.home.text1}"></span>
-                                </br></br>
-                                <span th:text="#{public.home.text2}"></span>
-                            </p>
+            <div id="bs-docs-section" class="rmenu-section ">
+                <div class="row hide" id="responsive-home-text">
+                    <div class="col-12 home-text">
+                        <p th:text="#{title.home}" class="title-home-responsive"></p>
+                        <p th:text="#{public.home.text1}"></p>
+                        <p th:text="#{public.home.text2}"></p>
+                    </div>
+                </div>
+                <div class="row hide" id="responsive-home-image">
+                    <div class="col-12">
+                        <div class="wrap">
+                            <a class="radial-menu" href="#">
+                                <div></div>
+                            </a>
+                            <a class="radial-menu" href="#">
+                                <div></div>
+                            </a>
+                            <a class="radial-menu" href="#">
+                                <div></div>
+                            </a>
+                            <a class="radial-menu" href="#">
+                                <div></div>
+                            </a>
+                            <a class="radial-menu" href="#">
+                                <div></div>
+                            </a>
                         </div>
+                    </div>
+                </div>
+                <div class="row" id="home">
+                    <div class="col-6 home-text">
+                        <p th:text="#{title.home}" class="title-home"></p>
+                        <p th:text="#{public.home.text1}"></p>
+                        <p th:text="#{public.home.text2}"></p>
                     </div>
                     <div class="col-6">
                         <div class="wrap">
