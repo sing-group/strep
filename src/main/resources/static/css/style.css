@@ -9,7 +9,6 @@ body
     margin: 0 auto;
     margin-bottom: 40px;
     font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    /*max-width: 1200px;*/
 }
 
 thead{
@@ -34,8 +33,6 @@ a{
 }
 
 .table thead th{
-    /*border-top: 1px solid FBFBFB !important;
-    border-top:  0px !important;*/
     border-bottom:  0px !important;
     color: #203939;
     text-align: left;
@@ -93,7 +90,6 @@ tr:nth-child(even){
     color: #203939;
     font-size: 1;
     font-weight: bold;
-    /*font-family: 'PT Sans', sans-serif;*/
 }
 
 .normal-text
@@ -148,7 +144,6 @@ input[type="date"]{
 .info-label
 {
     color: #9cb805;
-    /*  font-family: "Times New Roman";*/
 }
 .error-label
 {
@@ -176,11 +171,6 @@ input[type="checkbox"]{
 {
     margin-top:30px;
 }
-
-/*.welcome-text
-{
- text-align: center;
-}*/
 
 .page-content
 {
@@ -219,7 +209,6 @@ input[type="checkbox"]{
 
 .logout-icon, .user-photo, #locales
 {
-    /*margin-left: 20px;*/
     margin-right:20px;  
 }
 .icons{
@@ -236,8 +225,6 @@ input[type="checkbox"]{
 }
 .header-lang-user{
     display: inline-flex;
-    /*min-width: 170px;*/
-    height: 32px;
 }
 .image-button
 {
@@ -280,7 +267,6 @@ input[type="checkbox"]{
     color: #FFFFFF;
 }
 .indent{
-    /*text-indent: 0.5em;*/
     font-size: 95%;
 }
 .border-bottom{
@@ -368,8 +354,10 @@ input[type="checkbox"]{
 #locales{
     font-size: 14px;
     width: 45px;
-    height: 32px;
+    height: 36px;
     padding: 0px;
+    margin-left:10px;
+    align-self: center;
 }
 .dlocales{
     padding-left: 5px;
@@ -381,9 +369,7 @@ input[type="checkbox"]{
 ul li .dropdown-menu{
     background-color: #203939;
 }
-/*.dropdown.toogle{
-  width: 20px !important;
-}*/
+
 .jumbotron{
     background-color: #FBFBFB;
 }
@@ -391,8 +377,6 @@ ul li .dropdown-menu{
     border-color: #dee2e6 !important;
 }
 #username, #password {
-    /*background-color : #FFFFFF !important;
-    border-color : #e8f3f3 !important;*/
     background-color : #FFFFFF !important;
     max-width: 120px;
 }
@@ -434,7 +418,6 @@ input {
 .nav-item .nav-link.active, .nav-item .nav-link:hover{
     color:#203939 !important;
     text-decoration: none;
-    /* font-size: 16px;*/
 }
 
 #datasetpublic, #userregister{
@@ -464,11 +447,7 @@ input {
 .header{
     padding-bottom: 50px;
 }
-/*
-.footer{
-  padding-top: 50px;
-}
-*/
+
 .list-unstyled{
     display: flex;
     align-items: center;
@@ -486,7 +465,6 @@ legend{
 }
 .alert-primary{
     background-color: #e5f1f1;
-    /*background-color: #FFF;*/
     color: #203939;
 }
 .odd{
@@ -544,7 +522,6 @@ legend{
 
 .justify{
     text-align: justify;
-    /* font-size: 0.9375rem !important;*/
     font-weight:400;
 }
 
@@ -568,6 +545,19 @@ legend{
 .fa-times-padding{
     padding-right:8px;
 }
+
+
+#dlogin{
+    font-size: 16px;
+    float: left;
+    display:flex
+}
+#dmenu{
+    min-width: 350px;
+    position: relative;
+    width:100%;
+}
+
 /***** Responsive *****/
 
 @media (max-width: 375px){
@@ -576,16 +566,6 @@ legend{
     #username,#password{margin-bottom: 5px;}
     .header-lang-user{margin-left:0px !important;}
     .row{min-height: 60px;}
-}
-
-#dlogin{
-    padding-right: 10px;
-    font-size: 16px;
-}
-#dmenu{
-    min-width: 350px;
-    position: relative;
-    width:100%;
 }
 
 @media screen and (max-width: 1023px) {
@@ -600,6 +580,12 @@ legend{
         #dlogin { width: 100%; }
         #dmenu { width: 100%;}
         .dlocales{ width: 100%;}
+    }
+    @media (max-width: 550px) {
+        #locales{
+            align-self: end;
+            margin-bottom: 0.9rem !important;
+        }
     }
 }
 

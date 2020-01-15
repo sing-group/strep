@@ -13,7 +13,7 @@
                     <a id="userregister" class="nav-link" href="/user/register" th:text="#{signup.home.title}"></a>
                 </li>
             </ul>
-            <div sec:authorize="isAnonymous()" id="dlogin" style="float: left">
+            <div sec:authorize="isAnonymous()" id="dlogin">
                 <form action="#" th:action="@{/}" th:object="${user}" method="post" class="form-inline my-2 my-lg-0">
                     <label class="control-label-login" for="#{header.username}" id="laddLicense" name="lUsername" th:text="#{header.username}" ></label>
                     <input class="form-control mr-sm-2" type="text" id="username" name="username" th:attr="placeholder=#{header.username}">
@@ -22,8 +22,6 @@
                     <input class="form-control mr-sm-2" type="password" id="password" name="password" th:attr="placeholder=#{header.password}">
                     <button class="btn btn-success my-2 my-sm-0" type="submit" value="Login">Login</button>
                 </form>
-            </div>
-            <div class="header-lang-user no-login">
                 <select id="locales" class="form-control">
                     <option id="en" value="en" th:text="EN" onclick="changeLocale(this.id)"></option>
                     <option id="es" value="es" th:text="ES" onclick="changeLocale(this.id)"></option>
@@ -31,6 +29,7 @@
             </div>
         </div>
     </div>
+    <p th:text="${username}"></p>
     <div class="container" th:if="${username}!=null">
         <a class="nav-brand nav-link" href="/dataset/list" id="home">HOME</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +52,7 @@
                         </div>
                     </div>
                 </li>
-                
+
                 <div th:if="${authority!=T(org.strep.domain.Permission).VIEW}">
                     <li class="nav-item dropdown">
                         <a class="topdiv-text dropdown-toggle nav-link" id="navbar-link" href="#" data-toggle="dropdown"
@@ -111,7 +110,6 @@
             </ul>
 
             <!--TODO: Change this for an image passed from parameters-->
-
             <div class="header-lang-user">
                 <select id="locales" class="form-control">
                     <option id="en" value="en" th:text="EN" onclick="changeLocale(this.id)"></option>
@@ -124,7 +122,7 @@
                 &nbsp;<span th:text="${username}" class="topdiv-text"></span>&nbsp;&nbsp;
             </div>
             <div class="float-right logout-icon">
-                <a href="/logout" class="logout-icon icons">
+                <a href="/logout" class=" icons"><!--logout-icon-->
                     <i class="fas fa-door-open fa-2x"></i>
                 </a>
             </div>
