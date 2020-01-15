@@ -59,6 +59,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.lang.Math;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 
 /**
  * This controller responds to all requests related to datasets
@@ -72,6 +74,9 @@ public class DatasetController {
 
     @Value("${host.name}")
     private String HOST_NAME;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Autowired
     private DatasetRepository datasetRepository;
@@ -184,31 +189,31 @@ public class DatasetController {
         String authority = userService.getPermissionsByUsername(username);
         ArrayList<Dataset> datasets = new ArrayList<>();
         switch (type) {
-        case "community":
-            datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
-            break;
-
-        case "user":
-            // You have to do this because in case of view permission, default view is
-            // communityDatasets but, default type is always user
-            if (authority.equals(Permission.VIEW)) {
+            case "community":
                 datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
-            } else {
-                datasets = datasetRepository.getOwnDatasets(username, Dataset.TYPE_USER);
-            }
-            break;
+                break;
 
-        case "usersystem":
-            if (authority.equals(Permission.ADMINISTER)) {
-                datasets = datasetRepository.getSystemDatasets();
-            } else {
-                datasets = datasetRepository.getSystemDatasets(username, Dataset.TYPE_SYSTEM);
-            }
-            break;
+            case "user":
+                // You have to do this because in case of view permission, default view is
+                // communityDatasets but, default type is always user
+                if (authority.equals(Permission.VIEW)) {
+                    datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
+                } else {
+                    datasets = datasetRepository.getOwnDatasets(username, Dataset.TYPE_USER);
+                }
+                break;
 
-        default:
-            datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
-            type = "community";
+            case "usersystem":
+                if (authority.equals(Permission.ADMINISTER)) {
+                    datasets = datasetRepository.getSystemDatasets();
+                } else {
+                    datasets = datasetRepository.getSystemDatasets(username, Dataset.TYPE_SYSTEM);
+                }
+                break;
+
+            default:
+                datasets = datasetRepository.getCommunityDatasets(username, Dataset.TYPE_USER);
+                type = "community";
         }
         model.addAttribute("type", type);
         model.addAttribute("authority", authority);
@@ -398,10 +403,28 @@ public class DatasetController {
             model.addAttribute("dataset", dataset);
             return "add_dataset";
         } else {
+
             String message = datasetService.uploadDataset(dataset, datasetFile, username);
             redirectAttributes.addFlashAttribute("message", message);
             model.addAttribute("authority", authority);
             model.addAttribute("username", username);
+             
+            // Send mail to admin
+            Locale locale = LocaleContextHolder.getLocale();
+            ArrayList<User> usersList = userRepository.findUserByPermission(Permission.ADMINISTER);
+            System.out.println("usersList: " +  usersList.size());  
+            List<String> toList = new ArrayList<>();
+            usersList.forEach((u) -> {
+                toList.add(u.getEmail());
+            });
+            
+            SimpleMailMessage sMailMessage = new SimpleMailMessage();
+            System.out.println("emails: " +  toList);            
+            sMailMessage.setTo(toList.stream().toArray(String[]::new));
+            sMailMessage.setSubject(messageSource.getMessage("add.dataset.subject", null, locale));
+            sMailMessage.setText(messageSource.getMessage("add.dataset.text", Stream.of(username).toArray(String[]::new), locale));
+            mailSender.send(sMailMessage);
+
             return "redirect:/dataset/list?type=user";
         }
 
@@ -423,10 +446,10 @@ public class DatasetController {
 
         String visibility = "";
         if (optTask.isPresent()) {
-             TaskCreateUdataset task = optTask.get();
+            TaskCreateUdataset task = optTask.get();
             Optional<Dataset> optSourceDataset = datasetRepository.findById(task.getDataset().getName());
             if (optSourceDataset.isPresent()) {
-                 for (Dataset sourceDataset : task.getDatasets()) {
+                for (Dataset sourceDataset : task.getDatasets()) {
                     if (!sourceDataset.getLicense().isRedistribute()) {
                         visibility = Dataset.ACCESS_PRIVATE;
                     }
@@ -482,13 +505,13 @@ public class DatasetController {
                     return "edit_dataset";
                 } else {
 
-             System.out.println("ERROR 2");
+                    System.out.println("ERROR 2");
                     return "redirect:/error";
                 }
 
             } else {
 
-             System.out.println("ERROR 1");
+                System.out.println("ERROR 1");
                 return "redirect:/error";
             }
 
@@ -577,7 +600,7 @@ public class DatasetController {
                         if (!currentLicense.getName().equals(checkedDatasetsLicenses.get(indexLicenses).getName())
                                 && !checkedDatasetsLicenses.get(indexLicenses).isChangeLicense()) {
                             msg = "Dataset " + filteredDatasets.get(position)
-                                + messageSource.getMessage("filterdatasetsbylicense.dataset.notchangelicense", null, locale);
+                                    + messageSource.getMessage("filterdatasetsbylicense.dataset.notchangelicense", null, locale);
                             if (message.lastIndexOf(msg) == -1) {
                                 message.append(msg).append("\r\n");
                             }
@@ -619,7 +642,7 @@ public class DatasetController {
         for (String datasetName : checkedDatasets) {
             Dataset dataset = datasetRepository.findDatasetByName(datasetName);
             allCitationRequestFields.append(dataset.getCitationRequest());
-            if (!allCitationRequestFields.toString().equals("")){
+            if (!allCitationRequestFields.toString().equals("")) {
                 allCitationRequestFields.append("\r\n");
             }
             filteredDatasets.add(dataset.getName());
@@ -645,20 +668,20 @@ public class DatasetController {
     @GetMapping("/validateCitationRequest")
     public String validateCitationRequest(Authentication authentication, Model model,
             @RequestParam(name = "license", required = true) String license) {
-                Locale locale = LocaleContextHolder.getLocale();
-                String requiredCitationRequest= "0";
-                Iterable<License> licenses = licenseRepository.findByName(license);
+        Locale locale = LocaleContextHolder.getLocale();
+        String requiredCitationRequest = "0";
+        Iterable<License> licenses = licenseRepository.findByName(license);
         String licenseName = "";
         for (License lic : licenses) {
             if (lic.isAttributeRequired()) {
                 licenseName = lic.getName();
-                requiredCitationRequest= "1";
-            } 
+                requiredCitationRequest = "1";
+            }
         }
-        String message= "";
-        if (requiredCitationRequest.equals("1")){
-            message = messageSource.getMessage("validatecitationrequest.requiredfield",Stream.of(licenseName).toArray(String[]::new), locale);        
-        } 
+        String message = "";
+        if (requiredCitationRequest.equals("1")) {
+            message = messageSource.getMessage("validatecitationrequest.requiredfield", Stream.of(licenseName).toArray(String[]::new), locale);
+        }
         model.addAttribute("message", message);
         model.addAttribute("requiredCitationRequest", requiredCitationRequest);
         return "add_dataset::citation-request";
@@ -667,22 +690,22 @@ public class DatasetController {
     @GetMapping("/validateCitationRequestOnCreate")
     public String validateCitationRequestOnCreate(Authentication authentication, Model model,
             @RequestParam(name = "license", required = true) String license) {
-                Locale locale = LocaleContextHolder.getLocale();
-                String requiredCitationRequest= "0";
-                Iterable<License> licenses = licenseRepository.findByName(license);
-        
+        Locale locale = LocaleContextHolder.getLocale();
+        String requiredCitationRequest = "0";
+        Iterable<License> licenses = licenseRepository.findByName(license);
+
         String licenseName = "";
         for (License lic : licenses) {
             if (lic.isAttributeRequired()) {
                 licenseName = lic.getName();
-                requiredCitationRequest= "1";
-            } 
+                requiredCitationRequest = "1";
+            }
         }
-        
-        String message= "";
-        if (requiredCitationRequest.equals("1")){
+
+        String message = "";
+        if (requiredCitationRequest.equals("1")) {
             message = messageSource.getMessage("validatecitationrequest.requiredfield", Stream.of(licenseName).toArray(String[]::new), locale);
-        } 
+        }
         model.addAttribute("message", message);
         model.addAttribute("requiredCitationRequest", requiredCitationRequest);
         return "create_dataset::citation-request";
@@ -786,9 +809,9 @@ public class DatasetController {
     /**
      * Check spam percentage data
      *
-     * @param model      The model
-     * @param inputSpam  The percentage of spam messages desired
-     * @param datasets   The selected datasets
+     * @param model The model
+     * @param inputSpam The percentage of spam messages desired
+     * @param datasets The selected datasets
      * @param languages
      * @param sdatatypes
      * @param date1
@@ -912,18 +935,18 @@ public class DatasetController {
     /**
      * Validates the input data when "Check" button is pressed
      *
-     * @param model           the model
-     * @param inputSpamEml    Spam EML percentage
-     * @param inputHamEml     Ham EML percentage
-     * @param inputSpamWarc   Spam WARC percentage
-     * @param inputHamWarc    Ham WARC percentage
-     * @param inputSpamTsms   Spam SMS percentage
-     * @param inputHamTsms    Ham SMS percentage
-     * @param inputSpamYtbid  Spam YTB percentage
-     * @param inputHamYtbid   Ham YTB percentage
-     * @param inputSpamTwtid  Spam TWT percentage
-     * @param inputHamTwtid   Ham TWV percentage
-     * @param datasetNames    The datasets
+     * @param model the model
+     * @param inputSpamEml Spam EML percentage
+     * @param inputHamEml Ham EML percentage
+     * @param inputSpamWarc Spam WARC percentage
+     * @param inputHamWarc Ham WARC percentage
+     * @param inputSpamTsms Spam SMS percentage
+     * @param inputHamTsms Ham SMS percentage
+     * @param inputSpamYtbid Spam YTB percentage
+     * @param inputHamYtbid Ham YTB percentage
+     * @param inputSpamTwtid Spam TWT percentage
+     * @param inputHamTwtid Ham TWV percentage
+     * @param datasetNames The datasets
      * @param fileNumberInput Number of files for the new dataset
      * @return The part of the view that is going to be updated
      */
@@ -968,7 +991,7 @@ public class DatasetController {
 
         if (datasets == null || fileNumberInput == 0
                 || (inputSpamEml + inputHamEml + inputSpamWarc + inputHamWarc + inputSpamTsms + inputHamTsms
-                        + inputSpamYtbid + inputHamYtbid + inputSpamTwtid + inputHamTwtid) != 100) {
+                + inputSpamYtbid + inputHamYtbid + inputSpamTwtid + inputHamTwtid) != 100) {
             model.addAttribute("datatypesInputError", messageSource.getMessage(
                     "checkposibledatatypes.dataset.datatypesinputerror", Stream.of().toArray(String[]::new), locale));
         } else {

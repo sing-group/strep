@@ -40,8 +40,8 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     @Query("select t from TaskCreateSdataset t where t.dataset.author=?1 and t.dataset.name LIKE %?2% and t.active='1'")
     public ArrayList<Task> getSystemTasksFiltered(String username, String inputSearch);
 
-    /** 
-     * 
+    /**
+     *
      * Return the system task for the specified user
      *
      * @param username the username of the user
@@ -72,8 +72,9 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     public ArrayList<Task> getUserTasks(String username);
 
     /**
-     * Return the list of active user tasks for the specified user
-     *     (please note that only active tasks are retrieved)
+     * Return the list of active user tasks for the specified user (please note
+     * that only active tasks are retrieved)
+     *
      * @param username the username of the user
      * @param state the state for filter de tasks
      * @return A list of the user tasks of the user filtered
@@ -82,8 +83,9 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     public ArrayList<Task> getActiveUserTasks(String username, String state);
 
     /**
-     * Return the user tasks for the specified user
-     *   (please note that active and not active tasks are retrieved)
+     * Return the user tasks for the specified user (please note that active and
+     * not active tasks are retrieved)
+     *
      * @param username the username of the user
      * @param state the state for filter de tasks
      * @return A list of the user tasks of the user filtered
@@ -100,17 +102,23 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     @Query("select t from TaskCreateUPreprocessing t where t.id=?1 and t.active='1'")
     public TaskCreateUPreprocessing findTaskCreateUPreprocessingById(Long id);
 
- /**
-     * Return the specified preprocessing task
+    /**
+     * Return the list of preprocessing tasks that do not belong to the
+     * mentioned dataset, do not have private access (or that were created by
+     * username) and the mentioned state.
      *
-     * @param id the id of the task
-     * @return the preprocessing task with that id
+     * @param datasetName Name of the dataset
+     * @param username Username
+     * @param state The state of the tasks to get
+     * @return The list of preprocessing tasks list of preprocessing tasks that
+     * do not belong to the mentioned dataset, do not have private access (or
+     * that were created by username) and the mentioned state.
      */
-    @Query(value="SELECT t "+
-    "FROM TaskCreateUPreprocessing t, Dataset d "+
-    "WHERE d.name=t.preprocessDataset.name "+
-    "AND t.preprocessDataset.name<>?1 AND (d.access IN ('public','protected') OR d.author=?2) " +
-    "AND  t.state=?3")
+    @Query(value = "SELECT t "
+            + "FROM TaskCreateUPreprocessing t, Dataset d "
+            + "WHERE d.name=t.preprocessDataset.name "
+            + "AND t.preprocessDataset.name<>?1 AND (d.access IN ('public','protected') OR d.author=?2) "
+            + "AND  t.state=?3")
     public ArrayList<TaskCreateUPreprocessing> findAllTaskCreateUPreprocessing(String datasetName, String username, String state);
 
     /**

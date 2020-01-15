@@ -26,7 +26,7 @@ public interface UserRepository extends CrudRepository<User, String> {
             nativeQuery = true)
     Optional<User> findUserByHash(String hash);
 
-      /**
+    /**
      * Return the user with that email
      *
      * @param email the email of the user
@@ -41,7 +41,15 @@ public interface UserRepository extends CrudRepository<User, String> {
      * @param inputSearch the input for filter users
      * @return a list of the user with username like input
      */
-    @Query(
-            value = "SELECT * from user where username LIKE %?1%", nativeQuery = true)
+    @Query(value = "SELECT * from user where username LIKE %?1%", nativeQuery = true)
     ArrayList<User> searchUsers(String inputSearch);
+
+    /**
+     * Return a list of users with this permission
+     *
+     * @param permission the permission of users
+     * @return the list of users with this permission
+     */
+    @Query(value = "SELECT u from User u where u.permission.name=?1")
+    ArrayList<User> findUserByPermission(String permission);
 }
