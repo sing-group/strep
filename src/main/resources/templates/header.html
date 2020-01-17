@@ -15,12 +15,12 @@
             </ul>
             <div sec:authorize="isAnonymous()" id="dlogin">
                 <form action="#" th:action="@{/}" th:object="${user}" method="post" class="form-inline my-2 my-lg-0">
-                    <label class="control-label-login" for="#{header.username}" id="laddLicense" name="lUsername" th:text="#{header.username}" ></label>
-                    <input class="form-control mr-sm-2" type="text" id="username" name="username" th:attr="placeholder=#{header.username}">
-                    <label class="error-label" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" th:text="#{header.usernameerror}"></label>
-                    <label class="control-label-login" for="#{header.password}" id="lPassword" name="lPassword" th:text="#{header.password}" ></label>
-                    <input class="form-control mr-sm-2" type="password" id="password" name="password" th:attr="placeholder=#{header.password}">
-                    <button class="btn btn-success my-2 my-sm-0" type="submit" value="Login">Login</button>
+                        <label class="control-label-login" for="#{header.username}" id="laddLicense" name="lUsername" th:text="#{header.username}" ></label>
+                        <input class="form-control mr-sm-2" type="text" id="username" name="username" th:attr="placeholder=#{header.username}">
+                        <label class="error-label" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" th:text="#{header.usernameerror}"></label>
+                        <label class="control-label-login" for="#{header.password}" id="lPassword" name="lPassword" th:text="#{header.password}" ></label>
+                        <input class="form-control mr-sm-2" type="password" id="password" name="password" th:attr="placeholder=#{header.password}">
+                        <button class="btn btn-success my-2 my-sm-0" type="submit" value="Login">Login</button>
                 </form>
                 <select id="locales" class="form-control">
                     <option id="en" value="en" th:text="EN" onclick="changeLocale(this.id)"></option>
