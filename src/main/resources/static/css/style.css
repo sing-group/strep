@@ -606,7 +606,6 @@ legend{
     display:none;
 }
 .header-inline{
-    /*display: inline-flex;*/
     display: flex;
     justify-content: center;
     align-items: center;

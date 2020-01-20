@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container" th:if="${username}==null">
+    <div class="container" th:if="${session.username}==null">
         <a class="nav-brand nav-link" href="/" id="home">HOME</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    <div class="container" th:if="${username}!=null">
+    <div class="container" th:if="${session.username}!=null">
         <a class="nav-brand nav-link" href="/dataset/list" id="home">HOME</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -115,10 +115,10 @@
                     <option id="es" value="es" th:text="ES" onclick="changeLocale(this.id)"></option>
                 </select>
                 <a href="/user/editprofile" class="icons">
-                    <img th:if="${photo!=null}" class="user-photo" th:src="@{'/user/image?username='+${username}}" height="32" width="32">
+                    <img th:if="${photo!=null}" class="user-photo" th:src="@{'/user/image?username='+${session.username}}" height="32" width="32">
                     <i th:unless="${photo!=null}" class="fas fa-user fa-2x"></i>
                 </a>
-                &nbsp;<span th:text="${username}" class="topdiv-text"></span>&nbsp;&nbsp;
+                &nbsp;<span th:text="${session.username}" class="topdiv-text"></span>&nbsp;&nbsp;
             </div>
             <div class="float-right logout-icon">
                 <a href="/logout" class=" icons"><!--logout-icon-->

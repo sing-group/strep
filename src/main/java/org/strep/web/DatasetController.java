@@ -59,6 +59,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.lang.Math;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import javax.servlet.http.HttpSession;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
@@ -181,10 +182,12 @@ public class DatasetController {
 
     @GetMapping("/list")
     public String listDatasets(@RequestParam(name = "type", required = false, defaultValue = "user") String type,
-            Authentication authentication, Model model) {
+            Authentication authentication, Model model, HttpSession session) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         String username = userDetails.getUsername();
+        // Needed to show menu options correctly
+        session.setAttribute("username", username);
         Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
         ArrayList<Dataset> datasets = new ArrayList<>();
@@ -408,18 +411,16 @@ public class DatasetController {
             redirectAttributes.addFlashAttribute("message", message);
             model.addAttribute("authority", authority);
             model.addAttribute("username", username);
-             
+
             // Send mail to admin
             Locale locale = LocaleContextHolder.getLocale();
             ArrayList<User> usersList = userRepository.findUserByPermission(Permission.ADMINISTER);
-            System.out.println("usersList: " +  usersList.size());  
             List<String> toList = new ArrayList<>();
             usersList.forEach((u) -> {
                 toList.add(u.getEmail());
             });
-            
-            SimpleMailMessage sMailMessage = new SimpleMailMessage();
-            System.out.println("emails: " +  toList);            
+
+            SimpleMailMessage sMailMessage = new SimpleMailMessage();    
             sMailMessage.setTo(toList.stream().toArray(String[]::new));
             sMailMessage.setSubject(messageSource.getMessage("add.dataset.subject", null, locale));
             sMailMessage.setText(messageSource.getMessage("add.dataset.text", Stream.of(username).toArray(String[]::new), locale));
