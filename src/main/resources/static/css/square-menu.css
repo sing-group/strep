@@ -19,6 +19,7 @@ a.radial-menu{
     transform:scale(.5) translateZ(0px);
     background:#585247;
     display: block;
+    cursor: default;
 }
 a.radial-menu div{
     height:100%;

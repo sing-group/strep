@@ -625,19 +625,15 @@ legend{
     margin: auto;
     position: relative;
     top: 0px;
-    height: 58px;
+    min-height: 58px;
+    padding: 10px;
     width: 100%;
-    text-align:center;
+    text-align:justify;
     background-color: #eeeeee;
-}
-#infobox3 p {
-    line-height:58px;
     font-size:12px;
-    text-align:center;
-}
-#infobox3 p a {
-    margin-right:5px;
-    text-decoration: underline;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .cookies-button{
     padding: 5px;
