@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -96,6 +98,7 @@ public class UserController {
                 model.addAttribute("user", user);
                 return "register";
             } else {
+                // Send mail to new user
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setTo(user.getEmail());
                 message.setSubject(messageSource.getMessage("register.email.subject", null, locale));
@@ -103,9 +106,21 @@ public class UserController {
                         + hostname + "/user/accountconfirmation?hash="
                         + hash.replaceAll("=", "") + "\n\n"
                         + messageSource.getMessage("register.email.textregards", null, locale));
-
                 mailSender.send(message);
 
+                // Send mail to admin
+                ArrayList<User> usersList = userRepository.findUserByPermission(Permission.ADMINISTER);
+                List<String> toList = new ArrayList<>();
+                usersList.forEach((u) -> {
+                    toList.add(u.getEmail());
+                });
+                
+                SimpleMailMessage mailMessageToAdmins = new SimpleMailMessage();
+                mailMessageToAdmins.setTo(toList.stream().toArray(String[]::new));
+                mailMessageToAdmins.setSubject(messageSource.getMessage("register.email.subject.toadmin", null, locale));
+                mailMessageToAdmins.setText(messageSource.getMessage("register.email.text.toadmin", Stream.of(id).toArray(String[]::new), locale));
+                mailSender.send(mailMessageToAdmins);
+                
                 User user2 = new User(id, email, hash.replaceAll("=", ""), user.getPassword(),
                         user.getName(), user.getSurname());
 
@@ -130,22 +145,20 @@ public class UserController {
     }
 
     @GetMapping("/confirm")
-    public String confirmAccountRequest(@RequestParam("username") String username, Authentication authentication)
-    {
-        Optional<User> userOpt=userRepository.findById(username);
+    public String confirmAccountRequest(@RequestParam("username") String username, Authentication authentication) {
+        Optional<User> userOpt = userRepository.findById(username);
         Locale locale = LocaleContextHolder.getLocale();
-        
-        if (userOpt.isPresent() ){
+
+        if (userOpt.isPresent()) {
             User user = userOpt.get();
             user.setConfirmedAccount(true);
 
             userRepository.save(user);
             return "redirect:/user/list";
         } else {
-             return "redirect:/user/list?message=nook";
+            return "redirect:/user/list?message=nook";
         }
     }
-
 
     @GetMapping("list")
     public String listUsers(@RequestParam(name = "search", required = false) String searchInput,
@@ -255,7 +268,7 @@ public class UserController {
             user.setUsername(user.getUsername());
             model.addAttribute("username", username);
             model.addAttribute("authority", authority);
-            model.addAttribute("user", user); 
+            model.addAttribute("user", user);
             model.addAttribute("photo", user.getPhoto());
             return "edit_profile.html";
         } else {
@@ -274,20 +287,20 @@ public class UserController {
         String username = userDetails.getUsername();
         Optional<User> optUser = userRepository.findById(username);
         String authority = userService.getPermissionsByUsername(username);
-        
+
         model.addAttribute("username", username);
         model.addAttribute("authority", authority);
         model.addAttribute("photo", optUser.get().getPhoto());
 
         if (result.hasErrors()) {
-            if (result.getFieldErrors().get(0).getField().equals("password")){
+            if (result.getFieldErrors().get(0).getField().equals("password")) {
                 model.addAttribute("message", messageSource.getMessage("editprofile.passwordnotmatch", null, locale));
             } else {
                 model.addAttribute("message", messageSource.getMessage("editprofile.error", null, locale));
             }
-            
-            model.addAttribute("user", loadedUser);            
-            
+
+            model.addAttribute("user", loadedUser);
+
             return "edit_profile";
         }
 
@@ -300,7 +313,7 @@ public class UserController {
                 } else {
                     photo = optUser.get().getPhoto();
                 }
-            }else{
+            } else {
                 photo = multipartFile.getBytes();
             }
         } catch (Exception e) {
@@ -346,4 +359,3 @@ public class UserController {
     }
 
 }
-
