@@ -37,7 +37,7 @@ public ServletWebServerFactory servletContainer() {
 
     //Comment the following 3 files if SSL is not desired
     Connector connector8080 = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-    connector8080.setPort(80);
+    connector8080.setPort(8080);
     tomcat.addAdditionalTomcatConnectors(connector8080);
 
     return tomcat;
