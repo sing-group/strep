@@ -187,6 +187,9 @@ function updateTable(id) {
         $("#datatypes-table").load(url, function (response, status, xhr) {
             if (status == "error") {
                 location.reload();
+            } else {
+                 $("input[name^='inputHam']").attr("disabled", false);
+                 $("input[name^='inputSpam']").attr("disabled", false);
             }
         });
     } else {
