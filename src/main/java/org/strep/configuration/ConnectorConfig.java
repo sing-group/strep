@@ -21,15 +21,25 @@ public ServletWebServerFactory servletContainer() {
     TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
         @Override
         protected void postProcessContext(Context context) {
+            //Uncomment the following block if you want only SSL queries
+            /*
             SecurityConstraint securityConstraint = new SecurityConstraint();
             securityConstraint.setUserConstraint("CONFIDENTIAL");
             SecurityCollection collection = new SecurityCollection();
             collection.addPattern("/*");
             securityConstraint.addCollection(collection);
             context.addConstraint(securityConstraint);
+            */
         }
     };
-    tomcat.addAdditionalTomcatConnectors(redirectConnector());
+    //Comment out the following line if you want ssl
+    //tomcat.addAdditionalTomcatConnectors(redirectConnector());
+
+    //Comment the following 3 files if SSL is not desired
+    Connector connector8080 = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+    connector8080.setPort(80);
+    tomcat.addAdditionalTomcatConnectors(connector8080);
+
     return tomcat;
 }
 

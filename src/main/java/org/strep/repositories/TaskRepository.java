@@ -196,6 +196,12 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     @Query(value = "select t from TaskCreateUPreprocessing t where t.state=?1 ORDER BY t.preprocessDataset")
     public ArrayList<TaskCreateUPreprocessing> getPreprocessingTasks(String state);
 
+    /**
+     * Return the active tasks for an user and dataset
+     * @param username the name of the user
+     * @param name The dataset
+     * @return List of active tasks for a dataset
+     */
     @Query("select t from TaskCreateUdataset t where t.dataset.author=?1 and t.dataset.name =?2 and t.active='1'")
     public ArrayList<Task> getActiveUserTasksFilteredByDataset(String username, String name);
 
