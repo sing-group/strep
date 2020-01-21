@@ -5,7 +5,6 @@ function GetCookie(name) {
     var i = 0;
     while (i < clen) {
         var j = i + alen;
-
         if (document.cookie.substring(i, j) == arg)
             return "1";
         i = document.cookie.indexOf(" ", i) + 1;
@@ -19,28 +18,19 @@ function GetCookie(name) {
 function aceptar_cookies() {
     var expire = new Date();
     expire = new Date(expire.getTime() + 7776000000);
-    document.cookie = "cookies_surestao=aceptada; expires=" + expire;
-
-    var visit = GetCookie("cookies_surestao");
-    if (visit == 1) {
-        popbox3();
-    }
+    document.cookie = "cookies_surestao=aceptada; expires=" + expire + "; path=/;";
+    $('#overbox3').addClass("hide");
 }
 
 jQuery(function () {
     var visit = GetCookie("cookies_surestao");
     if (visit == 1) {
-        $('#overbox3').toggle();
+       $('#overbox3').addClass("hide");
     } else {
-        var expire = new Date();
-        expire = new Date(expire.getTime() + 7776000000);
-        document.cookie = "cookies_surestao=aceptada; expires=" + expire;
-    }
+        $('#overbox3').removeClass("hide");
+    } 
 
 });
 
-function popbox3() {
-    $('#overbox3').toggle();
-}
 
 

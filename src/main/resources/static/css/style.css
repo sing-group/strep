@@ -213,6 +213,9 @@ input[type="checkbox"]{
 }
 .icons{
     color: #FFFFFF !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .no-login{
     height: 50px;
@@ -618,7 +621,7 @@ legend{
     left: 0px;
     width: 100%;
     z-index: 999999;
-    display: block;
+    /*display: block;*/
 }
 #infobox3 {
     margin: auto;
