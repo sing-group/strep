@@ -107,7 +107,7 @@ tr:nth-child(even){
     font-weight: bold;
 }
 .padding{
-    padding-right:38px;
+    padding-right:42px;
 }
 input[type="date"]{
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;border-radius: 0.25em;
@@ -600,10 +600,10 @@ legend{
             max-width: 90px;
         }
         .inputHamSpam{
-            max-width: 100px;    
+            max-width: 90px;    
         }
         .notice{
-            font-size: 0.89em;
+            font-size: 0.7em;
         }
     }
     #home{display:none;}

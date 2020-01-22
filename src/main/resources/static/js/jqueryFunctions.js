@@ -142,9 +142,7 @@ function checkLicenses() {
                 });
             }
         });
-    } else {
-        location.reload();
-    }
+    } 
 }
 
 function updateTable(id) {

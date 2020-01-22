@@ -189,6 +189,7 @@ public class DatasetController {
         // Needed to show menu options correctly
         session.setAttribute("username", username);
         Optional<User> optUser = userRepository.findById(username);
+        session.setAttribute("photo", optUser.get().getPhoto());
         String authority = userService.getPermissionsByUsername(username);
         ArrayList<Dataset> datasets = new ArrayList<>();
         switch (type) {
@@ -223,6 +224,8 @@ public class DatasetController {
         model.addAttribute("username", username);
         model.addAttribute("datasets", datasets);
         model.addAttribute("photo", optUser.get().getPhoto());
+        
+     
         return "list_datasets";
     }
 

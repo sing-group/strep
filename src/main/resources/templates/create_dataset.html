@@ -354,15 +354,15 @@
                                                     </div>
                                                 </div>
                                                 <div class="row" th:if="${tableDatatypes!=null}">
-                                                    <div class="col-7 right padding">
+                                                    <div class="col-6 right padding">
                                                         <input id="buttonCheckDatatypes" type="button" class="btn btn-primary col-md-3" onclick="updateTable(this.id)" th:attr="value = #{create.dataset.button.check}">
                                                     </div>
-                                                    <div class="col-5"></div>
+                                                    <div class="col-6"></div>
                                                 </div>
                                                 <div class="row" th:if="${datatypesInputError}">
                                                     <div class="col-12 alert alert-dismissible alert-danger">
                                                         <i class="fas fa-exclamation-triangle"></i>&nbsp;
-                                                        <span  class="error-label" th:text="${datatypesInputError}"></span>
+                                                        <span class="error-label" th:text="${datatypesInputError}"></span>
                                                     </div>
                                                 </div>
                                                 <div class="row" th:unless="${datatypesInputError!=''}">
