@@ -39,7 +39,6 @@ function updateDatasetsList() {
     for (var i = 0; i < languages.length; i++) {
         if (languages[i].value != "") {
             vlang.push(languages[i].value);
-            //url += encodeURI("language=" + languages[i].value);
         }
     }
     if (vlang.length > 0) {
@@ -114,11 +113,13 @@ function checkLicenses() {
         var urlCheckLicenses = "/dataset/filterDatasetsByLicense?" + params;
         $("#datasets-list").load(urlCheckLicenses, function (response, status, xhr) {
             if (status == "error") {
+                console.log("#datasets-list error")
                 location.reload();
             } else {
                 var urlComposeCitationRequest = "/dataset/composeCitationRequest?" + params;
                 $("#citation-request").load(urlComposeCitationRequest, function (response, status, xhr) {
                     if (status == "error") {
+                        console.log("#citation-request error")
                         location.reload();
                     }
                 });
@@ -126,6 +127,7 @@ function checkLicenses() {
                 var urlCheckLicenses = "/dataset/checkLicenses?" + params;
                 $("#check-licenses").load(urlCheckLicenses, function (response, status, xhr) {
                     if (status == "error") {
+                        console.log("#check-licenses error")
                         location.reload();
                     }
                 });
@@ -134,6 +136,7 @@ function checkLicenses() {
                 $("#check-access").load(urlCheckAccess, function (response, status, xhr) {
                     updateTable();
                     if (status == "error") {
+                        console.log("#check-access error")
                         location.reload();
                     }
                 });
