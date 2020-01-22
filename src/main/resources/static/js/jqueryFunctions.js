@@ -59,6 +59,7 @@ function updateDatasetsList() {
 
     $("#datasets-list").load(url, function (response, status, xhr) {
         if (status == "error") {
+             alert("#update-datasets-list error")
             location.reload();
         }
     });
@@ -76,6 +77,7 @@ function validateCitationRequest() {
 
         $("#citation-request").load(url, function (response, status, xhr) {
             if (status == "error") {
+                 alert("#validate-citation-request error")
                 location.reload();
             }
         });
@@ -113,13 +115,13 @@ function checkLicenses() {
         var urlCheckLicenses = "/dataset/filterDatasetsByLicense?" + params;
         $("#datasets-list").load(urlCheckLicenses, function (response, status, xhr) {
             if (status == "error") {
-                console.log("#datasets-list error")
+                alert("#datasets-list error")
                 location.reload();
             } else {
                 var urlComposeCitationRequest = "/dataset/composeCitationRequest?" + params;
                 $("#citation-request").load(urlComposeCitationRequest, function (response, status, xhr) {
                     if (status == "error") {
-                        console.log("#citation-request error")
+                        alert("#citation-request error")
                         location.reload();
                     }
                 });
@@ -127,7 +129,7 @@ function checkLicenses() {
                 var urlCheckLicenses = "/dataset/checkLicenses?" + params;
                 $("#check-licenses").load(urlCheckLicenses, function (response, status, xhr) {
                     if (status == "error") {
-                        console.log("#check-licenses error")
+                        alert("#check-licenses error")
                         location.reload();
                     }
                 });
@@ -136,7 +138,7 @@ function checkLicenses() {
                 $("#check-access").load(urlCheckAccess, function (response, status, xhr) {
                     updateTable();
                     if (status == "error") {
-                        console.log("#check-access error")
+                        alert("#check-access error")
                         location.reload();
                     }
                 });
