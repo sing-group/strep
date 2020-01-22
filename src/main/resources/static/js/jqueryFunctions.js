@@ -118,14 +118,15 @@ function checkLicenses() {
                 alert("#datasets-list error")
                 location.reload();
             } else {
-                var urlComposeCitationRequest = "/dataset/composeCitationRequest?" + params;
+               /* var urlComposeCitationRequest = "/dataset/composeCitationRequest?" + params;
                 $("#citation-request").load(urlComposeCitationRequest, function (response, status, xhr) {
                     if (status == "error") {
                         alert("#citation-request error")
+                       
                         location.reload();
                     }
                 });
-
+*/
                 var urlCheckLicenses = "/dataset/checkLicenses?" + params;
                 $("#check-licenses").load(urlCheckLicenses, function (response, status, xhr) {
                     if (status == "error") {
