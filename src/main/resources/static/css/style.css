@@ -520,7 +520,7 @@ legend{
     color: #9cb805;
 }
 #inputSpamPercentage{
-    max-width: 90px;
+    /* max-width: 90px;*/
 }
 
 .justify{
@@ -567,6 +567,10 @@ legend{
     margin-top: -1px;
     list-style: none;
 }
+
+.filters3columns{
+    display: none;
+}
 /***** Responsive *****/
 
 @media (max-width: 414px){
@@ -577,9 +581,31 @@ legend{
         .header-lang-user{margin-left:0px !important;}
         .row{min-height: 60px;}
     }
+    @media (max-width: 360px){
+        #date1, #date2{width: 119px;}
+    }
 }
 
 @media screen and (max-width: 1023px) {
+    @media (max-width: 1000px){
+        .filters3columns{
+            display:  block;
+        }
+        .filters4columns{
+            display: none;
+        }
+    }
+    @media (max-width: 767px){
+        #inputSpamPercentage{
+            max-width: 90px;
+        }
+        .inputHamSpam{
+            max-width: 100px;    
+        }
+        .notice{
+            font-size: 0.89em;
+        }
+    }
     #home{display:none;}
     #responsive-home-image{display: inline;}
     #responsive-home-text{display:inline;}
@@ -587,6 +613,14 @@ legend{
         height: 85vmin !important;
         width: 85vmin !important;
         transform: none !important;
+    }
+}
+@media screen and (min-width: 1000px) {
+    .filters3columns{
+        display: none;
+    }
+    .filters4columns{
+        display: inline-flex;
     }
 }
 @media (max-width: 1920px) {
