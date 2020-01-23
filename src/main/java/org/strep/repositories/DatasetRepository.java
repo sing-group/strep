@@ -9,6 +9,7 @@ import org.strep.domain.Dataset;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.strep.domain.License;
 
 /**
  * Interface that extends CrudRepository implementation of basic CRUD operations
@@ -89,7 +90,7 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      * Return all system datasets owned by author and not private owned by anyone 
      *
      * @param username the username of the author of the dataset
-     * @param type the type of the dataset: userdataset or systemdataset
+     * @param type the type of the dataset: Dataset.TYPE_USER or Dataset.TYPE_SYSTEM
      * @return A list datasets owned by author and not private owned by anyone 
      */
     @Query(value = "SELECT * FROM dataset WHERE type=?2 AND available=true AND (author=?1 OR access<>'private')", nativeQuery = true)
@@ -172,4 +173,28 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
     @Query(value = "SELECT * FROM dataset WHERE name=?1", nativeQuery = true)
     public  Dataset findDatasetByName(String name);
 
+    /**
+     * Check if combining a list of datasets requires attribution
+     * @param datasetNames The datasets to be combined
+     * @return true if citation is required for combine the selected datasets
+     */
+    @Query(value="SELECT SUM(IF(attribute_required,1,0)) FROM license,dataset WHERE license.name=dataset.id AND dataset.name IN (?1)", nativeQuery=true)
+    public int checkIfCombinationRequiresAttribution(Collection<String> datasetNames);
+    
+    /**
+     * Combine citations of some datasets into one single string
+     * @param datasetNames The datasets to combine citations
+     * @return The String concatenation of datasets
+     */
+    @Query(value="SELECT GROUP_CONCAT(IF(citation_request!=null,CONCAT(citation_request,'\\r\\n'),'') SEPARATOR '') FROM dataset WHERE dataset.name IN (?1)", nativeQuery=true)
+    public String combineAllCitations4Datasets(Collection<String> datasetNames);
+    
+    /**
+     * Check if redistribution of combination of some datasets (as parameter) is not allowed
+     * @param datasetNames The datasets that is going to be combined
+     * @return true if redistribution is not allowed
+     */
+    @Query(value="SELECT SUM(IF(redistribute,0,1)) FROM license,dataset WHERE license.name=dataset.id AND dataset.name IN (?1)", nativeQuery=true)
+    public int checkIfRedistributionIsNotAllowed(Collection<String> datasetNames);
+    
 }

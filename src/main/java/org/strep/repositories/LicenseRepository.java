@@ -1,5 +1,7 @@
 package org.strep.repositories;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import org.strep.domain.License;
 
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +20,13 @@ public interface LicenseRepository extends CrudRepository<License, String>
      */
     @Query(value = "SELECT * FROM license WHERE name LIKE %?1%", nativeQuery=true)
     public Iterable<License> findByName(String searchInput);
+    
+    /**
+     * Select all licenses of a list of dataset
+     * @param datasetNames The dataset names
+     * @return The list of licenses of the datasets 
+     */
+    @Query(value="SELECT * FROM license, dataset WHERE license.name=dataset.id  AND dataset.name in (?1)", nativeQuery=true)
+    public ArrayList<License> getDatasetLicenses(Collection<String> datasetNames);    
+    
 }

@@ -59,7 +59,7 @@ function updateDatasetsList() {
 
     $("#datasets-list").load(url, function (response, status, xhr) {
         if (status == "error") {
-             alert("#update-datasets-list error")
+            alert("#update-datasets-list error")
             location.reload();
         }
     });
@@ -77,7 +77,7 @@ function validateCitationRequest() {
 
         $("#citation-request").load(url, function (response, status, xhr) {
             if (status == "error") {
-                 alert("#validate-citation-request error")
+                alert("#validate-citation-request error")
                 location.reload();
             }
         });
@@ -85,6 +85,7 @@ function validateCitationRequest() {
 }
 
 function checkLicenses() {
+    $("#createDatasetButton").attr("disabled", true);
     var datasetsList = $("input[name=datasets]");
     var selectedDatasets = $("input[name=datasets]:checked");
     var vCheckedDatasets = [];
@@ -115,24 +116,23 @@ function checkLicenses() {
         var urlCheckLicenses = "/dataset/filterDatasetsByLicense?" + params;
         $("#datasets-list").load(urlCheckLicenses, function (response, status, xhr) {
             if (status == "error") {
-                alert("#datasets-list error")
+                alert("#datasets-list error");
                 location.reload();
             } else {
-               /* var urlComposeCitationRequest = "/dataset/composeCitationRequest?" + params;
+                var urlComposeCitationRequest = "/dataset/composeCitationRequest?" + params;
                 $("#citation-request").load(urlComposeCitationRequest, function (response, status, xhr) {
                     if (status == "error") {
-                        alert("#citation-request error")
-                       
+                        alert("#citation-request error");
                         location.reload();
                     }
                 });
-*/
+
                 var urlCheckLicenses = "/dataset/checkLicenses?" + params;
                 $("#check-licenses").load(urlCheckLicenses, function (response, status, xhr) {
                     if (status == "error") {
-                        alert("#check-licenses error")
+                        alert("#check-licenses error");
                         location.reload();
-                    }
+                    } 
                 });
 
                 var urlCheckAccess = "/dataset/checkAccess?" + params;
@@ -141,11 +141,13 @@ function checkLicenses() {
                     if (status == "error") {
                         alert("#check-access error")
                         location.reload();
+                    } else {
+                        $("#createDatasetButton").attr("disabled", false);
                     }
                 });
             }
         });
-    } 
+    }
 }
 
 function updateTable(id) {
@@ -192,8 +194,8 @@ function updateTable(id) {
             if (status == "error") {
                 location.reload();
             } else {
-                 $("input[name^='inputHam']").attr("disabled", false);
-                 $("input[name^='inputSpam']").attr("disabled", false);
+                $("input[name^='inputHam']").attr("disabled", false);
+                $("input[name^='inputSpam']").attr("disabled", false);
             }
         });
     } else {
@@ -351,15 +353,15 @@ $(document).ready(function () {
         //$('#errorLabelName').remove();
         var taskId = $("#selectTask option:selected").val()
         if (taskId !== "") {
-            
+
             $("#dataset-file").attr("disabled", true);
             $("#createPreprocessingTaskF").attr("action", "/task/preprocess/reuse");
-            
+
             // Fill name and description 
             var url = encodeURI("/task/fillFields?id=" + taskId);
 
             $("#task-data").load(url, function (response, status, xhr) {
-          //      $('#errorLabelName').remove();
+                //      $('#errorLabelName').remove();
                 if (status === "error") {
                     alert("error");
                     location.reload();

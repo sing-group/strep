@@ -59,6 +59,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.lang.Math;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import javax.servlet.http.HttpSession;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -566,18 +567,16 @@ public class DatasetController {
         StringBuilder message = new StringBuilder();
         ArrayList<Dataset> allDatasets = new ArrayList<>();
         List<String> filteredDatasets = new ArrayList<>();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        ArrayList<License> checkedDatasetsLicenses = new ArrayList<>();
-
-        for (String datasetName : datasets) {
-            allDatasets.add(datasetRepository.findDatasetByName(datasetName));
-        }
+        String username = userDetails.getUsername();
+        
+        datasetRepository.getSystemDatasets(username,Dataset.TYPE_SYSTEM).forEach(allDatasets::add);
 
         for (String datasetName : checkedDatasets) {
-            Dataset dataset = datasetRepository.findDatasetByName(datasetName);
-            filteredDatasets.add(dataset.getName());
-            checkedDatasetsLicenses.add(dataset.getLicense());
+            filteredDatasets.add(datasetName);
         }
+        ArrayList<License> checkedDatasetsLicenses=licenseRepository.getDatasetLicenses(filteredDatasets);
 
         int position = 0;
         boolean exit = false;
@@ -634,15 +633,13 @@ public class DatasetController {
             @RequestParam(name = "checkedDatasets", required = true) String[] checkedDatasets) {
 
         StringBuilder message = new StringBuilder();
-        ArrayList<Dataset> allDatasets = new ArrayList<>();
-        List<String> filteredDatasets = new ArrayList<>();
+        //ArrayList<Dataset> allDatasets = new ArrayList<>();
+       /* List<String> filteredDatasets = new ArrayList<>();
         StringBuilder allCitationRequestFields = new StringBuilder();
         String citationRequest = "";
-
+        
         ArrayList<License> checkedDatasetsLicenses = new ArrayList<>();
-        for (String datasetName : datasets) {
-            allDatasets.add(datasetRepository.findDatasetByName(datasetName));
-        }
+     
         for (String datasetName : checkedDatasets) {
             Dataset dataset = datasetRepository.findDatasetByName(datasetName);
             allCitationRequestFields.append(dataset.getCitationRequest());
@@ -664,8 +661,12 @@ public class DatasetController {
                 }
             }
         }
-
-        model.addAttribute("citationRequest", citationRequest);
+        */
+        Collection<String> datasetCollection=Arrays.asList(checkedDatasets);
+        if (datasetRepository.checkIfCombinationRequiresAttribution(datasetCollection)>0)
+            model.addAttribute("citationRequest", datasetRepository.combineAllCitations4Datasets(datasetCollection));
+        else model.addAttribute("citationRequest", "");
+            
         return "create_dataset::citation-request";
     }
 
@@ -720,12 +721,16 @@ public class DatasetController {
             @RequestParam(name = "datasets", required = true) String[] datasets,
             @RequestParam(name = "checkedDatasets", required = true) String[] checkedDatasets) {
         Iterable<License> allLicenses = licenseRepository.findAll();
-        ArrayList<License> checkedDatasetsLicenses = new ArrayList<>();
-
+        
+        ArrayList<License> checkedDatasetsLicenses = 
+               licenseRepository.getDatasetLicenses(Arrays.asList(checkedDatasets));
+        
+        /*
         for (String datasetName : checkedDatasets) {
             Dataset dataset = datasetRepository.findDatasetByName(datasetName);
             checkedDatasetsLicenses.add(dataset.getLicense());
         }
+        */
 
         ArrayList<License> licenses = new ArrayList<>();
         for (License license : allLicenses) {
@@ -774,6 +779,7 @@ public class DatasetController {
             @RequestParam(name = "datasets", required = true) String[] datasets,
             @RequestParam(name = "checkedDatasets", required = true) String[] checkedDatasets) {
 
+        /**
         String access = "";
         ArrayList<License> checkedDatasetsLicenses = new ArrayList<>();
 
@@ -788,8 +794,12 @@ public class DatasetController {
                 break;
             }
         }
-
-        model.addAttribute("access", access);
+        */
+        
+        model.addAttribute("access", 
+                (datasetRepository.checkIfRedistributionIsNotAllowed(Arrays.asList(checkedDatasets))>0)?Dataset.ACCESS_PRIVATE:""
+        );
+        
         return "create_dataset::check-access";
     }
 
@@ -1180,6 +1190,7 @@ public class DatasetController {
             model.addAttribute("host", HOST_NAME);
             model.addAttribute("licenses", licenseRepository.findAll());
             model.addAttribute("datasets", datasetRepository.getSystemDatasets());
+            System.out.println("ERROR " + bindingResult.getAllErrors().get(0).getDefaultMessage());
             return "create_dataset";
         } else {
             boolean modeSpam = false;
