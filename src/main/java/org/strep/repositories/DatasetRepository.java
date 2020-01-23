@@ -196,5 +196,14 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      */
     @Query(value="SELECT SUM(IF(redistribute,0,1)) FROM license,dataset WHERE license.name=dataset.id AND dataset.name IN (?1)", nativeQuery=true)
     public int checkIfRedistributionIsNotAllowed(Collection<String> datasetNames);
+
+    /**
+     * Get datasets filtered by Name
+     * @param datasetNames The datasets that is going to be combined
+     * @return The list of datasets filtered by name
+     */
+    @Query(value="SELECT dataset.* FROM dataset WHERE dataset.name IN (?1)", nativeQuery=true)
+    public ArrayList<Dataset> findDatasetsByNames(Collection<String> datasetNames);
+
     
 }

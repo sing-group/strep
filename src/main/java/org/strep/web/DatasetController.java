@@ -567,16 +567,12 @@ public class DatasetController {
         StringBuilder message = new StringBuilder();
         ArrayList<Dataset> allDatasets = new ArrayList<>();
         List<String> filteredDatasets = new ArrayList<>();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        String username = userDetails.getUsername();
+        datasetRepository.findDatasetsByNames(Arrays.asList(datasets)).forEach(allDatasets::add);
         
-        datasetRepository.getSystemDatasets(username,Dataset.TYPE_SYSTEM).forEach(allDatasets::add);
-
-        for (String datasetName : checkedDatasets) {
-            filteredDatasets.add(datasetName);
-        }
+        filteredDatasets.addAll(Arrays.asList(checkedDatasets));
         ArrayList<License> checkedDatasetsLicenses=licenseRepository.getDatasetLicenses(filteredDatasets);
+        
 
         int position = 0;
         boolean exit = false;
