@@ -1,173 +1,156 @@
-<!DOCTYPE HTML>
-<html>
-
-    <head>
-        <title th:text="#{app.name}"></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="/css/style.css">   
-        <link rel="icon" type="image/png" href="/images/STRepLogo.png">
-    </head>
-
-    <body class="main-bg">
-        <div class="header">
-            <div th:include="header.html"></div>
-        </div>
-        <div class="container">
-            <div class="alert alert-dismissible alert-info" th:if="${message}">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <i class="fas fa-info-circle"></i>&nbsp;
-                <span th:text="${message}"></span>
-            </div>
-            <div id="banner" class="page-header">
-                <div class="row">
-                    <div class="col-12">
-                        <h2 th:text="#{list.datasets.title}"></h2> 
-                    </div>
-                </div>
-            </div>
-            <div id="bs-docs-section">
-                <div class="row" th:if="${authority==T(org.strep.domain.Permission).UPLOAD or authority==T(org.strep.domain.Permission).ADMINISTER}">
-                    <div class="col-12 right">
-                        <button type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/create'" th:text=" #{list.datasets.createbutton}"></button>
-                        <button type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/upload'" th:text=" #{list.datasets.uploadbutton}"></button>
-                    </div>
-                </div>
-                <div class="row" th:if="${authority==T(org.strep.domain.Permission).CREATE_CORPUS}">
-                    <div class="col-12 right">
-                        <button type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/create'" th:text=" #{list.datasets.createbutton}"></button>
-                    </div>
-                </div>
-                <div id="bs-component">
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item" th:if="${authority==T(org.strep.domain.Permission).VIEW}">
-                            <a class="nav-link disabled" href="/dataset/list?type=user" th:text="#{list.datasets.table.user}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.infoown}"></a>
-                        </li>
-                        <li class="nav-item" th:unless="${authority==T(org.strep.domain.Permission).VIEW}">
-                            <a class="nav-link" th:classappend="${type=='user'} ? 'active' : ''" href="/dataset/list?type=user" th:text="#{list.datasets.table.user}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.infoown}"></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:classappend="${type=='community' or (authority==T(org.strep.domain.Permission).VIEW and type=='user')} ? 'active' : ''" href="/dataset/list?type=community" th:text="#{list.datasets.table.community}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.infocommunity}"></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:classappend="${type=='usersystem'} ? 'active' : ''" href="/dataset/list?type=usersystem" th:text="#{list.datasets.table.system}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.infosystem}"></a>
-                        </li>
-                    </ul>
-                    <div class="tab-pane fade active show add-border" >
-                        <div class="alert alert-light" th:if="${datasets.size()==0}" th:text="#{list.datasets.table.nodatasets}"></div>
-                        <!-- ONLY CAN VIEW -->
-                        <table class="table table-hover margin20" th:if="${authority==T(org.strep.domain.Permission).VIEW and datasets.size()!=0}">
-                            <thead>
-                                <tr>
-                                    <th scope="col" th:text="#{list.datasets.table.name}"></th>
-                                    <th scope="col" th:text="#{list.datasets.table.author}"></th>
-                                    <th scope="col" th:text="#{list.datasets.table.date}"></th>
-                                    <th scope="col" th:text="#{list.datasets.table.license}"></th>
-                                    <th scope="col" th:text="#{list.datasets.table.fileinfo}" colspan="2"></th>
-                                    <th scope="col" th:text="#{list.datasets.table.actions}"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="dataset : ${datasets}">
-                                    <th scope="row" th:text="${dataset.name}"></th>
-                                    <td th:text="${dataset.author}"></td>
-                                    <td th:text="${#dates.format(dataset.uploadDate, 'yyyy-MM-dd')}" class="td-date"></td>
-                                    <td th:text="${dataset.license.name}"></td>
-                                    <td>
-                                        <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
-                                            <i class="fas fa-language"></i>
-                                            <span class="icon-caret-down"></span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li th:text="${language.description}" th:each="language : ${dataset.language}"></li>
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
-                                            <i class="fas fa-file-signature"></i>
-                                            <span class="icon-caret-down"></span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li th:text="${datatype.datatype}" th:each="datatype : ${dataset.datatypes}"></li>
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.view}" th:href="@{'/dataset/detailed?id=' + ${dataset.name}+ '&type=' + ${type}}">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.download}" th:href="@{'/dataset/download?id=' + ${dataset.name}+ '&type=' + ${type}}">
-                                            <i class="fas fa-file-download"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- -->
-                        <table class="table table-hover margin20" th:unless="${authority==T(org.strep.domain.Permission).VIEW or datasets.size()==0} "> <!--th:if="${type=='usersystem' and datasets.size()!=0}-->
-                            <thead>
-                                <tr>
-                                    <th scope="col" th:text="#{list.datasets.table.name}"></th>
-                                    <th scope="col" th:text="#{list.datasets.table.author}"></th>
-                                    <th scope="col" th:text="#{list.datasets.table.date}"></th>
-                                    <th scope="col" th:text="#{list.datasets.table.license}"></th>
-                                    <th scope="col" th:text="#{list.datasets.table.fileinfo}" colspan="2">d</th>
-                                    <th scope="col" th:text="#{list.datasets.table.actions}"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="dataset : ${datasets}">
-                                    <th scope="row" th:text="${dataset.name}"></th>
-                                    <td th:text="${dataset.author}"></td>
-                                    <td th:text="${#dates.format(dataset.uploadDate, 'yyyy-MM-dd')}" class="td-date"></td>
-                                    <td th:text="${dataset.license.name}"></td>
-                                    <td>
-                                        <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
-                                            <i class="fas fa-language"></i>
-                                            <span class="icon-caret-down"></span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li th:text="${language.description}" th:each="language : ${dataset.language}"></li>
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
-                                            <i class="fas fa-file-signature"></i>
-                                            <span class="icon-caret-down"></span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li th:text="${datatype.datatype}" th:each="datatype : ${dataset.datatypes}"></li>
-                                        </ul>
-                                    </td>
-                                    <td class="td-btn-list">
-                                        <a class="btn btn-list " width="100%" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.view}" th:href="@{'/dataset/detailed?id=' + ${dataset.name}+ '&type=' + ${type}}">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                         <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.preprocess}" th:if="${type=='user'}" th:href="@{'/task/preprocess/detailed?name=' + ${dataset.name}+ '&type=' + ${type}}"><!--task/preprocess/detailed-->
-                                            <i class="fas fa-tasks"></i>
-                                        </a>
-
-                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.creationdetails}"  th:if="${type=='user'}" th:href="@{'/task/detailed?task=' + ${dataset.getCreationTask().id}+ '&type=' + ${type}}">
-                                            <i class="fas fa-info-circle"></i>
-                                        </a>
-                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.download}" th:href="@{'/dataset/download?id=' + ${dataset.name}+ '&type=' + ${type}}">
-                                            <i class="fas fa-file-download"></i>
-                                        </a>
-                                        <a class="btn btn-list" data-toggle="tooltip"  th:if="${authority==T(org.strep.domain.Permission).ADMINISTER or username==dataset.getAuthor()}" data-placement="right" th:title="#{list.datasets.table.edit}" th:href="@{'/dataset/edit?id=' + ${dataset.name}+'&task=' + ${dataset.getCreationTask().id} + '&type=' + ${type}}">
-                                            <i class="fas fa-pen-square"></i>
-                                        </a>
-                                        <a class="btn btn-list" th:if="${authority==T(org.strep.domain.Permission).ADMINISTER or username==dataset.getAuthor()}" th:href="@{'/dataset/delete?id=' + ${dataset.name} + '&type=' + ${type}}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.delete}" th:onclick="'javascript:return confirm(\'' + #{list.datasets.table.suredelete} + '\');'" >
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+<div th:include="header.html"></div>
+<div class="container">
+    <div class="alert alert-dismissible alert-info" th:if="${message}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="fas fa-info-circle"></i>&nbsp;
+        <span th:text="${message}"></span>
+    </div>
+    <div id="banner" class="page-header">
+        <div class="row">
+            <div class="col-12">
+                <h2 th:text="#{list.datasets.title}"></h2> 
             </div>
         </div>
-        <div th:include="footer.html"></div>
-    </body>
-</html>
+    </div>
+    <div id="bs-docs-section">
+        <div class="row" th:if="${authority==T(org.strep.domain.Permission).UPLOAD or authority==T(org.strep.domain.Permission).ADMINISTER}">
+            <div class="col-12 right">
+                <button type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/create'" th:text=" #{list.datasets.createbutton}"></button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/upload'" th:text=" #{list.datasets.uploadbutton}"></button>
+            </div>
+        </div>
+        <div class="row" th:if="${authority==T(org.strep.domain.Permission).CREATE_CORPUS}">
+            <div class="col-12 right">
+                <button type="button" class="btn btn-primary" onclick="window.location.href = '/dataset/create'" th:text=" #{list.datasets.createbutton}"></button>
+            </div>
+        </div>
+        <div id="bs-component">
+            <ul class="nav nav-tabs">
+                <li class="nav-item" th:if="${authority==T(org.strep.domain.Permission).VIEW}">
+                    <a class="nav-link disabled" href="/dataset/list?type=user" th:text="#{list.datasets.table.user}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.infoown}"></a>
+                </li>
+                <li class="nav-item" th:unless="${authority==T(org.strep.domain.Permission).VIEW}">
+                    <a class="nav-link" th:classappend="${type=='user'} ? 'active' : ''" href="/dataset/list?type=user" th:text="#{list.datasets.table.user}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.infoown}"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${type=='community' or (authority==T(org.strep.domain.Permission).VIEW and type=='user')} ? 'active' : ''" href="/dataset/list?type=community" th:text="#{list.datasets.table.community}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.infocommunity}"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${type=='usersystem'} ? 'active' : ''" href="/dataset/list?type=usersystem" th:text="#{list.datasets.table.system}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.infosystem}"></a>
+                </li>
+            </ul>
+            <div class="tab-pane fade active show add-border" >
+                <div class="alert alert-light" th:if="${datasets.size()==0}" th:text="#{list.datasets.table.nodatasets}"></div>
+                <!-- ONLY CAN VIEW -->
+                <table class="table table-hover margin20" th:if="${authority==T(org.strep.domain.Permission).VIEW and datasets.size()!=0}">
+                    <thead>
+                        <tr>
+                            <th scope="col" th:text="#{list.datasets.table.name}"></th>
+                            <th scope="col" th:text="#{list.datasets.table.author}"></th>
+                            <th scope="col" th:text="#{list.datasets.table.date}"></th>
+                            <th scope="col" th:text="#{list.datasets.table.license}"></th>
+                            <th scope="col" th:text="#{list.datasets.table.fileinfo}" colspan="2"></th>
+                            <th scope="col" th:text="#{list.datasets.table.actions}"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="dataset : ${datasets}">
+                            <th scope="row" th:text="${dataset.name}"></th>
+                            <td th:text="${dataset.author}"></td>
+                            <td th:text="${#dates.format(dataset.uploadDate, 'yyyy-MM-dd')}" class="td-date"></td>
+                            <td th:text="${dataset.license.name}"></td>
+                            <td>
+                                <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fas fa-language"></i>
+                                    <span class="icon-caret-down"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li th:text="${language.description}" th:each="language : ${dataset.language}"></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fas fa-file-signature"></i>
+                                    <span class="icon-caret-down"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li th:text="${datatype.datatype}" th:each="datatype : ${dataset.datatypes}"></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.view}" th:href="@{'/dataset/detailed?id=' + ${dataset.name}+ '&type=' + ${type}}">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.download}" th:href="@{'/dataset/download?id=' + ${dataset.name}+ '&type=' + ${type}}">
+                                    <i class="fas fa-file-download"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- -->
+                <table class="table table-hover margin20" th:unless="${authority==T(org.strep.domain.Permission).VIEW or datasets.size()==0} "> <!--th:if="${type=='usersystem' and datasets.size()!=0}-->
+                    <thead>
+                        <tr>
+                            <th scope="col" th:text="#{list.datasets.table.name}"></th>
+                            <th scope="col" th:text="#{list.datasets.table.author}"></th>
+                            <th scope="col" th:text="#{list.datasets.table.date}"></th>
+                            <th scope="col" th:text="#{list.datasets.table.license}"></th>
+                            <th scope="col" th:text="#{list.datasets.table.fileinfo}"></th>
+                            <th scope="col" th:text="#{list.datasets.table.filetypes}"></th>
+                            <th scope="col" th:text="#{list.datasets.table.actions}"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="dataset : ${datasets}" width="100%">
+                            <th scope="row" th:text="${dataset.name}"></th>
+                            <td th:text="${dataset.author}"></td>
+                            <td th:text="${#dates.format(dataset.uploadDate, 'yyyy-MM-dd')}" class="td-date" ></td>
+                            <td th:text="${dataset.license.name}" ></td><!--style="min-width: max-content"-->
+                            <td>
+                                <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#" data-placement="right" th:title="#{list.datasets.table.fileinfotooltip}">
+                                    <i class="fas fa-language"></i>
+                                    <span class="icon-caret-down"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li th:text="${language.description}" th:each="language : ${dataset.language}"></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#" data-placement="right" th:title="#{list.datasets.table.filetypestooltip}"><!-- data-placement="right" th:title="#{list.datasets.filetypestooltip}"-->
+                                    <i class="fas fa-file-signature"></i>
+                                    <span class="icon-caret-down"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li th:text="${datatype.datatype}" th:each="datatype : ${dataset.datatypes}"></li>
+                                </ul>
+                            </td>
+                            <td class="td-btn-list">
+                                <a class="btn btn-list " width="100%" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.view}" th:href="@{'/dataset/detailed?id=' + ${dataset.name}+ '&type=' + ${type}}">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.preprocess}" th:if="${type=='user'}" th:href="@{'/task/preprocess/detailed?name=' + ${dataset.name}+ '&type=' + ${type}}"><!--task/preprocess/detailed-->
+                                    <i class="fas fa-tasks"></i>
+                                </a>
+
+                                <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.creationdetails}"  th:if="${type=='user'}" th:href="@{'/task/detailed?task=' + ${dataset.getCreationTask().id}+ '&type=' + ${type}}">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                                <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.download}" th:href="@{'/dataset/download?id=' + ${dataset.name}+ '&type=' + ${type}}">
+                                    <i class="fas fa-file-download"></i>
+                                </a>
+                                <a class="btn btn-list" data-toggle="tooltip"  th:if="${authority==T(org.strep.domain.Permission).ADMINISTER or username==dataset.getAuthor()}" data-placement="right" th:title="#{list.datasets.table.edit}" th:href="@{'/dataset/edit?id=' + ${dataset.name}+'&task=' + ${dataset.getCreationTask().id} + '&type=' + ${type}}">
+                                    <i class="fas fa-pen-square"></i>
+                                </a>
+                                <a class="btn btn-list" th:if="${authority==T(org.strep.domain.Permission).ADMINISTER or username==dataset.getAuthor()}" th:href="@{'/dataset/delete?id=' + ${dataset.name} + '&type=' + ${type}}" data-toggle="tooltip" data-placement="right" th:title="#{list.datasets.table.delete}" th:onclick="'javascript:return confirm(\'' + #{list.datasets.table.suredelete} + '\');'" >
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="footer.html"></div>

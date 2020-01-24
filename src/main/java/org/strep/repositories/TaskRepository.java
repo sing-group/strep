@@ -27,7 +27,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @param username the username of the user
      * @return A list of the system tasks of the user
      */
-    @Query("select t from TaskCreateSdataset t where t.dataset.author=?1 and t.active='1'")
+    @Query("SELECT t FROM TaskCreateSdataset t WHERE t.dataset.author=?1 AND t.active='1'")
     public ArrayList<Task> getSystemTasks(String username);
 
     /**
@@ -37,7 +37,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @param inputSearch the input for filter de tasks
      * @return A list of the system tasks of the user filtered
      */
-    @Query("select t from TaskCreateSdataset t where t.dataset.author=?1 and t.dataset.name LIKE %?2% and t.active='1'")
+    @Query("SELECT t FROM TaskCreateSdataset t WHERE t.dataset.author=?1 AND t.dataset.name LIKE %?2% AND t.active='1'")
     public ArrayList<Task> getSystemTasksFiltered(String username, String inputSearch);
 
     /**
@@ -49,7 +49,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @param state the state for filter de tasks
      * @return A list of the system tasks of the user filtered
      */
-    @Query("select t from TaskCreateSdataset t where t.dataset.author=?1 and t.dataset.name LIKE %?2% and t.state=?3 and t.active='1'")
+    @Query("SELECT t FROM TaskCreateSdataset t WHERE t.dataset.author=?1 AND t.dataset.name LIKE %?2% AND t.state=?3 AND t.active='1'")
     public ArrayList<Task> getSystemTasksFiltered(String username, String inputSearch, String state);
 
     /**
@@ -59,7 +59,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @param state the state for filter de tasks
      * @return the system task for the specified user filtered
      */
-    @Query("select t from TaskCreateSdataset t where t.dataset.author=?1 and t.state=?2 and t.active='1'")
+    @Query("SELECT t FROM TaskCreateSdataset t WHERE t.dataset.author=?1 AND t.state=?2 AND t.active='1'")
     public ArrayList<Task> getSystemTasks(String username, String state);
 
     /**
@@ -68,7 +68,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @param username the username of the user
      * @return A list of the user tasks of the user
      */
-    @Query("select t from TaskCreateUdataset t where t.dataset.author=?1 and t.active='1'")
+    @Query("SELECT t FROM TaskCreateUdataset t WHERE t.dataset.author=?1 AND t.active='1'")
     public ArrayList<Task> getUserTasks(String username);
 
     /**
@@ -79,7 +79,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @param state the state for filter de tasks
      * @return A list of the user tasks of the user filtered
      */
-    @Query("select t from TaskCreateUdataset t where t.dataset.author=?1 and t.state=?2 and t.active='1'")
+    @Query("SELECT t FROM TaskCreateUdataset t WHERE t.dataset.author=?1 AND t.state=?2 AND t.active='1'")
     public ArrayList<Task> getActiveUserTasks(String username, String state);
 
     /**
@@ -90,7 +90,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @param state the state for filter de tasks
      * @return A list of the user tasks of the user filtered
      */
-    @Query("select t from TaskCreateUdataset t where t.dataset.author=?1 and t.state=?2")
+    @Query("SELECT t FROM TaskCreateUdataset t WHERE t.dataset.author=?1 AND t.state=?2")
     public ArrayList<Task> getUserTasks(String username, String state);
 
     /**
@@ -99,7 +99,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @param id the id of the task
      * @return the preprocessing task with that id
      */
-    @Query("select t from TaskCreateUPreprocessing t where t.id=?1 and t.active='1'")
+    @Query("SELECT t FROM TaskCreateUPreprocessing t WHERE t.id=?1 AND t.active='1'")
     public TaskCreateUPreprocessing findTaskCreateUPreprocessingById(Long id);
 
     /**
@@ -128,7 +128,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @param inputSearch the input for filter the tasks
      * @return A list of the user tasks of the user filtered
      */
-    @Query("select t from TaskCreateUdataset t where t.dataset.author=?1 and t.dataset.name LIKE %?2% and t.active='1'")
+    @Query("SELECT t FROM TaskCreateUdataset t WHERE t.dataset.author=?1 AND t.dataset.name LIKE %?2% AND t.active='1'")
     public ArrayList<Task> getActiveUserTasksFiltered(String username, String inputSearch);
 
     /**
@@ -139,7 +139,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @param state the state for filter the tasks
      * @return A list of the user tasks of the user filtered
      */
-    @Query("select t from TaskCreateUdataset t where t.dataset.author=?1 and t.dataset.name LIKE %?2% and t.state=?3 and t.active='1'")
+    @Query("SELECT t FROM TaskCreateUdataset t WHERE t.dataset.author=?1 AND t.dataset.name LIKE %?2% AND t.state=?3 AND t.active='1'")
     public ArrayList<Task> getActiveUserTasksFiltered(String username, String inputSearch, String state);
 
     /**
@@ -148,7 +148,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @param id the id of the task
      * @return the user task with that id
      */
-    @Query("select t from TaskCreateUdataset t where t.id=?1 and t.active='1'")
+    @Query("SELECT t FROM TaskCreateUdataset t WHERE t.id=?1 AND t.active='1'")
     public Optional<TaskCreateUdataset> findTaskCreateUdatasetById(long id);
 
     /**
@@ -158,7 +158,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      */
     @Transactional
     @Modifying
-    @Query(value = "delete from task_create_udataset_datasets where dataset=?1", nativeQuery = true)
+    @Query(value = "DELETE FROM task_create_udataset_datasets WHERE dataset=?1", nativeQuery = true)
     public void deleteUserTasks(String datasetName);
 
     /**
@@ -170,7 +170,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @return a list with the preprocessing tasks of the dataset filtered by
      * state
      */
-    @Query(value = "select t from TaskCreateUPreprocessing t where t.preprocessDataset=?1 and t.state=?2 and t.active='1'")
+    @Query(value = "SELECT t FROM TaskCreateUPreprocessing t WHERE t.preprocessDataset=?1 AND t.state=?2 AND t.active='1'")
     public ArrayList<TaskCreateUPreprocessing> getActivePreprocessingTasks(Dataset dataset, String state);
 
     /**
@@ -182,7 +182,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @return a list with the preprocessing tasks of the dataset filtered by
      * state
      */
-    @Query(value = "select t from TaskCreateUPreprocessing t where t.preprocessDataset=?1 and t.state=?2")
+    @Query(value = "SELECT t FROM TaskCreateUPreprocessing t WHERE t.preprocessDataset=?1 AND t.state=?2")
     public ArrayList<TaskCreateUPreprocessing> getPreprocessingTasks(Dataset dataset, String state);
 
     /**
@@ -193,7 +193,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @return a list with the preprocessing tasks of the dataset filtered by
      * state
      */
-    @Query(value = "select t from TaskCreateUPreprocessing t where t.state=?1 ORDER BY t.preprocessDataset")
+    @Query(value = "SELECT t FROM TaskCreateUPreprocessing t WHERE t.state=?1 ORDER BY t.preprocessDataset")
     public ArrayList<TaskCreateUPreprocessing> getPreprocessingTasks(String state);
 
     /**
@@ -202,7 +202,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @param name The dataset
      * @return List of active tasks for a dataset
      */
-    @Query("select t from TaskCreateUdataset t where t.dataset.author=?1 and t.dataset.name =?2 and t.active='1'")
+    @Query("SELECT t FROM TaskCreateUdataset t WHERE t.dataset.author=?1 AND t.dataset.name =?2 AND t.active='1'")
     public ArrayList<Task> getActiveUserTasksFilteredByDataset(String username, String name);
 
 }

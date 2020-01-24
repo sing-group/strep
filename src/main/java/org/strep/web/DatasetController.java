@@ -225,8 +225,7 @@ public class DatasetController {
         model.addAttribute("username", username);
         model.addAttribute("datasets", datasets);
         model.addAttribute("photo", optUser.get().getPhoto());
-        
-     
+
         return "list_datasets";
     }
 
@@ -424,7 +423,7 @@ public class DatasetController {
                 toList.add(u.getEmail());
             });
 
-            SimpleMailMessage sMailMessage = new SimpleMailMessage();    
+            SimpleMailMessage sMailMessage = new SimpleMailMessage();
             sMailMessage.setTo(toList.stream().toArray(String[]::new));
             sMailMessage.setSubject(messageSource.getMessage("add.dataset.subject", null, locale));
             sMailMessage.setText(messageSource.getMessage("add.dataset.text", Stream.of(username).toArray(String[]::new), locale));
@@ -496,7 +495,6 @@ public class DatasetController {
 
         if (bindingResult.hasErrors()) {
             // TODO: Revisar este mensaje de error
-            // System.out.println("ERRORES");
             if (optDataset.isPresent()) {
                 Dataset toUpdateDataset = optDataset.get();
 
@@ -509,14 +507,10 @@ public class DatasetController {
                     model.addAttribute("photo", optUser.get().getPhoto());
                     return "edit_dataset";
                 } else {
-
-                    System.out.println("ERROR 2");
                     return "redirect:/error";
                 }
 
             } else {
-
-                System.out.println("ERROR 1");
                 return "redirect:/error";
             }
 
@@ -569,10 +563,9 @@ public class DatasetController {
         List<String> filteredDatasets = new ArrayList<>();
 
         datasetRepository.findDatasetsByNames(Arrays.asList(datasets)).forEach(allDatasets::add);
-        
+
         filteredDatasets.addAll(Arrays.asList(checkedDatasets));
-        ArrayList<License> checkedDatasetsLicenses=licenseRepository.getDatasetLicenses(filteredDatasets);
-        
+        ArrayList<License> checkedDatasetsLicenses = licenseRepository.getDatasetLicenses(filteredDatasets);
 
         int position = 0;
         boolean exit = false;
@@ -628,61 +621,29 @@ public class DatasetController {
             @RequestParam(name = "datasets", required = true) String[] datasets,
             @RequestParam(name = "checkedDatasets", required = true) String[] checkedDatasets) {
 
-        StringBuilder message = new StringBuilder();
-        //ArrayList<Dataset> allDatasets = new ArrayList<>();
-       /* List<String> filteredDatasets = new ArrayList<>();
-        StringBuilder allCitationRequestFields = new StringBuilder();
-        String citationRequest = "";
-        
-        ArrayList<License> checkedDatasetsLicenses = new ArrayList<>();
-     
-        for (String datasetName : checkedDatasets) {
-            Dataset dataset = datasetRepository.findDatasetByName(datasetName);
-            allCitationRequestFields.append(dataset.getCitationRequest());
-            if (!allCitationRequestFields.toString().equals("")) {
-                allCitationRequestFields.append("\r\n");
-            }
-            filteredDatasets.add(dataset.getName());
-            checkedDatasetsLicenses.add(dataset.getLicense());
+        Collection<String> datasetCollection = Arrays.asList(checkedDatasets);
+        if (datasetRepository.checkIfCombinationRequiresAttribution(datasetCollection) > 0) {
+            model.addAttribute("citationRequest", datasetRepository.combineAllCitations4Datasets(datasetCollection));
+        } else {
+            model.addAttribute("citationRequest", "");
         }
 
-        int position = 0;
-        boolean exit = false;
-        if (checkedDatasetsLicenses.size() > 0) {
-            while (position < checkedDatasetsLicenses.size() && exit == false) {
-                License currentLicense = checkedDatasetsLicenses.get(position);
-                if (currentLicense.isAttributeRequired()) {
-                    citationRequest = allCitationRequestFields.toString();
-                    exit = true;
-                }
-            }
-        }
-        */
-        Collection<String> datasetCollection=Arrays.asList(checkedDatasets);
-        if (datasetRepository.checkIfCombinationRequiresAttribution(datasetCollection)>0)
-            model.addAttribute("citationRequest", datasetRepository.combineAllCitations4Datasets(datasetCollection));
-        else model.addAttribute("citationRequest", "");
-            
         return "create_dataset::citation-request";
     }
 
     @GetMapping("/validateCitationRequest")
     public String validateCitationRequest(Authentication authentication, Model model,
-            @RequestParam(name = "license", required = true) String license) {
+            @RequestParam(name = "license", required = true) String licenseName) {
         Locale locale = LocaleContextHolder.getLocale();
         String requiredCitationRequest = "0";
-        Iterable<License> licenses = licenseRepository.findByName(license);
-        String licenseName = "";
-        for (License lic : licenses) {
-            if (lic.isAttributeRequired()) {
-                licenseName = lic.getName();
-                requiredCitationRequest = "1";
-            }
-        }
+        License license = licenseRepository.findByCompleteName(licenseName);
+
         String message = "";
-        if (requiredCitationRequest.equals("1")) {
+        if (license.isAttributeRequired()) {
             message = messageSource.getMessage("validatecitationrequest.requiredfield", Stream.of(licenseName).toArray(String[]::new), locale);
+            requiredCitationRequest = "1";
         }
+
         model.addAttribute("message", message);
         model.addAttribute("requiredCitationRequest", requiredCitationRequest);
         return "add_dataset::citation-request";
@@ -690,23 +651,18 @@ public class DatasetController {
 
     @GetMapping("/validateCitationRequestOnCreate")
     public String validateCitationRequestOnCreate(Authentication authentication, Model model,
-            @RequestParam(name = "license", required = true) String license) {
+            @RequestParam(name = "license", required = true) String licenseName) {
         Locale locale = LocaleContextHolder.getLocale();
         String requiredCitationRequest = "0";
-        Iterable<License> licenses = licenseRepository.findByName(license);
 
-        String licenseName = "";
-        for (License lic : licenses) {
-            if (lic.isAttributeRequired()) {
-                licenseName = lic.getName();
-                requiredCitationRequest = "1";
-            }
-        }
+        License license = licenseRepository.findByCompleteName(licenseName);
 
         String message = "";
-        if (requiredCitationRequest.equals("1")) {
+        if (license.isAttributeRequired()) {
             message = messageSource.getMessage("validatecitationrequest.requiredfield", Stream.of(licenseName).toArray(String[]::new), locale);
+            requiredCitationRequest = "1";
         }
+
         model.addAttribute("message", message);
         model.addAttribute("requiredCitationRequest", requiredCitationRequest);
         return "create_dataset::citation-request";
@@ -716,22 +672,13 @@ public class DatasetController {
     public String checkLicenses(Authentication authentication, Model model,
             @RequestParam(name = "datasets", required = true) String[] datasets,
             @RequestParam(name = "checkedDatasets", required = true) String[] checkedDatasets) {
-        Iterable<License> allLicenses = licenseRepository.findAll();
-        
-        ArrayList<License> checkedDatasetsLicenses = 
-               licenseRepository.getDatasetLicenses(Arrays.asList(checkedDatasets));
-        
-        /*
-        for (String datasetName : checkedDatasets) {
-            Dataset dataset = datasetRepository.findDatasetByName(datasetName);
-            checkedDatasetsLicenses.add(dataset.getLicense());
-        }
-        */
 
-        ArrayList<License> licenses = new ArrayList<>();
-        for (License license : allLicenses) {
-            licenses.add(license);
-        }
+        ArrayList<License> licenses = new ArrayList();
+
+        Iterable<License> allLicenses = licenseRepository.findAll();
+        allLicenses.forEach(licenses::add);
+
+        ArrayList<License> checkedDatasetsLicenses = licenseRepository.getDatasetLicenses(Arrays.asList(checkedDatasets));
 
         for (License currentLicense : checkedDatasetsLicenses) {
             if (!currentLicense.isChangeLicense()) { // Change license? NO
@@ -775,27 +722,8 @@ public class DatasetController {
             @RequestParam(name = "datasets", required = true) String[] datasets,
             @RequestParam(name = "checkedDatasets", required = true) String[] checkedDatasets) {
 
-        /**
-        String access = "";
-        ArrayList<License> checkedDatasetsLicenses = new ArrayList<>();
+        model.addAttribute("access", (datasetRepository.checkIfRedistributionIsNotAllowed(Arrays.asList(checkedDatasets)) > 0) ? Dataset.ACCESS_PRIVATE : "");
 
-        for (String datasetName : checkedDatasets) {
-            Dataset dataset = datasetRepository.findDatasetByName(datasetName);
-            checkedDatasetsLicenses.add(dataset.getLicense());
-        }
-
-        for (License license : checkedDatasetsLicenses) {
-            if (!license.isRedistribute()) {
-                access = Dataset.ACCESS_PRIVATE;
-                break;
-            }
-        }
-        */
-        
-        model.addAttribute("access", 
-                (datasetRepository.checkIfRedistributionIsNotAllowed(Arrays.asList(checkedDatasets))>0)?Dataset.ACCESS_PRIVATE:""
-        );
-        
         return "create_dataset::check-access";
     }
 
@@ -849,7 +777,7 @@ public class DatasetController {
         int fileNumberInt = -1;
         Locale locale = LocaleContextHolder.getLocale();
 
-        ArrayList<String> arrayListDatasets = new ArrayList<String>();
+        ArrayList<String> arrayListDatasets = new ArrayList<>();
 
         if (inputSpam != "" && datasets != null && fileNumber != "") {
             for (String dataset : datasets) {
@@ -926,10 +854,7 @@ public class DatasetController {
                             Integer.toString(neccesaryFilesHam), Integer.toString(availableFilesHam))
                             .toArray(String[]::new),
                     locale);
-            // String message = "Necesary spam files:" + neccesaryFilesSpam + "\nAvailable
-            // spam files" + availableFilesSpam;
-            // message += " / Necesary ham files:" + neccesaryFilesHam + "\nAvailable spam
-            // files" + availableFilesHam;
+
             if (availableFilesSpam >= neccesaryFilesSpam && availableFilesHam >= neccesaryFilesHam) {
                 model.addAttribute("spamSuccessInfo", message);
             } else {
@@ -946,6 +871,11 @@ public class DatasetController {
      * Validates the input data when "Check" button is pressed
      *
      * @param model the model
+     * @param languages
+     * @param sdatatypes
+     * @param date1
+     * @param date2
+     * @param licenses
      * @param inputSpamEml Spam EML percentage
      * @param inputHamEml Ham EML percentage
      * @param inputSpamWarc Spam WARC percentage
@@ -978,8 +908,8 @@ public class DatasetController {
             @RequestParam("inputFileNumber") int fileNumberInput) {
 
         Locale locale = LocaleContextHolder.getLocale();
-        ArrayList<String> datatypes = new ArrayList<String>();
-        ArrayList<String> datasets = new ArrayList<String>();
+        ArrayList<String> datatypes = new ArrayList<>();
+        ArrayList<String> datasets = new ArrayList<>();
 
         if (datasetNames != null) {
             for (String datasetName : datasetNames) {
@@ -1186,7 +1116,6 @@ public class DatasetController {
             model.addAttribute("host", HOST_NAME);
             model.addAttribute("licenses", licenseRepository.findAll());
             model.addAttribute("datasets", datasetRepository.getSystemDatasets());
-            System.out.println("ERROR " + bindingResult.getAllErrors().get(0).getDefaultMessage());
             return "create_dataset";
         } else {
             boolean modeSpam = false;

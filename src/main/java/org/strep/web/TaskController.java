@@ -464,7 +464,7 @@ public class TaskController {
                 HttpHeaders httpHeaders = new HttpHeaders();
                 httpHeaders.set("content-type", "text/csv");
                 httpHeaders.set("content-disposition", "attachment;" + "filename=" + fileName);
-                ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
+                ResponseEntity<InputStreamResource> response = new ResponseEntity<>(
                         new InputStreamResource(fis), httpHeaders, HttpStatus.CREATED);
                 return response;
             } catch (FileNotFoundException fnfException) {

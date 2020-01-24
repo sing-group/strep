@@ -19,7 +19,7 @@ public interface PermissionRequestRepository extends CrudRepository<PermissionRe
      * @param username the username of the user
      * @return A list of the permission requests for the specified users
      */
-    @Query(value="SELECT * from permission_request where user_username=?1", nativeQuery=true)
+    @Query(value="SELECT * FROM permission_request WHERE user_username=?1", nativeQuery=true)
     public ArrayList<PermissionRequest> findRequestsByUsername(String username);
 
     /**
@@ -27,13 +27,13 @@ public interface PermissionRequestRepository extends CrudRepository<PermissionRe
      * @param username the username of the user
      * @return A list of the permission requests for the specified user
      */
-    @Query(value="SELECT * from permission_request where user_username=?1 and status='pending'", nativeQuery=true)
+    @Query(value="SELECT * from permission_request WHERE user_username=?1 AND status='pending'", nativeQuery=true)
     public ArrayList<PermissionRequest> findPendingRequestsByUsername(String username);
 
     /**
      * Return the pending requests
      * @return A list of the pending permission requests
      */
-    @Query(value="SELECT * from permission_request where status='pending'", nativeQuery=true)
+    @Query(value="SELECT * from permission_request WHERE status='pending'", nativeQuery=true)
     public ArrayList<PermissionRequest> findPendingRequests();
 }

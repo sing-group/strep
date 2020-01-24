@@ -11,6 +11,11 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface LanguageRepository extends CrudRepository<Language, String>
 {
-     @Query(value = "select l from Language l ORDER BY l.description")
+
+    /**
+     *
+     * @return
+     */
+    @Query(value = "SELECT l FROM Language l ORDER BY l.description")
     public  Iterable<Language> findAllSortedByDescription();
 }

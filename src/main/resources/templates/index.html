@@ -1,117 +1,97 @@
-<!DOCTYPE HTML>
-<html>
-
-    <head>
-        <title th:text="#{app.name}"></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-              integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
-        <link rel="stylesheet" type="text/css" href="/css/square-menu.css">
-        <link rel="icon" type="image/png" href="/images/STRepLogo.png">
-    </head>
-
-    <body class="main-bg">
-        <div class="header">
-            <div th:include="header.html"></div>
+<div th:include="header.html"></div>
+<div class="container">
+    <div class="alert alert-dismissible alert-danger error-label" th:unless="${param.error == null}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <label class="" th:text="#{header.wrongusernameorpassword}"></label>
+    </div>
+    <div class="alert alert-dismissible alert-info" th:unless="${param.register==ok}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <label class="" th:text="#{header.registerok}"></label>
+    </div>
+    <div class="alert alert-dismissible alert-info" th:if="${param.confirmed!=null and param.confirmed[0]=='ok'}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <p th:text="#{register.email.confirmedaccount1}" class="bold"></p>
+        <p th:text="#{register.email.confirmedaccount2}"></p>
+    </div>
+    <div class="alert alert-dismissible alert-error"
+         th:if="${param.confirmed!=null and param.confirmed[0]=='nook'}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <p th:text="#{register.email.noconfirmedaccount}"></p>
+    </div>
+    <div id="bs-docs-section" class="rmenu-section ">
+        <div class="row hide" id="responsive-home-text">
+            <div class="col-12 home-text">
+                <p th:text="#{title.home}" class="title-text-home"></p>
+                <p th:text="#{public.home.text1}"></p>
+                <p th:text="#{public.home.text2}"></p>
+            </div>
         </div>
-        <div class="container">
-            <div class="alert alert-dismissible alert-danger error-label" th:unless="${param.error == null}">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <label class="" th:text="#{header.wrongusernameorpassword}"></label>
-            </div>
-            <div class="alert alert-dismissible alert-info" th:unless="${param.register==ok}">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <label class="" th:text="#{header.registerok}"></label>
-            </div>
-            <div class="alert alert-dismissible alert-info" th:if="${param.confirmed!=null and param.confirmed[0]=='ok'}">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <p th:text="#{register.email.confirmedaccount1}" class="bold"></p>
-                <p th:text="#{register.email.confirmedaccount2}"></p>
-            </div>
-            <div class="alert alert-dismissible alert-error"
-                 th:if="${param.confirmed!=null and param.confirmed[0]=='nook'}">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <p th:text="#{register.email.noconfirmedaccount}"></p>
-            </div>
-            <div id="bs-docs-section" class="rmenu-section ">
-                <div class="row hide" id="responsive-home-text">
-                    <div class="col-12 home-text">
-                        <p th:text="#{title.home}" class="title-home-responsive"></p>
-                        <p th:text="#{public.home.text1}"></p>
-                        <p th:text="#{public.home.text2}"></p>
-                    </div>
-                </div>
-                <div class="row hide" id="responsive-home-image">
-                    <div class="col-12">
-                        <div class="wrap">
-                            <a class="radial-menu" href="#">
-                                <div class="parent">
-                                    <span th:text="#{store}"></span>
-                                </div>
-                            </a>
-                            <a class="radial-menu" href="#">
-                                <div class="parent">
-                                    <span th:text="#{preprocess}"></span>
-                                </div>
-                            </a>
-                            <a class="radial-menu" href="#">
-                                <div class="parent">
-                                    <span th:text="#{tune}"></span>
-                                </div>
-                            </a>
-                            <a class="radial-menu" href="#">
-                                <div class="parent">
-                                    <span th:text="#{share}"></span>
-                                </div>
-                            </a>
-                            <a class="radial-menu" href="#">
-                                <div></div>
-                            </a>
+        <div class="row hide" id="responsive-home-image">
+            <div class="col-12">
+                <div class="wrap">
+                    <a class="radial-menu" href="#">
+                        <div class="parent">
+                            <span th:text="#{store}"></span>
                         </div>
-                    </div>
-                </div>
-                <div class="row" id="home">
-                    <div class="col-6 home-text">
-                        <p th:text="#{title.home}" class="title-home"></p>
-                        <p th:text="#{public.home.text1}"></p>
-                        <p th:text="#{public.home.text2}"></p>
-                    </div>
-                    <div class="col-6">
-                        <div class="wrap">
-                           <a class="radial-menu" href="#">
-                                <div class="parent">
-                                    <span th:text="#{store}"></span>
-                                </div>
-                            </a>
-                            <a class="radial-menu" href="#">
-                                <div class="parent">
-                                    <span th:text="#{preprocess}"></span>
-                                </div>
-                            </a>
-                            <a class="radial-menu" href="#">
-                                <div class="parent">
-                                    <span th:text="#{tune}"></span>
-                                </div>
-                            </a>
-                            <a class="radial-menu" href="#">
-                                <div class="parent">
-                                    <span th:text="#{share}"></span>
-                                </div>
-                            </a>
-                            <a class="radial-menu" href="#">
-                                <div></div>
-                            </a>
+                    </a>
+                    <a class="radial-menu" href="#">
+                        <div class="parent">
+                            <span th:text="#{preprocess}"></span>
                         </div>
-                    </div>
+                    </a>
+                    <a class="radial-menu" href="#">
+                        <div class="parent">
+                            <span th:text="#{tune}"></span>
+                        </div>
+                    </a>
+                    <a class="radial-menu" href="#">
+                        <div class="parent">
+                            <span th:text="#{share}"></span>
+                        </div>
+                    </a>
+                    <a class="radial-menu" href="#">
+                        <div></div>
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="footer">
-            <div th:include="footer.html"></div>
+        <div class="row" id="home">
+            <div class="col-6 home-text">
+                <p th:text="#{title.home}" class="title-text-home"></p>
+                <p th:text="#{public.home.text1}"></p>
+                <p>
+                    <span th:text="#{public.home.rdata}" class="rdatatext"></span>
+                    <span th:text="#{public.home.text2}"></span>
+                </p>
+            </div>
+            <div class="col-6">
+                <div class="wrap">
+                    <a class="radial-menu" href="#">
+                        <div class="parent">
+                            <span th:text="#{store}"></span>
+                        </div>
+                    </a>
+                    <a class="radial-menu" href="#">
+                        <div class="parent">
+                            <span th:text="#{preprocess}"></span>
+                        </div>
+                    </a>
+                    <a class="radial-menu" href="#">
+                        <div class="parent">
+                            <span th:text="#{tune}"></span>
+                        </div>
+                    </a>
+                    <a class="radial-menu" href="#">
+                        <div class="parent">
+                            <span th:text="#{share}"></span>
+                        </div>
+                    </a>
+                    <a class="radial-menu" href="#">
+                        <div></div>
+                    </a>
+                </div>
+            </div>
         </div>
-    </body>
-</html>
+    </div>
+</div>
+<div th:include="footer.html"></div>

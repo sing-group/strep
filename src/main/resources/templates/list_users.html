@@ -1,105 +1,84 @@
-<!DOCTYPE HTML>
-<html>
-
-<head>
-    <title th:text="#{app.name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="icon" type="image/png" href="/images/STRepLogo.png">
-</head>
-
-<body class="main-bg">
-    <div class="header">
-        <div th:include="header.html"></div>
+<div th:include="header.html"></div>
+<div class="container">
+    <div class="alert alert-dismissible alert-info" th:if="${message}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <p class=" main-text" th:text="${message}"></p>
     </div>
-    <div class="container">
-        <div class="alert alert-dismissible alert-info" th:if="${message}">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <p class=" main-text" th:text="${message}"></p>
-        </div>
 
-        <div class="alert alert-dismissible alert-info" th:if="${param.message}!=null and ${param.message[0]}=='nook'">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <p class=" main-text" th:text="#{list.users.confirmerror}"></p>
-        </div>
-        <div id="banner" class="page-header">
-            <div class="row">
-                <div class="col-12">
-                    <h2 th:text="#{list.users.title}"></h2>
-                </div>
-            </div>
-        </div>
+    <div class="alert alert-dismissible alert-info" th:if="${param.message}!=null and ${param.message[0]}=='nook'">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <p class=" main-text" th:text="#{list.users.confirmerror}"></p>
+    </div>
+    <div id="banner" class="page-header">
         <div class="row">
             <div class="col-12">
-                <form class="form-inline form-group">
-                    <input type="text" class="form-control mr-sm-2" name="search"
-                        th:attr="placeholder = #{list.users.placeholder.search}">
-                    <input type="submit" class="source-button btn btn-primary btn-xs"
-                        th:attr="value = #{list.users.search}">
-                </form>
+                <h2 th:text="#{list.users.title}"></h2>
             </div>
         </div>
-        <div class="tab-pane fade active show">
-            <div class="alert alert-light" th:if="${users.size()==0}" th:text="#{list.users.nousers}"></div>
-            <table class="table table-hover margin20" th:if="${users.size()!=0}">
-                <thead>
-                    <th scope="col"></th>
-                    <th scope="col" th:text="#{list.users.photo}"></th>
-                    <th scope="col" th:text="#{list.users.username}"></th>
-                    <th scope="col" th:text="#{list.users.name}"></th>
-                    <th scope="col" th:text="#{list.users.permissions}"></th>
-                    <th scope="col" th:text="#{list.users.actions}"></th>
-                </thead>
-                <tbody>
-                    <tr th:each="user : ${users}">
-                        <td>
-                            <img src="/images/tick.svg" th:if="${user.confirmedAccount}"
-                                th:title="#{detailed.user.confirmed}" th:attr="alt = #{detailed.user.confirmed}"
-                                height="16" width="16">
-                            <img src="/images/warning.svg" th:unless="${user.confirmedAccount}"
-                                th:title="#{detailed.user.notconfirmed}" th:attr="alt = #{detailed.user.notconfirmed}"
-                                height="16" width="16">
-                        </td>
-                        <td>
-                            <img th:if="${user.photo!=null}" class="user-photo"
-                                th:src="@{'/user/image?username='+${user.username}}" alt="photo" height="32" width="32">
-                            <i th:unless="${user.photo!=null}" class="fas fa-user fa-2x"></i>
-                        </td>
-                        <td>
-                            <span th:text="${user.username}"></span>
-                        </td>
-                        <td th:text="${user.name}"></td>
-                        <td>
-                            <p th:text="${user.permission.name}"></p>
-                        </td>
-                        <td class="minw_110">
-
-                            <a th:if="${!user.confirmedAccount}" class="btn btn-list" data-toggle="tooltip"
-                                data-placement="right" title="#{list.users.confirmerror}"
-                                th:href="@{/user/confirm(username = ${user.username})}">
-                                <i class="fas fa-check"></i>
-                            </a>
-                            <a class="btn btn-list" th:href="@{/user/detailed(username = ${user.username},type=user)}"
-                                th:title="#{list.users.details}">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                            <a class="btn btn-list" th:href="@{/user/delete(username = ${user.username}, type=user)}"
-                                th:onclick="'javascript:return confirm(\'' + #{list.users.suredelete} + '\');'"
-                                th:title="#{list.users.delete}">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <form class="form-inline form-group">
+                <input type="text" class="form-control mr-sm-2" name="search"
+                       th:attr="placeholder = #{list.users.placeholder.search}">
+                <input type="submit" class="source-button btn btn-primary btn-xs"
+                       th:attr="value = #{list.users.search}">
+            </form>
         </div>
     </div>
-    <div th:include="footer.html"></div>
-</body>
+    <div class="tab-pane fade active show">
+        <div class="alert alert-light" th:if="${users.size()==0}" th:text="#{list.users.nousers}"></div>
+        <table class="table table-hover margin20" th:if="${users.size()!=0}">
+            <thead>
+            <th scope="col"></th>
+            <th scope="col" th:text="#{list.users.photo}"></th>
+            <th scope="col" th:text="#{list.users.username}"></th>
+            <th scope="col" th:text="#{list.users.name}"></th>
+            <th scope="col" th:text="#{list.users.permissions}"></th>
+            <th scope="col" th:text="#{list.users.actions}"></th>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}">
+                    <td>
+                        <img src="/images/tick.svg" th:if="${user.confirmedAccount}"
+                             th:title="#{detailed.user.confirmed}" th:attr="alt = #{detailed.user.confirmed}"
+                             height="16" width="16">
+                        <img src="/images/warning.svg" th:unless="${user.confirmedAccount}"
+                             th:title="#{detailed.user.notconfirmed}" th:attr="alt = #{detailed.user.notconfirmed}"
+                             height="16" width="16">
+                    </td>
+                    <td>
+                        <img th:if="${user.photo!=null}" class="user-photo"
+                             th:src="@{'/user/image?username='+${user.username}}" alt="photo" height="32" width="32">
+                        <i th:unless="${user.photo!=null}" class="fas fa-user fa-2x"></i>
+                    </td>
+                    <td>
+                        <span th:text="${user.username}"></span>
+                    </td>
+                    <td th:text="${user.name}"></td>
+                    <td>
+                        <p th:text="${user.permission.name}"></p>
+                    </td>
+                    <td class="minw_110">
 
-</html>
+                        <a th:if="${!user.confirmedAccount}" class="btn btn-list" data-toggle="tooltip"
+                           data-placement="right" title="#{list.users.confirmerror}"
+                           th:href="@{/user/confirm(username = ${user.username})}">
+                            <i class="fas fa-check"></i>
+                        </a>
+                        <a class="btn btn-list" th:href="@{/user/detailed(username = ${user.username},type=user)}"
+                           th:title="#{list.users.details}">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a class="btn btn-list" th:href="@{/user/delete(username = ${user.username}, type=user)}"
+                           th:onclick="'javascript:return confirm(\'' + #{list.users.suredelete} + '\');'"
+                           th:title="#{list.users.delete}">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div th:include="footer.html"></div>

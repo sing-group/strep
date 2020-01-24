@@ -9,7 +9,6 @@ import org.strep.domain.Dataset;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.strep.domain.License;
 
 /**
  * Interface that extends CrudRepository implementation of basic CRUD operations
@@ -24,7 +23,7 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      *
      * @return Set of available datasets with public visibility
      */
-    @Query(value = "select * from dataset where access='public' and available=true",
+    @Query(value = "SELECT * FROM dataset WHERE access='public' AND available=true",
             nativeQuery = true)
     public HashSet<Dataset> getPublicDatasets();
 
@@ -33,7 +32,7 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      *
      * @return List of available system datasets
      */
-    @Query(value = "select * from dataset where type='systemdataset' and available=true", nativeQuery = true)
+    @Query(value = "SELECT * FROM dataset WHERE type='systemdataset' AND available=true", nativeQuery = true)
     public ArrayList<Dataset> getSystemDatasets();
 
     /**
@@ -41,7 +40,7 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      *
      * @return List of available protected datasets
      */
-    @Query(value = "select * from dataset where access='protected' and available=true", nativeQuery = true)
+    @Query(value = "SELECT * FROM dataset WHERE access='protected' AND available=true", nativeQuery = true)
     public ArrayList<Dataset> getProtectedDatasets();
 
     /**
@@ -50,7 +49,7 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      * @param username the username of the author of the dataset
      * @return A list of the available datasets for this author
      */
-    @Query(value = "select * from dataset where author=?1 and available=true", nativeQuery = true)
+    @Query(value = "SELECT * FROM dataset WHERE author=?1 AND available=true", nativeQuery = true)
     public ArrayList<Dataset> getUserDatasets(String username);
 
     /**
@@ -60,7 +59,7 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      * @param type the type of the dataset: spam or ham
      * @return A list of the available datasets for this filters
      */
-    /*@Query(value="select * from dataset where author=?1 and type=?2 and available=true", nativeQuery=true)*/
+    /*@Query(value="SELECT * FROM dataset WHERE author=?1 AND type=?2 AND available=true", nativeQuery=true)*/
     @Query(value = "SELECT * FROM dataset WHERE (author=?1 OR access='public') AND available=true AND type=?2", nativeQuery = true)
     public ArrayList<Dataset> getUserDatasets(String username, String type);
 
@@ -69,7 +68,7 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      *
      * @param username the username of the author of the dataset
      * @param type the type of the dataset: userdataset or systemdataset
-     * @return A list of available datasets owned by author and filtered by type
+     * @return A list of available datasets owned by author AND filtered by type
      */
     @Query(value = "SELECT * FROM dataset WHERE type=?2 AND available=true AND author=?1", nativeQuery = true)
     public ArrayList<Dataset> getOwnDatasets(String username, String type);
@@ -102,7 +101,7 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      * @param name the name of the dataset
      * @return A list of ids for the files of the specified dataset
      */
-    @Query(value = "select file_id from dataset_files where dataset_name=?1", nativeQuery = true)
+    @Query(value = "SELECT file_id FROM dataset_files WHERE dataset_name=?1", nativeQuery = true)
     public ArrayList<BigInteger> getFileIds(String name);
 
     /**
@@ -114,7 +113,7 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      * @param license the valid licenses
      * @return a list of the system datasets that meet the requirements
      */
-    @Query(value = "select distinct(d.name) from dataset d inner join dataset_languages lang on d.name=lang.dataset_name inner join dataset_datatypes data on d.name=data.dataset_name where d.type='systemdataset' and lang.language in ?1 and data.data_type in ?2 and d.id in ?3", nativeQuery = true)
+    @Query(value = "SELECT distinct(d.name) FROM dataset d INNER JOIN dataset_languages lang ON d.name=lang.dataset_name INNER JOIN dataset_datatypes data ON d.name=data.dataset_name WHERE d.type='systemdataset' AND lang.language IN ?1 AND data.data_type IN ?2 AND d.id IN ?3", nativeQuery = true)
     public ArrayList<String> getFilteredDatasets(Collection<String> languages, Collection<String> datatypes, Collection<String> license);
 
     /**
@@ -130,7 +129,7 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      * @return a list of system datasets that meet the requirements
      */
     @Query(value = "SELECT distinct(d.name) FROM dataset d INNER JOIN dataset_languages lang ON d.name=lang.dataset_name INNER JOIN dataset_datatypes data ON d.name=data.dataset_name "
-                 + " WHERE d.type='systemdataset' AND lang.language in ?1 AND data.data_type in ?2 AND d.id in ?3 AND (d.first_file_date <= ?5 AND d.last_file_date >= ?4)",
+                 + " WHERE d.type='systemdataset' AND lang.language IN ?1 AND data.data_type IN ?2 AND d.id IN ?3 AND (d.first_file_date <= ?5 AND d.last_file_date >= ?4)",
            nativeQuery = true)
     public ArrayList<String> getFilteredDatasetsByDate(Collection<String> languages, Collection<String> datatypes, Collection<String> license, String date1, String date2);
 
@@ -147,20 +146,21 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      * Return the number of spam/ham files associated to specified datasets
      *
      * @param datasetNames the name the datasets
+     * @param type
      * @return the number of spam files associated to those datasets
      */
-    @Query(value = "select count(distinct(df.file_id)) from dataset d inner join dataset_files df on d.name=df.dataset_name  inner join file f on df.file_id=f.id where d.name in (?1) and f.type=?2", nativeQuery = true)
+    @Query(value = "SELECT count(distinct(df.file_id)) FROM dataset d INNER JOIN dataset_files df ON d.name=df.dataset_name  INNER JOIN file f ON df.file_id=f.id WHERE d.name IN (?1) AND f.type=?2", nativeQuery = true)
     public int countFilesByType(Collection<String> datasetNames, String type);
 
     /**
-     * Return the count of files by extension and type associated to the
+     * Return the count of files by extension AND type associated to the
      * specified datasets
      *
      * @param datasetNames the name of the datasets
-     * @return the count of the files by extension and type associated to those
+     * @return the count of the files by extension AND type associated to those
      * datasets
      */
-    @Query(value = "select count(f.id) from dataset d inner join dataset_files df on d.name=df.dataset_name inner join file f on df.file_id=f.id where d.name in(?1) group by f.extension, f.type", nativeQuery = true)
+    @Query(value = "SELECT COUNT(f.id) FROM dataset d INNER JOIN dataset_files df ON d.name=df.dataset_name INNER JOIN file f ON df.file_id=f.id WHERE d.name IN(?1) GROUP BY f.extension, f.type", nativeQuery = true)
     public ArrayList<Object> getFilesByExtensionAndType(Collection<String> datasetNames);
     
     
@@ -168,7 +168,7 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      * Return datasets by name
      *
      * @param name the name of the dataset
-     * @return A list of available datasets owned by author and filtered by type
+     * @return A list of available datasets owned by author AND filtered by type
      */
     @Query(value = "SELECT * FROM dataset WHERE name=?1", nativeQuery = true)
     public  Dataset findDatasetByName(String name);
@@ -176,7 +176,7 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
     /**
      * Check if combining a list of datasets requires attribution
      * @param datasetNames The datasets to be combined
-     * @return true if citation is required for combine the selected datasets
+     * @return true if citation is required for combine the SELECTed datasets
      */
     @Query(value="SELECT SUM(IF(attribute_required,1,0)) FROM license,dataset WHERE license.name=dataset.id AND dataset.name IN (?1)", nativeQuery=true)
     public int checkIfCombinationRequiresAttribution(Collection<String> datasetNames);

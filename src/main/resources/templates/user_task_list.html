@@ -1,92 +1,72 @@
-<!DOCTYPE HTML>
-<html>
-
-<head>
-    <title th:text="#{app.name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="icon" type="image/png" href="/images/STRepLogo.png">
-</head>
-
-<body class="main-bg">
-    <div class="header">
-        <div th:include="header.html"></div>
+<div th:include="header.html"></div>
+<div class="container">
+    <div class="alert alert-dismissible alert-info" th:if="${message}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <p class=" main-text" th:text="${message}"></p>
     </div>
-    <div class="container">
-        <div class="alert alert-dismissible alert-info" th:if="${message}">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <p class=" main-text" th:text="${message}"></p>
-        </div>
-        <div id="banner" class="page-header">
-            <div class="row">
-                <div class="col-12">
-                    <h2 th:text="#{list.usertasks.title}"></h2>
-                </div>
+    <div id="banner" class="page-header">
+        <div class="row">
+            <div class="col-12">
+                <h2 th:text="#{list.usertasks.title}"></h2>
             </div>
         </div>
-        <div id="bs-docs-section">
-            <div class="row">
-                <div class="col-12">
-                    <form class="form-inline form-group" action="/task/create" method="GET">
-                        <input type="hidden" name="state" th:attr="value = ${state}">
-                        <input type="text" class="form-control mr-sm-2" name="searchInput"
-                            th:attr="placeholder = #{list.usertasks.placeholder.search}">
-                        <input type="submit" class="source-button btn btn-primary btn-xs"
-                            th:attr="value = #{list.usertasks.search}">
-                    </form>
-                </div>
-            </div>
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"
-                        href="/task/create?state=waiting" th:text="#{list.usertasks.waiting}"></a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''"
-                        href="/task/create?state=executing" th:text="#{list.usertasks.executing}"></a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''"
-                        href="/task/create?state=failed" th:text="#{list.usertasks.failed}"></a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" th:classappend="${state=='success'} ? 'active' : ''"
-                        href="/task/create?state=success" th:text="#{list.usertasks.success}"></a>
-                </li>
-            </ul>
-            <div class="tab-pane fade active show add-border">
-                <div class="alert alert-light" th:if="${tasks.size()==0}" th:text="#{systemtasks.notasks}"></div>
-                <table class="table table-hover margin20" th:if="${tasks.size()!=0}">
-                    <thead>
-                        <th scope="col" th:text="#{list.usertasks.date}"></th>
-                        <th scope="col" th:text="#{list.usertasks.dataset}"></th>
-                        <th scope="col" th:text="#{list.usertasks.message}" th:if="${state=='failed'}"></th>
-                        <th scope="col" th:text="#{list.usertasks.info}"></th>
-                    </thead>
-                    <tbody>
-                        <tr th:each="task : ${tasks}">
-                            <td th:text="${#dates.format(task.dataset.uploadDate, 'yyyy-MM-dd')}" class="td-date"></td>
-                                <td th:text="${task.dataset.name}" class=td-width-100></td>
-                                <td th:text="${task.message}" th:if="${state=='failed'}" class="td-width-100"></td>
-                                <td>
-                                    <a class="btn btn-list" th:if="${username==task.getDataset().getAuthor()}" th:href="@{'/task/hide?task=' + ${task.id} + '&option=create&state='+${state}}" data-toggle="tooltip" data-placement="right" th:title="#{list.usertasks.details}" th:onclick="'javascript:return confirm(\'' + #{list.usertasks.surehide} + '\');'">
-                                        <i class="fas fa-eye-slash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+    </div>
+    <div id="bs-docs-section">
+        <div class="row">
+            <div class="col-12">
+                <form class="form-inline form-group" action="/task/create" method="GET">
+                    <input type="hidden" name="state" th:attr="value = ${state}">
+                    <input type="text" class="form-control mr-sm-2" name="searchInput"
+                           th:attr="placeholder = #{list.usertasks.placeholder.search}">
+                    <input type="submit" class="source-button btn btn-primary btn-xs"
+                           th:attr="value = #{list.usertasks.search}">
+                </form>
             </div>
         </div>
-        <div th:include="footer.html"></div>
-    </body>
-</html>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"
+                   href="/task/create?state=waiting" th:text="#{list.usertasks.waiting}"></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''"
+                   href="/task/create?state=executing" th:text="#{list.usertasks.executing}"></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''"
+                   href="/task/create?state=failed" th:text="#{list.usertasks.failed}"></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${state=='success'} ? 'active' : ''"
+                   href="/task/create?state=success" th:text="#{list.usertasks.success}"></a>
+            </li>
+        </ul>
+        <div class="tab-pane fade active show add-border">
+            <div class="alert alert-light" th:if="${tasks.size()==0}" th:text="#{systemtasks.notasks(${state})}"></div>
+            <table class="table table-hover margin20" th:if="${tasks.size()!=0}">
+                <thead>
+                <th scope="col" th:text="#{list.usertasks.date}"></th>
+                <th scope="col" th:text="#{list.usertasks.dataset}"></th>
+                <th scope="col" th:text="#{list.usertasks.message}" th:if="${state=='failed'}"></th>
+                <th scope="col" th:text="#{list.usertasks.info}"></th>
+                </thead>
+                <tbody>
+                    <tr th:each="task : ${tasks}">
+                        <td th:text="${#dates.format(task.dataset.uploadDate, 'yyyy-MM-dd')}" class="td-date"></td>
+                        <td th:text="${task.dataset.name}" class=td-width-100></td>
+                        <td th:text="${task.message}" th:if="${state=='failed'}" class="td-width-100"></td>
+                        <td>
+                            <a class="btn btn-list" th:if="${username==task.getDataset().getAuthor()}" th:href="@{'/task/hide?task=' + ${task.id} + '&option=create&state='+${state}}" data-toggle="tooltip" data-placement="right" th:title="#{list.usertasks.details}" th:onclick="'javascript:return confirm(\'' + #{list.usertasks.surehide} + '\');'">
+                                <i class="fas fa-eye-slash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div th:include="footer.html"></div>

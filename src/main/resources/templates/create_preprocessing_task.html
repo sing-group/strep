@@ -1,73 +1,53 @@
-<!DOCTYPE HTML>
-<html>
-
-    <head>
-        <title th:text="#{app.name}"></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-              integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
-        <link rel="icon" type="image/png" href="/images/STRepLogo.png">
-    </head>
-
-    <body class="main-bg">
-        <div class="header">
-            <div th:include="header.html"></div>
-        </div>
-        <div class="container">
-            <div id="bs-docs-section">
-                <div class="row">
-                    <div class="col-12">
-                        <div id="bs-component">
-                            <form id="createPreprocessingTaskF" action="#" th:action="@{/task/preprocess/create}" th:object="${task}" enctype="multipart/form-data" method="POST">
-                                <input type="hidden" name="preprocessDataset" th:attr="value = ${dataset.name}"></input>
-                                <fieldset>
-                                    <legend>
-                                        <h2 th:text="#{createpreprocessing.title}"></h2>
-                                    </legend>
-                                    <div class="form-group">
-                                        <label class="control-label" th:text="#{createpreprocessing.datasettopreprocess}"></label>
-                                        <strong><label class="normal-text left" th:text="${dataset.name}"></label></strong>
-                                    </div>
-                                    <div class="form-group" th:if="${tasks.size()>0}">
-                                        <h6> <i class="fas fa-arrow-circle-right"></i>&nbsp;<span th:text="#{createpreprocessing.taskslist}"></span></h6>
-                                        <select class="form-control col-md-6" id="selectTask" name="task">
-                                            <option value="" selected th:text="#{createpreprocessing.selecttask}"></option>
-                                            <option th:each="task : ${tasks}" th:value="${task.id}"
-                                                    th:text="${task.name}"></option>
-                                        </select>
-                                        &#42;&nbsp;<small th:text="#{createpreprocessing.infomessage}"></small>
-                                    </div>
-                                    <div class="row"><div class="col-12">&nbsp;</div></div>
-                                    <h6> <i class="fas fa-arrow-circle-right"></i>&nbsp;<span th:text="#{createpreprocessing.createnewtask}"></span></h6>
-                                    <div class="form-group">  
-                                        <label for="#{createpreprocessing.placeholder.name}" id="lname" name="lname" class="control-label" th:text="#{createpreprocessing.name}"></label>
-                                        <input class="form-control" type="text" name="name" id="name" required th:value="${task.name}"></input>
-                                        <small th:text="#{createpreprocessing.format}"></small>
-                                        <label id="errorLabelName" class="error-label" th:if="${#fields.hasErrors('name')}" th:text="#{taskcreateupreprocessing.msg.name}"></label>
-                                    </div>
-                                    <div class="form-group" id="task-data" th:fragment="task-data">
-                                        <label for="#{createpreprocessing.placeholder.description}" id="ldescription" name="ldescription" class="control-label" th:text="#{createpreprocessing.description}" ></label>
-                                        <textarea class="form-control" rows="10" th:attr="placeholder = #{createpreprocessing.placeholder.description}" id="description" name="description" required th:text="${task.description}"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="dataset-file" class="main-text" th:text="#{createpreprocessing.pipeline}" ></label>
-                                        <input type="file" class="form-control-file col-md-6" name="multipart" id="dataset-file" required="required" />
-                                    </div>
-                                    <hr/>
-                                    <div class="form-group right">
-                                        <input class="btn btn-primary" type="submit" th:attr="value = #{createpreprocessing.submit.button}" />
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div>
-                    </div>
+<div th:include="header.html"></div>
+<div class="container">
+    <div id="bs-docs-section">
+        <div class="row">
+            <div class="col-12">
+                <div id="bs-component">
+                    <form id="createPreprocessingTaskF" action="#" th:action="@{/task/preprocess/create}" th:object="${task}" enctype="multipart/form-data" method="POST">
+                        <input type="hidden" name="preprocessDataset" th:attr="value = ${dataset.name}"></input>
+                        <fieldset>
+                            <legend>
+                                <h2 th:text="#{createpreprocessing.title}"></h2>
+                            </legend>
+                            <div class="form-group">
+                                <label class="control-label" th:text="#{createpreprocessing.datasettopreprocess}"></label>
+                                <strong><label class="normal-text left" th:text="${dataset.name}"></label></strong>
+                            </div>
+                            <div class="form-group" th:if="${tasks.size()>0}">
+                                <h6> <i class="fas fa-arrow-circle-right"></i>&nbsp;<span th:text="#{createpreprocessing.taskslist}"></span></h6>
+                                <select class="form-control col-md-6" id="selectTask" name="task">
+                                    <option value="" selected th:text="#{createpreprocessing.selecttask}"></option>
+                                    <option th:each="task : ${tasks}" th:value="${task.id}"
+                                            th:text="${task.name}"></option>
+                                </select>
+                                &#42;&nbsp;<small th:text="#{createpreprocessing.infomessage}"></small>
+                            </div>
+                            <div class="row"><div class="col-12">&nbsp;</div></div>
+                            <h6> <i class="fas fa-arrow-circle-right"></i>&nbsp;<span th:text="#{createpreprocessing.createnewtask}"></span></h6>
+                            <div class="form-group">  
+                                <label for="#{createpreprocessing.placeholder.name}" id="lname" name="lname" class="control-label" th:text="#{createpreprocessing.name}"></label>
+                                <input class="form-control" type="text" name="name" id="name" required th:value="${task.name}"></input>
+                                <small th:text="#{createpreprocessing.format}"></small>
+                                <label id="errorLabelName" class="error-label" th:if="${#fields.hasErrors('name')}" th:text="#{taskcreateupreprocessing.msg.name}"></label>
+                            </div>
+                            <div class="form-group" id="task-data" th:fragment="task-data">
+                                <label for="#{createpreprocessing.placeholder.description}" id="ldescription" name="ldescription" class="control-label" th:text="#{createpreprocessing.description}" ></label>
+                                <textarea class="form-control" rows="10" th:attr="placeholder = #{createpreprocessing.placeholder.description}" id="description" name="description" required th:text="${task.description}"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="dataset-file" class="main-text" th:text="#{createpreprocessing.pipeline}" ></label>
+                                <input type="file" class="form-control-file col-md-6" name="multipart" id="dataset-file" required="required" />
+                            </div>
+                            <hr/>
+                            <div class="form-group right">
+                                <input class="btn btn-primary" type="submit" th:attr="value = #{createpreprocessing.submit.button}" />
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
-        <div th:include="footer.html"></div>
-    </body>
-</html>
+    </div>
+</div>
+<div th:include="footer.html"></div>

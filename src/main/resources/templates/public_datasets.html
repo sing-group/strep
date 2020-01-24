@@ -1,91 +1,70 @@
-<!DOCTYPE HTML>
-<html>
-
-<head>
-    <title th:text="#{app.name}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="icon" type="image/png" href="/images/STRepLogo.png">
-</head>
-
-<body class="main-bg">
-    <div class="header">
-        <div th:include="header.html"></div>
-    </div>
-    <div class="container">
-        <div id="banner" class="page-header">
-            <div class="row">
-                <div class="col-12">
-                    <h2 th:text="#{public.title}"></h2>
-                </div>
+<div th:include="header.html"></div>
+<div class="container">
+    <div id="banner" class="page-header">
+        <div class="row">
+            <div class="col-12">
+                <h2 th:text="#{public.title}"></h2>
             </div>
         </div>
-        <div id="bs-docs-section">
-            <table class="table table-hover margin20">
-                <thead>
-                    <tr>
-                        <th scope="col" th:text="#{public.table.name}"></th>
-                        <th scope="col" th:text="#{public.table.author}"></th>
-                        <th scope="col" th:text="#{public.table.date}"></th>
-                        <th scope="col" th:text="#{public.table.license}"></th>
-                        <th scope="col" th:text="#{public.table.languages}"></th>
-                        <th scope="col" th:text="#{public.table.datatypes}"></th>
-                        <th scope="col" class="aligned-input" th:text="#{public.table.actions}"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <div th:each="dataset : ${datasets}">
-                        <tr>
-                            <th scope="row" th:text="${dataset.name}"></th>
-                            <td th:text="${dataset.author}"></td>
-                            <td th:text="${dataset.uploadDate}"></td>
-                            <td th:text="${dataset.license.name}"></td>
-                            <td class="aligned-input">
-                                <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fas fa-language"></i>
-                                    <span class="icon-caret-down"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <div th:each="language : ${dataset.language}">
-                                        <li th:text="${language.language}"></li>
-                                    </div>
-                                </ul>
-                            </td>
-                            <td class="aligned-input">
-                                <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fas fa-file-signature"></i>
-                                    <span class="icon-caret-down"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <div th:each="datatype : ${dataset.datatypes}">
-                                        <li th:text="${datatype.datatype}"></li>
-                                    </div>
-                                </ul>
-                            </td>
-                            <td class="aligned-input">
-                                <a class="btn btn-list" data-toggle="tooltip" data-placement="right"
-                                    th:title="#{public.table.details}"
-                                    th:href="@{'/dataset/public/detailed?id=' + ${dataset.name}}">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a class="btn btn-list" data-toggle="tooltip" data-placement="right"
-                                    th:title="#{public.table.download}"
-                                    th:href="@{'/dataset/public/download?id=' + ${dataset.name}}">
-                                    <i class="fas fa-file-download"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    </div>
-                </tbody>
-            </table>
-        </div> <!-- row -->
     </div>
-    <div th:include="footer.html"></div>
-</body>
-
-</html>
+    <div id="bs-docs-section">
+        <table class="table table-hover margin20">
+            <thead>
+                <tr>
+                    <th scope="col" th:text="#{public.table.name}"></th>
+                    <th scope="col" th:text="#{public.table.author}"></th>
+                    <th scope="col" th:text="#{public.table.date}"></th>
+                    <th scope="col" th:text="#{public.table.license}"></th>
+                    <th scope="col" th:text="#{public.table.languages}"></th>
+                    <th scope="col" th:text="#{public.table.datatypes}"></th>
+                    <th scope="col" class="aligned-input" th:text="#{public.table.actions}"></th>
+                </tr>
+            </thead>
+            <tbody>
+            <div th:each="dataset : ${datasets}">
+                <tr>
+                    <th scope="row" th:text="${dataset.name}"></th>
+                    <td th:text="${dataset.author}"></td>
+                    <td th:text="${dataset.uploadDate}"></td>
+                    <td th:text="${dataset.license.name}"></td>
+                    <td class="aligned-input">
+                        <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fas fa-language"></i>
+                            <span class="icon-caret-down"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <div th:each="language : ${dataset.language}">
+                                <li th:text="${language.language}"></li>
+                            </div>
+                        </ul>
+                    </td>
+                    <td class="aligned-input">
+                        <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fas fa-file-signature"></i>
+                            <span class="icon-caret-down"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <div th:each="datatype : ${dataset.datatypes}">
+                                <li th:text="${datatype.datatype}"></li>
+                            </div>
+                        </ul>
+                    </td>
+                    <td class="aligned-input">
+                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right"
+                           th:title="#{public.table.details}"
+                           th:href="@{'/dataset/public/detailed?id=' + ${dataset.name}}">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right"
+                           th:title="#{public.table.download}"
+                           th:href="@{'/dataset/public/download?id=' + ${dataset.name}}">
+                            <i class="fas fa-file-download"></i>
+                        </a>
+                    </td>
+                </tr>
+            </div>
+            </tbody>
+        </table>
+    </div> <!-- row -->
+</div>
+<div th:include="footer.html"></div>

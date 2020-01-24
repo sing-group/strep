@@ -22,11 +22,21 @@ public interface LicenseRepository extends CrudRepository<License, String>
     public Iterable<License> findByName(String searchInput);
     
     /**
+     * Return the license that meet the requirements
+     * @param name the name of license
+     * @return An License object
+     */
+    @Query(value = "SELECT * FROM license WHERE name LIKE %?1%", nativeQuery=true)
+    public License findByCompleteName(String name);
+    
+    
+    /**
      * Select all licenses of a list of dataset
      * @param datasetNames The dataset names
      * @return The list of licenses of the datasets 
      */
     @Query(value="SELECT * FROM license, dataset WHERE license.name=dataset.id  AND dataset.name in (?1)", nativeQuery=true)
     public ArrayList<License> getDatasetLicenses(Collection<String> datasetNames);    
+    
     
 }

@@ -1,34 +1,26 @@
-<footer id="footer" class="footer-bg">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="https://www.sing-group.org/" target="_blank"><img src="/images/singGrey.svg"
-                                                                                   alt="Next Generation Computer Systems Group" class="logo-sing"></a>
-                    </li>
-                    <li>
-                        <a href="https://www.uvigo.gal/es" target="_blank"><img src="/images/uvigo.png" alt="Universidad de Vigo" class="logo-uvigo"></a>
-                    </li>
-                </ul>
-            </div>
+        <div class="footer">
+            <footer id="footer" class="footer-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="https://www.sing-group.org/" target="_blank"><img src="/images/singGrey.svg" alt="Next Generation Computer Systems Group" class="logo-sing"></a>
+                                </li>
+                                <li>
+                                    <a href="https://www.uvigo.gal/es" target="_blank"><img src="/images/uvigo.png" alt="Universidad de Vigo" class="logo-uvigo"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="overbox3" class="hide">
+                    <div id="infobox3">
+                        <span th:text="#{public.cookies}"></span>&nbsp;
+                        <a onclick="aceptar_cookies();" th:text="#{cookies.accept}" class="cookies-button"></a>
+                    </div>
+                </div>
+            </footer>
         </div>
-    </div>
-    <div id="overbox3" class="hide">
-        <div id="infobox3">
-            <span th:text="#{public.cookies}"></span>&nbsp;
-            <a onclick="aceptar_cookies();" th:text="#{cookies.accept}" class="cookies-button"></a>
-        </div>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-
-    <script type="text/javascript" src="/js/functions.js"></script>
-    <script type="text/javascript" src="/js/jqueryFunctions.js"></script>
-    <script type="text/javascript" src="/js/cookies.js"></script>
-</footer>
+    </body>
+</html>

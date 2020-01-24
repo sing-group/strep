@@ -22,7 +22,7 @@ public interface UserRepository extends CrudRepository<User, String> {
      * @return the user with that hash
      */
     @Query(
-            value = "SELECT * from user u where hash=?1",
+            value = "SELECT * FROM user u WHERE hash=?1",
             nativeQuery = true)
     Optional<User> findUserByHash(String hash);
 
@@ -32,7 +32,7 @@ public interface UserRepository extends CrudRepository<User, String> {
      * @param email the email of the user
      * @return the user with that email
      */
-    @Query(value = "SELECT * from user u where email=?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM user u WHERE email=?1", nativeQuery = true)
     Optional<User> findUserByEmail(String email);
 
     /**
@@ -41,7 +41,7 @@ public interface UserRepository extends CrudRepository<User, String> {
      * @param inputSearch the input for filter users
      * @return a list of the user with username like input
      */
-    @Query(value = "SELECT * from user where username LIKE %?1%", nativeQuery = true)
+    @Query(value = "SELECT * FROM user WHERE username LIKE %?1%", nativeQuery = true)
     ArrayList<User> searchUsers(String inputSearch);
 
     /**
@@ -50,6 +50,6 @@ public interface UserRepository extends CrudRepository<User, String> {
      * @param permission the permission of users
      * @return the list of users with this permission
      */
-    @Query(value = "SELECT u from User u where u.permission.name=?1")
+    @Query(value = "SELECT u FROM User u WHERE u.permission.name=?1")
     ArrayList<User> findUserByPermission(String permission);
 }

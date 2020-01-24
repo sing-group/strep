@@ -22,6 +22,7 @@ public interface FileRepository extends CrudRepository<File, Long>
      * @param datasetNames the name the datasets accepted
      * @param languages The 2-code languages accepted
      * @param extensions The extensions of the accepted files
+     * @param licenses
      * @param startDate The start date interval for accepted files
      * @param endDate The end date interval for accepted files
      * @param type spam/ham

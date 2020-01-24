@@ -1,76 +1,60 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <title th:text="#{app.name}"></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="/css/style.css"> 
-        <link rel="icon" type="image/png" href="/images/STRepLogo.png">
-    </head>
-    <body class="main-bg">
-        <div class="header">
-            <div th:include="header.html"></div>
+<div th:include="header.html"></div>
+<div class="container" >
+    <div class="alert alert-dismissible alert-info" th:if="${message}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <p class=" main-text" th:text="${message}"></p>
+    </div>
+    <div id="banner" class="page-header">
+        <div class="row">
+            <div class="col-12">
+                <h2 th:text="#{list.preprocessing.dataset.title}"></h2>
+            </div>
         </div>
-        <div class="container" >
-            <div class="alert alert-dismissible alert-info" th:if="${message}">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <p class=" main-text" th:text="${message}"></p>
-            </div>
-            <div id="banner" class="page-header">
-                <div class="row">
-                    <div class="col-12">
-                        <h2 th:text="#{list.preprocessing.dataset.title}"></h2>
-                    </div>
-                </div>
-            </div>
-            <div id="bs-docs-section">
-                <div class="alert alert-light" th:if="${datasets.size()==0}" th:text="#{list.datasets.table.nodatasets}"></div>
-                <div class="modal-content" th:each="dataset : ${datasets}">
-                    <div class="modal-header">
-                        <h5 th:text="${dataset.key}"></h5>
+    </div>
+    <div id="bs-docs-section">
+        <div class="alert alert-light" th:if="${datasets.size()==0}" th:text="#{list.datasets.table.nodatasets}"></div>
+        <div class="modal-content" th:each="dataset : ${datasets}">
+            <div class="modal-header">
+                <h5 th:text="${dataset.key}"></h5>
 
-                    </div>
-                    <div class="modal-body tab-pane">
-                        <tr th:if="${dataset.value}==null" th:text="#{list.preprocessing.notasks}"></tr>
-                        <table class="table table-hover" th:if="${datasets.size()!=0 and dataset.value!=null}">
-                            <thead>
-                                <tr>
-                                    <th scope="col" th:text="#{list.preprocessing.date}"></th>
-                                    <th scope="col" th:text="#{list.preprocessing.name}"></th>
-                                    <th scope="col" th:text="#{list.preprocessing.description}"></th>
-                                    <th scope="col" th:text="#{detailed.dataset.actions}"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="task : ${dataset.value}">
-                                    <td th:text="${#dates.format(task.date, 'yyyy-MM-dd')}" class="td-date"></td>
-                                    <td th:text="${task.name}"></td>
-                                    <td th:text="${task.description}" width="100%" class="justify"></td>
-                                    <td class="minw_110">
-                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{createtasks.downloadpipeline}" th:href="'/task/preprocess/downloadpipeline?id='+ ${task.id}">
-                                            <i class="fas fa-file-download"></i>
-                                        </a>
-                                        <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{createtasks.downloadcsv}" th:if="${state=='success'}" th:href="'/task/preprocess/downloadcsv?id='+ ${task.id}">
-                                            <i class="fas fa-file-csv"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <a  class="btn btn-primary" th:text="#{list.preprocessing.button}" th:href="@{'/task/preprocess/create?name=' + ${dataset.key}}"></a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 right">
-                        <input type="button" class="btn btn-primary" th:value="#{back}" onclick="window.location.href = '/dataset/list'"></input>
-                    </div>
-                </div>               
+            </div>
+            <div class="modal-body tab-pane">
+                <tr th:if="${dataset.value}==null" th:text="#{list.preprocessing.notasks(${state})}"></tr>
+                <table class="table table-hover" th:if="${datasets.size()!=0 and dataset.value!=null}">
+                    <thead>
+                        <tr>
+                            <th scope="col" th:text="#{list.preprocessing.date}"></th>
+                            <th scope="col" th:text="#{list.preprocessing.name}"></th>
+                            <th scope="col" th:text="#{list.preprocessing.description}"></th>
+                            <th scope="col" th:text="#{detailed.dataset.actions}"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="task : ${dataset.value}">
+                            <td th:text="${#dates.format(task.date, 'yyyy-MM-dd')}" class="td-date"></td>
+                            <td th:text="${task.name}"></td>
+                            <td th:text="${task.description}" width="100%" class="justify"></td>
+                            <td class="minw_110">
+                                <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{createtasks.downloadpipeline}" th:href="'/task/preprocess/downloadpipeline?id='+ ${task.id}">
+                                    <i class="fas fa-file-download"></i>
+                                </a>
+                                <a class="btn btn-list" data-toggle="tooltip" data-placement="right" th:title="#{createtasks.downloadcsv}" th:if="${state=='success'}" th:href="'/task/preprocess/downloadcsv?id='+ ${task.id}">
+                                    <i class="fas fa-file-csv"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <a  class="btn btn-primary" th:text="#{list.preprocessing.button}" th:href="@{'/task/preprocess/create?name=' + ${dataset.key}}"></a>
             </div>
         </div>
-        <div th:include="footer.html"></div>
-    </body>
-</html>
+        <div class="row">
+            <div class="col-12 right">
+                <input type="button" class="btn btn-primary" th:value="#{back}" onclick="window.location.href = '/dataset/list'"></input>
+            </div>
+        </div>               
+    </div>
+</div>
+<div th:include="footer.html"></div>

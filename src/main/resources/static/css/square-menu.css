@@ -24,9 +24,8 @@ a.radial-menu{
 a.radial-menu div{
     height:100%;
     background-size:cover;
-    transition:opacity .5s;
     border-radius:inherit;
-
+    transition:transform .5s, opacity .5s;
 }
 a.radial-menu:nth-child(1){
     transform-origin: 110% 110%;
@@ -44,8 +43,8 @@ a.radial-menu:nth-child(2){
     transform:translatez(0px);
 }
 a.radial-menu:nth-child(2) div{
-        background-image: url('/images/preprocess.jpg');
-    
+    background-image: url('/images/preprocess.jpg');
+
 }
 a.radial-menu:nth-child(3){
     top:52.5%;
@@ -101,7 +100,7 @@ a.radial-menu:nth-child(1) span, a.radial-menu:nth-child(3) span{
     margin: 0 auto;
     font-size: 1.2em;
     text-align: justify;
-    padding-top: 40px;
+    /* padding-top: 40px;*/
     font-weight: normal;
 }
 .title-home{
@@ -112,3 +111,18 @@ a.radial-menu:nth-child(1) span, a.radial-menu:nth-child(3) span{
     justify-content: center;
     align-items: center;
 }
+
+/*span.rmenu:hover + .wrap, .wrap:hover{
+    transform:scale(.8) translateZ(0px);
+    opacity:1;
+    
+}*/
+/*
+span.rmenu:hover + .wrap a, .wrap:hover a{
+    transform:scale(1) translatez(0px);
+}
+*/
+/*a.radial-menu:hover div{
+    transform:scale(.8) translateZ(0px);
+    opacity:1;
+}*/

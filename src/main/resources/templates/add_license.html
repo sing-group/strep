@@ -1,85 +1,68 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title th:text="#{app.name}"></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="/css/style.css"> 
-        <link rel="icon" type="image/png" href="/images/STRepLogo.png">
-    </head>
+<div th:include="header.html"></div>
+<div class="container">
+    <div id="bs-docs-section">
+        <div class="row">
+            <div class="col-12">
+                <div id="bs-component">
+                    <form action="#" th:action="@{/license/add}" th:object="${license}" method="POST">
+                        <fieldset>
+                            <legend><h2 th:text="#{add.license.title}"></h2></legend>
+                            <div class="form-group">
+                                <label for="#{add.license.placeholder.name}" id="laddLicense" name="addLicense" class="control-label" th:text="#{add.license.placeholder.name}" ></label>
+                                <input class="form-control" type="text" name="name" th:attr="placeholder = #{add.license.placeholder.name}" required/>
+                                <label class="error-label" th:if="${#fields.hasErrors('name')}" th:text="#{license.msg.name}"></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="#{add.license.placeholder.description}" id="laddLicense" name="addDescription" class="control-label" th:text="#{add.license.placeholder.description}" ></label>
+                                <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label>
+                                <textarea class="form-control" rows="50" cols="80" name="description" th:attr="placeholder = #{add.license.placeholder.description}" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="#{add.license.placeholder.original}" id="loriginalUrl" name="originalUrl" class="control-label" th:text="#{add.license.placeholder.original}" ></label>
+                                <input class="form-control" type="text" name="url" th:attr="placeholder = #{add.license.placeholder.original}" required/>
+                                <label class="error-label" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></label>
+                            </div>
+                            <hr/>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="redistribute" name="redistribute">
+                                    <label class="custom-control-label" for="redistribute" th:text="#{add.license.redistribute}"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="attributeRequired" name="attributeRequired">
+                                    <label class="custom-control-label" for="attributeRequired" th:text="#{add.license.attributerequired}"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="commerciallyUse" name="commerciallyUse">
+                                    <label class="custom-control-label" for="commerciallyUse" th:text="#{add.license.commerciallyuse}"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="adaptWork" name="adaptWork">
+                                    <label class="custom-control-label" for="adaptWork" th:text="#{add.license.adaptwork}"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="changeLicense" name="changeLicense">
+                                    <label class="custom-control-label" for="changeLicense" th:text="#{add.license.changelicense}"></label>
+                                </div>
+                            </div>
+                            <hr/>
 
-    <body class="main-bg">
-        <div class="header">
-            <div th:include="header.html"></div>
-        </div>
-        <div class="container">
-            <div id="bs-docs-section">
-                <div class="row">
-                    <div class="col-12">
-                        <div id="bs-component">
-                            <form action="#" th:action="@{/license/add}" th:object="${license}" method="POST">
-                                <fieldset>
-                                    <legend><h2 th:text="#{add.license.title}"></h2></legend>
-                                    <div class="form-group">
-                                        <label for="#{add.license.placeholder.name}" id="laddLicense" name="addLicense" class="control-label" th:text="#{add.license.placeholder.name}" ></label>
-                                        <input class="form-control" type="text" name="name" th:attr="placeholder = #{add.license.placeholder.name}" required/>
-                                        <label class="error-label" th:if="${#fields.hasErrors('name')}" th:text="#{license.msg.name}"></label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="#{add.license.placeholder.description}" id="laddLicense" name="addDescription" class="control-label" th:text="#{add.license.placeholder.description}" ></label>
-                                        <label class="error-label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label>
-                                        <textarea class="form-control" rows="50" cols="80" name="description" th:attr="placeholder = #{add.license.placeholder.description}" required></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="#{add.license.placeholder.original}" id="loriginalUrl" name="originalUrl" class="control-label" th:text="#{add.license.placeholder.original}" ></label>
-                                        <input class="form-control" type="text" name="url" th:attr="placeholder = #{add.license.placeholder.original}" required/>
-                                        <label class="error-label" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></label>
-                                    </div>
-                                    <hr/>
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="redistribute" name="redistribute">
-                                            <label class="custom-control-label" for="redistribute" th:text="#{add.license.redistribute}"></label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="attributeRequired" name="attributeRequired">
-                                            <label class="custom-control-label" for="attributeRequired" th:text="#{add.license.attributerequired}"></label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="commerciallyUse" name="commerciallyUse">
-                                            <label class="custom-control-label" for="commerciallyUse" th:text="#{add.license.commerciallyuse}"></label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="adaptWork" name="adaptWork">
-                                            <label class="custom-control-label" for="adaptWork" th:text="#{add.license.adaptwork}"></label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="changeLicense" name="changeLicense">
-                                            <label class="custom-control-label" for="changeLicense" th:text="#{add.license.changelicense}"></label>
-                                        </div>
-                                    </div>
-                                    <hr/>
-                                    
-                                    <div class="form-group right">
-                                        <input type="submit" class="btn btn-primary" th:attr="value = #{add.license.button.upload}"><br>
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div>
-                    </div>
+                            <div class="form-group right">
+                                <input type="submit" class="btn btn-primary" th:attr="value = #{add.license.button.upload}"><br>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
-        <div th:include="footer.html"></div>
-    </body>
-</html>
+    </div>
+</div>
+<div th:include="footer.html"></div>
