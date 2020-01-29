@@ -16,7 +16,6 @@
         <div class="modal-content" th:each="dataset : ${datasets}">
             <div class="modal-header">
                 <h5 th:text="${dataset.key}"></h5>
-
             </div>
             <div class="modal-body tab-pane">
                 <tr th:if="${dataset.value}==null" th:text="#{list.preprocessing.notasks(${state})}"></tr>

@@ -97,14 +97,14 @@ tr:nth-child(even){
 .title-text
 {
     color: #203939;
-    font-size: 1;
+    font-size: inherit;
     font-weight: bold;
 }
 
 .normal-text
 {
     color: #203939;
-    font-size: 1;
+    font-size: inherit;
 }
 
 .main-text
@@ -446,10 +446,11 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0.5rem 0.5rem 0.5rem 0 !important;
+
 }
 .title-home{
     color:#FFF;
-    /*width: 80%;*/
     text-align: left;
     font-family: 'Sriracha', cursive;
 }
@@ -470,6 +471,13 @@ input {
 }
 .header{
     padding-bottom: 50px;
+}
+#header-background{
+    background-image: url(/images/logoBlanco.svg ); 
+    background-repeat: no-repeat; 
+    background-size: 100px;
+    background-position-y: center;
+    background-position-x: 10px;
 }
 
 .list-unstyled{
@@ -638,6 +646,17 @@ legend{
     text-transform: uppercase; 
 }
 
+#bs-component {
+    margin-top: 0.5em;
+}
+
+#bs-docs-section{
+    margin-top: 0.5em;
+}
+#banner{
+    margin-bottom: 0.5em;
+}
+
 /** RESPONSIVE **/
 
 @media (max-width: 414px){
@@ -660,11 +679,14 @@ legend{
         }
         .filters4columns{
             display: none;
-        }
+        }        
     }
     @media screen and (max-width: 991px) {
         .title-home{
             display: inline;
+        }
+        #header-background{
+            background-image: none; 
         }
     }
 
@@ -692,6 +714,9 @@ legend{
     .title-home{
         display: none;
     }
+    #header-background{
+        background-image: none;
+    }
 }
 
 @media screen and (min-width: 1000px) {
@@ -701,6 +726,9 @@ legend{
     .filters4columns{
         display: inline-flex;
     }
+    #header-background{
+            background-image: url(/images/logoBlanco.svg); 
+        }
 }
 @media (max-width: 1920px) {
     @media (max-width: 500px) {
@@ -711,10 +739,10 @@ legend{
         .dlocales{ width: 100%;}
     }
     @media (max-width: 550px) {
-        #locales{
+        /*#locales{
             align-self: end;
             margin-bottom: 0.9rem !important;
-        }
+        }*/
     }
 }
 

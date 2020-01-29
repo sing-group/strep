@@ -1,15 +1,15 @@
 <div th:include="header.html"></div>
 <div class="container">
-    <div id="bs-docs-section">
+    <div id="banner" class="page-header">
         <div class="row">
             <div class="col-12">
-                <div id="bs-component">
-                    <div class="row">
-                        <div class="col-12">
-                            <h2 th:text="#{detailed.publicdataset.details}"></h2>
-                        </div>
-                    </div>
-                </div>
+                <h2 th:text="#{detailed.publicdataset.details}"></h2>
+            </div>
+        </div>
+    </div>
+    <div id="bs-docs-section">
+        <!--div class="row">
+            <div class="col-12"-->
                 <div class="row">
                     <div class="col-3 left"><p class="title-text" th:text="#{detailed.dataset.author}"> </p></div>
                     <div class="col-9 left"><p class="normal-text" th:text="${dataset.author}"></p></div>
@@ -71,6 +71,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>   
+    <!--/div>
+</div-->   
 <div th:include="footer.html"></div>

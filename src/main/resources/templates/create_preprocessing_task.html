@@ -1,5 +1,12 @@
 <div th:include="header.html"></div>
 <div class="container">
+     <div id="banner" class="page-header">
+        <div class="row">
+            <div class="col-12">
+                <h2 th:text="#{createpreprocessing.title}"></h2>
+            </div>
+        </div>
+    </div>
     <div id="bs-docs-section">
         <div class="row">
             <div class="col-12">
@@ -7,9 +14,6 @@
                     <form id="createPreprocessingTaskF" action="#" th:action="@{/task/preprocess/create}" th:object="${task}" enctype="multipart/form-data" method="POST">
                         <input type="hidden" name="preprocessDataset" th:attr="value = ${dataset.name}"></input>
                         <fieldset>
-                            <legend>
-                                <h2 th:text="#{createpreprocessing.title}"></h2>
-                            </legend>
                             <div class="form-group">
                                 <label class="control-label" th:text="#{createpreprocessing.datasettopreprocess}"></label>
                                 <strong><label class="normal-text left" th:text="${dataset.name}"></label></strong>

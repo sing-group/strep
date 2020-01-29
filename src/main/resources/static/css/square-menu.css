@@ -128,7 +128,8 @@ span.rmenu:hover + .wrap a, .wrap:hover a{
     transform:scale(1) translatez(0px);
 }
 */
-a.radial-menu:hover div{
-/*    transform:scale(.8) translateZ(0px);*/
-    opacity:1;
+a.radial-menu:hover{
+   /* transform:scale(.8) translateZ(0px);*/
+    opacity:1 !important;
+     
 }

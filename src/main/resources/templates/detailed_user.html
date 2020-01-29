@@ -4,17 +4,19 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <p class=" main-text" th:text="${param.message}"></p>
     </div>
+    <div id="banner" class="page-header">
+        <div class="row">
+            <div class="col-12">
+                <h2 th:text="#{detailed.user.details}"></h2>
+            </div>
+        </div>
+    </div>
     <div id="bs-docs-section">
         <div class="row">
             <div class="col-12">
                 <div id="bs-component">
-                    <div class="row">
-                        <div class="col-12">
-                            <h2 class="main-text left" th:text="#{detailed.publicdataset.details}"></h2>
-                        </div>
-                    </div>
                     <div class="card border-primary mb3">
-                        <div class="card-header" th:text="#{detailed.user.details}"></div>
+                        <div class="card-header" th:text="#{detailed.user.data}"></div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 right">

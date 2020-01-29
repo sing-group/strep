@@ -5,15 +5,19 @@
         <label class="" th:text="${message}"></label>
     </div>
     <label class="" th:text="${message}"></label>
+    <div id="banner" class="page-header">
+        <div class="row">
+            <div class="col-12">
+                <h2 th:text="#{editprofile.title}"></h2>
+            </div>
+        </div>
+    </div>
     <div id="bs-docs-section">
         <div class="row">
             <div class="col-12">
                 <div id="bs-component">
                     <form action="#" th:action="@{/user/editprofile}" th:object="${user}" enctype="multipart/form-data" method="POST">
                         <fieldset>
-                            <legend>
-                                <h2 th:text="#{editprofile.title}"></h2>
-                            </legend>
                             <div class="form-group">
                                 <img class="user-photo" th:if="${user.photo!=null} and ${username}!=''"
                                      th:src="@{'/user/image?username='+${username}}" style="max-width: 150px;">

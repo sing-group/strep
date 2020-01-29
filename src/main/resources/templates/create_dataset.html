@@ -7,6 +7,7 @@
             </div>
         </div>
     </div>
+    <div id="bs-docs-section">
     <div class="row">
         <div class="col-12">
             <h4 class="create" th:text="#{create.dataset.filters}"></h4>
@@ -136,9 +137,9 @@
                 <p th:text="${message}"></p>
             </div>
             <table class="table table-hover">
-                <tr class="alert alert-light" th:if="${datasets.size()==0}">
+                <!--tr class="alert alert-light" th:if="${datasets.size()==0}">
                     <td colspan="6" th:text="#{list.datasets.table.nodatasets}"></td>
-                </tr>
+                </tr-->
                 <thead th:if="${datasets.size()!=0}">
                 <th scope="col" th:text="#{create.dataset.table.name}"></th>
                 <th scope="col" th:text="#{create.dataset.table.author}"></th>
@@ -177,7 +178,7 @@
                 </tbody>
             </table>
         </div>
-        <div id="bs-docs-section">
+        <!--div id="bs-docs-section"-->
             <div class="row">
                 <div class="col-12">&nbsp;&nbsp;</div>
             </div>
@@ -349,7 +350,8 @@
                     <input id="createDatasetButton" type="submit" class="btn btn-primary" th:attr="value = #{create.dataset.button.submit}" disabled="true">
                 </div>
             </div>
-        </div>
+        <!--/div-->
     </form>
+</div>
 </div>
 <div th:include="footer"></div>

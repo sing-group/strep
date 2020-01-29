@@ -11,50 +11,50 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <form class="form-inline form-group">
-                <input type="text" class="form-control mr-sm-2" name="search"
-                       th:attr="placeholder = #{list.licenses.search}">
-                <input type="submit" class="source-button btn btn-primary btn-xs"
-                       th:attr="value = #{list.licenses.search}">
-            </form>
+    <div id="bs-docs-section">
+        <div class="row">
+            <div class="col-12">
+                <form class="form-inline form-group">
+                    <input type="text" class="form-control mr-sm-2" name="search" th:attr="placeholder = #{list.licenses.search}">
+                    <input type="submit" class="source-button btn btn-primary btn-xs" th:attr="value = #{list.licenses.search}">
+                </form>
+            </div>
         </div>
-    </div>
-    <div class="tab-pane fade active show">
-        <div class="alert alert-light" th:if="${licenses.size()==0}" th:text="#{list.licenses.nolicenses}"></div>
-        <table class="table table-hover margin20" th:if="${licenses.size()!=0}">
-            <thead>
-            <th scope="col" th:text="#{list.licenses.name}"></th>
-            <th scope="col" th:text="#{list.licenses.URL}"></th>
-            <th scope="col" th:text="#{list.licenses.actions}"></th>
-            </thead>
-            <tbody>
-                <tr th:each="license : ${licenses}">
-                    <th scope="row" th:text="${license.name}"></th>
-                    <td>
-                        <a class="license" th:href="${license.url}" th:text="${license.url}" target="_blank"></a>
-                    </td>
-                    <td>
-                        <div class="btn-group">
-                            <a class="btn btn-list" th:href="@{/license/detailed(name = ${license.name})}"
-                               th:title="#{list.licenses.view}">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                            <a class="btn btn-list" th:href="@{/license/modify(name = ${license.name})}"
-                               th:title="#{list.licenses.edit}">
-                                <i class="fas fa-pen-square"></i>
-                            </a>
-                            <a class="btn btn-list" th:href="@{/license/delete(name = ${license.name})}"
-                               th:title="#{list.licenses.delete}"
-                               th:onclick="'javascript:return confirm(\'' + #{list.licenses.suredelete} + '\');'">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="tab-pane fade active show">
+            <div class="alert alert-light" th:if="${licenses.size()==0}" th:text="#{list.licenses.nolicenses}"></div>
+            <table class="table table-hover margin20" th:if="${licenses.size()!=0}">
+                <thead>
+                <th scope="col" th:text="#{list.licenses.name}"></th>
+                <th scope="col" th:text="#{list.licenses.URL}"></th>
+                <th scope="col" th:text="#{list.licenses.actions}"></th>
+                </thead>
+                <tbody>
+                    <tr th:each="license : ${licenses}">
+                        <th scope="row" th:text="${license.name}"></th>
+                        <td>
+                            <a class="license" th:href="${license.url}" th:text="${license.url}" target="_blank"></a>
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-list" th:href="@{/license/detailed(name = ${license.name})}"
+                                   th:title="#{list.licenses.view}">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a class="btn btn-list" th:href="@{/license/modify(name = ${license.name})}"
+                                   th:title="#{list.licenses.edit}">
+                                    <i class="fas fa-pen-square"></i>
+                                </a>
+                                <a class="btn btn-list" th:href="@{/license/delete(name = ${license.name})}"
+                                   th:title="#{list.licenses.delete}"
+                                   th:onclick="'javascript:return confirm(\'' + #{list.licenses.suredelete} + '\');'">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <div th:include="footer.html"></div>

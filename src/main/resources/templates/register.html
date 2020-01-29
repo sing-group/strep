@@ -4,15 +4,20 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <label class="" th:text="${message}"></label>
     </div>
+    <div id="banner" class="page-header">
+        <div class="row">
+            <div class="col-12">
+                <h2 th:text="#{register.title}"></h2>
+            </div>
+        </div>
+    </div>
     <div id="bs-docs-section">
-
         <div class="row">
             <div class="col-12">
                 <div id="bs-component">
                     <form action="#" th:action="@{/user/register}" th:object="${user}" method="POST">
                         <fieldset>
-                            <legend><h2 th:text="#{register.title}"></h2></legend>
-                            <div class="form-group">
+                           <div class="form-group">
                                 <label for="#{register.placeholder.email}" id="laddEmail" name="laddEmail" class="col-md-3 control-label" th:text="#{register.placeholder.email}" ></label>
                                 <input type="email" class="form-control col-md-6" name="email" th:attr="value=${user.email}" required="required">
                                 <label class="error-label" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"  th:text="#{register.emailerror}"></label>

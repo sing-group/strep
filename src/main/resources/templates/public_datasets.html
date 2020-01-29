@@ -8,7 +8,8 @@
         </div>
     </div>
     <div id="bs-docs-section">
-        <table class="table table-hover margin20">
+        <div class="alert alert-light" th:if="${datasets.size()==0}" th:text="#{list.datasets.table.nodatasets}"></div>
+        <table class="table table-hover margin20" th:if="${datasets.size()>0}">
             <thead>
                 <tr>
                     <th scope="col" th:text="#{public.table.name}"></th>
