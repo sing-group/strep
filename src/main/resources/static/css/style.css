@@ -685,6 +685,14 @@ legend{
         .title-home{
             display: inline;
         }
+        #header-user-options-responsive{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #header-user-options{
+            display: none;
+        }        
         #header-background{
             background-image: none; 
         }
@@ -714,6 +722,14 @@ legend{
     .title-home{
         display: none;
     }
+    #header-user-options-responsive{
+        display: none;
+    }
+    #header-user-options{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }    
     #header-background{
         background-image: none;
     }
@@ -727,8 +743,8 @@ legend{
         display: inline-flex;
     }
     #header-background{
-            background-image: url(/images/logoBlanco.svg); 
-        }
+        background-image: url(/images/logoBlanco.svg); 
+    }
 }
 @media (max-width: 1920px) {
     @media (max-width: 500px) {

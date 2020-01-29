@@ -60,7 +60,32 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="title-home" th:text="#{app.name}"></div>
+                    <!--div class="title-home" th:text="#{app.name}"></div-->
+                     <div id="header-user-options-responsive">
+                            <div class="header-lang-user">
+                                <select id="locales" class="form-control">
+                                    <option id="en" value="en" th:text="EN" onclick="changeLocale(this.id)"></option>
+                                    <option id="es" value="es" th:text="ES" onclick="changeLocale(this.id)"></option>
+                                </select>
+                                <a href="/user/editprofile" class="icons" th:if="${session.username!=null}">
+                                    <img th:if="${session.photo!=null} and ${session.username!=null}" class="user-photo" th:src="@{'/user/image?username='+${session.username}}" height="32" width="32">
+                                    <i th:unless="${session.photo!=null}" class="fas fa-user fa-2x"></i>
+                                </a>
+                                <a href="/user/editprofile" class="icons" th:unless="${session.username!=null}">
+                                    <img th:if="${photo!=null} and ${username!=null}" class="user-photo" th:src="@{'/user/image?username='+${username}}" height="32" width="32">
+                                    <i th:unless="${photo!=null}" class="fas fa-user fa-2x"></i>
+                                </a>
+                                &nbsp;
+                                <span th:if="${session.username}!=null" th:text="${session.username}" class="topdiv-text"></span>
+                                <span th:unless="${session.username}!=null" th:text="${username}" class="topdiv-text"></span>
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="float-right logout-icon">
+                                <a href="/logout" class=" icons"><!--logout-icon-->
+                                    <i class="fas fa-door-open fa-2x"></i>
+                                </a>
+                            </div>
+                        </div>
                     <div class="collapse navbar-collapse" id="navbarColor01">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item dropdown">
@@ -136,28 +161,30 @@
                         </ul>
 
                         <!--TODO: Change this for an image passed from parameters-->
-                        <div class="header-lang-user">
-                            <select id="locales" class="form-control">
-                                <option id="en" value="en" th:text="EN" onclick="changeLocale(this.id)"></option>
-                                <option id="es" value="es" th:text="ES" onclick="changeLocale(this.id)"></option>
-                            </select>
-                            <a href="/user/editprofile" class="icons" th:if="${session.username!=null}">
-                                <img th:if="${session.photo!=null} and ${session.username!=null}" class="user-photo" th:src="@{'/user/image?username='+${session.username}}" height="32" width="32">
-                                <i th:unless="${session.photo!=null}" class="fas fa-user fa-2x"></i>
-                            </a>
-                            <a href="/user/editprofile" class="icons" th:unless="${session.username!=null}">
-                                <img th:if="${photo!=null} and ${username!=null}" class="user-photo" th:src="@{'/user/image?username='+${username}}" height="32" width="32">
-                                <i th:unless="${photo!=null}" class="fas fa-user fa-2x"></i>
-                            </a>
-                            &nbsp;
-                            <span th:if="${session.username}!=null" th:text="${session.username}" class="topdiv-text"></span>
-                            <span th:unless="${session.username}!=null" th:text="${username}" class="topdiv-text"></span>
-                            &nbsp;&nbsp;
-                        </div>
-                        <div class="float-right logout-icon">
-                            <a href="/logout" class=" icons"><!--logout-icon-->
-                                <i class="fas fa-door-open fa-2x"></i>
-                            </a>
+                        <div id="header-user-options">
+                            <div class="header-lang-user">
+                                <select id="locales" class="form-control">
+                                    <option id="en" value="en" th:text="EN" onclick="changeLocale(this.id)"></option>
+                                    <option id="es" value="es" th:text="ES" onclick="changeLocale(this.id)"></option>
+                                </select>
+                                <a href="/user/editprofile" class="icons" th:if="${session.username!=null}">
+                                    <img th:if="${session.photo!=null} and ${session.username!=null}" class="user-photo" th:src="@{'/user/image?username='+${session.username}}" height="32" width="32">
+                                    <i th:unless="${session.photo!=null}" class="fas fa-user fa-2x"></i>
+                                </a>
+                                <a href="/user/editprofile" class="icons" th:unless="${session.username!=null}">
+                                    <img th:if="${photo!=null} and ${username!=null}" class="user-photo" th:src="@{'/user/image?username='+${username}}" height="32" width="32">
+                                    <i th:unless="${photo!=null}" class="fas fa-user fa-2x"></i>
+                                </a>
+                                &nbsp;
+                                <span th:if="${session.username}!=null" th:text="${session.username}" class="topdiv-text"></span>
+                                <span th:unless="${session.username}!=null" th:text="${username}" class="topdiv-text"></span>
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="float-right logout-icon">
+                                <a href="/logout" class=" icons"><!--logout-icon-->
+                                    <i class="fas fa-door-open fa-2x"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
