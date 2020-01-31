@@ -747,9 +747,9 @@ public class DatasetController {
     /**
      * Check spam percentage data
      *
-     * @param model The model
-     * @param inputSpam The percentage of spam messages desired
-     * @param datasets The selected datasets
+     * @param model      The model
+     * @param inputSpam  The percentage of spam messages desired
+     * @param datasets   The selected datasets
      * @param languages
      * @param sdatatypes
      * @param date1
@@ -870,23 +870,23 @@ public class DatasetController {
     /**
      * Validates the input data when "Check" button is pressed
      *
-     * @param model the model
+     * @param model           the model
      * @param languages
      * @param sdatatypes
      * @param date1
      * @param date2
      * @param licenses
-     * @param inputSpamEml Spam EML percentage
-     * @param inputHamEml Ham EML percentage
-     * @param inputSpamWarc Spam WARC percentage
-     * @param inputHamWarc Ham WARC percentage
-     * @param inputSpamTsms Spam SMS percentage
-     * @param inputHamTsms Ham SMS percentage
-     * @param inputSpamYtbid Spam YTB percentage
-     * @param inputHamYtbid Ham YTB percentage
-     * @param inputSpamTwtid Spam TWT percentage
-     * @param inputHamTwtid Ham TWV percentage
-     * @param datasetNames The datasets
+     * @param inputSpamEml    Spam EML percentage
+     * @param inputHamEml     Ham EML percentage
+     * @param inputSpamWarc   Spam WARC percentage
+     * @param inputHamWarc    Ham WARC percentage
+     * @param inputSpamTsms   Spam SMS percentage
+     * @param inputHamTsms    Ham SMS percentage
+     * @param inputSpamYtbid  Spam YTB percentage
+     * @param inputHamYtbid   Ham YTB percentage
+     * @param inputSpamTwtid  Spam TWT percentage
+     * @param inputHamTwtid   Ham TWV percentage
+     * @param datasetNames    The datasets
      * @param fileNumberInput Number of files for the new dataset
      * @return The part of the view that is going to be updated
      */
@@ -931,7 +931,7 @@ public class DatasetController {
 
         if (datasets == null || fileNumberInput == 0
                 || (inputSpamEml + inputHamEml + inputSpamWarc + inputHamWarc + inputSpamTsms + inputHamTsms
-                + inputSpamYtbid + inputHamYtbid + inputSpamTwtid + inputHamTwtid) != 100) {
+                        + inputSpamYtbid + inputHamYtbid + inputSpamTwtid + inputHamTwtid) != 100) {
             model.addAttribute("datatypesInputError", messageSource.getMessage(
                     "checkposibledatatypes.dataset.datatypesinputerror", Stream.of().toArray(String[]::new), locale));
         } else {
