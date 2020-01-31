@@ -1,49 +1,72 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <title th:text="#{app.name}"></title>
 
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title th:text="#{app.name}"></title>
 
-        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-        <!-- Google Fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Kalam|Norican|Sriracha&display=swap" rel="stylesheet"> 
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
-        <link rel="stylesheet" type="text/css" href="/css/square-menu.css">
-        <link rel="icon" type="image/png" href="/images/favicon.png">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="/js/functions.js"></script>
-        <script type="text/javascript" src="/js/jqueryFunctions.js"></script>
-        <script type="text/javascript" src="/js/cookies.js"></script>
-    </head>
-    <body class="main-bg">
-        <div class="header">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                <div class="container" th:if="${session.username}==null and ${username}==null">
-                    <a class="nav-brand nav-link" href="/" id="home">HOME</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <!-- Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Kalam|Norican|Sriracha&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/square-menu.css">
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/functions.js"></script>
+    <script type="text/javascript" src="/js/jqueryFunctions.js"></script>
+    <script type="text/javascript" src="/js/cookies.js"></script>
+</head>
+
+<body class="main-bg">
+    <div class="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <!-- id="header-background"-->
+            <div class="container" th:if="${session.username}==null and ${username}==null">
+                <div id="header-menu">
+                    <img src="/images/logoBlanco.svg" id="logo-home">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="title-home" th:text="#{app.name}"></div>
-                    <div class="collapse navbar-collapse" id="navbarColor01">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <a id="datasetpublic" class="nav-link" href="/dataset/public" th:text="#{public.home.title}"></a>
-                            </li>
-                            <li class="nav-item">
-                                <a id="userregister" class="nav-link" href="/user/register" th:text="#{signup.home.title}"></a>
-                            </li>
-                        </ul>
-                        <div sec:authorize="isAnonymous()" id="dlogin">
-                            <form action="#" th:action="@{/}" th:object="${user}" method="post" class="form-inline my-2 my-lg-0">
-                                <label class="control-label-login" for="#{header.username}" id="laddLicense" name="lUsername" th:text="#{header.username}" ></label>
-                                <input class="form-control mr-sm-2" type="text" id="username" name="username" th:attr="placeholder=#{header.username}">
-                                <label class="error-label" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" th:text="#{header.usernameerror}"></label>
+                </div>
+                <div id="responsive-header-menu">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <img src="/images/logoBlanco.svg" id="logo-home">
+                </div>
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a id="datasetpublic" class="nav-link" href="/dataset/public"
+                                th:text="#{public.home.title}"></a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="userregister" class="nav-link" href="/user/register"
+                                th:text="#{signup.home.title}"></a>
+                        </li>
+                    </ul>
+                    <div sec:authorize="isAnonymous()" id="dlogin">
+                        <form action="#" th:action="@{/}" th:object="${user}" method="post"
+                            class="form-inline my-2 my-lg-0">
+                            <label class="control-label-login" for="#{header.username}" id="laddLicense"
+                                name="lUsername" th:text="#{header.username}"></label>
+                            <input class="form-control mr-sm-2" type="text" id="username" name="username"
+                                th:attr="placeholder=#{header.username}">
+                            <label class="error-label" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" th:text="#{header.usernameerror}"></label>
                                 <label class="control-label-login" for="#{header.password}" id="lPassword" name="lPassword" th:text="#{header.password}" ></label>
                                 <input class="form-control mr-sm-2" type="password" id="password" name="password" th:attr="placeholder=#{header.password}">
                                 <button class="btn btn-success my-2 my-sm-0" type="submit" value="Login">Login</button>
@@ -56,11 +79,19 @@
                     </div>
                 </div>
                 <div class="container" th:if="${session.username}!=null or ${username}!=null">
-                    <a class="nav-brand nav-link" href="/dataset/list" id="home">HOME</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <!--div class="title-home" th:text="#{app.name}"></div-->
+                    <div id="header-menu">
+                        <img src="/images/logoBlanco.svg" id="logo-home">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        
+                    </div>
+                    <div id="responsive-header-menu">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <img src="/images/logoBlanco.svg" id="logo-home">
+                    </div>
                      <div id="header-user-options-responsive">
                             <div class="header-lang-user">
                                 <select id="locales" class="form-control">

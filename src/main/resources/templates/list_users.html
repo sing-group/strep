@@ -52,15 +52,10 @@
                                  th:src="@{'/user/image?username='+${user.username}}" alt="photo" height="32" width="32">
                             <i th:unless="${user.photo!=null}" class="fas fa-user fa-2x"></i>
                         </td>
-                        <td>
-                            <span th:text="${user.username}"></span>
-                        </td>
+                        <td th:text="${user.username}"></td>
                         <td th:text="${user.name}"></td>
-                        <td>
-                            <p th:text="${user.permission.name}"></p>
-                        </td>
+                        <td th:text="${user.permission.name}"></td>
                         <td class="minw_110">
-
                             <a th:if="${!user.confirmedAccount}" class="btn btn-list" data-toggle="tooltip"
                                data-placement="right" title="#{list.users.confirmerror}"
                                th:href="@{/user/confirm(username = ${user.username})}">

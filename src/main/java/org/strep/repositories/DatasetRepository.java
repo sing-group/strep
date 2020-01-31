@@ -4,9 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-
 import org.strep.domain.Dataset;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -32,7 +30,9 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      *
      * @return List of available system datasets
      */
-    @Query(value = "SELECT * FROM dataset WHERE type='systemdataset' AND available=true", nativeQuery = true)
+    
+    /*@Query(value = "SELECT * FROM dataset WHERE type='systemdataset' AND available=true", nativeQuery = true)*/
+    @Query(value = "SELECT * FROM dataset d, task t WHERE d.type='systemdataset' AND d.available=true AND t.dataset_name=d.name AND t.state='success'", nativeQuery = true)
     public ArrayList<Dataset> getSystemDatasets();
 
     /**
@@ -70,7 +70,9 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      * @param type the type of the dataset: userdataset or systemdataset
      * @return A list of available datasets owned by author AND filtered by type
      */
-    @Query(value = "SELECT * FROM dataset WHERE type=?2 AND available=true AND author=?1", nativeQuery = true)
+    
+    /*@Query(value = "SELECT * FROM dataset WHERE type=?2 AND available=true AND author=?1", nativeQuery = true)*/
+    @Query(value="SELECT * FROM dataset d, task t WHERE d.type=?2 AND d.available=true AND d.author=?1 AND t.dataset_name=d.name AND t.state='success'", nativeQuery = true)
     public ArrayList<Dataset> getOwnDatasets(String username, String type);
 
     /**
@@ -82,7 +84,8 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      * @return A list of not private and available datasets owned by any user
      * but author, filtered by type
      */
-    @Query(value = "SELECT * FROM dataset WHERE type=?2 AND available=true AND author<>?1 AND access<>'private'", nativeQuery = true)
+    /*@Query(value = "SELECT * FROM dataset WHERE type=?2 AND available=true AND author<>?1 AND access<>'private'", nativeQuery = true)*/
+    @Query(value = "SELECT * FROM dataset d, task t WHERE d.type=?2 AND d.available=true AND d.author<>?1 AND d.access<>'private' AND t.dataset_name=d.name AND t.state='success'", nativeQuery = true)
     public ArrayList<Dataset> getCommunityDatasets(String username, String type);
 
     /**
@@ -92,7 +95,8 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      * @param type the type of the dataset: Dataset.TYPE_USER or Dataset.TYPE_SYSTEM
      * @return A list datasets owned by author and not private owned by anyone 
      */
-    @Query(value = "SELECT * FROM dataset WHERE type=?2 AND available=true AND (author=?1 OR access<>'private')", nativeQuery = true)
+    /* @Query(value = "SELECT * FROM dataset WHERE type=?2 AND available=true AND (author=?1 OR access<>'private')", nativeQuery = true)*/
+    @Query(value = "SELECT * FROM dataset d, task t WHERE d.type=?2 AND d.available=true AND (d.author=?1 OR d.access<>'private') AND t.dataset_name=d.name AND t.state='success'", nativeQuery = true)
     public ArrayList<Dataset> getSystemDatasets(String username, String type);
 
     /**
@@ -186,7 +190,7 @@ public interface DatasetRepository extends CrudRepository<Dataset, String> {
      * @param datasetNames The datasets to combine citations
      * @return The String concatenation of datasets
      */
-    @Query(value="SELECT GROUP_CONCAT(IF(citation_request!=null,CONCAT(citation_request,'\\r\\n'),'') SEPARATOR '') FROM dataset WHERE dataset.name IN (?1)", nativeQuery=true)
+    @Query(value="SELECT GROUP_CONCAT(citation_request,IF(citation_request!=null, '.','') SEPARATOR '') FROM dataset WHERE dataset.name IN (?1)", nativeQuery=true)
     public String combineAllCitations4Datasets(Collection<String> datasetNames);
     
     /**

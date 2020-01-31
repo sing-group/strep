@@ -49,7 +49,8 @@
                             <th scope="col" th:text="#{list.datasets.table.author}"></th>
                             <th scope="col" th:text="#{list.datasets.table.date}"></th>
                             <th scope="col" th:text="#{list.datasets.table.license}"></th>
-                            <th scope="col" th:text="#{list.datasets.table.fileinfo}" colspan="2"></th>
+                            <th scope="col" th:text="#{list.datasets.table.fileinfo}"></th>
+                            <th scope="col" th:text="#{list.datasets.table.filetypes}"></th>
                             <th scope="col" th:text="#{list.datasets.table.actions}"></th>
                         </tr>
                     </thead>
@@ -106,7 +107,7 @@
                             <th scope="row" th:text="${dataset.name}"></th>
                             <td th:text="${dataset.author}"></td>
                             <td th:text="${#dates.format(dataset.uploadDate, 'yyyy-MM-dd')}" class="td-date" ></td>
-                            <td th:text="${dataset.license.name}" ></td><!--style="min-width: max-content"-->
+                            <td th:text="${dataset.license.name}" ></td>
                             <td>
                                 <a class="btn btn-list dropdown-toggle" data-toggle="dropdown" href="#" data-placement="right" th:title="#{list.datasets.table.fileinfotooltip}">
                                     <i class="fas fa-language"></i>
