@@ -26,7 +26,7 @@ public interface LicenseRepository extends CrudRepository<License, String>
      * @param name the name of license
      * @return An License object
      */
-    @Query(value = "SELECT * FROM license WHERE name LIKE %?1%", nativeQuery=true)
+    @Query(value = "SELECT * FROM license WHERE name =?1", nativeQuery=true)
     public License findByCompleteName(String name);
     
     
