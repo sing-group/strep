@@ -26,7 +26,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.959798"
-     inkscape:cx="-28.174859"
+     inkscape:cx="-87.268782"
      inkscape:cy="36.66379"
      inkscape:document-units="mm"
      inkscape:current-layer="layer2"
@@ -57,7 +57,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -131,28 +131,23 @@
        d="m 55.836308,6.7725591 -1.426269,2.4603135 c 0.343488,-0.09218 0.632184,-0.250796 0.863513,-0.4790397 0.39323,-0.3880557 0.590145,-0.9159104 0.590145,-1.5833651 0,-0.139699 -0.01091,-0.271071 -0.02739,-0.3979087 z"
        id="path849"
        inkscape:connector-curvature="0" />
-    <text
-       xml:space="preserve"
+    <g
+       aria-label="S"
        style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="60.808338"
-       y="18.347252"
-       id="text978-6-0"><tspan
-         sodipodi:role="line"
-         id="tspan976-6-4"
-         x="60.808338"
-         y="18.347252"
+       id="text978-6-0">
+      <path
+         d="m 63.734277,17.190846 q 0,-0.357011 -0.256117,-0.636411 -0.256116,-0.287161 -0.620888,-0.48895 -0.364773,-0.20955 -0.729545,-0.426861 -0.357011,-0.217311 -0.613128,-0.551039 -0.256116,-0.341489 -0.256116,-0.783872 0,-0.605367 0.426861,-0.993422 0.426861,-0.395817 1.039989,-0.395817 0.294922,0 0.644172,0.1397 0.34925,0.131939 0.4191,0.131939 0.162983,0 0.248355,-0.271639 h 0.325967 l 0.186267,1.847144 h -0.380295 q -0.1397,-0.589844 -0.48895,-0.962377 -0.34925,-0.372534 -0.830439,-0.372534 -0.325966,0 -0.527755,0.170745 -0.201789,0.162983 -0.201789,0.473428 0,0.147461 0.06985,0.2794 0.06985,0.131938 0.20955,0.256116 0.1397,0.124178 0.232833,0.186267 0.09313,0.06209 0.263878,0.170744 0.939095,0.5588 1.18745,0.760589 0.582083,0.473428 0.620889,1.1176 0,0.04657 0,0.100895 0,0.597605 -0.465667,1.055511 -0.457905,0.457905 -1.2573,0.457905 -0.287161,0 -0.675216,-0.1397 -0.380295,-0.1397 -0.465667,-0.1397 -0.186267,0 -0.225072,0.2794 H 61.281766 L 61.03341,16.593241 h 0.34925 q 0.201789,0.613128 0.589845,0.993422 0.395817,0.380294 0.946855,0.380294 0.34925,0 0.582084,-0.225072 0.232833,-0.225072 0.232833,-0.551039 z"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111126px;font-family:Kinnari;-inkscape-font-specification:'Kinnari Bold';fill:#ffffff;stroke-width:0.26458332"
-         transform="translate(6.879167)">S</tspan></text>
-    <text
-       xml:space="preserve"
+         id="path1494" />
+    </g>
+    <g
+       aria-label="R"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Signatra DEMO';-inkscape-font-specification:'Signatra DEMO';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="46.16544"
-       y="9.827178"
-       id="text839"><tspan
-         sodipodi:role="line"
-         id="tspan837"
-         x="46.16544"
-         y="9.827178"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111126px;font-family:Kinnari;-inkscape-font-specification:'Kinnari Bold';fill:#ffffff;stroke-width:0.26458332">R</tspan></text>
+       id="text839">
+      <path
+         d="m 51.326579,9.827178 h -1.381478 l -1.847145,-2.3826612 -0.287161,0.00776 v 1.6608778 q 0,0.3647722 0.682978,0.3647722 v 0.34925 H 46.16544 v -0.34925 q 0.651933,0 0.651933,-0.3647722 V 5.1860335 q 0,-0.3647723 -0.651933,-0.3647723 v -0.34925 h 2.142066 q 1.032228,0 1.591028,0.3802945 0.566561,0.3725333 0.566561,1.0865556 0,0.5820833 -0.372533,0.9235722 -0.364772,0.3414889 -0.946856,0.4579056 l 1.428045,1.7695333 q 0.155222,0.1940278 0.310444,0.2871611 0.155222,0.085372 0.442384,0.1164167 z M 49.432867,5.9543835 q 0,-0.5044722 -0.318205,-0.7450667 -0.318206,-0.2483556 -0.830439,-0.2483556 h -0.147461 q -0.217311,0 -0.271639,0.046567 -0.05433,0.038806 -0.05433,0.2328333 v 1.738489 q 0.807156,-0.038806 1.210734,-0.2638778 0.411338,-0.2250722 0.411338,-0.7605889 z"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111126px;font-family:Kinnari;-inkscape-font-specification:'Kinnari Bold';fill:#ffffff;stroke-width:0.26458332"
+         id="path1491" />
+    </g>
   </g>
 </svg>
