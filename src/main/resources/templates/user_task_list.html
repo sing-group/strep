@@ -16,42 +16,40 @@
             <div class="col-12">
                 <form class="form-inline form-group" action="/task/create" method="GET">
                     <input type="hidden" name="state" th:attr="value = ${state}">
-                    <input type="text" class="form-control mr-sm-2" name="searchInput"
-                           th:attr="placeholder = #{list.usertasks.placeholder.search}">
-                    <input type="submit" class="source-button btn btn-primary btn-xs"
-                           th:attr="value = #{list.usertasks.search}">
+                    <input type="text" class="form-control mr-sm-2" name="searchInput" th:attr="placeholder = #{list.usertasks.placeholder.search}">
+                    <input type="submit" class="source-button btn btn-primary btn-xs" th:attr="value = #{list.usertasks.search}">
                 </form>
             </div>
         </div>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''"
-                   href="/task/create?state=waiting" th:text="#{list.usertasks.waiting}"></a>
+                <a class="nav-link" th:classappend="${state=='waiting'} ? 'active' : ''" href="/task/create?state=waiting" th:text="#{list.usertasks.waiting}"></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''"
-                   href="/task/create?state=executing" th:text="#{list.usertasks.executing}"></a>
+                <a class="nav-link" th:classappend="${state=='executing'} ? 'active' : ''" href="/task/create?state=executing" th:text="#{list.usertasks.executing}"></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''"
-                   href="/task/create?state=failed" th:text="#{list.usertasks.failed}"></a>
+                <a class="nav-link" th:classappend="${state=='failed'} ? 'active' : ''" href="/task/create?state=failed" th:text="#{list.usertasks.failed}"></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" th:classappend="${state=='success'} ? 'active' : ''"
-                   href="/task/create?state=success" th:text="#{list.usertasks.success}"></a>
+                <a class="nav-link" th:classappend="${state=='success'} ? 'active' : ''" href="/task/create?state=success" th:text="#{list.usertasks.success}"></a>
             </li>
         </ul>
         <div class="tab-pane fade active show add-border">
-            <div class="alert alert-light" th:if="${tasks.size()==0}" th:text="#{systemtasks.notasks(${state})}"></div>
+            <div class="alert alert-light" th:if="${tasks.size()==0 and state=='waiting'}" th:text="#{systemtasks.notasks(#{list.usertasks.waiting})}"></div>
+            <div class="alert alert-light" th:if="${tasks.size()==0 and state=='executing'}" th:text="#{systemtasks.notasks(#{list.usertasks.executing})}"></div>
+            <div class="alert alert-light" th:if="${tasks.size()==0 and state=='failed'}" th:text="#{systemtasks.notasks(#{list.usertasks.failed})}"></div>
+            <div class="alert alert-light" th:if="${tasks.size()==0 and state=='success'}" th:text="#{systemtasks.notasks(#{list.usertasks.success})}"></div>
+
             <table class="table table-hover margin20" th:if="${tasks.size()!=0}">
                 <thead>
-                <th scope="col" th:text="#{list.usertasks.date}"></th>
-                <th scope="col" th:text="#{list.usertasks.dataset}"></th>
-                <th scope="col" th:text="#{list.usertasks.message}" th:if="${state=='failed'}"></th>
-                <th scope="col" th:text="#{list.usertasks.info}"></th>
+                    <th scope="col" th:text="#{list.usertasks.date}"></th>
+                    <th scope="col" th:text="#{list.usertasks.dataset}"></th>
+                    <th scope="col" th:text="#{list.usertasks.message}" th:if="${state=='failed'}"></th>
+                    <th scope="col" th:text="#{list.usertasks.info}"></th>
                 </thead>
                 <tbody>
                     <tr th:each="task : ${tasks}">

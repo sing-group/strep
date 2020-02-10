@@ -247,8 +247,8 @@ public class DatasetController {
             String languages = datasetService.getLanguagesString(dataset);
             String datatypes = datasetService.getDatatypesString(dataset);
 
-            if (dataset.getAccess().equals(Dataset.ACCESS_PRIVATE)) {
-                if (dataset.getAuthor().equals(username)) {
+            if (dataset.getAccess().equals(Dataset.ACCESS_PRIVATE) ) {
+                if (dataset.getAuthor().equals(username) || authority.equals(Permission.ADMINISTER)) {
                     model.addAttribute("dataset", dataset);
                     model.addAttribute("languages", languages);
                     model.addAttribute("datatypes", datatypes);
