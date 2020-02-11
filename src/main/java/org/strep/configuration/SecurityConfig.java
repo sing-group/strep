@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 http.
                 authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/user/register").permitAll()
                 .antMatchers("/user/accountconfirmation").permitAll()
                 .antMatchers("/dataset/public/**").permitAll()

@@ -574,6 +574,14 @@ legend {
     background-color: #FBFBFB;
 }
 
+#task-detailed {
+    margin-top: 1em;
+}
+
+.task-detailed-modal-footer {
+    border-top: none !important;
+}
+
 .card {
     border-color: #F0EEEE !important;
 }
