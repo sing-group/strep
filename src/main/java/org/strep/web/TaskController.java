@@ -140,27 +140,27 @@ public class TaskController {
             task.setActive(Boolean.FALSE);
             taskRepository.save(task);
             switch (option) {
-                case "upload":
-                    return "redirect:/task/upload?state=" + state;
-                case "create":
-                    return "redirect:/task/create?state=" + state;
-                case "preprocess":
-                    return "redirect:/task/preprocess?state=" + state;
+            case "upload":
+                return "redirect:/task/upload?state=" + state;
+            case "create":
+                return "redirect:/task/create?state=" + state;
+            case "preprocess":
+                return "redirect:/task/preprocess?state=" + state;
             }
         }
         return "redirect:/error";
     }
 
-     @GetMapping("/fillFields")
+    @GetMapping("/fillFields")
     public String fillTaskFields(Authentication authentication, Model model, @RequestParam("id") int id) {
         Long idLong = new Long(id);
         TaskCreateUPreprocessing task = taskRepository.findTaskCreateUPreprocessingById(idLong);
-        model.addAttribute("task",task);
+        model.addAttribute("task", task);
         System.out.println("task name: " + task.getName());
         System.out.println("task description: " + task.getDescription());
         return "create_preprocessing_task::task-data";
     }
-    
+
     @GetMapping("/detailed")
     public String detailedTask(Authentication authentication, Model model, @RequestParam(name = "task") int id) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -252,7 +252,7 @@ public class TaskController {
     @GetMapping("/preprocess/detailed")
     public String listDetailedPreprocesss(Authentication authentication, Model model,
             @RequestParam(name = "state", required = false, defaultValue = Task.STATE_SUCESS) String state,
-            @RequestParam(name = "name", required = false, defaultValue = "") String name) {
+            @RequestParam(name = "name", required = true, defaultValue = "") String name) {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
@@ -311,6 +311,79 @@ public class TaskController {
         return "list_preprocess_detailed";
     }
 
+    @GetMapping("/showtasks")
+    public String listPreprocessTasks(Authentication authentication, Model model,
+            @RequestParam(name = "state", required = false, defaultValue = Task.STATE_SUCESS) String state,
+            @RequestParam(name = "name", required = true, defaultValue = "") String name) {
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
+        String authority = userService.getPermissionsByUsername(username);
+
+        model.addAttribute("authority", authority);
+        model.addAttribute("username", username);
+        model.addAttribute("state", state);
+        model.addAttribute("photo", optUser.get().getPhoto());
+
+        ArrayList<TaskCreateUPreprocessing> tasks = taskRepository.getPreprocessingTasks(Task.STATE_SUCESS);
+        ArrayList<TaskCreateUPreprocessing> currentDatasetTasks = new ArrayList<>();
+        for (TaskCreateUPreprocessing task : tasks) {
+
+            if (name.equals(task.getDataset().getName())) {
+                currentDatasetTasks.add(task);
+            }
+        }
+
+        model.addAttribute("name", name);
+        model.addAttribute("tasks", currentDatasetTasks);
+        
+        return "task_detailed";
+    }
+
+    @GetMapping("/preprocess/dataset")
+    public String listDatasetToPreprocesss(Authentication authentication, Model model,
+            @RequestParam(name = "state", required = false, defaultValue = Task.STATE_SUCESS) String state) {
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String username = userDetails.getUsername();
+        Optional<User> optUser = userRepository.findById(username);
+        String authority = userService.getPermissionsByUsername(username);
+
+        model.addAttribute("authority", authority);
+        model.addAttribute("username", username);
+        model.addAttribute("state", state);
+        model.addAttribute("photo", optUser.get().getPhoto());
+
+        HashMap<String, ArrayList<TaskCreateUPreprocessing>> taskCreateUPreprocessingHM = new HashMap<>();
+
+        ArrayList<TaskCreateUPreprocessing> tasks = taskRepository.getPreprocessingTasks(Task.STATE_SUCESS);
+
+        String currentDataset = "";
+        ArrayList<TaskCreateUPreprocessing> currentDatasetTasks = null;
+        for (TaskCreateUPreprocessing task : tasks) {
+
+            if (!currentDataset.equals(task.getDataset().getName())) {
+                currentDataset = task.getDataset().getName();
+                currentDatasetTasks = new ArrayList<>();
+                taskCreateUPreprocessingHM.put(currentDataset, currentDatasetTasks);
+            }
+            currentDatasetTasks.add(task);
+        }
+        ArrayList<Task> datasetsNoPreprocessing = taskRepository.getUserTasks(username, Task.STATE_SUCESS);
+        for (Task data : datasetsNoPreprocessing) {
+            currentDataset = data.getDataset().getName();
+            if (!taskCreateUPreprocessingHM.containsKey(currentDataset)) {
+                taskCreateUPreprocessingHM.put(currentDataset, null);
+            }
+        }
+
+        model.addAttribute("datasets", taskCreateUPreprocessingHM);
+        return "list_preprocess_dataset";
+    }
+
     @GetMapping("/preprocess/create")
     public String createPreprocessingTask(Authentication authentication, Model model, TaskCreateUPreprocessing task,
             @RequestParam(name = "name") String datasetName) {
@@ -328,7 +401,8 @@ public class TaskController {
         if (optDataset.isPresent() && optDataset.get().getAuthor().equals(username)) {
             Dataset dataset = optDataset.get();
             ArrayList<TaskCreateUPreprocessing> distinctTasks = new ArrayList<>();
-            ArrayList<TaskCreateUPreprocessing> tasks = taskRepository.findAllTaskCreateUPreprocessing(datasetName, username, Task.STATE_SUCESS);
+            ArrayList<TaskCreateUPreprocessing> tasks = taskRepository.findAllTaskCreateUPreprocessing(datasetName,
+                    username, Task.STATE_SUCESS);
 
             for (TaskCreateUPreprocessing t : tasks) {
                 String taskName = t.getName();
@@ -341,7 +415,7 @@ public class TaskController {
                             break;
                         }
                     }
-                    if (!exists){
+                    if (!exists) {
                         distinctTasks.add(t);
                     }
                 } else {
@@ -360,9 +434,8 @@ public class TaskController {
 
     @PostMapping("/preprocess/create")
     public String createPreprocessingTask(Authentication authentication, Model model,
-            RedirectAttributes redirectAttributes,
-            @Valid @ModelAttribute("task") TaskCreateUPreprocessing task, BindingResult bindingResult,
-            @RequestParam(name = "preprocessDataset") String datasetName,
+            RedirectAttributes redirectAttributes, @Valid @ModelAttribute("task") TaskCreateUPreprocessing task,
+            BindingResult bindingResult, @RequestParam(name = "preprocessDataset") String datasetName,
             @RequestParam(name = "multipart") MultipartFile pipeline) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
@@ -402,8 +475,7 @@ public class TaskController {
 
     @PostMapping("/preprocess/reuse")
     public String createPreprocessingTask(Authentication authentication, Model model,
-            RedirectAttributes redirectAttributes,
-            @RequestParam(name = "preprocessDataset") String datasetName,
+            RedirectAttributes redirectAttributes, @RequestParam(name = "preprocessDataset") String datasetName,
             @RequestParam(name = "task") String taskId) {
 
         Long id = new Long(taskId);
@@ -436,8 +508,8 @@ public class TaskController {
                 HttpHeaders httpHeaders = new HttpHeaders();
                 httpHeaders.set("content-type", "application/xml");
                 httpHeaders.set("content-disposition", "attachment;" + "filename=" + fileName);
-                ResponseEntity<InputStreamResource> response = new ResponseEntity<>(
-                        new InputStreamResource(fis), httpHeaders, HttpStatus.CREATED);
+                ResponseEntity<InputStreamResource> response = new ResponseEntity<>(new InputStreamResource(fis),
+                        httpHeaders, HttpStatus.CREATED);
                 return response;
 
             } catch (FileNotFoundException fnfException) {
@@ -464,8 +536,8 @@ public class TaskController {
                 HttpHeaders httpHeaders = new HttpHeaders();
                 httpHeaders.set("content-type", "text/csv");
                 httpHeaders.set("content-disposition", "attachment;" + "filename=" + fileName);
-                ResponseEntity<InputStreamResource> response = new ResponseEntity<>(
-                        new InputStreamResource(fis), httpHeaders, HttpStatus.CREATED);
+                ResponseEntity<InputStreamResource> response = new ResponseEntity<>(new InputStreamResource(fis),
+                        httpHeaders, HttpStatus.CREATED);
                 return response;
             } catch (FileNotFoundException fnfException) {
                 return null;

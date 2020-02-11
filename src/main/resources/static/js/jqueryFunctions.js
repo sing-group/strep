@@ -1,7 +1,7 @@
 function retrieveDatasetInfo(id) {
     var url = "/dataset/modal?id=" + id;
 
-    $("#dataset-info").load(url, function (response, status, xhr) {
+    $("#dataset-info").load(url, function(response, status, xhr) {
         if (status == "error") {
             location.reload();
         }
@@ -9,10 +9,25 @@ function retrieveDatasetInfo(id) {
     $("#datasetModal").modal('show');
 }
 
+function search() {
+    var searchWord = $("#searchInput").val().toLowerCase();
+
+    $('.datasets-list').each(function() {
+        var children = $(this).children().html();
+        var childrenLowerCase = children.toLowerCase();
+        if (childrenLowerCase.indexOf(searchWord) == -1) {
+            $("#" + children).hide();
+        } else {
+            $("#" + children).show();
+        }
+    });
+
+}
+
 function updateDatasetsList() {
-    var licenses = $('#licenses').find("option:selected");//document.getElementsByName("licenses");
-    var languages = $('#languages').find("option:selected");//$('input[name="language"]:checked');//document.getElementsByName("language");
-    var datatypes = $('#datatypes').find("option:selected");//$('input[name="datatype"]:checked');//document.getElementsByName("datatype");
+    var licenses = $('#licenses').find("option:selected"); //document.getElementsByName("licenses");
+    var languages = $('#languages').find("option:selected"); //$('input[name="language"]:checked');//document.getElementsByName("language");
+    var datatypes = $('#datatypes').find("option:selected"); //$('input[name="datatype"]:checked');//document.getElementsByName("datatype");
     var dateValue1 = document.getElementById("date1").value;
     var dateValue2 = document.getElementById("date2").value;
 
@@ -57,7 +72,7 @@ function updateDatasetsList() {
         firstParam = false;
     }
 
-    $("#datasets-list").load(url, function (response, status, xhr) {
+    $("#datasets-list").load(url, function(response, status, xhr) {
         if (status == "error") {
             alert("#update-datasets-list error")
             location.reload();
@@ -75,7 +90,7 @@ function validateCitationRequest() {
             url = encodeURI("/dataset/validateCitationRequest?license=" + license);
         }
 
-        $("#citation-request").load(url, function (response, status, xhr) {
+        $("#citation-request").load(url, function(response, status, xhr) {
             if (status == "error") {
                 alert("#validate-citation-request error")
                 location.reload();
@@ -114,13 +129,13 @@ function checkLicenses() {
         }
 
         var urlCheckLicenses = "/dataset/filterDatasetsByLicense?" + params;
-        $("#datasets-list").load(urlCheckLicenses, function (response, status, xhr) {
+        $("#datasets-list").load(urlCheckLicenses, function(response, status, xhr) {
             if (status == "error") {
                 alert("#datasets-list error");
                 location.reload();
             } else {
                 var urlComposeCitationRequest = "/dataset/composeCitationRequest?" + params;
-                $("#citation-request").load(urlComposeCitationRequest, function (response, status, xhr) {
+                $("#citation-request").load(urlComposeCitationRequest, function(response, status, xhr) {
                     if (status == "error") {
                         alert("#citation-request error");
                         location.reload();
@@ -128,15 +143,15 @@ function checkLicenses() {
                 });
 
                 var urlCheckLicenses = "/dataset/checkLicenses?" + params;
-                $("#check-licenses").load(urlCheckLicenses, function (response, status, xhr) {
+                $("#check-licenses").load(urlCheckLicenses, function(response, status, xhr) {
                     if (status == "error") {
                         alert("#check-licenses error");
                         location.reload();
-                    } 
+                    }
                 });
 
                 var urlCheckAccess = "/dataset/checkAccess?" + params;
-                $("#check-access").load(urlCheckAccess, function (response, status, xhr) {
+                $("#check-access").load(urlCheckAccess, function(response, status, xhr) {
                     updateTable();
                     if (status == "error") {
                         alert("#check-access error")
@@ -187,10 +202,10 @@ function updateTable(id) {
         }
 
         url += "&inputSpamEml=" + inputSpamEmlValue + "&inputHamEml=" + inputHamEmlValue + "&inputSpamTsms=" + inputSpamTsmsValue + "&inputHamTsms=" + inputHamTsmsValue +
-                "&inputSpamYtbid=" + inputSpamTytbValue + "&inputHamYtbid=" + inputHamTytbValue + "&inputSpamTwtid=" + inputSpamTwtidValue + "&inputHamTwtid=" + inputHamTwtidValue +
-                "&inputSpamWarc=" + inputSpamWarcValue + "&inputHamWarc=" + inputHamWarcValue;
+            "&inputSpamYtbid=" + inputSpamTytbValue + "&inputHamYtbid=" + inputHamTytbValue + "&inputSpamTwtid=" + inputSpamTwtidValue + "&inputHamTwtid=" + inputHamTwtidValue +
+            "&inputSpamWarc=" + inputSpamWarcValue + "&inputHamWarc=" + inputHamWarcValue;
         checkSelectedDatasets();
-        $("#datatypes-table").load(url, function (response, status, xhr) {
+        $("#datatypes-table").load(url, function(response, status, xhr) {
             if (status == "error") {
                 location.reload();
             } else {
@@ -210,7 +225,7 @@ function updateTable(id) {
         }
 
         checkSelectedDatasets();
-        $("#datatypes-table").load(url, function (response, status, xhr) {
+        $("#datatypes-table").load(url, function(response, status, xhr) {
             if (status == "error") {
                 location.reload();
             }
@@ -232,7 +247,7 @@ function checkIfPosibleSpam() {
         }
     }
 
-    $("#info-spam").load(url, function (response, status, xhr) {
+    $("#info-spam").load(url, function(response, status, xhr) {
         if (status == "error") {
             location.reload();
         }
@@ -252,7 +267,7 @@ function checkNullValues(input) {
     }
 }
 
-$('#deleteDatasetModal').on('show.bs.modal', function (event) {
+$('#deleteDatasetModal').on('show.bs.modal', function(event) {
     var button = $(event.relatedTarget);
     var href = button.attr('href');
     var buttonConfirm = $('#deleteConfirmation');
@@ -319,15 +334,18 @@ function back(url) {
     }
 }
 
-$(document).ready(function () {
+function close() {
+    alert("close");
+}
+$(document).ready(function() {
 
     $('#datasetSelectedError').hide();
-    $("#back").click(function () {
+    $("#back").click(function() {
         window.location = document.referrer;
     });
 
     // It's been done like this to make it work properly in Chrome
-    document.getElementById('locales').addEventListener('change', function () {
+    document.getElementById('locales').addEventListener('change', function() {
         changeLocale($('#locales').val());
     }, false);
 
@@ -349,7 +367,7 @@ $(document).ready(function () {
     }
 
     // create_preprocessing_task. Needed to disabled the unselect option.
-    $("#selectTask").change(function () {
+    $("#selectTask").change(function() {
         //$('#errorLabelName').remove();
         var taskId = $("#selectTask option:selected").val()
         if (taskId !== "") {
@@ -360,7 +378,7 @@ $(document).ready(function () {
             // Fill name and description 
             var url = encodeURI("/task/fillFields?id=" + taskId);
 
-            $("#task-data").load(url, function (response, status, xhr) {
+            $("#task-data").load(url, function(response, status, xhr) {
                 //      $('#errorLabelName').remove();
                 if (status === "error") {
                     alert("error");
@@ -381,4 +399,19 @@ $(document).ready(function () {
             $("#createPreprocessingTaskF").attr("action", "/task/preprocess/create")
         }
     });
+
+    $(".btn-preprocess").click(function() {
+        var name = $(this).attr("id");
+        var url = "/task/showtasks?name=" + encodeURI(name);
+        $("#task-detailed").load(url, function(response, status, xhr) {
+            if (status == "error") {
+                location.reload();
+            } else {
+                $(".modal-content").removeClass("hide");
+                $("#task-detailed").removeClass("modal-content");
+
+            }
+        });
+    });
+
 });

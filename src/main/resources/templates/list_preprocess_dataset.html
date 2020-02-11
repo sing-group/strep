@@ -1,0 +1,52 @@
+<div th:include="header.html"></div>
+<div class="container">
+    <div class="alert alert-dismissible alert-info" th:if="${message}">
+        <p class=" main-text" th:text="${message}"></p>
+    </div>
+    <div id="banner" class="page-header">
+        <div class="row">
+            <div class="col-12">
+                <h2 th:text="#{list.preprocessing.dataset.title}"></h2>
+            </div>
+        </div>
+    </div>
+    <div id="bs-docs-section">
+        <div class="row">
+            <div class="col-12">
+                <form class="form-inline form-group right" action="#" method="GET">
+                    <input type="text" class="form-control mr-sm-2" name="searchInput" id="searchInput">
+                    <input type="button" class="source-button btn btn-primary btn-xs" th:value="#{list.users.search}" onclick="search()">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade active show">
+        <div class="alert alert-light" th:if="${datasets.size()==0}" th:text="#{list.datasets.table.nodatasets}"></div>
+        <table class="table table-hover margin20">
+            <thead>
+                <tr width="100%">
+                    <th scope="col" th:text="#{list.datasets.table.name}"></th>
+                    <th style="text-align: center;" width="10%" scope="col" th:text="#{list.datasets.table.actions}"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="dataset : ${datasets}" width="100%" th:id="${dataset.key}" class="datasets-list">
+                    <th scope="row" th:text="${dataset.key}" width="100%"></th>
+                    <td style="text-align: center;">
+                        <a class="btn btn-list btn-preprocess" th:id="${dataset.key}" data-toggle="tooltip" data-placement="right" th:title="#{list.preprocess.datasets.listpreprocessing}">
+                            <i class="fas fa-bars"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:include="task_detailed.html"></div>
+    <div class="row ">
+        <div class="col-12 right ">
+            <input type="button " class="btn btn-primary " th:value="#{back} " onclick="window.location.href='/dataset/list'"></input>
+        </div>
+    </div>
+</div>
+</div>
+<div th:include="footer.html"></div>
