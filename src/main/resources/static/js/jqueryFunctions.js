@@ -9,7 +9,7 @@ function retrieveDatasetInfo(id) {
     $("#datasetModal").modal('show');
 }
 
-function search() {
+function filter() {
     var searchWord = $("#searchInput").val().toLowerCase();
 
     $('.datasets-list').each(function() {
@@ -334,9 +334,7 @@ function back(url) {
     }
 }
 
-function close() {
-    alert("close");
-}
+
 $(document).ready(function() {
 
     $('#datasetSelectedError').hide();
@@ -344,17 +342,19 @@ $(document).ready(function() {
         window.location = document.referrer;
     });
 
-    // It's been done like this to make it work properly in Chrome
-    document.getElementById('locales').addEventListener('change', function() {
-        changeLocale($('#locales').val());
-    }, false);
+    $(".locales").change(function() {
+        var id = $(this).val();
 
-    // Needed to update properly the dropbox
-    let params = new URLSearchParams(location.search);
-    var lang = params.get('lang');
-    if (lang != null) {
-        $('#locales').val(lang);
-    }
+        changeLocale(id);
+        var url = "/changeLang?lang=" + encodeURI(id);
+        console.log(url);
+        $("#locales").load(url, function(response, status, xhr) {
+            if (status == "error") {
+                location.reload();
+            }
+        });
+
+    });
 
     // Needed to mark active links
     var pathname = $(location).attr('pathname').replace(/[/]/gi, "");
@@ -379,7 +379,6 @@ $(document).ready(function() {
             var url = encodeURI("/task/fillFields?id=" + taskId);
 
             $("#task-data").load(url, function(response, status, xhr) {
-                //      $('#errorLabelName').remove();
                 if (status === "error") {
                     alert("error");
                     location.reload();

@@ -2,6 +2,7 @@ package org.strep.web;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.strep.domain.User;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 /**
@@ -64,4 +66,13 @@ public class LoginController
         }
 
     }
+
+
+    @GetMapping("/changeLang")
+    public String changeLanguage(HttpSession session,@RequestParam(name="lang", required=true) String lang)
+    {
+        session.setAttribute("lang", lang);        
+        return "header::locales";
+    }
+
 }

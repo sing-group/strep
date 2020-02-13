@@ -677,6 +677,12 @@ legend {
     align-items: center;
 }
 
+.y-overflow {
+    height: 320px;
+    overflow-y: auto;
+    display: block;
+}
+
 
 /** COOKIES **/
 
