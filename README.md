@@ -26,7 +26,7 @@ STRep allows publishing system and tuned datasets allowing the user to restrict 
 
 STRep is also capable of assisting users in the assignation of licenses for the new tuned datasets. It includes by default a licenses list and allows the management of all kinds of licenses and their rights. System datasets must be associated with a specific license defined in the platform. Furthermore, as can be easily depicted, the definition of new tuned corpora is limited by the licenses of system datasets combined. Before combining datasets from multiple sources, we should check if licenses of selected datasets guarantee their utilization as sources of the new tuned dataset. As shown in Figure 1a, datasets that do not allow the adaptation should not be combined with other ones. On the other hand, the combination of datasets whose original licenses do not allow their redistribution with other licenses will be only possible when the original licenses of combined datasets are the same. 
 
-![STRep licensing checks](https://moncho.mdez-reboredo.info/imgstrep/Figure1a.png)
+![STRep licensing checks](https://moncho.mdez-reboredo.info/imgstrep/Figure1a.png) {.center}
 
 *Figure 1a. Determine if two system datasets having licences L1 and L2 can be combined into a new tuned dataset*
 
@@ -57,3 +57,23 @@ Considering the time required to execute some repository actions, most of them h
 Figure 2. rdata4spam architecture
 
 To test the software, it has been deployed in https://rdata.4spam.group.
+
+## Customizing
+
+## Authors
+
+This project has been conceived and developed by SING research group. The development team is composed by:
+
+  * Ismael Vázquez: Developer
+  * José R. Méndez: Subject Matter Expert
+  * María Novo: Software Architecture Design and Team Leader
+
+## License
+
+Copyright (C) 2018 Sing Group (University of Vigo)
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see https://www.gnu.org/licenses/.
