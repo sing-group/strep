@@ -221,7 +221,7 @@ public class TaskService {
         Locale locale = LocaleContextHolder.getLocale();
         String message = "";
         try {
-            TaskCreateUPreprocessing toCreateTask = new TaskCreateUPreprocessing(dataset, task.getName(), Task.STATE_WAITING, null, task.getDescription(), pipeline, null, new Date(), dataset);
+            TaskCreateUPreprocessing toCreateTask = new TaskCreateUPreprocessing(dataset, task.getName(), Task.STATE_WAITING, null, task.getDescription(), pipeline, null, new Date());
             taskRepository.save(toCreateTask);
             message = messageSource.getMessage("createpreprocessing.sucessfull.message", Stream.of().toArray(String[]::new), locale);
         } catch (Exception exception) {
@@ -247,7 +247,8 @@ public class TaskService {
         String fileName = null;
 
         TaskCreateUPreprocessing task = taskRepository.findTaskCreateUPreprocessingById(taskId);
-        Dataset dataset = task.getPreprocessDataset();
+        //Dataset dataset = task.getPreprocessDataset();
+        Dataset dataset = task.getDataset();
         String name = dataset.getName() + taskId + ".xml";
         if (dataset.getAuthor().equals(username)) {
             java.io.File file = new java.io.File(PIPELINE_PATH + name);
@@ -284,7 +285,8 @@ public class TaskService {
         String fileName = null;
 
         TaskCreateUPreprocessing task = taskRepository.findTaskCreateUPreprocessingById(taskId);
-        Dataset dataset = task.getPreprocessDataset();
+        //Dataset dataset = task.getPreprocessDataset();
+        Dataset dataset = task.getDataset();
         String name = dataset.getName() + taskId + ".csv";
         if (dataset.getAuthor().equals(username)) {
             java.io.File file = new java.io.File(OUTPUT_PATH + name);

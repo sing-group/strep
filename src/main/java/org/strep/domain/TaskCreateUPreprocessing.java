@@ -6,10 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -62,13 +59,6 @@ public class TaskCreateUPreprocessing extends Task implements Serializable
     private Date date;
 
     /**
-     * The dataset to preprocess
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="preprocess_dataset_name", referencedColumnName="name")
-    private Dataset preprocessDataset;
-
-    /**
      * The default constructor
      */
     public TaskCreateUPreprocessing()
@@ -86,7 +76,7 @@ public class TaskCreateUPreprocessing extends Task implements Serializable
      * @param csv the name of the csv generated
      * @param date the date of upload of the task
      */
-    public TaskCreateUPreprocessing(Dataset dataset, String name, String state, String message, String description, byte[] pipeline, String csv, Date date, Dataset preprocessDataset)
+    public TaskCreateUPreprocessing(Dataset dataset, String name, String state, String message, String description, byte[] pipeline, String csv, Date date)
     {
         super(dataset, state, message);
         this.name=name;
@@ -94,7 +84,6 @@ public class TaskCreateUPreprocessing extends Task implements Serializable
         this.pipeline = pipeline;
         this.csv = csv;
         this.date = date;
-        this.preprocessDataset = preprocessDataset;
     }
 
     /**
@@ -167,24 +156,6 @@ public class TaskCreateUPreprocessing extends Task implements Serializable
     public void setDate(Date date)
     {
         this.date = date;
-    }
-
-    /**
-     * Return the preprocessed dataset
-     * @return the preprocessed dataset
-     */
-    public Dataset getPreprocessDataset()
-    {
-        return this.preprocessDataset;
-    }
-
-    /**
-     * Stablish the preprocessed dataset
-     * @param preprocessDataset the preprocessed dataset
-     */
-    public void setPreprocessDataset(Dataset preprocessDataset)
-    {
-        this.preprocessDataset = preprocessDataset;
     }
 
     /**
