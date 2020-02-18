@@ -26,7 +26,7 @@ STRep allows publishing system and tuned datasets allowing the user to restrict 
 
 STRep is also capable of assisting users in the assignation of licenses for the new tuned datasets. It includes by default a licenses list and allows the management of all kinds of licenses and their rights. System datasets must be associated with a specific license defined in the platform. Furthermore, as can be easily depicted, the definition of new tuned corpora is limited by the licenses of system datasets combined. Before combining datasets from multiple sources, we should check if licenses of selected datasets guarantee their utilization as sources of the new tuned dataset. As shown in Figure 1a, datasets that do not allow the adaptation should not be combined with other ones. On the other hand, the combination of datasets whose original licenses do not allow their redistribution with other licenses will be only possible when the original licenses of combined datasets are the same. 
 
-![STRep licensing checks](https://moncho.mdez-reboredo.info/imgstrep/Figure1a.png) {.center}
+![STRep licensing checks](https://moncho.mdez-reboredo.info/imgstrep/Figure1a.png)
 
 *Figure 1a. Determine if two system datasets having licences L1 and L2 can be combined into a new tuned dataset*
 
@@ -44,6 +44,12 @@ Figure 1c represents an algorithm that calculates the licenses that can be assig
 
 *Figure 1c. Check possible licenses for a new tuned dataset*
 
+The following is a class diagram, which describes the architecture of the system:
+
+
+![Class diagram](https://moncho.mdez-reboredo.info/imgstrep/Figure2.png)
+
+*Figure 2. Class diagram*
 
 
 ## Research Data for Spam (rdata4spam)
@@ -52,13 +58,11 @@ STRep is part of a broader project: rdata4spam, that is a client-server applicat
 
 Considering the time required to execute some repository actions, most of them have been implemented as tasks that are executed in a separate application called STRep Service (https://github.com/sing-group/strep_service). This architecture together form along rdata4spam.
 
-![rdata4spam architecture](https://moncho.mdez-reboredo.info/imgstrep/Figure2.png)
+![rdata4spam architecture](https://moncho.mdez-reboredo.info/imgstrep/Figure3.png)
 
-Figure 2. rdata4spam architecture
+Figure 3. rdata4spam architecture
 
 To test the software, it has been deployed in https://rdata.4spam.group.
-
-## Customizing
 
 ## Authors
 
@@ -67,6 +71,9 @@ This project has been conceived and developed by SING research group. The develo
   * Ismael Vázquez: Developer
   * José R. Méndez: Subject Matter Expert
   * María Novo: Software Architecture Design and Team Leader
+  * Reyes Pavón: Developer
+  * Rosalía Laza: Developer
+  * David Ruano: Developer
 
 ## License
 
