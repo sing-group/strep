@@ -116,8 +116,8 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      */
     @Query(value = "SELECT t "
             + "FROM TaskCreateUPreprocessing t, Dataset d "
-            + "WHERE d.name=t.preprocessDataset.name "
-            + "AND t.preprocessDataset.name<>?1 AND (d.access IN ('public','protected') OR d.author=?2) "
+            + "WHERE d.name=t.dataset.name "
+            + "AND t.dataset.name<>?1 AND (d.access IN ('public','protected') OR d.author=?2) "
             + "AND  t.state=?3")
     public ArrayList<TaskCreateUPreprocessing> findAllTaskCreateUPreprocessing(String datasetName, String username, String state);
 
@@ -170,7 +170,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @return a list with the preprocessing tasks of the dataset filtered by
      * state
      */
-    @Query(value = "SELECT t FROM TaskCreateUPreprocessing t WHERE t.preprocessDataset=?1 AND t.state=?2 AND t.active='1'")
+    @Query(value = "SELECT t FROM TaskCreateUPreprocessing t WHERE t.dataset.name=?1 AND t.state=?2 AND t.active='1'")
     public ArrayList<TaskCreateUPreprocessing> getActivePreprocessingTasks(Dataset dataset, String state);
 
     /**
@@ -182,7 +182,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @return a list with the preprocessing tasks of the dataset filtered by
      * state
      */
-    @Query(value = "SELECT t FROM TaskCreateUPreprocessing t WHERE t.preprocessDataset=?1 AND t.state=?2")
+    @Query(value = "SELECT t FROM TaskCreateUPreprocessing t WHERE t.dataset.name=?1 AND t.state=?2")
     public ArrayList<TaskCreateUPreprocessing> getPreprocessingTasks(Dataset dataset, String state);
 
     /**
@@ -193,7 +193,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @return a list with the preprocessing tasks of the dataset filtered by
      * state
      */
-    @Query(value = "SELECT t FROM TaskCreateUPreprocessing t WHERE t.state=?1 ORDER BY t.preprocessDataset")
+    @Query(value = "SELECT t FROM TaskCreateUPreprocessing t WHERE t.state=?1 ORDER BY t.dataset.name")
     public ArrayList<TaskCreateUPreprocessing> getPreprocessingTasks(String state);
 
     /**

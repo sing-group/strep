@@ -56,8 +56,12 @@ public class Task implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    // No caso de TaskCreateSDataset o que se fai é que o dataset que está en task actua como o dataset que hai que encher cos arquivos que se pasan no ficheiro zip. Básicamente sería un parámetro de E/S (entrada/salida). Este Dataset de salida instanciase no spring e despois échese no strep_service. 
     /**
-     * The dataset associated to this task
+     * The dataset associated to this task.  Depending on the type of task, the dataset will behave on different way.
+     * Preprocessing task (TaskCreateUPreprocessing) : This is an input dataset
+     * System task (TaskCreateSDataset) : This is an Input/output dataset. This dataset is filled with zip file content.
+     * Tune task (TaskCreateUDataset): Output dataset which contains the combination/filtering of instances made through executing the task
      */
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "dataset_name")
