@@ -51,6 +51,13 @@ The following is a class diagram, which describes the architecture of the system
 
 *Figure 2. Class diagram*
 
+## Customizing
+
+To customize this application, you can find the corresponding files in *resources* directory:
+
+  * The image files are in */images/*. This directory contains all image files.
+  * The favicon file is  */favicon.ico*.
+  * The text files are in */locale*. You will find a file per language with all texts.
 
 ## Research Data for Spam (rdata4spam)
 
