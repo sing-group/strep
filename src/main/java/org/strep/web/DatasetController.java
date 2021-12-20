@@ -422,12 +422,15 @@ public class DatasetController {
             usersList.forEach((u) -> {
                 toList.add(u.getEmail());
             });
-
-            SimpleMailMessage sMailMessage = new SimpleMailMessage();
-            sMailMessage.setTo(toList.stream().toArray(String[]::new));
-            sMailMessage.setSubject(messageSource.getMessage("add.dataset.subject", null, locale));
-            sMailMessage.setText(messageSource.getMessage("add.dataset.text", Stream.of(username).toArray(String[]::new), locale));
-            mailSender.send(sMailMessage);
+            try{
+                SimpleMailMessage sMailMessage = new SimpleMailMessage();
+                sMailMessage.setTo(toList.stream().toArray(String[]::new));
+                sMailMessage.setSubject(messageSource.getMessage("add.dataset.subject", null, locale));
+                sMailMessage.setText(messageSource.getMessage("add.dataset.text", Stream.of(username).toArray(String[]::new), locale));
+                mailSender.send(sMailMessage);
+            }catch(Exception e){
+                //TODO: gestionar esto.
+            }
 
             return "redirect:/dataset/list?type=user";
         }
