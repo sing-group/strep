@@ -1,9 +1,30 @@
+/*-
+ * #%L
+ * STRep
+ * %%
+ * Copyright (C) 2019 - 2024 SING Group (University of Vigo)
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
+ */
 /* index */
 /*body,html{margin:0;padding:0;height:100%;}
 .rmenu-section{background:#E3DFD2;box-shadow: inset 0 0 20vmin 0 #585247;}*/
 .wrap{
     position:relative;
-   /* width:80vmin; height:80vmin;*/
+    /* width:80vmin; height:80vmin;*/
     width:62vmin; 
     height:62vmin;
     margin:0 auto;
@@ -13,8 +34,8 @@
     transition:transform .5s, opacity .5s;
     transform:scale(.8) translateZ(0px);
     opacity:1;
-  }
-  a.radial-menu{
+}
+a.radial-menu{
     position:absolute;
     left:0; top:0;
     width:47.5%; 
@@ -23,69 +44,69 @@
     transform:scale(.5) translateZ(0px);
     background:#585247;
     display: block;
-  }
-  a.radial-menu div{
+}
+a.radial-menu div{
     height:100%;
     background-size:cover;
     opacity:.5;
     transition:opacity .5s;
     border-radius:inherit;
-    
-  }
-  a.radial-menu:nth-child(1){
+
+}
+a.radial-menu:nth-child(1){
     border-radius:40vmin 0 0 0;
     transform-origin: 110% 110%;
     transition:transform .4s .15s;
     transform:translatez(0px);
-  }
-  a.radial-menu:nth-child(1) div{
+}
+a.radial-menu:nth-child(1) div{
     background-image:url('https://farm3.staticflickr.com/2827/10384422264_d9c7299146.jpg');
     /*background-image: url('https://s2.best-wallpaper.net/wallpaper/1024x768/1704/Test-tube-drop-tube-blue-style_1024x768.jpg');*/
-    
-  }
-  a.radial-menu:nth-child(2){
+
+}
+a.radial-menu:nth-child(2){
     border-radius:0 40vmin 0 0;
     left:52.5%;
     transform-origin: -10% 110%;
     transition:transform .4s .2s;
     transform:translatez(0px);
-  }
-  a.radial-menu:nth-child(2) div{
+}
+a.radial-menu:nth-child(2) div{
     background-image:url('https://farm7.staticflickr.com/6083/6055581292_d94c2d90e3.jpg');
     /*background-image: url('https://s2.best-wallpaper.net/wallpaper/1024x768/1608/Network-connection-web-cable-light_1024x768.jpg');*/
-  }
-  a.radial-menu:nth-child(3){
+}
+a.radial-menu:nth-child(3){
     border-radius:0 0 0 40vmin;
     top:52.5%;
     transform-origin: 110% -10%;
     transition:transform .4s .25s;
     transform:translatez(0px);
-  }
-  a.radial-menu:nth-child(3) div{
+}
+a.radial-menu:nth-child(3) div{
     background-image:url('https://farm7.staticflickr.com/6092/6227418584_d5883b0948.jpg');
-  }
-  a.radial-menu:nth-child(4){
+}
+a.radial-menu:nth-child(4){
     border-radius:0 0 40vmin 0;
     top:52.5%; left:52.5%;
     transform-origin: -10% -10%;
     transition:transform .4s .3s;
     transform:translatez(0px);
-  }
-  a.radial-menu:nth-child(4) div{
+}
+a.radial-menu:nth-child(4) div{
     background-image: url('https://farm8.staticflickr.com/7187/6895047173_d4b1a0d798.jpg');
-  }
-  a.radial-menu:nth-child(5){
+}
+a.radial-menu:nth-child(5){
     width:55%;height:55%;
     left:22.5%; top:22.5%;
     border-radius:50vmin;
     /*box-shadow:0 0 0 5vmin #E3DFD2;*/
     box-shadow:0 0 0 5vmin #FFFFFF;
     transform:scale(1);
-  }
-  a.radial-menu:nth-child(5) div{
+}
+a.radial-menu:nth-child(5) div{
     background-image: url('https://farm4.staticflickr.com/3766/12953056854_b8cdf14f21.jpg');
-  }
-  span.rmenu{
+}
+span.rmenu{
     position:relative;
     display:block;
     margin:0 auto;
@@ -96,37 +117,37 @@
     /*transform:translateZ(0px);*/
     transform:scale(.8) translateZ(0px);
     opacity:1;
-  }
-  span.rmenu span{
+}
+span.rmenu span{
     position:absolute;
     width:60%;height:3px;
     background:#ACA696;
     left:20%; top:50%;
     border-radius:0;
-  }
-  span.rmenu span:after, span.rmenu span:before{
+}
+span.rmenu span:after, span.rmenu span:before{
     content:'';
     position:absolute;
     left:0; top:-1.5vmin;
     width:100%; height:100%;
     background:inherit;
-  }
-  span.rmenu span:after{
+}
+span.rmenu span:after{
     top:1.5vmin;
-  }
-  /*span.rmenu:hover + .wrap, .wrap:hover{
-    
-    transform:scale(.8) translateZ(0px);
-    opacity:1;
-  }
-  span.rmenu:hover + .wrap a, .wrap:hover a{
-    transform:scale(1) translatez(0px);
-  }*/
-  a.radial-menu:hover div{
+}
+/*span.rmenu:hover + .wrap, .wrap:hover{
+  
+  transform:scale(.8) translateZ(0px);
+  opacity:1;
+}
+span.rmenu:hover + .wrap a, .wrap:hover a{
+  transform:scale(1) translatez(0px);
+}*/
+a.radial-menu:hover div{
     opacity:1;
     transform:translatez(0px);
-  }
-  .home-text{  
+}
+.home-text{  
     height:62vmin;
     margin:0 auto;
     transform: scale(.8) translateZ(0px);
@@ -134,9 +155,9 @@
     text-align: justify;
     vertical-align: middle;
     display: flex;
-   justify-content: center;
-   align-items: center;
-  }
-  .title-home{
+    justify-content: center;
+    align-items: center;
+}
+.title-home{
     font-size: 2em;
-  }
+}

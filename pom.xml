@@ -12,10 +12,22 @@
     <artifactId>strep</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>STRep</name>
+    <inceptionYear>2019</inceptionYear>
     <description>Spam Text Repository</description>
     <properties>
         <java.version>1.8</java.version>
+        <license.licenseName>gpl_v3</license.licenseName>
+        <license.copyrightOwners>SING Group (University of Vigo)</license.copyrightOwners>
+        <license.organizationName>SING Group (University of Vigo)</license.organizationName>
+        <license.addJavaLicenseAfterPackage>false</license.addJavaLicenseAfterPackage>
     </properties>
+    <licenses>
+        <license>
+            <name>GNU GENERAL PUBLIC LICENSE, Version 3</name>
+            <url>http://www.gnu.org/licenses/gpl.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
     <repositories>
         <repository>
             <id>spring-milestone</id>
