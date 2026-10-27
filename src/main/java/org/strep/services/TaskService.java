@@ -51,6 +51,7 @@ import org.strep.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -98,6 +99,7 @@ public class TaskService {
      * The datasets service
      */
     @Autowired
+    @Lazy // DatasetService also depends on TaskService (circular references are not allowed since Boot 2.6)
     private DatasetService datasetService;
 
     /**
