@@ -21,7 +21,7 @@
  */
 package org.strep.configuration;
 
-import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 @Configuration
