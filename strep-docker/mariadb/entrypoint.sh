@@ -17,6 +17,9 @@ sql_quote() {
 
 if [ ! -d "$DATADIR/mysql" ]; then
     echo "[strep-mariadb] Initialising data directory"
+    # Leave an empty data directory if the initialisation fails, so that the
+    # next start tries again instead of running a half-initialised server
+    trap 'echo "[strep-mariadb] Initialisation failed" >&2; [ -n "${pid:-}" ] && kill "$pid" && wait "$pid"; rm -rf "${DATADIR:?}"/* "${DATADIR:?}"/.[!.]*' EXIT
     mariadb-install-db --user=mysql --datadir="$DATADIR" --skip-test-db > /dev/null
 
     mariadbd --user=mysql --datadir="$DATADIR" --skip-networking --socket=/run/mysqld/init.sock &
@@ -26,8 +29,11 @@ if [ ! -d "$DATADIR/mysql" ]; then
         sleep 1
     done
 
+    # mariadb-install-db creates root@localhost and mysql@localhost with
+    # unix_socket authentication: only the OS user "mysql" (this process) can
+    # log in through the socket until the root password is set
     db=$(printf '%s' "$MARIADB_DATABASE" | sed 's/`/``/g')
-    mariadb --socket=/run/mysqld/init.sock -uroot <<EOF
+    mariadb --socket=/run/mysqld/init.sock -umysql <<EOF
 CREATE DATABASE IF NOT EXISTS \`$db\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER IF NOT EXISTS '$(sql_quote "$MARIADB_USER")'@'%' IDENTIFIED BY '$(sql_quote "$MARIADB_PASSWORD")';
 GRANT ALL PRIVILEGES ON \`$db\`.* TO '$(sql_quote "$MARIADB_USER")'@'%';
@@ -36,8 +42,9 @@ DELETE FROM mysql.global_priv WHERE User = '';
 FLUSH PRIVILEGES;
 EOF
 
-    mariadb-admin --socket=/run/mysqld/init.sock -uroot -p"$MARIADB_ROOT_PASSWORD" shutdown
+    mariadb-admin --socket=/run/mysqld/init.sock -umysql shutdown
     wait "$pid"
+    trap - EXIT
     echo "[strep-mariadb] Database '$MARIADB_DATABASE' and user '$MARIADB_USER' created"
 fi
 
