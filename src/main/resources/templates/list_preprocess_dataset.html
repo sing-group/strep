@@ -19,7 +19,7 @@
   <http://www.gnu.org/licenses/gpl-3.0.html>.
   #L%
   -->
-<div th:include="header.html"></div>
+<div th:insert="~{header.html}"></div>
 <div class="container">
     <div class="alert alert-dismissible alert-info" th:if="${message}">
         <p class=" main-text" th:text="${message}"></p>
@@ -62,8 +62,8 @@
             </tbody>
         </table>
     </div>
-    <div th:include="task_detailed.html"></div>
+    <div th:insert="~{task_detailed.html}"></div>
 
 </div>
 </div>
-<div th:include="footer.html"></div>
+<div th:insert="~{footer.html}"></div>

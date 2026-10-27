@@ -16,7 +16,7 @@
 
 <body class="main-bg">
     <div class="header">
-        <div th:include="header.html"></div>
+        <div th:insert="~{header.html}"></div>
     </div>
     <p th:text="${T(org.strep.configuration.ApplicationConfig).getAppName()}"></p>
     <div class="container">
@@ -165,7 +165,7 @@
             </div-->
     </div>
     <div class="footer">
-        <div th:include="footer.html"></div>
+        <div th:insert="~{footer.html}"></div>
     </div>
 </body>
 
