@@ -23,8 +23,8 @@ package org.strep.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.servlet.ServletWebServerFactory;
+import org.springframework.boot.tomcat.servlet.TomcatServletWebServerFactory;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.catalina.connector.Connector;
@@ -54,12 +54,12 @@ public ServletWebServerFactory servletContainer() {
         }
     };
     //Comment out the following line if you want ssl
-    //tomcat.addAdditionalTomcatConnectors(redirectConnector());
+    //tomcat.addAdditionalConnectors(redirectConnector());
 
     //Comment the following 3 files if SSL is not desired
     Connector connector8080 = new Connector("org.apache.coyote.http11.Http11NioProtocol");
     connector8080.setPort(8080);
-    tomcat.addAdditionalTomcatConnectors(connector8080);
+    tomcat.addAdditionalConnectors(connector8080);
 
     return tomcat;
 }
