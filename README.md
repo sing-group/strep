@@ -56,8 +56,38 @@ The following is a class diagram, which describes the architecture of the system
 To customize this application, you can find the corresponding files in *resources* directory:
 
   * The image files are in */images/*. This directory contains all image files.
-  * The favicon file is  */favicon.ico*.
+  * The favicon file is  */static/favicon.ico*.
   * The text files are in */locale*. You will find a file per language with all texts.
+
+## Configuration and secrets
+
+Passwords and machine specific settings are not stored in `application.properties`. They are read from environment variables, or from the optional file `config/application-local.properties` (relative to the working directory, ignored by git), which uses the normal Spring property names.
+
+| Variable | Property | Default |
+|---|---|---|
+| `STREP_DB_URL` | `spring.datasource.url` | `jdbc:mysql://127.0.0.1:3306/strep` |
+| `STREP_DB_USER` | `spring.datasource.username` | `springuser` |
+| `STREP_DB_PASSWORD` | `spring.datasource.password` | `changeme` |
+| `STREP_MAIL_USERNAME` | `spring.mail.username` | (empty) |
+| `STREP_MAIL_PASSWORD` | `spring.mail.password` | (empty) |
+| `STREP_KEYSTORE` | `server.ssl.key-store` | `file:config/keystore.p12` |
+| `STREP_KEYSTORE_PASSWORD` | `server.ssl.key-store-password` | `changeme` |
+| `STREP_DATASET_STORAGE` | `dataset.storage` | `/var/lib/strep/datasets/` |
+| `STREP_PIPELINE_STORAGE` | `pipeline.storage` | `/var/lib/strep/pipelines/` |
+| `STREP_CSV_STORAGE` | `csv.storage` | `/var/lib/strep/csv/` |
+| `STREP_HOST_NAME` | `host.name` | `https://localhost:8443` |
+
+### TLS keystore
+
+The application serves HTTPS on port 8443 and needs a PKCS12 keystore with a key under the alias `tomcat`. It is not versioned; create a self-signed one for development with:
+
+```
+mkdir -p config
+keytool -genkeypair -alias tomcat -keyalg RSA -keysize 3072 -validity 3650 \
+        -storetype PKCS12 -keystore config/keystore.p12 -dname "CN=localhost"
+```
+
+and give its password with `STREP_KEYSTORE_PASSWORD` (or `server.ssl.key-store-password` in `config/application-local.properties`).
 
 ## Research Data for Spam (rdata4spam)
 

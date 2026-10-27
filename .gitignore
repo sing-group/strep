@@ -18,3 +18,7 @@ exec.sh
 resources/jlt/
 
 resources/wnplusplus/
+
+# Local secrets and TLS keystore (see README)
+*.p12
+.env
