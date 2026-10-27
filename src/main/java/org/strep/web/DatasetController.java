@@ -26,7 +26,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -78,8 +79,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.lang.Math;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.mail.SimpleMailMessage;
@@ -130,11 +129,6 @@ public class DatasetController {
 
     @Autowired
     private UserRepository userRepository;
-
-    /**
-     * To parse dates
-     */
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * The message i18n
@@ -818,13 +812,13 @@ public class DatasetController {
             neccesaryFilesHam = fileNumberInt - neccesaryFilesSpam;
 
             // Parse the received date
-            Date d1 = null, d2 = null;
+            LocalDate d1 = null, d2 = null;
             if (date1 == null || date1.equals("")) {
                 d1 = fileRepository.getEarliestDate();
             } else {
                 try {
-                    d1 = simpleDateFormat.parse(date1);
-                } catch (ParseException pe) {
+                    d1 = LocalDate.parse(date1);
+                } catch (DateTimeParseException pe) {
                     d1 = fileRepository.getEarliestDate();
                 }
             }
@@ -832,8 +826,8 @@ public class DatasetController {
                 d2 = fileRepository.getLatestDate();
             } else {
                 try {
-                    d2 = simpleDateFormat.parse(date2);
-                } catch (ParseException pe) {
+                    d2 = LocalDate.parse(date2);
+                } catch (DateTimeParseException pe) {
                     d2 = fileRepository.getLatestDate();
                 }
             }
@@ -990,13 +984,13 @@ public class DatasetController {
 
             // Compute available files
             // Parse the received date
-            Date d1 = null, d2 = null;
+            LocalDate d1 = null, d2 = null;
             if (date1 == null || date1.equals("")) {
                 d1 = fileRepository.getEarliestDate();
             } else {
                 try {
-                    d1 = simpleDateFormat.parse(date1);
-                } catch (ParseException pe) {
+                    d1 = LocalDate.parse(date1);
+                } catch (DateTimeParseException pe) {
                     d1 = fileRepository.getEarliestDate();
                 }
             }
@@ -1004,8 +998,8 @@ public class DatasetController {
                 d2 = fileRepository.getLatestDate();
             } else {
                 try {
-                    d2 = simpleDateFormat.parse(date2);
-                } catch (ParseException pe) {
+                    d2 = LocalDate.parse(date2);
+                } catch (DateTimeParseException pe) {
                     d2 = fileRepository.getLatestDate();
                 }
             }
@@ -1149,13 +1143,13 @@ public class DatasetController {
             }
 
             // Parse the received date
-            Date d1 = null, d2 = null;
+            LocalDate d1 = null, d2 = null;
             if (dateFrom == null || dateFrom.equals("")) {
                 d1 = fileRepository.getEarliestDate();
             } else {
                 try {
-                    d1 = simpleDateFormat.parse(dateFrom);
-                } catch (ParseException pe) {
+                    d1 = LocalDate.parse(dateFrom);
+                } catch (DateTimeParseException pe) {
                     d1 = fileRepository.getEarliestDate();
                 }
             }
@@ -1163,8 +1157,8 @@ public class DatasetController {
                 d2 = fileRepository.getLatestDate();
             } else {
                 try {
-                    d2 = simpleDateFormat.parse(dateTo);
-                } catch (ParseException pe) {
+                    d2 = LocalDate.parse(dateTo);
+                } catch (DateTimeParseException pe) {
                     d2 = fileRepository.getLatestDate();
                 }
             }

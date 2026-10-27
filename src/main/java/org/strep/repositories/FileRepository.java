@@ -24,7 +24,7 @@ package org.strep.repositories;
 import org.strep.domain.File;
 
 import java.util.Collection;
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -60,19 +60,19 @@ public interface FileRepository extends CrudRepository<File, Long>
      +  "file.type = ?7", //see only ham or spam files
     nativeQuery = true)
     public int countSystemDatasetFilesByType(Collection<String> datasetNames, Collection<String> languages, Collection<String> extensions, 
-                                             Collection<String> licenses, Date startDate, Date endDate, String type);
+                                             Collection<String> licenses, LocalDate startDate, LocalDate endDate, String type);
     
     /**
     * Find the date of the latest file
     * @return the date of the latest file
     */
     @Query(value = "SELECT max(date) FROM file", nativeQuery = true)
-    public Date getLatestDate();
+    public LocalDate getLatestDate();
 
     /**
     * Find the date of the earliest file
     * @return the date of the earliest file
     */
     @Query(value = "SELECT min(date) FROM file", nativeQuery = true)
-    public Date getEarliestDate();
+    public LocalDate getEarliestDate();
 }

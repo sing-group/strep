@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -172,7 +173,7 @@ public class TaskService {
      * @return
      */
     public String addNewUserDatasetTask(Dataset dataset, List<String> licenses, List<String> languages, List<String> datatypes,
-            List<String> datasets, Date dateFrom, Date dateTo, int inputSpamEml, int inputHamEml, int inputSpamWarc,
+            List<String> datasets, LocalDate dateFrom, LocalDate dateTo, int inputSpamEml, int inputHamEml, int inputSpamWarc,
             int inputHamWarc, int inputSpamTsms, int inputHamTsms, int inputSpamYtbid, int inputHamYtbid,
             int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage, String username, boolean spamMode) {
 
@@ -324,7 +325,7 @@ public class TaskService {
     // selected datasets
     private boolean correctFilters(List<String> datasetNames, int inputSpamEml, int inputHamEml, int inputSpamWarc, int inputHamWarc,
             int inputSpamTsms, int inputHamTsms, int inputSpamYtbid, int inputHamYtbid, int inputSpamTwtid, int inputHamTwtid, int fileNumberInput, int inputSpamPercentage, boolean spamMode,
-            List<String> languages, List<String> sdatatypes, List<String> licenses, Date date1, Date date2 //filters
+            List<String> languages, List<String> sdatatypes, List<String> licenses, LocalDate date1, LocalDate date2 //filters
             ) {
 
         boolean success = true;

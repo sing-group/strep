@@ -22,8 +22,8 @@
 package org.strep.domain;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -111,13 +111,13 @@ public class TaskCreateUdataset extends Task {
      * The date from which you can pick up files from the original datasets
      */
     @Column(nullable = true)
-    private Date dateFrom;
+    private LocalDate dateFrom;
 
     /**
      * The date until which you can pick up files from the original datasets
      */
     @Column(nullable = true)
-    private Date dateTo;
+    private LocalDate dateTo;
 
     /**
      * The languages selected in the filters to construct the new dataset
@@ -185,7 +185,7 @@ public class TaskCreateUdataset extends Task {
      * @param limitHamPercentageTytb
      */
     public TaskCreateUdataset(final Dataset dataset, final String state, final String message,
-            final int limitPercentageSpam, final int limitNumberOfFiles, final Date dateFrom, final Date dateTo,
+            final int limitPercentageSpam, final int limitNumberOfFiles, final LocalDate dateFrom, final LocalDate dateTo,
             final List<Language> languages, final List<Datatype> datatypes, final List<License> licenses,
             final List<Dataset> datasets, final int limitSpamPercentageEml, final int limitHamPercentageEml,
             final int limitSpamPercentageWarc, final int limitHamPercentageWarc, final int limitSpamPercentageTytb,
@@ -261,7 +261,7 @@ public class TaskCreateUdataset extends Task {
      * 
      * @return the date from which you can pick up files from the original datasets
      */
-    public Date getDateFrom() {
+    public LocalDate getDateFrom() {
         return this.dateFrom;
     }
 
@@ -271,7 +271,7 @@ public class TaskCreateUdataset extends Task {
      * @param dateFrom the date from which you can pick up files from the original
      *                 datasets
      */
-    public void setDateFrom(final Date dateFrom) {
+    public void setDateFrom(final LocalDate dateFrom) {
         this.dateFrom = dateFrom;
     }
 
@@ -280,7 +280,7 @@ public class TaskCreateUdataset extends Task {
      * 
      * @return the date until you can pick up files from the original datasets
      */
-    public Date getDateTo() {
+    public LocalDate getDateTo() {
         return this.dateTo;
     }
 
@@ -289,7 +289,7 @@ public class TaskCreateUdataset extends Task {
      * 
      * @param dateTo the date until you can pick up files from the original datasets
      */
-    public void setDateTo(final Date dateTo) {
+    public void setDateTo(final LocalDate dateTo) {
         this.dateTo = dateTo;
     }
 
@@ -648,7 +648,7 @@ public class TaskCreateUdataset extends Task {
      * @return String for message dates
      */
     public String toStringDate() {
-        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        final DateTimeFormatter format = DateTimeFormatter.ISO_LOCAL_DATE;
         final StringBuilder stringBuilder = new StringBuilder();
 
         if (dateTo != null && dateFrom != null) {

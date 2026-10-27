@@ -28,7 +28,7 @@ import jakarta.validation.constraints.Size;
 
 import java.util.Set;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import org.strep.domain.Dataset;
 
 /**
@@ -74,8 +74,7 @@ public class File implements Serializable
      * The date of the file
      */
     @Basic
-    @Temporal(TemporalType.DATE)    
-    private Date date;
+    private LocalDate date;
 
     /**
      * The extension of the file
@@ -172,7 +171,7 @@ public class File implements Serializable
      * Return the date of the file
      * @return the date of the file
      */
-    public Date getDate()
+    public LocalDate getDate()
     {
         return date;
     }
@@ -181,7 +180,7 @@ public class File implements Serializable
      * Stablish the date of the file
      * @param date the date of the file
      */
-    public void setDate(Date date)
+    public void setDate(LocalDate date)
     {
         this.date = date;
     }
