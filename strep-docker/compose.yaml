@@ -29,6 +29,8 @@ services:
       db:
         condition: service_healthy
     environment:
+      # Time zone of the dates written by the JVM (CSV files, e-mails)
+      TZ: ${STREP_TZ:-Europe/Madrid}
       STREP_DB_URL: jdbc:mariadb://db:3306/${STREP_DB_NAME:-strep}
       STREP_DB_USER: ${STREP_DB_USER:-strep}
       STREP_DB_PASSWORD: ${STREP_DB_PASSWORD}
@@ -69,6 +71,8 @@ services:
       web:
         condition: service_healthy
     environment:
+      # Time zone of the dates written by the JVM (CSV files, e-mails)
+      TZ: ${STREP_TZ:-Europe/Madrid}
       STREP_DB_URL: jdbc:mariadb://db:3306/${STREP_DB_NAME:-strep}
       STREP_DB_USER: ${STREP_DB_USER:-strep}
       STREP_DB_PASSWORD: ${STREP_DB_PASSWORD}
