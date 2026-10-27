@@ -56,7 +56,7 @@ public interface LicenseRepository extends CrudRepository<License, String>
      * @param datasetNames The dataset names
      * @return The list of licenses of the datasets 
      */
-    @Query(value="SELECT * FROM license, dataset WHERE license.name=dataset.id  AND dataset.name in (?1)", nativeQuery=true)
+    @Query(value="SELECT license.* FROM license, dataset WHERE license.name=dataset.id AND dataset.name in (?1)", nativeQuery=true)
     public ArrayList<License> getDatasetLicenses(Collection<String> datasetNames);    
     
     

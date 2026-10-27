@@ -191,7 +191,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @return a list with the preprocessing tasks of the dataset filtered by
      * state
      */
-    @Query(value = "SELECT t FROM TaskCreateUPreprocessing t WHERE t.dataset.name=?1 AND t.state=?2 AND t.active=true")
+    @Query(value = "SELECT t FROM TaskCreateUPreprocessing t WHERE t.dataset=?1 AND t.state=?2 AND t.active=true")
     public ArrayList<TaskCreateUPreprocessing> getActivePreprocessingTasks(Dataset dataset, String state);
 
     /**
@@ -203,7 +203,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
      * @return a list with the preprocessing tasks of the dataset filtered by
      * state
      */
-    @Query(value = "SELECT t FROM TaskCreateUPreprocessing t WHERE t.dataset.name=?1 AND t.state=?2")
+    @Query(value = "SELECT t FROM TaskCreateUPreprocessing t WHERE t.dataset=?1 AND t.state=?2")
     public ArrayList<TaskCreateUPreprocessing> getPreprocessingTasks(Dataset dataset, String state);
 
     /**
