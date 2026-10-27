@@ -29,7 +29,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      STREP_DB_URL: jdbc:mysql://db:3306/${STREP_DB_NAME:-strep}
+      STREP_DB_URL: jdbc:mariadb://db:3306/${STREP_DB_NAME:-strep}
       STREP_DB_USER: ${STREP_DB_USER:-strep}
       STREP_DB_PASSWORD: ${STREP_DB_PASSWORD}
       STREP_MAIL_USERNAME: ${STREP_MAIL_USERNAME:-}
@@ -69,7 +69,7 @@ services:
       web:
         condition: service_healthy
     environment:
-      STREP_DB_URL: jdbc:mysql://db:3306/${STREP_DB_NAME:-strep}
+      STREP_DB_URL: jdbc:mariadb://db:3306/${STREP_DB_NAME:-strep}
       STREP_DB_USER: ${STREP_DB_USER:-strep}
       STREP_DB_PASSWORD: ${STREP_DB_PASSWORD}
       STREP_DATASET_STORAGE: /var/lib/strep/datasets/

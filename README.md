@@ -77,6 +77,8 @@ Passwords and machine specific settings are not stored in `application.propertie
 | `STREP_CSV_STORAGE` | `csv.storage` | `/var/lib/strep/csv/` |
 | `STREP_HOST_NAME` | `host.name` | `https://localhost:8443` |
 
+The JDBC driver is chosen by the URL: `jdbc:mysql://` for MySQL and `jdbc:mariadb://` for MariaDB (MySQL Connector/J does not work with MariaDB 11).
+
 ### TLS keystore
 
 The application serves HTTPS on port 8443 and needs a PKCS12 keystore with a key under the alias `tomcat`. It is not versioned; create a self-signed one for development with:
