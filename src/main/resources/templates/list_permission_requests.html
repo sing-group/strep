@@ -58,7 +58,7 @@
                             th:text="${permissionRequest.user.name + ' ' + permissionRequest.user.surname }"></th>
                         <td th:text="${permissionRequest.permission.name}"></td>
                         <td>
-                            <form action="/permission/accept" method="POST" id="permissionForm">
+                            <form th:action="@{/permission/accept}" method="POST" id="permissionForm">
                                 <input type="hidden" name="username"
                                        th:attr="value = ${permissionRequest.user.username}">
                                 <input type="hidden" name="permission"

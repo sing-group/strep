@@ -28,6 +28,8 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <link href="/webjars/bootswatch/dist/flatly/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/webjars/font-awesome/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="/css/fonts.css">
@@ -43,6 +45,8 @@
 </head>
 
 <body class="main-bg">
+<!-- Logout must be a POST with the CSRF token -->
+<form id="logoutForm" th:action="@{/logout}" method="post" class="d-none"></form>
     <div class="header">
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container" th:if="${session.username}==null and ${username}==null">
@@ -115,7 +119,7 @@
                         <span th:unless="${session.username}!=null" th:text="${username}" class="topdiv-text"></span> &nbsp;&nbsp;
                     </div>
                     <div class="float-right logout-icon">
-                        <a href="/logout" class=" icons">
+                        <a href="/logout" class=" icons" onclick="document.getElementById('logoutForm').submit(); return false;">
                             <i class="fas fa-door-open fa-2x"></i>
                         </a>
                     </div>
@@ -208,7 +212,7 @@
                             <span th:unless="${session.username}!=null" th:text="${username}" class="topdiv-text"></span> &nbsp;&nbsp;
                         </div>
                         <div class="float-right logout-icon">
-                            <a href="/logout" class=" icons">
+                            <a href="/logout" class=" icons" onclick="document.getElementById('logoutForm').submit(); return false;">
                                 <!--logout-icon-->
                                 <i class="fas fa-door-open fa-2x"></i>
                             </a>

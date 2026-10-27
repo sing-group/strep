@@ -19,6 +19,17 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+// Send the CSRF token (published by header.html) with every non-GET AJAX request
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        if (token && header && !/^(GET|HEAD|OPTIONS)$/i.test(settings.type)) {
+            xhr.setRequestHeader(header, token);
+        }
+    }
+});
+
 function retrieveDatasetInfo(id) {
     var url = "/dataset/modal?id=" + id;
 

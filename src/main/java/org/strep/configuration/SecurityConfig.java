@@ -28,7 +28,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.strep.domain.Permission;
@@ -78,8 +77,6 @@ public class SecurityConfig
                 .requestMatchers("/license/list/**", "/license/add/**", "/user/list/**", "/permission/listrequests/**", "/user/detailed/**", "/user/delete/**",
                 "/license/modify/**").hasAuthority(Permission.ADMINISTER)
                 .anyRequest().authenticated())
-            // TODO: CSRF stays disabled until the forms include the token (phase 4)
-            .csrf(AbstractHttpConfigurer::disable)
             .formLogin(form -> form
                 .loginPage("/").failureUrl("/?error=true")
                 .defaultSuccessUrl("/dataset/list")
