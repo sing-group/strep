@@ -28,7 +28,6 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 //import jakarta.persistence.OneToOne;
 
 /**
@@ -47,7 +46,7 @@ public class PermissionRequestPK implements Serializable
      * The permission id
      */
     @ManyToOne(fetch= FetchType.LAZY)
-    @MapsId("permission_id")
+    @JoinColumn(name = "permission_id", referencedColumnName="id")
     private Permission permission;
 
     /**
@@ -55,7 +54,6 @@ public class PermissionRequestPK implements Serializable
      */
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "user_username", referencedColumnName="username")
-    @MapsId("user_username")
     private User user;
 
     /**
