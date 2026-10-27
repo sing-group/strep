@@ -33,6 +33,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Pattern;
+import org.hibernate.Length;
 
 import java.io.Serializable;
 
@@ -104,7 +105,8 @@ public class Task implements Serializable {
      * The message of the task when failed
      *
      */
-    @Column(nullable = true)
+    // Without an explicit length Hibernate 6+ creates a TINYTEXT (255 bytes)
+    @Column(nullable = true, length = Length.LONG32)
     @Lob
     private String message;
 

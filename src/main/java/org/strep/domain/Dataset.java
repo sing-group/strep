@@ -103,6 +103,8 @@ public class Dataset implements Serializable {
      */
     @NotNull
     @Size(min = 1, max = 1000)
+    // LONGTEXT as with Hibernate 5: Hibernate 6+ would size the column from @Size
+    @Column(columnDefinition = "LONGTEXT")
     @Lob
     private String description;
 
