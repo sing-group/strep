@@ -21,8 +21,8 @@
  */
 package org.strep.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 
 /**
  * JPA Bean for the Dataset objects managed by application

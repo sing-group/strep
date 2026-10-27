@@ -23,8 +23,8 @@ package org.strep.web;
 
 import java.util.Optional;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 import org.strep.domain.User;
 import org.strep.repositories.UserRepository;

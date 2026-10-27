@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.strep.domain.Dataset;
 import org.strep.domain.Datatype;
@@ -81,7 +81,7 @@ import java.lang.Math;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 

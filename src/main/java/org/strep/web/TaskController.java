@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.strep.domain.Dataset;
 import org.strep.domain.Task;

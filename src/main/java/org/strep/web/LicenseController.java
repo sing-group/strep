@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.strep.domain.License;
 import org.strep.domain.User;

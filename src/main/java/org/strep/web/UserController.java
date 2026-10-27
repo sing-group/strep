@@ -31,9 +31,9 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.apache.commons.io.IOUtils;
 
 import org.strep.domain.Dataset;

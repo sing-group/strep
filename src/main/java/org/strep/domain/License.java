@@ -21,15 +21,15 @@
  */
 package org.strep.domain;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 /**
  * JPA Bean for the Dataset objects managed by application

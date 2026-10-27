@@ -21,7 +21,7 @@
  */
 package org.strep.domain;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import org.strep.domain.User;
 
 import org.hibernate.annotations.NaturalId;
