@@ -1,0 +1,8 @@
+# Build context of strep-docker/Dockerfile.web: only pom.xml and src/ are needed
+.git
+target
+config
+strep-docker/resources
+strep-docker/config
+strep-docker/secrets
+strep-docker/.env

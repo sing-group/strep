@@ -1,0 +1,4 @@
+# Build context of Dockerfile.service: only config/ and resources/ are needed
+.env
+secrets
+mariadb

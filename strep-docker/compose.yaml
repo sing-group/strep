@@ -1,0 +1,96 @@
+# STRep: web application, preprocessing service and MariaDB
+# Usage: see README.md in this directory (cp .env.example .env; docker compose up -d)
+
+name: strep
+
+services:
+  db:
+    build:
+      context: ./mariadb
+    image: strep-mariadb:local
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${STREP_DB_NAME:-strep}
+      MARIADB_USER: ${STREP_DB_USER:-strep}
+      MARIADB_PASSWORD: ${STREP_DB_PASSWORD:?Set STREP_DB_PASSWORD in .env}
+      MARIADB_ROOT_PASSWORD: ${STREP_DB_ROOT_PASSWORD:?Set STREP_DB_ROOT_PASSWORD in .env}
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - internal
+
+  web:
+    build:
+      context: ..
+      dockerfile: strep-docker/Dockerfile.web
+    image: strep-web:local
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      STREP_DB_URL: jdbc:mysql://db:3306/${STREP_DB_NAME:-strep}
+      STREP_DB_USER: ${STREP_DB_USER:-strep}
+      STREP_DB_PASSWORD: ${STREP_DB_PASSWORD}
+      STREP_MAIL_USERNAME: ${STREP_MAIL_USERNAME:-}
+      STREP_MAIL_PASSWORD: ${STREP_MAIL_PASSWORD:-}
+      STREP_KEYSTORE: file:/run/secrets/strep_keystore
+      STREP_KEYSTORE_PASSWORD: ${STREP_KEYSTORE_PASSWORD:?Set STREP_KEYSTORE_PASSWORD in .env}
+      STREP_HOST_NAME: ${STREP_HOST_NAME:-https://localhost:8443}
+      STREP_DATASET_STORAGE: /var/lib/strep/datasets/
+      STREP_PIPELINE_STORAGE: /var/lib/strep/pipelines/
+      STREP_CSV_STORAGE: /var/lib/strep/csv/
+    secrets:
+      - strep_keystore
+    volumes:
+      - datasets:/var/lib/strep/datasets
+      - pipelines:/var/lib/strep/pipelines
+      - csv:/var/lib/strep/csv
+    ports:
+      - "${STREP_HTTP_PORT:-8080}:8080"
+      - "${STREP_HTTPS_PORT:-8443}:8443"
+    networks:
+      - internal
+
+  service:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+      additional_contexts:
+        bdp4j: ../../bdp4j
+        nlpa: ../../nlpa
+        strep_service: ../../strep_service
+    image: strep-service:local
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      # The web application creates the schema (Hibernate) and loads data.sql
+      web:
+        condition: service_healthy
+    environment:
+      STREP_DB_URL: jdbc:mysql://db:3306/${STREP_DB_NAME:-strep}
+      STREP_DB_USER: ${STREP_DB_USER:-strep}
+      STREP_DB_PASSWORD: ${STREP_DB_PASSWORD}
+      STREP_DATASET_STORAGE: /var/lib/strep/datasets/
+      STREP_PIPELINE_STORAGE: /var/lib/strep/pipelines/
+      STREP_CSV_STORAGE: /var/lib/strep/csv/
+    volumes:
+      - datasets:/var/lib/strep/datasets
+      - pipelines:/var/lib/strep/pipelines
+      - csv:/var/lib/strep/csv
+    networks:
+      - internal
+
+secrets:
+  strep_keystore:
+    file: ${STREP_KEYSTORE_FILE:-./secrets/keystore.p12}
+
+volumes:
+  db-data:
+  datasets:
+  pipelines:
+  csv:
+
+networks:
+  internal:

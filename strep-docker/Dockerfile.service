@@ -1,0 +1,74 @@
+# syntax=docker/dockerfile:1
+#
+# STRep service (dataset preprocessing with BDP4J/NLPA)
+# Build context: strep-docker (NLPA config and resources). The sibling
+# repositories bdp4j, nlpa and strep_service are passed as additional
+# build contexts (see compose.yaml).
+
+FROM debian:trixie AS build
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends openjdk-21-jdk-headless maven unzip zip \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /build/bdp4j
+COPY --from=bdp4j pom.xml .
+COPY --from=bdp4j src src
+RUN --mount=type=cache,target=/root/.m2 mvn -B -DskipTests install
+
+WORKDIR /build/nlpa
+COPY --from=nlpa pom.xml .
+COPY --from=nlpa local-repo local-repo
+COPY --from=nlpa src src
+RUN --mount=type=cache,target=/root/.m2 mvn -B -DskipTests install
+
+WORKDIR /build/strep_service
+COPY --from=strep_service pom.xml .
+COPY --from=strep_service src src
+RUN --mount=type=cache,target=/root/.m2 mvn -B -DskipTests package
+
+# Pipes that must not be offered by the service (they need external services
+# or very large models). They are removed from the services file of the only
+# NLPA jar in the image: strep_service uses NLPA classes directly, so NLPA has
+# to stay in lib/ (it is in the Class-Path of the manifest), and PipeProvider's
+# class loader also sees the services file of the parent class path. Filtering
+# a copy in plugins/ alone, as the old image did, had no effect.
+RUN set -eu; \
+    cd target/lib; \
+    nlpa=$(ls nlpa-*.jar); \
+    unzip -q -o "$nlpa" META-INF/services/org.bdp4j.pipe.Pipe; \
+    sed -i -E '/\.(NERFromStringBufferPipe|ComputePolarityFromStringBufferPipe_?|ComputePolarityTBWSFromStringBuffer|StoreTweetLangPipe)$/d' \
+        META-INF/services/org.bdp4j.pipe.Pipe; \
+    zip -q "$nlpa" META-INF/services/org.bdp4j.pipe.Pipe; \
+    rm -rf META-INF; \
+    unzip -p "$nlpa" META-INF/services/org.bdp4j.pipe.Pipe \
+        | grep -E 'NERFromStringBufferPipe|ComputePolarity|StoreTweetLangPipe' && exit 1 || true; \
+    mkdir -p /build/dist/plugins; \
+    cp ../strep.service-*.jar /build/dist/strep.service.jar; \
+    cp -r ../lib /build/dist/lib; \
+    ln -s "../lib/$nlpa" "/build/dist/plugins/$nlpa"
+
+# NLPA configuration: use the real files if they were placed in config/
+# (git-ignored), otherwise start from the examples
+COPY config /build/dist/config
+COPY resources /build/dist/resources
+RUN set -eu; cd /build/dist/config; \
+    for example in *.example; do \
+        target="${example%.example}"; \
+        [ -e "$target" ] || cp "$example" "$target"; \
+    done
+
+FROM debian:trixie-slim
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends openjdk-21-jre-headless procps \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd --system --uid 10001 --home-dir /opt/strep-service --shell /usr/sbin/nologin strep \
+    && mkdir -p /opt/strep-service /var/lib/strep/datasets /var/lib/strep/pipelines /var/lib/strep/csv \
+    && chown -R strep:strep /opt/strep-service /var/lib/strep
+WORKDIR /opt/strep-service
+COPY --from=build --chown=strep:strep /build/dist/ ./
+USER strep
+ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75"
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+    CMD pgrep -f strep.service.jar > /dev/null || exit 1
+# The service and NLPA read config/ and resources/ relative to the working directory
+ENTRYPOINT ["java", "-jar", "/opt/strep-service/strep.service.jar"]
