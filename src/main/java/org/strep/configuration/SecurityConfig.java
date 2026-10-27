@@ -65,7 +65,7 @@ public class SecurityConfig
                 // Error pages and forwards were not secured with authorizeRequests() in Spring Security 5
                 .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                 // Resources that were ignored with WebSecurity in Spring Security 5
-                .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/fonts/**", "/webjars/**").permitAll()
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/changeLang").permitAll()
                 .requestMatchers("/favicon.ico").permitAll()
