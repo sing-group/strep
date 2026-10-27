@@ -10,6 +10,14 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends openjdk-21-jdk-headless maven unzip zip \
     && rm -rf /var/lib/apt/lists/*
 
+# maven.sing-group.org answers 200 with an HTML page for artifacts it does not
+# host; drop any such page cached as a POM by an earlier build, and the cached
+# resolution failures, so that Maven looks for them again
+RUN --mount=type=cache,target=/root/.m2 \
+    (grep -rLZ --include='*.pom' -e '<project' /root/.m2 2> /dev/null || true) \
+        | xargs -0 -r -n1 sh -c 'echo "Removing $1"; rm -f "$1" "${1%/*}"/_remote.repositories' _; \
+    find /root/.m2 -name '*.lastUpdated' -delete 2> /dev/null || true
+
 WORKDIR /build/bdp4j
 COPY --from=bdp4j pom.xml .
 COPY --from=bdp4j src src
