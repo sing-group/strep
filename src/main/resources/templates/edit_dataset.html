@@ -81,7 +81,7 @@
                             <input type="hidden" name="id" th:attr="value = ${toUpdateDataset.name}">
                             <input type="hidden" name="typeDatasetList" th:value="${param.type}">
                             <div class="form-group right">
-                                <a class="btn btn-primary" th:text="#{back}" th:href="@{'/dataset/list?type=' + ${param.type}}"></a>
+                                <a class="btn btn-primary" th:text="#{back}" th:href="@{/dataset/list(type=${param.type})}"></a>
                                 <input type="submit" class="btn btn-primary" th:attr="value = #{edit.dataset.button}"><br>
                             </div>
                         </fieldset>

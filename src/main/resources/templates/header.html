@@ -173,7 +173,7 @@
                             <div class="dropdown-menu top-bg" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item topdiv-text" href="/permission/list" th:text="#{header.permissionlist}"></a>
                                 <div th:if="${authority!=T(org.strep.domain.Permission).ADMINISTER}">
-                                    <a class="dropdown-item topdiv-text" href="/permission/requests/" th:text="#{header.permissionrequests}"></a>
+                                    <a class="dropdown-item topdiv-text" href="/permission/requests" th:text="#{header.permissionrequests}"></a>
                                 </div>
                             </div>
                         </li>
@@ -185,7 +185,7 @@
                                 </a>
                                 <div class="dropdown-menu top-bg" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item topdiv-text" href="/license/list" th:text="#{header.licenseslist}"></a>
-                                    <a class="dropdown-item topdiv-text" href="/license/add/" th:text="#{header.addlicense}"></a>
+                                    <a class="dropdown-item topdiv-text" href="/license/add" th:text="#{header.addlicense}"></a>
                                 </div>
 
                             </li>

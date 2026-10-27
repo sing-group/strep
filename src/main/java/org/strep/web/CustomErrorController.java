@@ -45,6 +45,8 @@ public class CustomErrorController implements ErrorController
 			Integer code = Integer.valueOf(httpCode.toString());
 			
 			switch(code) {
+				case 403:
+					return "error-403";
 				case 404:
 					return "error-404";
 				case 500:

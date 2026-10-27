@@ -229,7 +229,7 @@
                 <input type="hidden" th:value="${param.type}">
                 <div class="row">
                     <div class="col-12 right">
-                        <a class="btn btn-primary" th:text="#{back}" th:href="@{'/dataset/list?type=' + ${param.type}}"></a>
+                        <a class="btn btn-primary" th:text="#{back}" th:href="@{/dataset/list(type=${param.type})}"></a>
                     </div>
                 </div>
             </div>
