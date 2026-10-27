@@ -44,11 +44,14 @@ import org.strep.repositories.PermissionRepository;
 import org.strep.repositories.UserRepository;
 import org.strep.services.UserService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
@@ -70,6 +73,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -119,6 +124,13 @@ public class UserController {
                 model.addAttribute("user", user);
                 return "register";
             } else {
+                // The account is created before sending the mails: if the mail server
+                // fails, an administrator can still confirm the account
+                User user2 = new User(id, email, hash.replaceAll("=", ""), user.getPassword(),
+                        user.getName(), user.getSurname());
+
+                userService.createUser(user2);
+
                 // Send mail to new user
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setTo(user.getEmail());
@@ -127,7 +139,11 @@ public class UserController {
                         + hostname + "/user/accountconfirmation?hash="
                         + hash.replaceAll("=", "") + "\n\n"
                         + messageSource.getMessage("register.email.textregards", null, locale));
-                mailSender.send(message);
+                try {
+                    mailSender.send(message);
+                } catch (MailException e) {
+                    logger.error("Could not send the account confirmation mail to user {}", id, e);
+                }
 
                 // Send mail to admin
                 ArrayList<User> usersList = userRepository.findUserByPermission(Permission.ADMINISTER);
@@ -140,12 +156,11 @@ public class UserController {
                 mailMessageToAdmins.setTo(toList.stream().toArray(String[]::new));
                 mailMessageToAdmins.setSubject(messageSource.getMessage("register.email.subject.toadmin", null, locale));
                 mailMessageToAdmins.setText(messageSource.getMessage("register.email.text.toadmin", Stream.of(id).toArray(String[]::new), locale));
-                mailSender.send(mailMessageToAdmins);
-                
-                User user2 = new User(id, email, hash.replaceAll("=", ""), user.getPassword(),
-                        user.getName(), user.getSurname());
-
-                userService.createUser(user2);
+                try {
+                    mailSender.send(mailMessageToAdmins);
+                } catch (MailException e) {
+                    logger.error("Could not send the new user notification to the administrators", e);
+                }
 
                 return "redirect:/?register=ok";
             }

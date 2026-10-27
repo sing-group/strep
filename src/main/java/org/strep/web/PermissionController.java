@@ -37,9 +37,12 @@ import org.strep.repositories.UserRepository;
 import org.strep.services.PermissionService;
 import org.strep.services.UserService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
@@ -57,6 +60,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/permission")
 public class PermissionController {
+
+    private static final Logger logger = LoggerFactory.getLogger(PermissionController.class);
 
     @Autowired
     private UserService userService;
@@ -117,7 +122,11 @@ public class PermissionController {
         mailMessageToAdmins.setTo(toList.stream().toArray(String[]::new));
         mailMessageToAdmins.setSubject(messageSource.getMessage("permission.request.subject.toadmin", null, locale));
         mailMessageToAdmins.setText(messageSource.getMessage("permission.request.text.toadmin", Stream.of(username).toArray(String[]::new), locale));
-        mailSender.send(mailMessageToAdmins);
+        try {
+            mailSender.send(mailMessageToAdmins);
+        } catch (MailException e) {
+            logger.error("Could not send the permission request notification to the administrators", e);
+        }
 
         return "redirect:/permission/requests?message=" + message;
     }
